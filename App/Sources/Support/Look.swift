@@ -101,3 +101,15 @@ extension View {
         }
     }
 }
+
+extension View {
+    /// A sheet's own background colour (iOS 16.4+); earlier, the content's.
+    @ViewBuilder
+    func sheetBackground(_ color: Color) -> some View {
+        if #available(iOS 16.4, *) {
+            presentationBackground(color)
+        } else {
+            background(color.ignoresSafeArea())
+        }
+    }
+}

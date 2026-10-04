@@ -580,7 +580,7 @@ private struct CountField: View {
                 .font(.system(size: 13, weight: .bold))
                 .foregroundStyle(Theme.soft)
             TextField("0", text: Binding(
-                get: { value == 0 ? "" : String(value) },
+                get: { value == 0 ? "" : value.grouped },
                 set: { value = Int($0.filter { $0.isASCII && $0.isNumber }.prefix(9)) ?? 0 }))
                 .keyboardType(.numberPad)
                 .font(Typography.headingBold(20, relativeTo: .title3))
@@ -607,7 +607,7 @@ struct NumberField: View {
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: Theme.Space.s)
             TextField("0", text: Binding(
-                get: { value == 0 ? "" : String(value) },
+                get: { value == 0 ? "" : value.grouped },
                 set: { value = Int($0.filter { $0.isASCII && $0.isNumber }.prefix(9)) ?? 0 }))
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.trailing)

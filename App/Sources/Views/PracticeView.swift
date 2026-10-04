@@ -76,6 +76,8 @@ struct PracticeView: View {
         .successFeedback(trigger: model.practisedToday(practiceID))
         .background(Theme.ground.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
+        // Full screen, as in the mockup: the big button owns the bottom edge.
+        .toolbar(.hidden, for: .tabBar)
         .sheet(isPresented: Binding(get: { customAmount != nil }, set: { if !$0 { customAmount = nil } })) {
             CustomAmountSheet { amount in
                 taps += 1
@@ -399,7 +401,7 @@ struct AfterMidnightSheet: View {
         .padding(.horizontal, Theme.Space.xl)
         .padding(.top, Theme.Space.xl)
         .padding(.bottom, Theme.Space.l)
-        .background(Theme.card.ignoresSafeArea())
+        .sheetBackground(Theme.card)
         .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
     }
