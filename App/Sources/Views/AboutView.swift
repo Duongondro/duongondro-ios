@@ -2,16 +2,29 @@ import SwiftUI
 
 /// Settings › About: what is running, so anyone can match the app to its source.
 struct AboutSection: View {
+    @EnvironmentObject private var account: AccountModel
     private let build = BuildIdentity.current
 
     var body: some View {
         CardSection(header: "About", footer: "Tap Source to open this exact commit on GitHub.") {
             SettingsRow("Version", detail: Text(verbatim: build.version))
             SourceRow(build: build)
+            if let server = account.serverVersion {
+                // The server's commit, linked like the app's.
+                Button {
+                    if server.revision != "unknown",
+                       let url = URL(string: "https://github.com/Duongondro/duongondro-api/commit/\(server.revision)") {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    SettingsRow("Server", detail: Text(verbatim: server.short).font(.system(.subheadline, design: .monospaced)))
+                }
+            }
             NavigationLink { AboutView() } label: {
                 SettingsRow("About and contributors", chevron: true)
             }
         }
+        .task { await account.loadServerVersion() }
     }
 }
 

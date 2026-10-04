@@ -46,6 +46,10 @@ final class AccountModel: ObservableObject {
     @Published private(set) var poked: Set<UUID> = []
     /// The name friends see, as the server has it.
     @Published private(set) var displayName = ""
+    /// The account's registered devices, for Settings' "Your devices".
+    @Published private(set) var deviceCount: Int?
+    /// The server's build, for Settings' About.
+    @Published private(set) var serverVersion: ServerVersion?
     /// An invite opened from a link or pasted, waiting to be accepted.
     @Published var pendingInvite: InviteLink?
 
@@ -171,6 +175,10 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    func loadServerVersion() async {
+        serverVersion = try? await APIClient(baseURL: Self.serverURL).version()
+    }
+
     // MARK: Friends
 
     func refreshFriends() async {
@@ -178,7 +186,10 @@ final class AccountModel: ObservableObject {
         do {
             friends = try await social.friends()
             friendsLoaded = true
-            if displayName.isEmpty, let me = try? await social.account.api.me() { displayName = me.displayName }
+            if let me = try? await social.account.api.me() {
+                displayName = me.displayName
+                deviceCount = me.devices.count
+            }
         } catch {
             self.error = error.localizedDescription
         }

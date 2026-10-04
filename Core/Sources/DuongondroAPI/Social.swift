@@ -2,6 +2,9 @@ import Foundation
 
 /// Phase 4's operations: invitations, friends, public streaks and nudges.
 extension APIClient {
+    /// The commit the server was built from; needs no session.
+    public func version() async throws -> ServerVersion { try await get("api/version") }
+
     public func setDisplayName(_ name: String) async throws {
         try await send("PATCH", "api/me", body: MeUpdate(displayName: name))
     }
@@ -82,6 +85,12 @@ extension APIClient {
 }
 
 struct MeUpdate: Codable { let displayName: String }
+
+public struct ServerVersion: Codable, Equatable, Sendable {
+    public let revision: String
+    public let short: String
+    public let modified: Bool
+}
 
 public struct InviteInput: Codable, Sendable {
     public let id: String

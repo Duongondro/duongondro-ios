@@ -66,6 +66,9 @@ struct AccountSection: View {
             }
             CardSection(header: "This device") {
                 SettingsRow("Device key", detail: Text(tierName))
+                if let n = account.deviceCount {
+                    SettingsRow("Your devices", detail: Text(verbatim: "\(n)"))
+                }
             }
             .alert("Your name", isPresented: $naming) {
                 TextField("Name", text: $name)
