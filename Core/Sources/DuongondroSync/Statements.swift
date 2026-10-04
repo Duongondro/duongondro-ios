@@ -40,6 +40,75 @@ public enum Statements {
         return devices.count == raw.devices.count ? (devices, raw.version) : nil
     }
 
+    // MARK: Phase 4
+
+    public static func invite(id: String, inviter: UUID, inviterIdentityPk: Data, expiresAt: Date) -> Data {
+        Data(#"{"expiresAt":\#(millis(expiresAt)),"inviteId":"\#(id)","inviter":"\#(inviter.uuidString.lowercased())","inviterIdentityPk":"\#(base64url(inviterIdentityPk))"}"#.utf8)
+    }
+
+    public struct Invite: Equatable, Sendable {
+        public let id: String
+        public let inviter: UUID
+        public let inviterIdentityPk: Data
+        public let expiresAt: Date
+    }
+
+    public static func parseInvite(_ payload: Data) -> Invite? {
+        struct Raw: Decodable { let expiresAt: Int64; let inviteId: String; let inviter: String; let inviterIdentityPk: String }
+        guard let raw = try? JSONDecoder().decode(Raw.self, from: payload), let inviter = UUID(uuidString: raw.inviter),
+              let pk = fromBase64url(raw.inviterIdentityPk) else { return nil }
+        return Invite(id: raw.inviteId, inviter: inviter, inviterIdentityPk: pk, expiresAt: date(raw.expiresAt))
+    }
+
+    public static func acceptance(inviteID: String, invitee: UUID, inviteeIdentityPk: Data) -> Data {
+        Data(#"{"inviteId":"\#(inviteID)","invitee":"\#(invitee.uuidString.lowercased())","inviteeIdentityPk":"\#(base64url(inviteeIdentityPk))"}"#.utf8)
+    }
+
+    /// A public streak: tracked days only (docs/crypto.md), the day of the last one,
+    /// and the deadline the server times streak-at-risk pushes by.
+    public struct Streak: Equatable, Sendable {
+        public var user: UUID
+        public var practice: String
+        public var day: String
+        public var current: Int
+        public var longest: Int
+        public var deadline: Date
+        public var seq: Int64
+
+        public init(user: UUID, practice: String, day: String, current: Int, longest: Int, deadline: Date, seq: Int64) {
+            self.user = user
+            self.practice = practice
+            self.day = day
+            self.current = current
+            self.longest = longest
+            self.deadline = deadline
+            self.seq = seq
+        }
+    }
+
+    /// The practice id is the client's own and travels as is: lowercase letters,
+    /// digits and hyphens (the server's rule), so it needs no escaping.
+    public static func streak(_ s: Streak) -> Data {
+        Data(#"{"current":\#(s.current),"day":"\#(s.day)","deadline":\#(millis(s.deadline)),"longest":\#(s.longest),"practice":"\#(s.practice)","seq":\#(s.seq),"user":"\#(s.user.uuidString.lowercased())"}"#.utf8)
+    }
+
+    public static func parseStreak(_ payload: Data) -> Streak? {
+        struct Raw: Decodable {
+            let current: Int
+            let day: String
+            let deadline: Int64
+            let longest: Int
+            let practice: String
+            let seq: Int64
+            let user: String
+        }
+        guard let raw = try? JSONDecoder().decode(Raw.self, from: payload), let user = UUID(uuidString: raw.user) else { return nil }
+        return Streak(user: user, practice: raw.practice, day: raw.day, current: raw.current, longest: raw.longest,
+                      deadline: date(raw.deadline), seq: raw.seq)
+    }
+
+    static func date(_ millis: Int64) -> Date { Date(timeIntervalSince1970: Double(millis) / 1000) }
+
     static func millis(_ date: Date) -> Int64 { Int64((date.timeIntervalSince1970 * 1000).rounded(.down)) }
 
     static func base64url(_ data: Data) -> String {

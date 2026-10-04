@@ -191,3 +191,78 @@ final class LiveSyncTests: XCTestCase {
         }
     }
 }
+
+final class InviteLinkTests: XCTestCase {
+    func testLinksRoundTripInAnyCase() throws {
+        let link = InviteLink.new(.invite)
+        XCTAssertEqual(link.string.count, "HTTPS://DUONGONDRO.APP/I/7K2MQ9XA#H4N8R2CJ6TPW3ZQF".count)
+        XCTAssertEqual(InviteLink(link.string), link)
+        XCTAssertEqual(InviteLink(link.string.lowercased()), link, "a browser may lower the case")
+        XCTAssertEqual(InviteLink("https://duongondro.app/F/\(link.id)#\(Crockford.encode(link.secret))")?.kind, .friend)
+        XCTAssertNil(InviteLink("https://example.com/I/\(link.id)#\(Crockford.encode(link.secret))"))
+        XCTAssertNil(InviteLink("https://duongondro.app/I/\(link.id)"))
+        XCTAssertEqual(Crockford.decode(Crockford.encode(link.secret)), link.secret)
+    }
+}
+
+/// Two people against a development server: an invite, its redemption, and a
+/// public streak verified against the pinned key.
+final class LiveSocialTests: XCTestCase {
+    func testInviteRedeemAndPublicStreak() async throws {
+        guard let s = ProcessInfo.processInfo.environment["DUONGONDRO_TEST_API"], let base = URL(string: s) else {
+            throw XCTSkip("set DUONGONDRO_TEST_API to a development server to run")
+        }
+        func person() async throws -> (Account, AppDatabase) {
+            let dev = try await APIClient(baseURL: base).devSession()
+            let db = try AppDatabase.inMemory()
+            let account = Account(api: APIClient(baseURL: base, token: dev.token), secrets: MemorySecretStore(),
+                                  database: db, preferSoftwareKey: true)
+            _ = try await account.setUpFirstDevice()
+            return (account, db)
+        }
+        let (a, dbA) = try await person()
+        let (b, _) = try await person()
+        try await a.api.setDisplayName("Tomasz")
+        try await b.api.setDisplayName("Ania")
+
+        let (link, _) = try await Social(account: a).createInvite()
+        // A link whose secret was changed does not check: the MAC fails.
+        var forged = link.secret
+        forged[0] ^= 1
+        do {
+            _ = try await Social(account: b).check(InviteLink(kind: .invite, id: link.id, secret: forged))
+            XCTFail("a forged secret checked")
+        } catch Social.Failure.notAuthentic {}
+
+        let checked = try await Social(account: b).check(InviteLink(link.string.lowercased())!)
+        try await Social(account: b).redeem(checked)
+
+        // A logs Dorje Sempa yesterday and today, and makes it public.
+        try dbA.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == "dorje-sempa" }!, sortOrder: 0))
+        for d in [-86400.0, 0] {
+            let t = Date().addingTimeInterval(d - 60)
+            try dbA.insert(Session(practiceID: "dorje-sempa", amount: 108, startedAt: t, startExact: true,
+                                   timeZoneID: TimeZone.current.identifier, loggedAt: t))
+        }
+        let socialA = Social(account: a)
+        try await socialA.setPublic("dorje-sempa", true)
+        let resent = try await socialA.publishStreaks()
+        XCTAssertEqual(resent, 0, "nothing changed, nothing sent")
+
+        let friendsOfB = try await Social(account: b).friends()
+        XCTAssertEqual(friendsOfB.count, 1)
+        XCTAssertEqual(friendsOfB[0].displayName, "Tomasz")
+        XCTAssertFalse(friendsOfB[0].keyChanged)
+        XCTAssertEqual(friendsOfB[0].streaks.first?.practice, "dorje-sempa")
+        XCTAssertEqual(friendsOfB[0].streaks.first?.current, 2)
+
+        let friendsOfA = try await socialA.friends()
+        XCTAssertEqual(friendsOfA.map(\.displayName), ["Ania"])
+        try await a.api.poke(friendsOfA[0].userID)
+
+        // Private again: B sees no streak.
+        try await socialA.setPublic("dorje-sempa", false)
+        let after = try await Social(account: b).friends()
+        XCTAssertTrue(after[0].streaks.isEmpty)
+    }
+}

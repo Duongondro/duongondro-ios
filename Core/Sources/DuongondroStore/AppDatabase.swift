@@ -126,6 +126,26 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
                 );
                 """)
         }
+        migrator.registerMigration("v3") { db in
+            // Phase 4. Friends as this phone pinned them: the identity key each
+            // friend's streaks must verify against, kept from the first time it was
+            // seen (an invite's checked key, or the server's word), so a later key
+            // swap by the server shows instead of passing silently.
+            try db.execute(sql: """
+                CREATE TABLE friends (
+                    user_id      TEXT PRIMARY KEY NOT NULL,
+                    identity_pk  BLOB NOT NULL,
+                    display_name TEXT NOT NULL,
+                    pinned_at    DATETIME NOT NULL
+                );
+                -- Practices whose streak is published to friends, and the last
+                -- statement's seq (the server takes only higher ones).
+                CREATE TABLE public_streaks (
+                    practice_id TEXT PRIMARY KEY NOT NULL REFERENCES practices (id) ON DELETE CASCADE,
+                    seq         INTEGER NOT NULL DEFAULT 0
+                );
+                """)
+        }
         return migrator
     }
 
@@ -148,7 +168,9 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         // row says: an update must never send them back to Welcome, where finishing
         // again would overwrite their opening counts and streak seeds.
         if !practices.isEmpty { preferences.onboarded = true }
-        return Snapshot(practices: practices, sessions: sessions, seeds: seeds, preferences: preferences)
+        let publicPractices = Set(try String.fetchAll(db, sql: "SELECT practice_id FROM public_streaks"))
+        return Snapshot(practices: practices, sessions: sessions, seeds: seeds, preferences: preferences,
+                        publicPractices: publicPractices)
     }
 
     /// Calls `onChange` with a fresh snapshot now and after every write, on the
@@ -237,7 +259,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     public func eraseAll() throws {
         generationLock.withLock { generationValue += 1 }
         try writer.write { db in
-            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences; DELETE FROM sync_state;")
+            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences; DELETE FROM sync_state; DELETE FROM friends; DELETE FROM public_streaks;")
         }
         try writer.vacuum()
         if let pool = writer as? DatabasePool {
@@ -245,6 +267,69 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
             // Should it still be busy, the rows are already deleted and SQLite's
             // automatic checkpoint folds the WAL in later, so the purge goes on.
             _ = try? pool.writeWithoutTransaction { try $0.checkpoint(.truncate) }
+        }
+    }
+
+    // MARK: - Friends and public streaks
+
+    /// Makes a practice's streak public or private here; publishing is the caller's.
+    public func setPublic(_ practiceID: String, _ isPublic: Bool) throws {
+        try writer.write { db in
+            if isPublic {
+                try db.execute(sql: "INSERT OR IGNORE INTO public_streaks (practice_id) VALUES (?)", arguments: [practiceID])
+            } else {
+                try db.execute(sql: "DELETE FROM public_streaks WHERE practice_id = ?", arguments: [practiceID])
+            }
+        }
+    }
+
+    /// Public practices and the seq of the last statement published for each.
+    public func publicStreakSeqs() throws -> [String: Int64] {
+        try writer.read { db in
+            Dictionary(uniqueKeysWithValues: try Row.fetchAll(db, sql: "SELECT practice_id, seq FROM public_streaks").map {
+                ($0["practice_id"] as String, $0["seq"] as Int64)
+            })
+        }
+    }
+
+    public func savePublishedSeq(_ practiceID: String, _ seq: Int64, generation: Int? = nil) throws {
+        try write(generation) { db in
+            try db.execute(sql: "UPDATE public_streaks SET seq = MAX(seq, ?) WHERE practice_id = ?", arguments: [seq, practiceID])
+        }
+    }
+
+    public func friends() throws -> [PinnedFriend] {
+        try writer.read { db in
+            try Row.fetchAll(db, sql: "SELECT * FROM friends ORDER BY display_name, user_id").map {
+                PinnedFriend(userID: UUID(uuidString: $0["user_id"]) ?? UUID(), identityPublicKey: $0["identity_pk"],
+                             displayName: $0["display_name"], pinnedAt: $0["pinned_at"])
+            }
+        }
+    }
+
+    /// Pins a friend's key if none is pinned yet (the first key seen is the one
+    /// kept), updates the name, and returns the pinned record.
+    @discardableResult
+    public func pin(_ userID: UUID, identityPublicKey: Data, displayName: String, at now: Date = Date(),
+                    generation: Int? = nil) throws -> PinnedFriend {
+        try write(generation) { db in
+            let id = userID.uuidString.lowercased()
+            try db.execute(sql: """
+                INSERT INTO friends (user_id, identity_pk, display_name, pinned_at) VALUES (?, ?, ?, ?)
+                ON CONFLICT (user_id) DO UPDATE SET display_name = excluded.display_name
+                """, arguments: [id, identityPublicKey, displayName, now])
+            let row = try Row.fetchOne(db, sql: "SELECT * FROM friends WHERE user_id = ?", arguments: [id])!
+            return PinnedFriend(userID: userID, identityPublicKey: row["identity_pk"], displayName: row["display_name"],
+                                pinnedAt: row["pinned_at"])
+        }
+    }
+
+    /// Drops pinned friends the server no longer lists (unfriended, blocked, deleted).
+    public func keepFriends(_ userIDs: Set<UUID>, generation: Int? = nil) throws {
+        try write(generation) { db in
+            for f in try String.fetchAll(db, sql: "SELECT user_id FROM friends") where !userIDs.contains(UUID(uuidString: f) ?? UUID()) {
+                try db.execute(sql: "DELETE FROM friends WHERE user_id = ?", arguments: [f])
+            }
         }
     }
 
@@ -421,13 +506,16 @@ public struct Snapshot: Equatable, Sendable {
     public var sessions: [Session]
     public var seeds: [StreakSeed]
     public var preferences: Preferences
+    /// Practices whose streak friends see.
+    public var publicPractices: Set<String>
 
     public init(practices: [TrackedPractice] = [], sessions: [Session] = [], seeds: [StreakSeed] = [],
-                preferences: Preferences = Preferences()) {
+                preferences: Preferences = Preferences(), publicPractices: Set<String> = []) {
         self.practices = practices
         self.sessions = sessions
         self.seeds = seeds
         self.preferences = preferences
+        self.publicPractices = publicPractices
     }
 
     public var activePractices: [TrackedPractice] { practices.filter { !$0.archived } }
@@ -522,6 +610,14 @@ public struct SyncState: Equatable, Sendable {
         self.keyVersion = keyVersion
         self.cursor = cursor
     }
+}
+
+/// A friend as this phone pinned them.
+public struct PinnedFriend: Equatable, Sendable {
+    public var userID: UUID
+    public var identityPublicKey: Data
+    public var displayName: String
+    public var pinnedAt: Date
 }
 
 /// A session as sync sees it: its content, when it last changed, and whether it is deleted.
