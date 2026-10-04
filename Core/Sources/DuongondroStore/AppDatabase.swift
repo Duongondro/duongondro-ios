@@ -539,6 +539,8 @@ public struct Preferences: Codable, Equatable, Sendable {
     public var reminderMinutes: Int?
     /// Lock screens show "A friend practised" instead of practice names.
     public var discreetNotifications = false
+    /// "Shouldn't you be meditating?" an hour before the usual time of each practice.
+    public var usualTimeNudge = false
 
     public init() {}
 
@@ -547,6 +549,7 @@ public struct Preferences: Codable, Equatable, Sendable {
     // one is ignored. Synthesised decoding would fail on any added field instead.
     enum CodingKeys: String, CodingKey {
         case onboarded, finishedShortRefuge, finishedNgondro, malaSize, reminderMinutes, discreetNotifications
+        case usualTimeNudge
     }
 
     public init(from decoder: Decoder) throws {
@@ -558,6 +561,7 @@ public struct Preferences: Codable, Equatable, Sendable {
         malaSize = try c.decodeIfPresent(Int.self, forKey: .malaSize) ?? d.malaSize
         reminderMinutes = try c.decodeIfPresent(Int.self, forKey: .reminderMinutes) ?? d.reminderMinutes
         discreetNotifications = try c.decodeIfPresent(Bool.self, forKey: .discreetNotifications) ?? d.discreetNotifications
+        usualTimeNudge = try c.decodeIfPresent(Bool.self, forKey: .usualTimeNudge) ?? d.usualTimeNudge
     }
 }
 

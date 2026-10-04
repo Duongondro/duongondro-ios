@@ -157,6 +157,21 @@ private struct GeneralSection: View {
                 .tint(Theme.accent)
                 .frame(minHeight: Theme.Size.minTap)
             }
+            Toggle(isOn: Binding(
+                get: { model.preferences.usualTimeNudge },
+                set: { on in
+                    model.update { $0.usualTimeNudge = on }
+                    if on { Task { await Reminders.requestAndSchedule(model) } }
+                })) {
+                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                    Text("Nudge at my usual time").foregroundStyle(Theme.ink)
+                    Text("An hour before you usually practise, learned on this phone from the last two weeks.")
+                        .font(.footnote)
+                        .foregroundStyle(Theme.muted)
+                }
+            }
+            .tint(Theme.accent)
+            .padding(.vertical, Theme.Space.s)
             Toggle(isOn: Binding(get: { model.preferences.discreetNotifications },
                                  set: { v in model.update { $0.discreetNotifications = v } })) {
                 VStack(alignment: .leading, spacing: Theme.Space.xxs) {

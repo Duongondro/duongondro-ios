@@ -55,6 +55,7 @@ public enum DataExport {
         let finishedNgondro: Bool
         let reminderMinutesAfterMidnight: Int?
         let discreetNotifications: Bool
+        let usualTimeNudge: Bool
     }
 
     struct PracticeOut: Encodable {
@@ -99,7 +100,8 @@ public enum DataExport {
             exportedAt: now, appVersion: appVersion,
             preferences: PreferencesOut(malaSize: p.malaSize, finishedShortRefuge: p.finishedShortRefuge,
                                         finishedNgondro: p.finishedNgondro, reminderMinutesAfterMidnight: p.reminderMinutes,
-                                        discreetNotifications: p.discreetNotifications),
+                                        discreetNotifications: p.discreetNotifications,
+                                        usualTimeNudge: p.usualTimeNudge),
             practices: s.practices.map { t in
                 let rounds = t.rounds(sessions: s.sessions)
                 return PracticeOut(id: t.id, name: t.practice.name, secondName: t.practice.secondName,

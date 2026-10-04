@@ -68,3 +68,33 @@ final class CoreTests: XCTestCase {
         XCTAssertNil(CivilDate("26-10-05"))
     }
 }
+
+final class UsualTimeTests: XCTestCase {
+    let tz = "Europe/Amsterdam"
+
+    func session(day: Int, hour: Int, minute: Int) -> Session {
+        var c = DateComponents(year: 2026, month: 10, day: day, hour: hour, minute: minute)
+        c.timeZone = TimeZone(identifier: tz)
+        let t = Calendar(identifier: .gregorian).date(from: c)!
+        return Session(practiceID: "dorje-sempa", amount: 108, startedAt: t, startExact: false, timeZoneID: tz, loggedAt: t)
+    }
+
+    var now: Date { session(day: 20, hour: 12, minute: 0).loggedAt }
+
+    func testMedianOfTheLastTwoWeeks() {
+        let s = [session(day: 15, hour: 7, minute: 0), session(day: 16, hour: 7, minute: 30),
+                 session(day: 17, hour: 8, minute: 0), session(day: 1, hour: 22, minute: 0)]
+        XCTAssertEqual(UsualTime.minutes(of: s, now: now), 7 * 60 + 30, "the session three weeks ago does not count")
+    }
+
+    func testTooFewSessionsAreNoHabit() {
+        XCTAssertNil(UsualTime.minutes(of: [session(day: 18, hour: 7, minute: 0), session(day: 19, hour: 7, minute: 0)], now: now))
+    }
+
+    func testTimesAroundMidnightWrap() {
+        let s = [session(day: 15, hour: 23, minute: 50), session(day: 16, hour: 0, minute: 10),
+                 session(day: 17, hour: 23, minute: 40), session(day: 18, hour: 0, minute: 20)]
+        let m = UsualTime.minutes(of: s, now: now)!
+        XCTAssertTrue(m >= 23 * 60 + 45 || m <= 15, "\(m) is not near midnight")
+    }
+}

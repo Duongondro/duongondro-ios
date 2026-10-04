@@ -17,6 +17,7 @@ enum Reminders {
 
     /// Replaces the pending reminders for today and tomorrow from the current state.
     static func reschedule(_ model: AppModel, now: Date = Date()) {
+        scheduleUsualTime(model, now: now)
         let center = UNUserNotificationCenter.current()
         let tz = TimeZone.current
         let today = CivilDate.of(now, in: tz)
@@ -40,6 +41,43 @@ enum Reminders {
             let comps = Calendar.gregorian(in: tz).dateComponents([.year, .month, .day, .hour, .minute], from: fire)
             let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
             center.add(UNNotificationRequest(identifier: prefix + day.description, content: content, trigger: trigger))
+        }
+    }
+
+    static let usualPrefix = "usual-time-"
+
+    /// "Shouldn't you be meditating?": an hour before the time each practice is
+    /// usually logged (the median of two weeks), today and tomorrow, unless that
+    /// practice is already done that day. Learned and scheduled on the phone only.
+    static func scheduleUsualTime(_ model: AppModel, now: Date) {
+        let center = UNUserNotificationCenter.current()
+        let enabled = model.preferences.usualTimeNudge
+        let discreet = model.preferences.discreetNotifications
+        let snapshot = model.snapshot
+        Task { @MainActor in
+            let stale = await center.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix(usualPrefix) }
+            center.removePendingNotificationRequests(withIdentifiers: stale)
+            guard enabled else { return }
+            let tz = TimeZone.current
+            let today = CivilDate.of(now, in: tz)
+            for p in snapshot.activePractices {
+                let sessions = snapshot.sessions(of: p.id)
+                guard let usual = UsualTime.minutes(of: sessions, now: now) else { continue }
+                let minutes = (usual - 60 + 1440) % 1440
+                for day in [today, today.adding(days: 1)] {
+                    if sessions.contains(where: { $0.day == day }) { continue }
+                    guard let fire = fireDate(on: day, minutes: minutes, in: tz), fire > now else { continue }
+                    let content = UNMutableNotificationContent()
+                    content.title = String(localized: "Shouldn't you be meditating?")
+                    content.body = discreet
+                        ? String(localized: "You usually sit down around now.")
+                        : String(localized: "You usually sit down for \(p.practice.name) around now.")
+                    content.sound = .default
+                    let comps = Calendar.gregorian(in: tz).dateComponents([.year, .month, .day, .hour, .minute], from: fire)
+                    try? await center.add(UNNotificationRequest(identifier: usualPrefix + p.id + "-" + day.description, content: content,
+                                                     trigger: UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)))
+                }
+            }
         }
     }
 
