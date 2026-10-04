@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- make testflight fills in TEAM_ID from local.mk -->
+<!-- make testflight fills in TEAM_ID from local.mk. Signing is manual: the upload key
+     has the App Manager role, which cannot use Apple's cloud-managed distribution
+     certificate, so an Apple Distribution certificate in the login keychain and the
+     "Duongondro App Store" profile (both made through the API) sign the export. -->
 <plist version="1.0">
 <dict>
 	<key>method</key>
@@ -10,7 +13,14 @@
 	<key>teamID</key>
 	<string>TEAM_ID</string>
 	<key>signingStyle</key>
-	<string>automatic</string>
+	<string>manual</string>
+	<key>signingCertificate</key>
+	<string>Apple Distribution</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>app.duongondro.ios</key>
+		<string>Duongondro App Store</string>
+	</dict>
 	<key>uploadSymbols</key>
 	<true/>
 	<key>manageAppVersionAndBuildNumber</key>
