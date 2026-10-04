@@ -54,6 +54,9 @@ enum Theme {
     static let welcomeOutline = Color(light: 0x7A1F2E, dark: 0x6E4A54)
     static let welcomeOutlineInk = Color(light: 0x7A1F2E, dark: 0xFFFFFF)
     /// Destructive actions and warnings.
+    /// QR codes stay burgundy on white in both themes: a camera needs the contrast.
+    static let qrInk = Color(light: 0x7A1F2E, dark: 0x7A1F2E)
+    static let qrGround = Color(light: 0xFFFFFF, dark: 0xFFFFFF)
     static let destructive = Color(light: 0xB3261E, dark: 0xF2827A)
     /// Text and icons on an accent-filled button.
     static let onAccent = Color(light: 0xFFFFFF, dark: 0x120A0C)

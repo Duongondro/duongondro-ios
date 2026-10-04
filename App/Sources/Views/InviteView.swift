@@ -75,7 +75,7 @@ struct QRBadge: View {
         ZStack {
             Circle().fill(Theme.hero)
             RoundedRectangle(cornerRadius: Theme.Radius.bigButton, style: .continuous)
-                .fill(Color.white)
+                .fill(Theme.qrGround)
                 .frame(width: 196, height: 196)
             if let text, let code = try? QRCode.encode(text, ecc: .medium) {
                 // Four modules of white all round (the spec's quiet zone): 29 + 8
@@ -105,7 +105,7 @@ private struct QRModules: View {
     var body: some View {
         Canvas { context, size in
             let m = size.width / CGFloat(code.size)
-            let ink = Color(red: 0x7A / 255, green: 0x1F / 255, blue: 0x2E / 255)
+            let ink = Theme.qrInk
             for y in 0..<code.size {
                 for x in 0..<code.size where code[x, y] && !code.isFinderModule(x: x, y: y) {
                     let r = CGRect(x: CGFloat(x) * m, y: CGFloat(y) * m, width: m, height: m).insetBy(dx: m * 0.08, dy: m * 0.08)
