@@ -11,6 +11,8 @@ enum Theme {
         static let l: CGFloat = 16
         static let xl: CGFloat = 20
         static let xxl: CGFloat = 32
+        /// Between the onboarding step dashes.
+        static let dash: CGFloat = 6
     }
 
     static let accent = Color(light: 0x7A1F2E, dark: 0xE8909C)
@@ -87,6 +89,7 @@ enum Theme {
     /// Small, platform-specific corner radii (design: Look).
     enum Radius {
         static let small: CGFloat = 4
+        static let dash: CGFloat = 2
         static let card: CGFloat = 6
         static let bigButton: CGFloat = 8
         static let sheet: CGFloat = 12

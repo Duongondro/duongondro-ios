@@ -11,34 +11,32 @@ struct OnboardingView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                switch flow.step {
-                case .welcome: WelcomeStep()
-                case .finishedNgondro: FinishedNgondroStep()
-                case .finishedShortRefuge: FinishedShortRefugeStep()
-                case .practices: PracticesStep()
-                case .counts(let index): CountsStep(index: index).id(index)
-                case .mala: MalaStep()
-                case .reminder: ReminderStep()
-                case .door: DoorStep()
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(.horizontal, Theme.Space.xl)
-            .background(Theme.ground.ignoresSafeArea())
-            .toolbar {
-                if flow.canGoBack {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button { flow.back() } label: { Label("Back", systemImage: "chevron.backward") }
+            VStack(spacing: 0) {
+                if flow.step != .welcome { StepTopBar() }
+                Group {
+                    switch flow.step {
+                    case .welcome: WelcomeStep()
+                    case .finishedNgondro: FinishedNgondroStep()
+                    case .finishedShortRefuge: FinishedShortRefugeStep()
+                    case .practices: PracticesStep()
+                    case .counts(let index): CountsStep(index: index).id(index)
+                    case .mala: MalaStep()
+                    case .reminder: ReminderStep()
+                    case .door: DoorStep()
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .padding(.horizontal, Theme.Space.xl)
+            .background(Theme.ground.ignoresSafeArea())
+            .toolbar(.hidden, for: .navigationBar)
             .animation(.default, value: flow.step)
         }
         .environmentObject(flow)
     }
 }
+
+// MARK: - State
 
 // MARK: - State
 
@@ -134,58 +132,127 @@ final class OnboardingFlow: ObservableObject {
     }
 }
 
+extension OnboardingStep {
+    /// Which of the five progress dashes this step reaches.
+    var dashes: Int {
+        switch self {
+        case .welcome, .finishedNgondro: return 1
+        case .finishedShortRefuge: return 2
+        case .practices: return 3
+        case .counts, .mala: return 4
+        case .reminder, .door: return 5
+        }
+    }
+}
+
 // MARK: - Building blocks
+
+/// Back chevron on the left, five progress dashes centred (the mockups' top bar).
+private struct StepTopBar: View {
+    @EnvironmentObject private var flow: OnboardingFlow
+    private let total = 5
+
+    var body: some View {
+        HStack(spacing: 0) {
+            Button { flow.back() } label: {
+                Image(systemName: "chevron.backward")
+                    .font(.title3.weight(.bold))
+                    .foregroundStyle(Theme.ink)
+                    .frame(width: Theme.Size.minTap, height: Theme.Size.minTap)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Back")
+            .opacity(flow.canGoBack ? 1 : 0)
+            .disabled(!flow.canGoBack)
+            Spacer(minLength: 0)
+            HStack(spacing: Theme.Space.dash) {
+                ForEach(1...total, id: \.self) { n in
+                    RoundedRectangle(cornerRadius: Theme.Radius.dash, style: .continuous)
+                        .fill(n <= flow.step.dashes ? Theme.accent : Theme.inputBorder)
+                        .frame(width: Theme.Size.stepDash.width, height: Theme.Size.stepDash.height)
+                }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Step \(flow.step.dashes) of \(total)")
+            Spacer(minLength: 0)
+            Color.clear.frame(width: Theme.Size.minTap, height: Theme.Size.minTap)
+        }
+        .padding(.horizontal, -Theme.Space.s)
+    }
+}
 
 private struct StepHeader: View {
     let title: LocalizedStringKey
     var detail: LocalizedStringKey?
+    var titleSize: CGFloat = 32
+    var titleStyle: Font.TextStyle = .title
+    var detailFont: Font = .system(size: 16)
+    var detailColor: Color = Theme.soft
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.s) {
+        VStack(alignment: .leading, spacing: Theme.Space.m) {
             Text(title)
-                .font(Typography.largeTitle)
+                .font(Typography.headingBold(titleSize, relativeTo: titleStyle))
+                .foregroundStyle(Theme.ink)
                 .fixedSize(horizontal: false, vertical: true)
             if let detail {
                 Text(detail)
-                    .foregroundStyle(Theme.muted)
+                    .font(detailFont)
+                    .foregroundStyle(detailColor)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(.top, Theme.Space.l)
-        .padding(.bottom, Theme.Space.xl)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
+/// A full-width flat button of the given style, with a text label.
 struct PrimaryButton: View {
     let title: LocalizedStringKey
     var fill: Color = Theme.accent
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.headline)
-                .foregroundStyle(Theme.onAccent)
-                .frame(maxWidth: .infinity, minHeight: Theme.Size.button)
-        }
-        .primaryButtonStyle()
-        .tint(fill)
+        Button(action: action) { Text(title) }
+            .buttonStyle(FilledButtonStyle(fill: fill, height: Theme.Size.welcomeButton))
     }
 }
 
 private struct ChoiceButton: View {
     let title: LocalizedStringKey
+    var filled = false
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.headline)
-                .frame(maxWidth: .infinity, minHeight: Theme.Size.button)
+        if filled {
+            Button(action: action) { Text(title) }
+                .buttonStyle(FilledButtonStyle(height: Theme.Size.answer))
+        } else {
+            Button(action: action) { Text(title) }
+                .buttonStyle(OutlinedButtonStyle(height: Theme.Size.answer))
         }
-        .secondaryButtonStyle()
     }
 }
+
+/// Yes/no screens: centred question, the two answers at the bottom.
+private struct QuestionLayout<Answers: View>: View {
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
+    @ViewBuilder let answers: Answers
+
+    var body: some View {
+        VStack(spacing: Theme.Space.l) {
+            Spacer(minLength: 0)
+            StepHeader(title: title, detail: detail, titleSize: 36, titleStyle: .largeTitle)
+            Spacer(minLength: 0)
+            VStack(spacing: Theme.Space.m) { answers }
+        }
+        .padding(.bottom, Theme.Space.xl)
+    }
+}
+
+// MARK: - Steps
 
 // MARK: - Steps
 
@@ -253,19 +320,20 @@ private struct WelcomeStep: View {
     }
 }
 
+
 private struct FinishedNgondroStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
-            StepHeader(title: "Have you finished ngöndro?")
-            ChoiceButton(title: "Yes") {
+        QuestionLayout(title: "Have you finished ngöndro?",
+                       detail: "All four parts, 111,111 each. Repeat rounds come later.") {
+            ChoiceButton(title: "Yes", filled: true) {
                 flow.finishedNgondro = true
                 flow.finishedShortRefuge = true
                 flow.pruneToAvailable()
                 flow.go(.practices)
             }
-            ChoiceButton(title: "No") {
+            ChoiceButton(title: "Not yet") {
                 flow.finishedNgondro = false
                 flow.go(.finishedShortRefuge)
             }
@@ -277,14 +345,14 @@ private struct FinishedShortRefugeStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
-            StepHeader(title: "Have you finished short refuge?")
-            ChoiceButton(title: "Yes") {
+        QuestionLayout(title: "Have you finished short refuge?",
+                       detail: "The short refuge meditation you do before starting ngöndro.") {
+            ChoiceButton(title: "Yes", filled: true) {
                 flow.finishedShortRefuge = true
                 flow.pruneToAvailable()
                 flow.go(.practices)
             }
-            ChoiceButton(title: "No") {
+            ChoiceButton(title: "Not yet") {
                 flow.finishedShortRefuge = false
                 flow.pruneToAvailable()
                 flow.go(.practices)
@@ -298,25 +366,30 @@ private struct PracticesStep: View {
     @State private var addingCustom = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            StepHeader(title: "Which practices do you do daily?",
-                       detail: "Pick as many as you like. You can add more later in Settings.")
+        VStack(alignment: .leading, spacing: Theme.Space.l) {
+            StepHeader(title: "Which do you practise daily?", detail: "Pick as many as you do.",
+                       detailFont: .system(size: 14), detailColor: Theme.muted)
+                .padding(.top, Theme.Space.s)
             ScrollView {
-                VStack(spacing: Theme.Space.s) {
+                CardSection {
                     ForEach(flow.available + flow.chosen.map(\.practice).filter(\.isCustom)) { p in
                         PracticeChoiceRow(practice: p)
                     }
                     Button { addingCustom = true } label: {
-                        Label("Add your own", systemImage: "plus")
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("+ Add your own")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(Theme.accent)
+                            .frame(maxWidth: .infinity, minHeight: Theme.Size.field, alignment: .leading)
+                            .contentShape(Rectangle())
                     }
-                    .cardStyle()
+                    .buttonStyle(.plain)
                 }
             }
             .plainBottomEdge()
             PrimaryButton(title: "Continue") { flow.go(.counts(0)) }
                 .disabled(flow.chosen.isEmpty)
-                .padding(.vertical, Theme.Space.l)
+                .opacity(flow.chosen.isEmpty ? 0.4 : 1)
+                .padding(.bottom, Theme.Space.xl)
         }
         .sheet(isPresented: $addingCustom) {
             CustomPracticeSheet { p, streakOnly in
@@ -329,28 +402,50 @@ private struct PracticesStep: View {
 private struct PracticeChoiceRow: View {
     @EnvironmentObject private var flow: OnboardingFlow
     let practice: Practice
+    /// Second names longer than this go on their own line.
+    private let inlineLimit = 20
 
     var body: some View {
         let chosen = flow.isChosen(practice.id)
-        VStack(alignment: .leading, spacing: Theme.Space.s) {
+        VStack(alignment: .leading, spacing: Theme.Space.xs) {
             Button { flow.toggle(practice) } label: {
-                HStack(spacing: Theme.Space.m) {
-                    Image(systemName: chosen ? "checkmark.circle.fill" : "circle")
-                        .font(.title2)
-                        .foregroundStyle(chosen ? Theme.accent : Theme.muted)
-                    PracticeName(practice: practice)
+                HStack(alignment: .top, spacing: Theme.Space.m) {
+                    Image(systemName: chosen ? "checkmark.square.fill" : "square")
+                        .font(.system(size: 22))
+                        .foregroundStyle(chosen ? Theme.accent : Theme.inputBorder)
+                    nameText(chosen: chosen)
                     Spacer(minLength: 0)
                 }
+                .padding(.vertical, Theme.Space.s)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityElement(children: .combine)
             .accessibilityAddTraits(chosen ? .isSelected : [])
             if chosen, practice.streakOnlyAllowed, let i = flow.chosen.firstIndex(where: { $0.id == practice.id }) {
                 Toggle("Streak only, no count", isOn: $flow.chosen[i].streakOnly)
-                    .font(.subheadline)
+                    .font(.footnote)
+                    .foregroundStyle(Theme.soft)
+                    .padding(.bottom, Theme.Space.s)
             }
         }
-        .cardStyle()
+    }
+
+    @ViewBuilder
+    private func nameText(chosen: Bool) -> some View {
+        let name = Text(practice.name).font(.system(size: 16, weight: chosen ? .bold : .regular)).foregroundColor(Theme.ink)
+        if let second = practice.secondName {
+            if second.count > inlineLimit {
+                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                    name
+                    Text(second).font(.system(size: 13)).foregroundColor(Theme.muted)
+                }
+            } else {
+                name + Text("  ") + Text(second).font(.system(size: 14)).foregroundColor(Theme.muted)
+            }
+        } else {
+            name
+        }
     }
 }
 
@@ -393,6 +488,7 @@ struct CustomPracticeSheet: View {
     }
 }
 
+
 /// One screen per chosen practice: count so far (first round assumed), the
 /// current streak and when it was last practised, optionally the longest.
 private struct CountsStep: View {
@@ -401,56 +497,101 @@ private struct CountsStep: View {
 
     var body: some View {
         if flow.chosen.indices.contains(index) {
-            VStack(spacing: 0) {
-                Form {
-                    Group { sections($flow.chosen[index]) }
-                        .themedRows()
+            let p = $flow.chosen[index]
+            VStack(alignment: .leading, spacing: Theme.Space.l) {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: Theme.Space.l) {
+                        Text("\(index + 1) of \(flow.chosen.count) practices")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundStyle(Theme.muted)
+                        StepHeader(title: "Where are you with \(p.wrappedValue.practice.name)?", titleSize: 28)
+                        card(p)
+                        if !p.wrappedValue.streakOnly, p.wrappedValue.showsRound {
+                            Stepper(value: p.round, in: 1...99) { Text("Round \(p.wrappedValue.round)") }
+                                .foregroundStyle(Theme.soft)
+                        } else if !p.wrappedValue.streakOnly, p.wrappedValue.practice.target != nil {
+                            Button { p.wrappedValue.showsRound = true } label: {
+                                Text("I'm doing a later round")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .underline()
+                                    .foregroundStyle(Theme.accent)
+                                    .frame(minHeight: Theme.Size.minTap, alignment: .leading)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        if p.wrappedValue.streak > 0 {
+                            NumberField(title: "Longest streak (optional)",
+                                        value: Binding(get: { p.wrappedValue.longest ?? 0 },
+                                                       set: { p.wrappedValue.longest = $0 > 0 ? $0 : nil }))
+                                .font(.footnote)
+                                .foregroundStyle(Theme.soft)
+                        }
+                        VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                            if !p.wrappedValue.streakOnly {
+                                Text("From paper or a spreadsheet; rough is fine.")
+                            }
+                            Text("Your streak so far counts on your own Today screen. Friends only ever see days tracked in the app.")
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(Theme.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.top, Theme.Space.s)
                 }
-                .themedList()
                 .plainBottomEdge()
-                .padding(.horizontal, -Theme.Space.xl)
                 PrimaryButton(title: "Continue") {
                     flow.go(index + 1 < flow.chosen.count ? .counts(index + 1) : .mala)
                 }
-                .padding(.vertical, Theme.Space.l)
+                .padding(.bottom, Theme.Space.xl)
             }
         }
     }
 
-    @ViewBuilder
-    private func sections(_ p: Binding<OnboardingPractice>) -> some View {
-        Section {
-            PracticeName(practice: p.wrappedValue.practice)
-        } header: {
-            Text("Practice \(index + 1) of \(flow.chosen.count)")
-        }
-        if !p.wrappedValue.streakOnly {
-            Section {
-                NumberField(title: "Count so far", value: p.countSoFar)
-                if p.wrappedValue.showsRound {
-                    Stepper(value: p.round, in: 1...99) { Text("Round \(p.wrappedValue.round)") }
-                } else if p.wrappedValue.practice.target != nil {
-                    Button("I'm doing a later round") { p.wrappedValue.showsRound = true }
+    private func card(_ p: Binding<OnboardingPractice>) -> some View {
+        VStack(alignment: .leading, spacing: Theme.Space.m) {
+            HStack(spacing: Theme.Space.m) {
+                if !p.wrappedValue.streakOnly {
+                    CountField(label: "So far", value: p.countSoFar)
                 }
-            } footer: {
-                Text("From paper or a spreadsheet; rough is fine.")
+                CountField(label: "Streak, days", value: p.streak)
+            }
+            HStack(spacing: Theme.Space.s) {
+                Text("Last practised")
+                    .font(.system(size: 14))
+                    .foregroundStyle(Theme.soft)
+                SegmentedChoice(options: [(true, String(localized: "Today")), (false, String(localized: "Yesterday"))],
+                                selection: p.lastWasToday)
             }
         }
-        Section {
-            NumberField(title: "Current streak, in days", value: p.streak)
-            if p.wrappedValue.streak > 0 {
-                Picker("Last practised", selection: p.lastWasToday) {
-                    Text("Today").tag(true)
-                    Text("Yesterday").tag(false)
-                }
-                .pickerStyle(.segmented)
-                NumberField(title: "Longest streak (optional)",
-                            value: Binding(get: { p.wrappedValue.longest ?? 0 },
-                                           set: { p.wrappedValue.longest = $0 > 0 ? $0 : nil }))
-            }
-        } footer: {
-            Text("Your streak so far counts on your own Today screen. Friends only ever see days tracked in the app.")
+        .padding(Theme.Space.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+    }
+}
+
+/// A labelled whole-number box of the Totals mockup; empty for 0, digits only.
+private struct CountField: View {
+    let label: LocalizedStringKey
+    @Binding var value: Int
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.s) {
+            Text(label)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(Theme.soft)
+            TextField("0", text: Binding(
+                get: { value == 0 ? "" : String(value) },
+                set: { value = Int($0.filter { $0.isASCII && $0.isNumber }.prefix(9)) ?? 0 }))
+                .keyboardType(.numberPad)
+                .font(Typography.headingBold(20, relativeTo: .title3))
+                .foregroundStyle(Theme.ink)
+                .padding(.horizontal, Theme.Space.m)
+                .frame(height: Theme.Size.field)
+                .overlay(RoundedRectangle(cornerRadius: Theme.Radius.small, style: .continuous)
+                    .strokeBorder(Theme.inputBorder, lineWidth: 1))
+                .accessibilityLabel(label)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -479,11 +620,14 @@ private struct MalaStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
+        VStack(alignment: .leading, spacing: Theme.Space.l) {
             StepHeader(title: "How much does one mala count?",
                        detail: "Teachers differ. Each practice can change this later in Settings.")
+                .padding(.top, Theme.Space.s)
+            Spacer(minLength: 0)
             ChoiceButton(title: "100") { flow.malaSize = 100; flow.go(.reminder) }
             ChoiceButton(title: "108") { flow.malaSize = 108; flow.go(.reminder) }
+                .padding(.bottom, Theme.Space.xl)
         }
     }
 }
@@ -493,15 +637,16 @@ private struct ReminderStep: View {
     @State private var time = Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: Date()) ?? Date()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
+        VStack(alignment: .leading, spacing: Theme.Space.l) {
             StepHeader(title: "When should we remind you?",
                        detail: "An evening nudge when a streak is at risk. It is scheduled on this phone; nothing leaves it.")
+                .padding(.top, Theme.Space.s)
             DatePicker("Time", selection: $time, displayedComponents: .hourAndMinute)
                 .datePickerStyle(.wheel)
                 .labelsHidden()
                 .frame(maxWidth: .infinity)
-            Spacer()
-            PrimaryButton(title: "Remind me at this time") {
+            Spacer(minLength: 0)
+            ChoiceButton(title: "Remind me at this time", filled: true) {
                 flow.reminder = time
                 flow.go(.door)
             }
@@ -522,16 +667,19 @@ private struct DoorStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
-            switch flow.door {
-            case .justMe:
-                StepHeader(title: "Everything stays on this phone",
+        VStack(alignment: .leading, spacing: Theme.Space.l) {
+            Group {
+                switch flow.door {
+                case .justMe:
+                    StepHeader(title: "Everything stays on this phone",
                            detail: "No account and no network. You can sign up later and keep everything.")
-            case .invite, .existingAccount:
-                StepHeader(title: "Accounts are not ready yet",
-                           detail: "This build has no server. Your practice is kept on this phone, and joining friends will pick it up later.")
+                case .invite, .existingAccount:
+                    StepHeader(title: "Accounts are not ready yet",
+                               detail: "This build has no server. Your practice is kept on this phone, and joining friends will pick it up later.")
+                }
             }
-            Spacer()
+            .padding(.top, Theme.Space.s)
+            Spacer(minLength: 0)
             PrimaryButton(title: "Start practising") { flow.finish(into: model) }
         }
         .padding(.bottom, Theme.Space.xl)
