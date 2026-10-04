@@ -32,10 +32,12 @@ signing-check:
 	@test -n "$(TEAM_ID)" -a -n "$(ASC_KEY_ID)" -a -n "$(ASC_ISSUER_ID)" -a -f "$(ASC_KEY_PATH)" || \
 	  (echo "set TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID and ASC_KEY_PATH in local.mk (see local.mk.example)"; exit 1)
 
-device: project signing-check  ## Release build installed on a connected iPhone: make device DEVICE=<name or id>
-	@test -n "$(DEVICE)" || (echo "usage: make device DEVICE=<name or identifier from 'xcrun devicectl list devices'>"; exit 1)
+# The phone must be registered with the team first (an API key cannot do that from
+# xcodebuild): App Store Connect › Devices, or POST /v1/devices with the same key.
+device: project signing-check  ## Release build installed on a paired iPhone: make device DEVICE=<udid>
+	@test -n "$(DEVICE)" || (echo "usage: make device DEVICE=<udid from 'xcrun devicectl device info details --device <name>'>"; exit 1)
 	xcodebuild -project Duongondro.xcodeproj -scheme Duongondro -configuration Release \
-	  -destination 'generic/platform=iOS' -derivedDataPath build/device build \
+	  -destination 'platform=iOS,id=$(DEVICE)' -derivedDataPath build/device build \
 	  CURRENT_PROJECT_VERSION=$(BUILD_NUMBER) $(SIGNING)
 	xcrun devicectl device install app --device "$(DEVICE)" build/device/Build/Products/Release-iphoneos/Duongondro.app
 
