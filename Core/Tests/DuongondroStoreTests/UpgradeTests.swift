@@ -211,6 +211,52 @@ final class SyncStoreTests: XCTestCase {
         XCTAssertTrue(try db.snapshot().sessions.isEmpty)
     }
 
+    func testALocalEditAfterTheClockWentBackStillWins() throws {
+        let db = try db()
+        try db.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == "dorje-sempa" }!, sortOrder: 0))
+        let t = Date(timeIntervalSince1970: 1_790_000_000)
+        let s = session(at: t)
+        // A newer write from another phone arrives, then this phone's clock is behind it.
+        var remote = SyncRecord(session: s, updatedAt: t.addingTimeInterval(3600))
+        remote.session.amount = 216
+        XCTAssertTrue(try db.applyRemote(remote))
+        try db.delete(session: s.id, at: t)
+        let local = try XCTUnwrap(db.dirtySessions().first)
+        XCTAssertGreaterThan(local.updatedAt, remote.updatedAt, "the later edit must not lose to the earlier one")
+    }
+
+    func testTombstonesForUnknownSessionsChangeNothing() throws {
+        let db = try db()
+        let t = Date(timeIntervalSince1970: 1_790_000_000)
+        let gone = SyncRecord(session: session("chenrezig", at: t), updatedAt: t, deletedAt: t)
+        XCTAssertFalse(try db.applyRemote(gone))
+        XCTAssertFalse(try db.applyRemoteDeletion(UUID.v7(at: t), updatedAt: t, deletedAt: t))
+        XCTAssertTrue(try db.snapshot().practices.isEmpty, "a deletion does not add its practice")
+    }
+
+    func testBareRemoteDeletionMarksANewerDeletion() throws {
+        let db = try db()
+        let t = Date(timeIntervalSince1970: 1_790_000_000)
+        let s = session("chenrezig", at: t)
+        try db.applyRemote(SyncRecord(session: s, updatedAt: t))
+        XCTAssertFalse(try db.applyRemoteDeletion(s.id, updatedAt: t, deletedAt: t), "not newer")
+        XCTAssertTrue(try db.applyRemoteDeletion(s.id, updatedAt: t.addingTimeInterval(1), deletedAt: t.addingTimeInterval(1)))
+        XCTAssertTrue(try db.snapshot().sessions.isEmpty)
+        XCTAssertTrue(try db.dirtySessions().isEmpty)
+    }
+
+    func testWritesFromBeforeAnEraseAreRefused() throws {
+        let db = try db()
+        let generation = db.generation
+        try db.eraseAll()
+        let state = SyncState(userID: UUID(), keyVersion: 1)
+        XCTAssertThrowsError(try db.saveSyncState(state, generation: generation))
+        let t = Date(timeIntervalSince1970: 1_790_000_000)
+        XCTAssertThrowsError(try db.applyRemote(SyncRecord(session: session(at: t), updatedAt: t), generation: generation))
+        XCTAssertNil(try db.syncState())
+        XCTAssertNoThrow(try db.saveSyncState(state, generation: db.generation))
+    }
+
     func testSyncStateRoundTrips() throws {
         let db = try db()
         let state = SyncState(userID: UUID(), keyVersion: 2, cursor: "abc:123")

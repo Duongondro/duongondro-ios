@@ -318,6 +318,14 @@ public struct PracticeLog: Codable, Equatable, Sendable {
     public let keyVersion: Int
     public let updatedAt: Date
     public let deletedAt: Date?
+
+    public init(id: UUID, sealed: Data?, keyVersion: Int, updatedAt: Date, deletedAt: Date? = nil) {
+        self.id = id
+        self.sealed = sealed
+        self.keyVersion = keyVersion
+        self.updatedAt = updatedAt
+        self.deletedAt = deletedAt
+    }
 }
 
 public struct SyncResponse: Codable, Sendable {

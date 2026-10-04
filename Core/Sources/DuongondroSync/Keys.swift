@@ -23,7 +23,7 @@ public final class MemorySecretStore: SecretStore, @unchecked Sendable {
 /// The names secrets are stored under.
 enum SecretName {
     static let deviceKey = "device-key"
-    static let deviceTier = "device-key-tier"
+    static let pendingRecovery = "recovery-pending"
     static let deviceID = "device-id"
     static let identitySeed = "identity-seed"
     static func practiceKey(_ version: Int) -> String { "practice-key-\(version)" }
@@ -48,30 +48,47 @@ public struct DeviceKeys: Sendable {
         public var publicKey: Data { agreement.publicKeyX963 }
     }
 
+    /// Key and tier are one record, so a key can never be found without its tier.
+    struct Stored: Codable {
+        let tier: Tier
+        let key: Data
+    }
+
     public func current() throws -> Key? {
-        guard let data = try store.read(SecretName.deviceKey),
-              let tierRaw = try store.read(SecretName.deviceTier),
-              let tier = Tier(rawValue: String(decoding: tierRaw, as: UTF8.self)) else { return nil }
-        switch tier {
+        guard let data = try store.read(SecretName.deviceKey) else { return nil }
+        let stored = try JSONDecoder().decode(Stored.self, from: data)
+        switch stored.tier {
         case .hardware:
-            return Key(agreement: try SecureEnclave.P256.KeyAgreement.PrivateKey(dataRepresentation: data), tier: tier)
+            return Key(agreement: try SecureEnclave.P256.KeyAgreement.PrivateKey(dataRepresentation: stored.key), tier: .hardware)
         case .software, .tee:
-            return Key(agreement: try P256.KeyAgreement.PrivateKey(rawRepresentation: data), tier: tier)
+            return Key(agreement: try P256.KeyAgreement.PrivateKey(rawRepresentation: stored.key), tier: stored.tier)
         }
     }
 
-    public func currentOrCreate() throws -> Key {
-        if let key = try current() { return key }
-        if !preferSoftware, SecureEnclave.isAvailable,
-           let enclave = try? SecureEnclave.P256.KeyAgreement.PrivateKey() {
-            try store.write(SecretName.deviceKey, enclave.dataRepresentation)
-            try store.write(SecretName.deviceTier, Data(Tier.hardware.rawValue.utf8))
-            return Key(agreement: enclave, tier: .hardware)
+    /// The stored key, or a new one. `fellBack` says a Secure Enclave existed but
+    /// refused to make a key, which the app reports (design: Keys).
+    public func currentOrCreate() throws -> (key: Key, fellBack: Bool) {
+        if let key = try current() { return (key, false) }
+        var fellBack = false
+        if !preferSoftware, SecureEnclave.isAvailable {
+            // Usable after the first unlock, like the Keychain items, so a sync
+            // in the background can unwrap; no user presence (CodeShare's DeviceKey).
+            var error: Unmanaged<CFError>?
+            if let access = SecAccessControlCreateWithFlags(nil, kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+                                                            .privateKeyUsage, &error),
+               let enclave = try? SecureEnclave.P256.KeyAgreement.PrivateKey(accessControl: access) {
+                try save(Stored(tier: .hardware, key: enclave.dataRepresentation))
+                return (Key(agreement: enclave, tier: .hardware), false)
+            }
+            fellBack = true
         }
         let software = P256.KeyAgreement.PrivateKey()
-        try store.write(SecretName.deviceKey, software.rawRepresentation)
-        try store.write(SecretName.deviceTier, Data(Tier.software.rawValue.utf8))
-        return Key(agreement: software, tier: .software)
+        try save(Stored(tier: .software, key: software.rawRepresentation))
+        return (Key(agreement: software, tier: .software), fellBack)
+    }
+
+    private func save(_ stored: Stored) throws {
+        try store.write(SecretName.deviceKey, try JSONEncoder().encode(stored))
     }
 }
 

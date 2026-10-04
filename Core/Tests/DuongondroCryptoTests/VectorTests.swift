@@ -14,7 +14,7 @@ final class VectorTests: XCTestCase {
             let nonce, recoverySecret, inviteSecret, qrSecret: String
             let keyVersion: UInt32
         }
-        struct Session: Decodable { let json, aad, padded, sealed: String }
+        struct Session: Decodable { let json, aad, padded, sealed, tombstoneJson, tombstoneSealed: String }
         struct Wrap: Decodable {
             let name: String
             let kind: UInt8
@@ -68,6 +68,13 @@ final class VectorTests: XCTestCase {
         // The AAD binds the blob to its session, user and key version.
         XCTAssertThrowsError(try E2EE.openSession(sealKey: sealKey, session: user, user: user, keyVersion: 1, sealed: sealed))
         XCTAssertThrowsError(try E2EE.openSession(sealKey: sealKey, session: session, user: user, keyVersion: 2, sealed: sealed))
+    }
+
+    func testTombstoneOpens() throws {
+        let sealKey = E2EE.sealKey(practiceKey: hex(v.inputs.practiceKey), user: user)
+        let opened = try E2EE.openSession(sealKey: sealKey, session: uuid(v.inputs.session), user: user, keyVersion: 1,
+                                          sealed: hex(v.session.tombstoneSealed))
+        XCTAssertEqual(String(decoding: opened, as: UTF8.self), v.session.tombstoneJson)
     }
 
     func testPaddingRoundTripsAndRejectsGarbage() throws {

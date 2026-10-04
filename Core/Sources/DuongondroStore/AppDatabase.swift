@@ -7,7 +7,7 @@ import DuongondroCore
 ///
 /// Holds no state besides the connection; the app observes `snapshotObservation`
 /// and publishes what the UI shows.
-public final class AppDatabase: Sendable {
+public final class AppDatabase: @unchecked Sendable {  // the generation counter is lock-protected
     /// A DatabasePool on disk, a DatabaseQueue in tests and previews.
     public let writer: any DatabaseWriter
 
@@ -196,7 +196,7 @@ public final class AppDatabase: Sendable {
     public func choose(day: CivilDate?, forSession id: UUID) throws {
         try writer.write { db in
             try db.execute(sql: "UPDATE sessions SET chosen_day = ?, updated_at = ?, dirty = 1 WHERE id = ?",
-                           arguments: [day?.description, Date(), id.uuidString.lowercased()])
+                           arguments: [day?.description, try Self.nextStamp(for: id, db), id.uuidString.lowercased()])
         }
     }
 
@@ -235,6 +235,7 @@ public final class AppDatabase: Sendable {
     /// rewrites the file and the WAL is truncated, so deleted rows do not linger
     /// in free pages.
     public func eraseAll() throws {
+        generationLock.withLock { generationValue += 1 }
         try writer.write { db in
             try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences; DELETE FROM sync_state;")
         }
@@ -258,8 +259,8 @@ public final class AppDatabase: Sendable {
         }
     }
 
-    public func saveSyncState(_ state: SyncState) throws {
-        try writer.write { db in
+    public func saveSyncState(_ state: SyncState, generation: Int? = nil) throws {
+        try write(generation) { db in
             try db.execute(sql: "INSERT OR REPLACE INTO sync_state (id, user_id, key_version, cursor) VALUES (1, ?, ?, ?)",
                            arguments: [state.userID.uuidString.lowercased(), state.keyVersion, state.cursor])
         }
@@ -273,8 +274,8 @@ public final class AppDatabase: Sendable {
     }
 
     /// Marks a session synced, unless it changed again after `updatedAt` was read.
-    public func markSynced(_ id: UUID, updatedAt: Date) throws {
-        try writer.write { db in
+    public func markSynced(_ id: UUID, updatedAt: Date, generation: Int? = nil) throws {
+        try write(generation) { db in
             try db.execute(sql: "UPDATE sessions SET dirty = 0 WHERE id = ? AND updated_at = ?",
                            arguments: [id.uuidString.lowercased(), updatedAt])
         }
@@ -307,8 +308,51 @@ public final class AppDatabase: Sendable {
     /// Deletes a session as a mark, so the deletion syncs.
     public func delete(session id: UUID, at now: Date = Date()) throws {
         try writer.write { db in
+            let stamp = try Self.nextStamp(for: id, db, now: now)
             try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 1 WHERE id = ?",
-                           arguments: [now, now, id.uuidString.lowercased()])
+                           arguments: [stamp, stamp, id.uuidString.lowercased()])
+        }
+    }
+
+    /// A change's time: now, but always after the row's last change, so a local
+    /// edit made after pulling a newer remote one (or after the clock moved back)
+    /// still wins under last-write-wins.
+    static func nextStamp(for id: UUID, _ db: Database, now: Date = Date()) throws -> Date {
+        let last = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id.uuidString.lowercased()])
+        guard let last, last >= now else { return now }
+        return last.addingTimeInterval(0.001)
+    }
+
+    /// Bumped by `eraseAll`: a sync that started before an erase (or a sign-out)
+    /// checks it before every write, so it never writes the old account back.
+    public var generation: Int { generationLock.withLock { generationValue } }
+    private let generationLock = NSLock()
+    private var generationValue = 0
+
+    /// Thrown by a write that names a generation `eraseAll` has since ended.
+    public struct Erased: Error {}
+
+    /// A write that runs only if no erase happened since `generation` was read.
+    /// The check is inside the transaction, so an erase cannot slip in between.
+    func write<T>(_ generation: Int?, _ body: (Database) throws -> T) throws -> T {
+        try writer.write { db in
+            if let generation, generation != self.generation { throw Erased() }
+            return try body(db)
+        }
+    }
+
+    /// Applies a deletion from the server that carries no content (a tombstone
+    /// may omit everything but its times): marks the session deleted if the
+    /// deletion is newer. Returns whether anything changed.
+    @discardableResult
+    public func applyRemoteDeletion(_ id: UUID, updatedAt: Date, deletedAt: Date, generation: Int? = nil) throws -> Bool {
+        try write(generation) { db in
+            let key = id.uuidString.lowercased()
+            guard let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [key]),
+                  local < updatedAt else { return false }
+            try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 0 WHERE id = ?",
+                           arguments: [deletedAt, updatedAt, key])
+            return true
         }
     }
 
@@ -317,13 +361,13 @@ public final class AppDatabase: Sendable {
     /// added, from the catalogue or as a custom practice with the session's name.
     /// Returns whether anything changed.
     @discardableResult
-    public func applyRemote(_ r: SyncRecord, practiceName: String? = nil) throws -> Bool {
-        try writer.write { db in
+    public func applyRemote(_ r: SyncRecord, practiceName: String? = nil, generation: Int? = nil) throws -> Bool {
+        try write(generation) { db in
             let id = r.session.id.uuidString.lowercased()
-            if let local: Date = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id]),
-               local >= r.updatedAt {
-                return false
-            }
+            let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id])
+            if let local, local >= r.updatedAt { return false }
+            // A deletion of a session this phone never had changes nothing here.
+            if local == nil, r.deletedAt != nil { return false }
             if try Int.fetchOne(db, sql: "SELECT 1 FROM practices WHERE id = ?", arguments: [r.session.practiceID]) == nil {
                 let order = try Int.fetchOne(db, sql: "SELECT COALESCE(MAX(sort_order) + 1, 0) FROM practices") ?? 0
                 let practice = Catalogue.builtIn.first { $0.id == r.session.practiceID }

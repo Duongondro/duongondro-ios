@@ -47,8 +47,79 @@ final class StatementTests: XCTestCase {
                         loggedAt: Date(timeIntervalSince1970: 1_791_180_000))
         let record = SyncRecord(session: s, updatedAt: Date(timeIntervalSince1970: 1_791_180_001))
         let json = try SealedSession(record, practiceName: nil).encoded()
-        let back = try JSONDecoder().decode(SealedSession.self, from: json).record(id: s.id, updatedAt: record.updatedAt)
+        let back = try JSONDecoder().decode(SealedSession.self, from: json).record(id: s.id)
         XCTAssertEqual(back, record)
+    }
+}
+
+/// Opening what the server sends, without a server: replays, missing keys,
+/// bare tombstones, and the shapes other clients may seal.
+final class ApplyTests: XCTestCase {
+    let user = UUID()
+    let practiceKey = SymmetricKey(size: .bits256).data
+    var db: AppDatabase!
+    var engine: SyncEngine!
+
+    override func setUpWithError() throws {
+        db = try AppDatabase.inMemory()
+        let secrets = MemorySecretStore()
+        try secrets.write(SecretName.practiceKey(1), practiceKey)
+        let account = Account(api: APIClient(baseURL: URL(string: "http://127.0.0.1:9")!), secrets: secrets, database: db)
+        engine = SyncEngine(account: account)
+    }
+
+    func log(_ json: String, id: UUID, version: Int = 1, updatedAt: Int64) throws -> PracticeLog {
+        let sealKey = E2EE.sealKey(practiceKey: practiceKey, user: user)
+        let sealed = try E2EE.sealSession(sealKey: sealKey, session: id, user: user, keyVersion: UInt32(version), json: Data(json.utf8))
+        return PracticeLog(id: id, sealed: sealed, keyVersion: version, updatedAt: SyncEngine.date(updatedAt))
+    }
+
+    let t: Int64 = 1_791_180_000_000
+
+    func testTheVectorsSessionJSONApplies() throws {
+        // The API's vector carries only the specified fields, as another client would seal them.
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let json = #"{"count":108,"day":"2026-10-05","practice":"dorje-sempa","start":1791176400000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        XCTAssertEqual(try engine.apply(log(json, id: id, updatedAt: t), user: user, generation: db.generation), .applied)
+        let s = try XCTUnwrap(db.snapshot().sessions.first)
+        XCTAssertEqual(s.amount, 108)
+        XCTAssertFalse(s.startExact)
+        XCTAssertEqual(s.loggedAt, s.startedAt)
+    }
+
+    func testAReplayUnderANewerOuterTimeIsRefused() throws {
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let json = #"{"count":108,"practice":"dorje-sempa","start":1791176400000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        XCTAssertEqual(try engine.apply(log(json, id: id, updatedAt: t + 60_000), user: user, generation: db.generation), .refused)
+        XCTAssertTrue(try db.snapshot().sessions.isEmpty)
+    }
+
+    func testAMissingKeyVersionIsUnreadable() throws {
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let json = #"{"count":1,"practice":"dorje-sempa","start":1791176400000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        XCTAssertEqual(try engine.apply(log(json, id: id, version: 2, updatedAt: t), user: user, generation: db.generation), .unreadable)
+    }
+
+    func testABareTombstoneDeletes() throws {
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let json = #"{"count":108,"practice":"dorje-sempa","start":1791176400000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        _ = try engine.apply(log(json, id: id, updatedAt: t), user: user, generation: db.generation)
+        let tombstone = #"{"deletedAt":1791183600000,"updatedAt":1791183600000}"#
+        XCTAssertEqual(try engine.apply(log(tombstone, id: id, updatedAt: 1_791_183_600_000), user: user, generation: db.generation), .applied)
+        XCTAssertTrue(try db.snapshot().sessions.isEmpty)
+    }
+
+    func testPaddingHidesTheLengthOfNames() throws {
+        let s = Session(practiceID: "custom-a", amount: 1, startedAt: Date(timeIntervalSince1970: 1_791_176_400),
+                        startExact: true, timeZoneID: "Europe/Amsterdam", loggedAt: Date(timeIntervalSince1970: 1_791_176_400))
+        let r = SyncRecord(session: s, updatedAt: s.loggedAt)
+        let sealKey = E2EE.sealKey(practiceKey: practiceKey, user: user)
+        let sizes = try ["A", String(repeating: "B", count: 40)].map { name in
+            try E2EE.sealSession(sealKey: sealKey, session: s.id, user: user, keyVersion: 1,
+                                 json: SealedSession(r, practiceName: name).encoded()).count
+        }
+        XCTAssertEqual(sizes[0], sizes[1])
+        XCTAssertEqual((sizes[0] - 12 - 16) % 256, 0)
     }
 }
 
