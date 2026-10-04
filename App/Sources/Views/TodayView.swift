@@ -55,7 +55,7 @@ private struct HeadlineStreakCard: View {
             Spacer(minLength: 0)
         }
         .padding(Theme.Space.l)
-        .background(Theme.streakCard, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .background(Theme.hero, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }

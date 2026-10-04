@@ -19,8 +19,23 @@ enum Theme {
     static let card = Color(light: 0xFFFFFF, dark: 0x2B1C20)
     static let cardBorder = Color(light: 0xFFFFFF, dark: 0x46323A)
     static let muted = Color(light: 0x6B5A60, dark: 0xC2B2B7)
-    /// The headline streak card: burgundy-tinted in dark mode.
-    static let streakCard = Color(light: 0xF6E9EB, dark: 0x4A1C27)
+    /// Body text, and the darker secondary text of questions and forms.
+    static let ink = Color(light: 0x22151A, dark: 0xF4ECEE)
+    static let soft = Color(light: 0x4E3F44, dark: 0xC2B2B7)
+    /// Hairlines between rows, segmented tracks and soft-filled buttons.
+    static let line = Color(light: 0xEFE7E4, dark: 0x46323A)
+    static let softFill = Color(light: 0xEFE7E4, dark: 0x3A2A2E)
+    /// Input borders and the onboarding step dashes not yet reached.
+    static let inputBorder = Color(light: 0xDCCDD1, dark: 0x46323A)
+    /// Progress bars' track.
+    static let track = Color(light: 0xF1E4E6, dark: 0x4A363B)
+    /// The headline streak card on Today: solid burgundy, white text.
+    static let hero = Color(light: 0x7A1F2E, dark: 0x4A1C27)
+    static let heroInk = Color(light: 0xFFFFFF, dark: 0xF4ECEE)
+    /// The Undo toast: inverted against the ground.
+    static let toast = Color(light: 0x22151A, dark: 0xF4ECEE)
+    static let toastInk = Color(light: 0xFFFFFF, dark: 0x22151A)
+    static let toastTrack = Color(light: 0x5A4A4F, dark: 0xC9B9BD)
     /// Streak flames are gold, never orange.
     static let flame = Color(light: 0xC9952B, dark: 0xE3B341)
     /// Streak numbers as text: gold only reads on dark (2.7:1 on white), so burgundy in light mode.
@@ -52,6 +67,16 @@ enum Theme {
         static let emblem: CGFloat = 220
         /// The smallest tap target (Apple's 44 pt).
         static let minTap: CGFloat = 44
+        /// Onboarding answers (Yes / Not yet) and its Continue.
+        static let answer: CGFloat = 60
+        static let field: CGFloat = 48
+        static let secondary: CGFloat = 52
+        /// Progress bars: on Today's cards, and on the practice screen.
+        static let barThin: CGFloat = 6
+        static let barThick: CGFloat = 10
+        /// The onboarding progress dashes.
+        static let stepDash = CGSize(width: 28, height: 4)
+        static let checkBadge: CGFloat = 30
         /// The entry part of a number field.
         static let numberField: CGFloat = 120
     }
@@ -62,6 +87,7 @@ enum Theme {
         static let card: CGFloat = 6
         static let bigButton: CGFloat = 8
         static let sheet: CGFloat = 12
+        static let bar: CGFloat = 3
     }
 }
 
