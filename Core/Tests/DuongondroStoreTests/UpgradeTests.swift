@@ -295,3 +295,29 @@ final class SessionIDTests: XCTestCase {
         XCTAssertEqual(try db.rekeyLegacySessionIDs(), 0)
     }
 }
+
+final class FriendPinTests: XCTestCase {
+    func testAFriendDroppedAndListedAgainKeepsTheFirstKey() throws {
+        let db = try AppDatabase.inMemory()
+        let friend = UUID()
+        try db.pin(friend, identityPublicKey: Data([1]), displayName: "Ania")
+        try db.keepFriends([])
+        XCTAssertEqual(try db.friends().first?.listed, false, "unlisted, not forgotten")
+        let again = try db.pin(friend, identityPublicKey: Data([2]), displayName: "Ania")
+        XCTAssertEqual(again.identityPublicKey, Data([1]), "the server's new key is not a first sight")
+        XCTAssertTrue(again.listed)
+        try db.repin(friend, identityPublicKey: Data([2]), displayName: "")
+        XCTAssertEqual(try db.friends().first?.identityPublicKey, Data([2]), "a key an invite proved replaces it")
+        XCTAssertEqual(try db.friends().first?.displayName, "Ania", "an empty name keeps the known one")
+        try db.forgetFriend(friend)
+        XCTAssertTrue(try db.friends().isEmpty)
+    }
+
+    func testSeenSeqsOnlyGrow() throws {
+        let db = try AppDatabase.inMemory()
+        let friend = UUID()
+        try db.noteSeq(friend, practice: "chenrezig", seq: 5)
+        try db.noteSeq(friend, practice: "chenrezig", seq: 3)
+        XCTAssertEqual(try db.seenSeq(friend, practice: "chenrezig"), 5)
+    }
+}

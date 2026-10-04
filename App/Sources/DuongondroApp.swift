@@ -75,7 +75,10 @@ struct RootView: View {
         }
         .sheet(isPresented: Binding(get: { account.pendingInvite != nil && account.recoveryCode == nil },
                                     set: { if !$0 { account.pendingInvite = nil } })) {
-            if let link = account.pendingInvite { AcceptInviteView(link: link).environmentObject(account) }
+            if let link = account.pendingInvite {
+                // A new identity per link, so a second link never redeems the first's check.
+                AcceptInviteView(link: link).environmentObject(account).id(link.string)
+            }
         }
         .fullScreenCover(isPresented: Binding(get: { account.recoveryCode != nil }, set: { _ in })) {
             if let code = account.recoveryCode { RecoveryCodeView(code: code).environmentObject(account) }

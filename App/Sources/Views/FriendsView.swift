@@ -8,6 +8,7 @@ struct FriendsView: View {
     @EnvironmentObject private var account: AccountModel
     @State private var inviting = false
     @State private var pasting = false
+    @State private var pasted: InviteLink?
 
     var body: some View {
         ScrollView {
@@ -53,6 +54,30 @@ struct FriendsView: View {
                             .padding(.horizontal, Theme.Space.l)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    if !account.friends.isEmpty {
+                        CardSection(header: "Your friends") {
+                            ForEach(account.friends) { f in
+                                NavigationLink { FriendDetailView(friendID: f.userID) } label: {
+                                    HStack(spacing: Theme.Space.m) {
+                                        Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend") : f.displayName)
+                                            .foregroundStyle(Theme.ink)
+                                        Spacer(minLength: Theme.Space.s)
+                                        if f.keyChanged {
+                                            Label("Key changed", systemImage: "exclamationmark.triangle.fill")
+                                                .font(.footnote.weight(.semibold))
+                                                .foregroundStyle(Theme.destructive)
+                                        }
+                                        Image(systemName: "chevron.right")
+                                            .font(.footnote.weight(.bold))
+                                            .foregroundStyle(Theme.muted)
+                                            .accessibilityHidden(true)
+                                    }
+                                    .frame(minHeight: Theme.Size.minTap)
+                                    .contentShape(Rectangle())
+                                }
+                            }
+                        }
+                    }
                     InviteCard { inviting = true }
                     Button("Paste an invite link") { pasting = true }
                         .font(.subheadline.weight(.bold))
@@ -70,7 +95,12 @@ struct FriendsView: View {
         .refreshable { await account.refreshFriends() }
         .task { await account.refreshFriends() }
         .navigationDestination(isPresented: $inviting) { InviteView() }
-        .sheet(isPresented: $pasting) { PasteInviteView() }
+        // The accept sheet opens only once this one has gone: UIKit refuses to
+        // present while another sheet is still dismissing.
+        .sheet(isPresented: $pasting, onDismiss: {
+            if let pasted { account.pendingInvite = pasted }
+            pasted = nil
+        }) { PasteInviteView(pasted: $pasted) }
     }
 
     struct NewsItem {
@@ -83,11 +113,14 @@ struct FriendsView: View {
     /// still waiting for today, whichever is newest.
     private var news: [NewsItem] { Self.news(account.friends) }
 
-    static func news(_ friends: [Social.FriendView]) -> [NewsItem] {
-        let today = CivilDate.of(Date(), in: .current)
-        return friends.compactMap { f -> NewsItem? in
-            let live = f.streaks.filter { $0.current > 0 && $0.deadline > Date() }
-            if let done = live.filter({ $0.day == today }).max(by: { $0.seq < $1.seq }) {
+    static func news(_ friends: [Social.FriendView], now: Date = Date()) -> [NewsItem] {
+        // Decided from the signed deadline, not the day: the friend's day is in
+        // their own zone. The deadline is midnight after the day following the
+        // last practice day, so more than a day left means they practised on
+        // their own today; less means today is still open.
+        friends.filter { !$0.keyChanged }.compactMap { f -> NewsItem? in
+            let live = f.streaks.filter { $0.current > 0 && $0.deadline > now }
+            if let done = live.filter({ $0.deadline.timeIntervalSince(now) > 86400 }).max(by: { $0.seq < $1.seq }) {
                 return NewsItem(friend: f, streak: done, doneToday: true)
             }
             if let waiting = live.max(by: { $0.current < $1.current }) {
@@ -99,7 +132,7 @@ struct FriendsView: View {
     }
 
     private var leaders: [(key: String, name: String, practice: String, current: Int)] {
-        account.friends.flatMap { f in
+        account.friends.filter { !$0.keyChanged }.flatMap { f in
             f.streaks.filter { $0.current > 0 && $0.deadline > Date() }.map {
                 (key: "\(f.userID)-\($0.practice)", name: f.displayName, practice: $0.practice, current: $0.current)
             }
@@ -131,12 +164,13 @@ struct NewsRow: View {
             }
             Spacer(minLength: Theme.Space.s)
             if !item.doneToday {
-                let poked = account.poked.contains(item.friend.userID)
+                let poked = account.isPoked(item.friend.userID)
                 Button(poked ? "Poked" : "Poke") { Task { await account.poke(item.friend.userID) } }
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(poked ? Theme.muted : Theme.onAccent)
                     .padding(.horizontal, Theme.Space.l)
-                    .frame(minWidth: 64, minHeight: 40)
+                    .frame(minHeight: Theme.Size.minTap)
+                    .accessibilityLabel(poked ? Text("Poked \(name)") : Text("Poke \(name)"))
                     .background(poked ? Theme.softFill : Theme.accent, in: Capsule())
                     .disabled(poked)
             }
@@ -159,9 +193,13 @@ struct NewsRow: View {
                 ? " · " + sent.formatted(.relative(presentation: .named)) : ""
             return String(localized: "Day \(item.streak.current)") + when
         }
-        let ends = Calendar.current.isDateInToday(item.streak.deadline.addingTimeInterval(-1))
+        // The deadline in this phone's clock: "at midnight" only when it is this
+        // phone's midnight too.
+        let deadline = item.streak.deadline
+        let parts = Calendar.current.dateComponents([.hour, .minute], from: deadline)
+        let ends = parts.hour == 0 && parts.minute == 0 && deadline.timeIntervalSinceNow <= 86400
             ? String(localized: "ends at midnight")
-            : String(localized: "ends \(item.streak.deadline.formatted(.relative(presentation: .named)))")
+            : String(localized: "ends \(deadline.formatted(.dateTime.weekday(.abbreviated).hour().minute()))")
         return String(localized: "\(practice) streak: \(item.streak.current) days, \(ends)")
     }
 }
@@ -206,8 +244,8 @@ private struct InviteCard: View {
 
 /// "Paste invite": the first-install path, when the App Store ate the link.
 private struct PasteInviteView: View {
-    @EnvironmentObject private var account: AccountModel
     @Environment(\.dismiss) private var dismiss
+    @Binding var pasted: InviteLink?
     @State private var text = ""
 
     var body: some View {
@@ -229,7 +267,7 @@ private struct PasteInviteView: View {
                     .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous).strokeBorder(Theme.inputBorder))
                 Spacer(minLength: 0)
                 Button("Continue") {
-                    account.pendingInvite = InviteLink(text)
+                    pasted = InviteLink(text)
                     dismiss()
                 }
                 .buttonStyle(FilledButtonStyle())

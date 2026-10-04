@@ -146,6 +146,22 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
                 );
                 """)
         }
+        migrator.registerMigration("v4") { db in
+            // Review of phase 4: a pin outlives the server's list (`listed` 0 once
+            // dropped; only the person's own unfriend or block forgets it), so a
+            // friend dropped and listed again under another key shows as a changed
+            // key; and the highest streak seq seen per friend and practice, so the
+            // server cannot replay an older, validly signed statement.
+            try db.execute(sql: """
+                ALTER TABLE friends ADD COLUMN listed INTEGER NOT NULL DEFAULT 1;
+                CREATE TABLE friend_seqs (
+                    user_id  TEXT NOT NULL,
+                    practice TEXT NOT NULL,
+                    seq      INTEGER NOT NULL,
+                    PRIMARY KEY (user_id, practice)
+                );
+                """)
+        }
         return migrator
     }
 
@@ -259,7 +275,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     public func eraseAll() throws {
         generationLock.withLock { generationValue += 1 }
         try writer.write { db in
-            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences; DELETE FROM sync_state; DELETE FROM friends; DELETE FROM public_streaks;")
+            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences; DELETE FROM sync_state; DELETE FROM friends; DELETE FROM friend_seqs; DELETE FROM public_streaks;")
         }
         try writer.vacuum()
         if let pool = writer as? DatabasePool {
@@ -302,7 +318,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         try writer.read { db in
             try Row.fetchAll(db, sql: "SELECT * FROM friends ORDER BY display_name, user_id").map {
                 PinnedFriend(userID: UUID(uuidString: $0["user_id"]) ?? UUID(), identityPublicKey: $0["identity_pk"],
-                             displayName: $0["display_name"], pinnedAt: $0["pinned_at"])
+                             displayName: $0["display_name"], pinnedAt: $0["pinned_at"], listed: $0["listed"])
             }
         }
     }
@@ -316,21 +332,81 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
             let id = userID.uuidString.lowercased()
             try db.execute(sql: """
                 INSERT INTO friends (user_id, identity_pk, display_name, pinned_at) VALUES (?, ?, ?, ?)
-                ON CONFLICT (user_id) DO UPDATE SET display_name = excluded.display_name
+                ON CONFLICT (user_id) DO UPDATE SET display_name = excluded.display_name, listed = 1
                 """, arguments: [id, identityPublicKey, displayName, now])
             let row = try Row.fetchOne(db, sql: "SELECT * FROM friends WHERE user_id = ?", arguments: [id])!
             return PinnedFriend(userID: userID, identityPublicKey: row["identity_pk"], displayName: row["display_name"],
-                                pinnedAt: row["pinned_at"])
+                                pinnedAt: row["pinned_at"], listed: row["listed"])
         }
     }
 
-    /// Drops pinned friends the server no longer lists (unfriended, blocked, deleted).
+    /// Pins a key that was verified (an invite's pin MAC checked it): it replaces
+    /// whatever was pinned on the server's word, and clears a changed key.
+    public func repin(_ userID: UUID, identityPublicKey: Data, displayName: String, at now: Date = Date(),
+                      generation: Int? = nil) throws {
+        try write(generation) { db in
+            try db.execute(sql: """
+                INSERT INTO friends (user_id, identity_pk, display_name, pinned_at) VALUES (?, ?, ?, ?)
+                ON CONFLICT (user_id) DO UPDATE SET identity_pk = excluded.identity_pk,
+                    display_name = CASE WHEN excluded.display_name = '' THEN friends.display_name ELSE excluded.display_name END,
+                    pinned_at = excluded.pinned_at, listed = 1
+                """, arguments: [userID.uuidString.lowercased(), identityPublicKey, displayName, now])
+        }
+    }
+
+    /// Forgets a friend for good: only on the person's own unfriend or block.
+    public func forgetFriend(_ userID: UUID) throws {
+        try writer.write { db in
+            let id = userID.uuidString.lowercased()
+            try db.execute(sql: "DELETE FROM friends WHERE user_id = ?; DELETE FROM friend_seqs WHERE user_id = ?",
+                           arguments: [id, id])
+        }
+    }
+
+    /// The highest streak seq seen from a friend for a practice (0 if none).
+    public func seenSeq(_ userID: UUID, practice: String) throws -> Int64 {
+        try writer.read { db in
+            try Int64.fetchOne(db, sql: "SELECT seq FROM friend_seqs WHERE user_id = ? AND practice = ?",
+                               arguments: [userID.uuidString.lowercased(), practice]) ?? 0
+        }
+    }
+
+    public func noteSeq(_ userID: UUID, practice: String, seq: Int64, generation: Int? = nil) throws {
+        try write(generation) { db in
+            try db.execute(sql: """
+                INSERT INTO friend_seqs (user_id, practice, seq) VALUES (?, ?, ?)
+                ON CONFLICT (user_id, practice) DO UPDATE SET seq = MAX(seq, excluded.seq)
+                """, arguments: [userID.uuidString.lowercased(), practice, seq])
+        }
+    }
+
+    /// Marks pinned friends the server no longer lists as unlisted, keeping the
+    /// pin: a server that drops someone and lists them again under another key
+    /// must not get that key pinned as a first sight.
     public func keepFriends(_ userIDs: Set<UUID>, generation: Int? = nil) throws {
         try write(generation) { db in
-            for f in try String.fetchAll(db, sql: "SELECT user_id FROM friends") where !userIDs.contains(UUID(uuidString: f) ?? UUID()) {
-                try db.execute(sql: "DELETE FROM friends WHERE user_id = ?", arguments: [f])
+            for f in try String.fetchAll(db, sql: "SELECT user_id FROM friends") {
+                let listed = userIDs.contains(UUID(uuidString: f) ?? UUID())
+                try db.execute(sql: "UPDATE friends SET listed = ? WHERE user_id = ?", arguments: [listed, f])
             }
         }
+    }
+
+    /// Adds practices the server publishes for this account to the public set
+    /// (another phone, or a restore, made them public), with the server's seq.
+    public func mergePublished(_ seqs: [String: Int64], generation: Int? = nil) throws {
+        try write(generation) { db in
+            for (practice, seq) in seqs where try Int.fetchOne(db, sql: "SELECT 1 FROM practices WHERE id = ?", arguments: [practice]) != nil {
+                try db.execute(sql: """
+                    INSERT INTO public_streaks (practice_id, seq) VALUES (?, ?)
+                    ON CONFLICT (practice_id) DO UPDATE SET seq = MAX(seq, excluded.seq)
+                    """, arguments: [practice, seq])
+            }
+        }
+    }
+
+    public func isPublic(_ practiceID: String) throws -> Bool {
+        try writer.read { try Int.fetchOne($0, sql: "SELECT 1 FROM public_streaks WHERE practice_id = ?", arguments: [practiceID]) != nil }
     }
 
     // MARK: - Sync
@@ -625,6 +701,7 @@ public struct PinnedFriend: Equatable, Sendable {
     public var identityPublicKey: Data
     public var displayName: String
     public var pinnedAt: Date
+    public var listed = true
 }
 
 /// A session as sync sees it: its content, when it last changed, and whether it is deleted.

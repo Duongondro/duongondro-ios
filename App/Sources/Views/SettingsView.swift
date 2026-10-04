@@ -217,7 +217,10 @@ struct PracticeSettingsView: View {
                                 get: { model.snapshot.publicPractices.contains(p.id) },
                                 set: { on in Task { await account.setPublic(p.id, on) } }))
                         } footer: {
-                            Text("Only the number of days practised in the app, never counts or totals.")
+                            VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                                Text("Only the number of days practised in the app, never counts or totals.")
+                                if let error = account.error { Text(verbatim: error).foregroundStyle(Theme.destructive) }
+                            }
                         }
                     }
                     if p.practice.streakOnlyAllowed {

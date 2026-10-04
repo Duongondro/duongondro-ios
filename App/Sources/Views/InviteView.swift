@@ -1,4 +1,5 @@
 import SwiftUI
+import DuongondroAPI
 import DuongondroQR
 import DuongondroSync
 
@@ -58,10 +59,17 @@ struct InviteView: View {
         .toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
         .task(id: kind) {
-            invite = nil
-            failed = false
-            invite = await account.createInvite(kind)
-            failed = invite == nil
+            // An add-friend code lasts ten minutes: a fresh one replaces it a
+            // minute before it expires, for as long as the screen is open.
+            repeat {
+                invite = nil
+                failed = false
+                invite = await account.createInvite(kind)
+                failed = invite == nil
+                guard let expiresAt = invite?.expiresAt, kind == .friend else { return }
+                let wait = max(5, expiresAt.timeIntervalSinceNow - 60)
+                try? await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000))
+            } while !Task.isCancelled
         }
     }
 }
@@ -180,8 +188,12 @@ struct AcceptInviteView: View {
                     do {
                         try await account.accept(checked)
                         dismiss()
-                    } catch {
+                    } catch Social.Failure.ownInvite {
+                        problem = String(localized: "This is your own invite. Send it to a friend instead.")
+                    } catch APIError.notFound {
                         problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.")
+                    } catch {
+                        problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.")
                     }
                     working = false
                 }
@@ -210,8 +222,10 @@ struct AcceptInviteView: View {
                 problem = String(localized: "This invite has expired. Ask for a new one.")
             } catch Social.Failure.notAuthentic {
                 problem = String(localized: "This invite does not check out, so it was not accepted. Ask your friend to send it again.")
-            } catch {
+            } catch APIError.notFound {
                 problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.")
+            } catch {
+                problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.")
             }
         }
     }

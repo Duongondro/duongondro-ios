@@ -73,7 +73,7 @@ final class DataExportTests: XCTestCase {
         // reaches the export through the server's account.json, the rest is bookkeeping.
         // friends holds names and keys the server also has (in its export); public_streaks
         // is which practices are public, and reaches the export through the server's streaks.
-        XCTAssertEqual(tables, ["friends", "practices", "preferences", "public_streaks", "sessions", "streak_seeds", "sync_state"],
+        XCTAssertEqual(tables, ["friend_seqs", "friends", "practices", "preferences", "public_streaks", "sessions", "streak_seeds", "sync_state"],
                        "a new table needs a place in DataExport and in AppDatabase.eraseAll")
         try db.eraseAll()
         for table in tables {

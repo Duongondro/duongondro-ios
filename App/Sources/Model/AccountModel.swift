@@ -42,8 +42,21 @@ final class AccountModel: ObservableObject {
     /// Friends as last fetched, each streak verified against the pinned key.
     @Published private(set) var friends: [Social.FriendView] = []
     @Published private(set) var friendsLoaded = false
-    /// Friends poked today from this phone (the server allows one a day).
-    @Published private(set) var poked: Set<UUID> = []
+    /// Friends poked from this phone, by the UTC day the server counts pokes in
+    /// (one per friend per day); kept across launches.
+    @Published private var pokedOn: [String: String] = (UserDefaults.standard.dictionary(forKey: "pokedOn") as? [String: String]) ?? [:] {
+        didSet { UserDefaults.standard.set(pokedOn, forKey: "pokedOn") }
+    }
+
+    static func utcDay(_ date: Date = Date()) -> String {
+        CivilDate.of(date, in: TimeZone(identifier: "UTC")!).description
+    }
+
+    func isPoked(_ friend: UUID) -> Bool { pokedOn[friend.uuidString] == Self.utcDay() }
+
+    /// Live invites made on this phone, reused until shortly before they expire,
+    /// so opening the Invite screen does not mint a new one each time.
+    private var invites: [InviteLink.Kind: (link: InviteLink, expiresAt: Date)] = [:]
     /// The name friends see, as the server has it.
     @Published private(set) var displayName = ""
     /// The account's registered devices, for Settings' "Your devices".
@@ -200,9 +213,9 @@ final class AccountModel: ObservableObject {
         guard let social else { return }
         do {
             try await social.account.api.poke(friend)
-            poked.insert(friend)
+            pokedOn[friend.uuidString] = Self.utcDay()
         } catch APIError.conflict {
-            poked.insert(friend)
+            pokedOn[friend.uuidString] = Self.utcDay()
         } catch {
             self.error = error.localizedDescription
         }
@@ -210,8 +223,11 @@ final class AccountModel: ObservableObject {
 
     func createInvite(_ kind: InviteLink.Kind) async -> (link: InviteLink, expiresAt: Date)? {
         guard let social else { return nil }
+        if let live = invites[kind], live.expiresAt.timeIntervalSinceNow > (kind == .invite ? 86400 : 60) { return live }
         do {
-            return try await social.createInvite(kind)
+            let made = try await social.createInvite(kind)
+            invites[kind] = made
+            return made
         } catch {
             self.error = error.localizedDescription
             return nil
@@ -232,6 +248,29 @@ final class AccountModel: ObservableObject {
         await refreshFriends()
     }
 
+    func setNotifyDone(_ on: Bool, for friend: UUID) async {
+        guard let social else { return }
+        await run { try await social.account.api.setNotifyDone(on, for: friend) }
+        await refreshFriends()
+    }
+
+    func unfriend(_ friend: UUID) async {
+        guard let social else { return }
+        await run { try await social.unfriend(friend) }
+        await refreshFriends()
+    }
+
+    func block(_ friend: UUID) async {
+        guard let social else { return }
+        await run { try await social.block(friend) }
+        await refreshFriends()
+    }
+
+    func report(_ friend: UUID, reason: String) async {
+        guard let social else { return }
+        await run { try await social.account.api.report(friend, reason: String(reason.prefix(1000))) }
+    }
+
     func setPublic(_ practice: String, _ isPublic: Bool) async {
         guard let social else { return }
         await run { try await social.setPublic(practice, isPublic) }
@@ -239,7 +278,10 @@ final class AccountModel: ObservableObject {
 
     func setDisplayName(_ name: String) async {
         guard let social else { return }
-        let trimmed = String(name.trimmingCharacters(in: .whitespacesAndNewlines).prefix(64))
+        // The server counts code points (runes), not characters.
+        var scalars = String.UnicodeScalarView()
+        scalars.append(contentsOf: name.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.prefix(64))
+        let trimmed = String(scalars)
         await run {
             try await social.account.api.setDisplayName(trimmed)
             self.displayName = trimmed
@@ -274,6 +316,9 @@ final class AccountModel: ObservableObject {
         account = nil
         social = nil
         friends = []
+        pokedOn = [:]
+        invites = [:]
+        pendingInvite = nil
         friendsLoaded = false
         displayName = ""
         status = .none
