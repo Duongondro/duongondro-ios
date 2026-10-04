@@ -39,6 +39,9 @@ public struct Practice: Identifiable, Hashable, Codable, Sendable {
     }
 
     public func effectiveMalaSize(default globalDefault: Int) -> Int { malaSize ?? globalDefault }
+
+    /// Practices without a target (the Karmapa meditations) start as streak-only.
+    public var streakOnlyByDefault: Bool { streakOnlyAllowed && target == nil }
 }
 
 public enum Catalogue {
@@ -49,6 +52,7 @@ public enum Catalogue {
         Practice(id: "mandala", name: "Mandala offering", group: .ngondro, target: 111_111, streakOnlyAllowed: false),
         Practice(id: "guru-yoga", name: "Meditation on the Lama", secondName: "Guru Yoga", group: .ngondro, target: 111_111, streakOnlyAllowed: false),
         Practice(id: "8th-karmapa", name: "8th Karmapa Meditation", group: .afterNgondro, target: nil, streakOnlyAllowed: true),
+        Practice(id: "16th-karmapa", name: "Meditation on the 16th Karmapa", group: .anyTime, target: nil, streakOnlyAllowed: true),
         Practice(id: "chenrezig", name: "Chenrezig", secondName: "Loving Eyes", group: .anyTime, target: 1_000_000, streakOnlyAllowed: true),
         Practice(id: "amitabha", name: "Amitabha", secondName: "Meditation on the Buddha of Limitless Light", group: .anyTime, target: 500_000, streakOnlyAllowed: true),
     ]

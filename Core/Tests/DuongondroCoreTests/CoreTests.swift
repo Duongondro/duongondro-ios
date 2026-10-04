@@ -7,6 +7,7 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(beginner.contains("short-refuge"))
         XCTAssertFalse(beginner.contains("dorje-sempa"))
         XCTAssertFalse(beginner.contains("8th-karmapa"))
+        XCTAssertTrue(beginner.contains("16th-karmapa"), "open from the first day")
 
         let inNgondro = Catalogue.available(finishedNgondro: false, finishedShortRefuge: true).map(\.id)
         XCTAssertTrue(inNgondro.contains("dorje-sempa"))
@@ -16,6 +17,15 @@ final class CoreTests: XCTestCase {
         let done = Catalogue.available(finishedNgondro: true, finishedShortRefuge: true).map(\.id)
         XCTAssertTrue(done.contains("8th-karmapa"))
         XCTAssertTrue(done.contains("dorje-sempa"), "repeat rounds stay available")
+    }
+
+    func testKarmapaMeditationsStartStreakOnly() {
+        let byID = Dictionary(uniqueKeysWithValues: Catalogue.builtIn.map { ($0.id, $0) })
+        XCTAssertTrue(byID["16th-karmapa"]!.streakOnlyByDefault)
+        XCTAssertNil(byID["16th-karmapa"]!.target)
+        XCTAssertTrue(byID["8th-karmapa"]!.streakOnlyByDefault)
+        XCTAssertFalse(byID["chenrezig"]!.streakOnlyByDefault)
+        XCTAssertFalse(byID["dorje-sempa"]!.streakOnlyByDefault)
     }
 
     func testNgondroIsNeverStreakOnly() {

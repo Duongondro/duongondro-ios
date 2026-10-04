@@ -181,7 +181,7 @@ private struct AddPracticeView: View {
         NavigationStack {
             List {
                 ForEach(options) { p in
-                    Button { add(TrackedPractice(practice: p, streakOnly: p.id == "8th-karmapa")) } label: {
+                    Button { add(TrackedPractice(practice: p, streakOnly: p.streakOnlyByDefault)) } label: {
                         PracticeName(practice: p)
                     }
                     .foregroundStyle(.primary)

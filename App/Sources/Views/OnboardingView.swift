@@ -97,7 +97,7 @@ final class OnboardingFlow: ObservableObject {
         if let i = chosen.firstIndex(where: { $0.id == p.id }) {
             chosen.remove(at: i)
         } else {
-            chosen.append(OnboardingPractice(practice: p, streakOnly: p.id == "8th-karmapa"))
+            chosen.append(OnboardingPractice(practice: p, streakOnly: p.streakOnlyByDefault))
         }
     }
 
