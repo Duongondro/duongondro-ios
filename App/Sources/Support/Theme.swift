@@ -71,6 +71,8 @@ enum Theme {
         static let answer: CGFloat = 60
         static let field: CGFloat = 48
         static let secondary: CGFloat = 52
+        /// About's side-by-side buttons.
+        static let aboutButton: CGFloat = 48
         /// Progress bars: on Today's cards, and on the practice screen.
         static let barThin: CGFloat = 6
         static let barThick: CGFloat = 10

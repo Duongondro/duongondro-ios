@@ -9,25 +9,37 @@ struct YourDataView: View {
     @State private var exportError: String?
 
     var body: some View {
-        List {
-            Group {
-                Section {
-                    Button { export() } label: { Label("Export all my data", systemImage: "square.and.arrow.up") }
-                } footer: {
-                    Text("One ZIP with every practice, session and streak, readable without this app.")
-                }
-                Section {
-                    NavigationLink { DeleteEverythingView() } label: {
-                        Label("Delete everything", systemImage: "trash").foregroundStyle(Theme.destructive)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Space.l) {
+                CardSection(footer: "One ZIP with every practice, session and streak, readable without this app.") {
+                    Button { export() } label: {
+                        Label("Export all my data", systemImage: "square.and.arrow.up")
+                            .foregroundStyle(Theme.accent)
+                            .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                     }
-                } footer: {
-                    Text("Removes all your data from this phone. It cannot be undone.")
+                }
+                CardSection(footer: "Removes all your data from this phone. It cannot be undone.") {
+                    NavigationLink { DeleteEverythingView() } label: {
+                        HStack {
+                            Label("Delete everything", systemImage: "trash").foregroundStyle(Theme.destructive)
+                            Spacer(minLength: Theme.Space.s)
+                            Image(systemName: "chevron.right")
+                                .font(.footnote.weight(.bold))
+                                .foregroundStyle(Theme.muted)
+                                .accessibilityHidden(true)
+                        }
+                        .frame(minHeight: Theme.Size.minTap)
+                        .contentShape(Rectangle())
+                    }
                 }
             }
-            .themedRows()
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.top, Theme.Space.l)
         }
-        .themedList()
+        .buttonStyle(.plain)
+        .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Your data")
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $exported) { file in ShareSheet(items: [file.url]) }
         .alert("Export failed", isPresented: Binding(get: { exportError != nil }, set: { if !$0 { exportError = nil } })) {
             Button("OK", role: .cancel) {}
@@ -59,31 +71,36 @@ private struct DeleteEverythingView: View {
     private let word = String(localized: "delete", comment: "The word typed to confirm deleting everything; lowercase")
 
     var body: some View {
-        Form {
-            Group {
-                Section {
-                    Text("This deletes every practice, session and streak on this phone, your reminders and any keys the app holds, then returns to the start.")
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text("Export first if you want a copy.")
-                        .foregroundStyle(Theme.muted)
+        let confirmed = typed.trimmingCharacters(in: .whitespaces).lowercased() == word.lowercased()
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Space.l) {
+                CardSection {
+                    VStack(alignment: .leading, spacing: Theme.Space.s) {
+                        Text("This deletes every practice, session and streak on this phone, your reminders and any keys the app holds, then returns to the start.")
+                            .foregroundStyle(Theme.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text("Export first if you want a copy.")
+                            .foregroundStyle(Theme.muted)
+                    }
+                    .padding(.vertical, Theme.Space.m)
                 }
-                Section {
+                CardSection(header: "Type \u{201C}\(word)\u{201D} to confirm") {
                     TextField(word, text: $typed)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
-                } header: {
-                    Text("Type \u{201C}\(word)\u{201D} to confirm")
+                        .frame(minHeight: Theme.Size.minTap)
                 }
-                Section {
-                    Button("Delete everything", role: .destructive) {
-                        do { try Purge.run(model) } catch { failure = error.localizedDescription }
-                    }
-                    .disabled(typed.trimmingCharacters(in: .whitespaces).lowercased() != word.lowercased())
+                Button("Delete everything") {
+                    do { try Purge.run(model) } catch { failure = error.localizedDescription }
                 }
+                .buttonStyle(FilledButtonStyle(fill: Theme.destructive, height: Theme.Size.button))
+                .disabled(!confirmed)
+                .opacity(confirmed ? 1 : 0.4)
             }
-            .themedRows()
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.top, Theme.Space.l)
         }
-        .themedList()
+        .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Delete everything")
         .navigationBarTitleDisplayMode(.inline)
         .alert("Could not delete", isPresented: Binding(get: { failure != nil }, set: { if !$0 { failure = nil } })) {

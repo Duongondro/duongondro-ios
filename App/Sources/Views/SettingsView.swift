@@ -7,9 +7,79 @@ struct SettingsView: View {
     @State private var adding = false
 
     var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Space.l) {
+                Text("Settings")
+                    .font(Typography.largeTitle)
+                    .foregroundStyle(Theme.ink)
+                    .padding(.horizontal, Theme.Space.xs)
+                    .accessibilityAddTraits(.isHeader)
+                CardSection(header: "Practices") {
+                    NavigationLink { PracticeListView() } label: {
+                        SettingsRow("Your practices", detail: Text(verbatim: "\(model.snapshot.activePractices.count)"), chevron: true)
+                    }
+                    Button { adding = true } label: {
+                        Text("Add a practice")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(Theme.accent)
+                            .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                    }
+                }
+                GeneralSection()
+                CardSection(header: "Your data") {
+                    NavigationLink { YourDataView() } label: {
+                        SettingsRow("Export and delete", chevron: true)
+                    }
+                }
+                AboutSection()
+            }
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.bottom, Theme.Space.xl)
+        }
+        .buttonStyle(.plain)
+        .background(Theme.ground.ignoresSafeArea())
+        .toolbar(.hidden, for: .navigationBar)
+        .sheet(isPresented: $adding) { AddPracticeView() }
+    }
+}
+
+/// A label on the left, an optional muted value and chevron on the right.
+struct SettingsRow: View {
+    let title: LocalizedStringKey
+    var detail: Text?
+    var chevron = false
+
+    init(_ title: LocalizedStringKey, detail: Text? = nil, chevron: Bool = false) {
+        self.title = title
+        self.detail = detail
+        self.chevron = chevron
+    }
+
+    var body: some View {
+        HStack(spacing: Theme.Space.s) {
+            Text(title).foregroundStyle(Theme.ink)
+            Spacer(minLength: Theme.Space.s)
+            if let detail { detail.foregroundStyle(Theme.muted) }
+            if chevron {
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(Theme.muted)
+                    .accessibilityHidden(true)
+            }
+        }
+        .frame(minHeight: Theme.Size.minTap)
+        .contentShape(Rectangle())
+    }
+}
+
+/// The practices, reorderable, with the archived ones behind a row.
+private struct PracticeListView: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
         List {
             Group {
-                Section("Practices") {
+                Section {
                     ForEach(model.snapshot.activePractices) { p in
                         NavigationLink { PracticeSettingsView(practiceID: p.id) } label: { PracticeName(practice: p.practice) }
                     }
@@ -18,24 +88,18 @@ struct SettingsView: View {
                         ids.move(fromOffsets: from, toOffset: to)
                         model.perform { try $0.reorder(ids + model.snapshot.practices.filter(\.archived).map(\.id)) }
                     }
-                    Button { adding = true } label: { Label("Add a practice", systemImage: "plus") }
                     let archived = model.snapshot.practices.filter(\.archived)
                     if !archived.isEmpty {
                         NavigationLink("Archived (\(archived.count))") { ArchivedPracticesView() }
                     }
                 }
-                GeneralSection()
-                Section("Your data") {
-                    NavigationLink("Export and delete") { YourDataView() }
-                }
-                AboutSection()
             }
             .themedRows()
         }
         .themedList()
-        .navigationTitle("Settings")
+        .navigationTitle("Your practices")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar { EditButton() }
-        .sheet(isPresented: $adding) { AddPracticeView() }
     }
 }
 
@@ -45,7 +109,7 @@ private struct GeneralSection: View {
     static let showsLanguage = false
 
     var body: some View {
-        Section("General") {
+        CardSection(header: "General") {
             // Hidden until the translations exist: only English works so far. When they
             // land, the language is picked in the app itself, as in CodeShare, not by a
             // trip to the system Settings app.
@@ -53,38 +117,55 @@ private struct GeneralSection: View {
                 Button {
                     if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
                 } label: {
-                    LabeledContent("Language", value: currentLanguage)
+                    SettingsRow("Language", detail: Text(verbatim: currentLanguage), chevron: true)
                 }
-                .foregroundStyle(.primary)
             }
-            Picker("A mala counts as", selection: Binding(get: { model.preferences.malaSize },
-                                                           set: { v in model.update { $0.malaSize = v } })) {
-                Text(verbatim: "100").tag(100)
-                Text(verbatim: "108").tag(108)
+            HStack {
+                Text("A mala counts as").foregroundStyle(Theme.ink)
+                Spacer(minLength: Theme.Space.s)
+                Picker("A mala counts as", selection: Binding(get: { model.preferences.malaSize },
+                                                               set: { v in model.update { $0.malaSize = v } })) {
+                    Text(verbatim: "100").tag(100)
+                    Text(verbatim: "108").tag(108)
+                }
+                .labelsHidden()
+                .pickerStyle(.menu)
+                .tint(Theme.accent)
             }
-            Toggle("Evening reminder", isOn: Binding(
+            .frame(minHeight: Theme.Size.minTap)
+            Toggle(isOn: Binding(
                 get: { model.preferences.reminderMinutes != nil },
                 set: { on in
                     model.update { $0.reminderMinutes = on ? 20 * 60 : nil }
                     if on { Task { await Reminders.requestAndSchedule(model) } }
-                }))
+                })) {
+                Text("Evening reminder").foregroundStyle(Theme.ink)
+            }
+            .tint(Theme.accent)
+            .frame(minHeight: Theme.Size.minTap)
             if let minutes = model.preferences.reminderMinutes {
-                DatePicker("Time", selection: Binding(
+                DatePicker(selection: Binding(
                     get: { Calendar.current.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: Date()) ?? Date() },
                     set: { d in
                         let c = Calendar.current.dateComponents([.hour, .minute], from: d)
                         model.update { $0.reminderMinutes = (c.hour ?? 20) * 60 + (c.minute ?? 0) }
-                    }), displayedComponents: .hourAndMinute)
+                    }), displayedComponents: .hourAndMinute) {
+                    Text("Time").foregroundStyle(Theme.ink)
+                }
+                .tint(Theme.accent)
+                .frame(minHeight: Theme.Size.minTap)
             }
             Toggle(isOn: Binding(get: { model.preferences.discreetNotifications },
                                  set: { v in model.update { $0.discreetNotifications = v } })) {
-                VStack(alignment: .leading) {
-                    Text("Discreet notifications")
+                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                    Text("Discreet notifications").foregroundStyle(Theme.ink)
                     Text("Lock screens say \u{201C}A friend practised\u{201D} instead of the practice.")
                         .font(.footnote)
                         .foregroundStyle(Theme.muted)
                 }
             }
+            .tint(Theme.accent)
+            .padding(.vertical, Theme.Space.s)
         }
     }
 

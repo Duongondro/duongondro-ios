@@ -1,19 +1,16 @@
 import SwiftUI
 
-/// Settings › About: what is running, so anyone can match the app to its
-/// source, and the humans who made it.
+/// Settings › About: what is running, so anyone can match the app to its source.
 struct AboutSection: View {
     private let build = BuildIdentity.current
 
     var body: some View {
-        Section("About") {
-            LabeledContent("Version", value: build.version)
+        CardSection(header: "About", footer: "Tap Source to open this exact commit on GitHub.") {
+            SettingsRow("Version", detail: Text(verbatim: build.version))
             SourceRow(build: build)
-            Link(destination: URL(string: "https://github.com/Duongondro/duongondro-ios")!) {
-                LabeledContent("Source code", value: "BSD-3-Clause")
+            NavigationLink { AboutView() } label: {
+                SettingsRow("About and contributors", chevron: true)
             }
-            NavigationLink("Contributors") { ContributorsView() }
-            NavigationLink("Licences") { LicencesView() }
         }
     }
 }
@@ -27,38 +24,103 @@ private struct SourceRow: View {
         Button {
             if let url = build.commitURL { UIApplication.shared.open(url) }
         } label: {
-            LabeledContent("Source", value: build.shortRevision)
+            HStack(spacing: Theme.Space.s) {
+                Text("Source").foregroundStyle(Theme.ink)
+                Spacer(minLength: Theme.Space.s)
+                Text(verbatim: build.shortRevision)
+                    .font(.system(.subheadline, design: .monospaced))
+                    .foregroundStyle(Theme.accent)
+                Image(systemName: "arrow.up.right.square")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .accessibilityHidden(true)
+            }
+            .frame(minHeight: Theme.Size.minTap)
+            .contentShape(Rectangle())
         }
-        .foregroundStyle(.primary)
         .contextMenu {
             Button { UIPasteboard.general.string = build.revision } label: { Label("Copy full hash", systemImage: "doc.on.doc") }
         }
     }
 }
 
-struct ContributorsView: View {
+/// Settings › About and contributors: the name, what is running, the humans who made it.
+struct AboutView: View {
+    private let build = BuildIdentity.current
     private let contributors = Contributors.load()
+    @State private var showingLicences = false
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
-        List {
-            Section {
-                ForEach(contributors, id: \.self) { Text(verbatim: $0) }
-            } footer: {
-                Text("Everyone with a commit in the app, server, design or Android repositories, most commits first. Generated from git history when this build was made.")
+        ScrollView {
+            VStack(spacing: Theme.Space.l) {
+                VStack(spacing: Theme.Space.s) {
+                    Text("Duongöndro")
+                        .font(Typography.headingBold(30, relativeTo: .title))
+                        .foregroundColor(Theme.accent)
+                    (Text(verbatim: build.version + " \u{00B7} ")
+                        + Text(verbatim: build.shortRevision).font(.system(.subheadline, design: .monospaced)).foregroundColor(Theme.accent))
+                        .font(.subheadline)
+                        .foregroundColor(Theme.muted)
+                    Text("End-to-end encrypted and fully open source.")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                }
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding(.top, Theme.Space.xl)
+
+                if !contributors.isEmpty {
+                    CardSection(header: "Made by",
+                                footer: "Everyone who committed to the app, server, design or Android repositories, most commits first. Generated from the git history when the app is built.") {
+                        ForEach(contributors, id: \.self) { name in
+                            Text(verbatim: name)
+                                .foregroundStyle(Theme.ink)
+                                .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, Theme.Space.xl)
+        }
+        .background(Theme.ground.ignoresSafeArea())
+        .safeAreaInset(edge: .bottom) {
+            HStack(spacing: Theme.Space.m) {
+                Button("Source code") { openURL(Self.repository) }
+                Button("Licences") { showingLicences = true }
+            }
+            .buttonStyle(OutlinedButtonStyle(height: Theme.Size.aboutButton))
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.vertical, Theme.Space.m)
+            .background(Theme.ground)
+        }
+        .navigationTitle("About")
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showingLicences) {
+            NavigationStack {
+                LicencesView()
+                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showingLicences = false } } }
             }
         }
-        .navigationTitle("Contributors")
     }
+
+    private static let repository = URL(string: "https://github.com/Duongondro/duongondro-ios")!
 }
 
 private struct LicencesView: View {
     var body: some View {
-        List {
-            LicenceRow(name: "Duongöndro for iOS", licence: "BSD-3-Clause", url: "https://github.com/Duongondro/duongondro-ios/blob/main/LICENSE")
-            LicenceRow(name: "GRDB.swift", licence: "MIT", url: "https://github.com/groue/GRDB.swift/blob/master/LICENSE")
-            LicenceRow(name: "IBM Plex Sans", licence: "SIL Open Font License 1.1", url: "https://github.com/IBM/plex/blob/master/LICENSE.txt")
+        ScrollView {
+            CardSection {
+                LicenceRow(name: "Duongöndro for iOS", licence: "BSD-3-Clause", url: "https://github.com/Duongondro/duongondro-ios/blob/main/LICENSE")
+                LicenceRow(name: "GRDB.swift", licence: "MIT", url: "https://github.com/groue/GRDB.swift/blob/master/LICENSE")
+                LicenceRow(name: "IBM Plex Sans", licence: "SIL Open Font License 1.1", url: "https://github.com/IBM/plex/blob/master/LICENSE.txt")
+            }
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.top, Theme.Space.l)
         }
+        .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Licences")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -70,9 +132,11 @@ private struct LicenceRow: View {
     var body: some View {
         Link(destination: URL(string: url)!) {
             VStack(alignment: .leading) {
-                Text(verbatim: name).foregroundStyle(.primary)
+                Text(verbatim: name).foregroundStyle(Theme.ink)
                 Text(verbatim: licence).font(.footnote).foregroundStyle(Theme.muted)
             }
+            .padding(.vertical, Theme.Space.s)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
