@@ -192,24 +192,56 @@ private struct ChoiceButton: View {
 private struct WelcomeStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
+    // The Welcome mockup (design canvas "Welcome, light" / "Welcome, dark"): centred,
+    // the emblem, the name, the tagline with its encryption line in gold, then the
+    // three doors: a filled button, an outlined one, and a text link.
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
-            Spacer()
-            Image(systemName: "bird.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(Theme.accent)
+        VStack(spacing: Theme.Space.xxl) {
+            Spacer(minLength: Theme.Space.xxl)
+            Image("Emblem")
+                .resizable()
+                .scaledToFit()
+                .frame(width: Theme.Size.emblem)
                 .accessibilityHidden(true)
-            Text(verbatim: "Duongöndro")
-                .font(Typography.largeTitle)
-                .foregroundStyle(Theme.accent)
-            Text("Count your practice. Keep your streak. Let your friends nag.")
-                .font(.title3)
-                .foregroundStyle(Theme.muted)
-                .fixedSize(horizontal: false, vertical: true)
+            VStack(spacing: Theme.Space.m) {
+                Text(verbatim: "Duongöndro")
+                    .font(Typography.headingBold(44, relativeTo: .largeTitle))
+                    .foregroundStyle(Theme.welcomeTitle)
+                Text("Track your meditation practice together with your friends.")
+                    .font(.title3)
+                    .foregroundStyle(Theme.welcomeSoft)
+                Text("End-to-end encrypted and fully open source.")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Theme.welcomeGoldText)
+            }
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             Spacer()
-            PrimaryButton(title: "I have an invite", fill: Theme.welcomePrimary) { pick(.invite) }
-            ChoiceButton(title: "Just me, on this phone") { pick(.justMe) }
-            ChoiceButton(title: "I already have an account") { pick(.existingAccount) }
+            VStack(spacing: Theme.Space.m) {
+                Button { pick(.invite) } label: {
+                    Text("I have an invite")
+                        .font(.headline)
+                        .foregroundStyle(Theme.welcomePrimaryInk)
+                        .frame(maxWidth: .infinity, minHeight: Theme.Size.welcomeButton)
+                        .background(Theme.welcomePrimary, in: RoundedRectangle(cornerRadius: Theme.Radius.card))
+                }
+                Button { pick(.justMe) } label: {
+                    Text("Just me, on this phone")
+                        .font(.headline)
+                        .foregroundStyle(Theme.welcomeOutlineInk)
+                        .frame(maxWidth: .infinity, minHeight: Theme.Size.welcomeButton)
+                        .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card)
+                            .strokeBorder(Theme.welcomeOutline, lineWidth: 2))
+                }
+                Button { pick(.existingAccount) } label: {
+                    Text("I already have an account")
+                        .font(.subheadline.weight(.semibold))
+                        .underline()
+                        .foregroundStyle(Theme.welcomeSoft)
+                        .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap)
+                }
+            }
+            .buttonStyle(.plain)
         }
         .padding(.bottom, Theme.Space.xl)
         .background(Theme.welcomeGround.padding(.horizontal, -Theme.Space.xl).ignoresSafeArea())

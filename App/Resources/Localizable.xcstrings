@@ -1,21 +1,25 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "%lld days": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld day"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "· longest %@" : {
+
+    },
+    "· longest %lld" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "· longest %lld day"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld days"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "· longest %lld days"
                 }
               }
             }
@@ -23,21 +27,34 @@
         }
       }
     },
-    "Your streak of %lld days ends at midnight.": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Your streak of %lld day ends at midnight."
+    "%@" : {
+
+    },
+    "%@ days" : {
+
+    },
+    "%@ in all rounds" : {
+
+    },
+    "%@ in total" : {
+
+    },
+    "%lld days" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Your streak of %lld days ends at midnight."
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
                 }
               }
             }
@@ -45,28 +62,146 @@
         }
       }
     },
-    "· longest %lld": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "· longest %lld day"
+    "Add one mala, %@" : {
+
+    },
+    "Added %@" : {
+
+    },
+    "Any practice today starts a streak." : {
+
+    },
+    "Archiving hides the practice from Today and keeps its counts and history." : {
+
+    },
+    "Count your practice. Keep your streak. Let your friends nag." : {
+
+    },
+    "Counted for %@" : {
+
+    },
+    "Counts logged so far are kept." : {
+
+    },
+    "Default (%@)" : {
+
+    },
+    "Discreet notifications" : {
+
+    },
+    "Dismiss" : {
+
+    },
+    "Done today" : {
+
+    },
+    "Everyone with a commit in the app, server, design or Android repositories, most commits first. Generated from git history when this build was made." : {
+
+    },
+    "Export first if you want a copy." : {
+
+    },
+    "From paper or a spreadsheet; rough is fine." : {
+
+    },
+    "Lock screens say “A friend practised” instead of the practice." : {
+
+    },
+    "Marked done" : {
+
+    },
+    "Not yet today" : {
+
+    },
+    "One ZIP with every practice, session and streak, readable without this app." : {
+
+    },
+    "Practice %@ of %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Practice %1$@ of %2$@"
+          }
+        }
+      }
+    },
+    "Practise before %@ ends" : {
+
+    },
+    "Removes all your data from this phone. It cannot be undone." : {
+
+    },
+    "Round %@" : {
+
+    },
+    "Round %@ · %@ of %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Round %1$@ · %2$@ of %3$@"
+          }
+        }
+      }
+    },
+    "Started %@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Started %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "Streak only" : {
+
+    },
+    "This deletes every practice, session and streak on this phone, your reminders and any keys the app holds, then returns to the start." : {
+
+    },
+    "This practice is gone." : {
+
+    },
+    "Today" : {
+
+    },
+    "Type “%@” to confirm" : {
+
+    },
+    "Yesterday" : {
+
+    },
+    "You started around %@." : {
+
+    },
+    "Your streak of %lld days ends at midnight." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Your streak of %lld day ends at midnight."
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "· longest %lld days"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Your streak of %lld days ends at midnight."
                 }
               }
             }
           }
         }
       }
+    },
+    "Your streak so far counts on your own Today screen. Friends only ever see days tracked in the app." : {
+
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

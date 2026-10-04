@@ -28,7 +28,14 @@ enum Theme {
     /// Welcome follows the system appearance: warm off-white with a burgundy
     /// button, or near-black burgundy with a gold one (design: Look).
     static let welcomeGround = Color(light: 0xF7F3F1, dark: 0x1E0C11)
-    static let welcomePrimary = Color(light: 0x7A1F2E, dark: 0xE3B341)
+    static let welcomePrimary = Color(light: 0x7A1F2E, dark: 0xD4A72C)
+    static let welcomePrimaryInk = Color(light: 0xFFFFFF, dark: 0x2A1A06)
+    static let welcomeTitle = Color(light: 0x7A1F2E, dark: 0xFFFFFF)
+    static let welcomeSoft = Color(light: 0x4E3F44, dark: 0xE9D7DB)
+    /// The "end-to-end encrypted" line: a text-safe gold on either ground.
+    static let welcomeGoldText = Color(light: 0x7A5410, dark: 0xE3B341)
+    static let welcomeOutline = Color(light: 0x7A1F2E, dark: 0x6E4A54)
+    static let welcomeOutlineInk = Color(light: 0x7A1F2E, dark: 0xFFFFFF)
     /// Destructive actions and warnings.
     static let destructive = Color(light: 0xB3261E, dark: 0xF2827A)
     /// Text and icons on an accent-filled button.
@@ -40,6 +47,11 @@ enum Theme {
         static let bigButton: CGFloat = 88
         /// Full-width buttons in onboarding.
         static let button: CGFloat = 50
+        /// Welcome's two door buttons, and its emblem.
+        static let welcomeButton: CGFloat = 56
+        static let emblem: CGFloat = 220
+        /// The smallest tap target (Apple's 44 pt).
+        static let minTap: CGFloat = 44
         /// The entry part of a number field.
         static let numberField: CGFloat = 120
     }

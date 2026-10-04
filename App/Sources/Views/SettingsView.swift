@@ -42,16 +42,21 @@ struct SettingsView: View {
 private struct GeneralSection: View {
     @EnvironmentObject private var model: AppModel
 
+    static let showsLanguage = false
+
     var body: some View {
         Section("General") {
-            Button {
-                // Per-app language lives in the system Settings app on iOS; switching
-                // inside a running app is unreliable, so the app does not try.
-                if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
-            } label: {
-                LabeledContent("Language", value: currentLanguage)
+            // Hidden until the translations exist: only English works so far. When they
+            // land, the language is picked in the app itself, as in CodeShare, not by a
+            // trip to the system Settings app.
+            if Self.showsLanguage {
+                Button {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                } label: {
+                    LabeledContent("Language", value: currentLanguage)
+                }
+                .foregroundStyle(.primary)
             }
-            .foregroundStyle(.primary)
             Picker("A mala counts as", selection: Binding(get: { model.preferences.malaSize },
                                                            set: { v in model.update { $0.malaSize = v } })) {
                 Text(verbatim: "100").tag(100)
