@@ -10,7 +10,8 @@ settings:
     SWIFT_VERSION: "5.9"
     MARKETING_VERSION: "0.1"
     CURRENT_PROJECT_VERSION: "1"
-    DEVELOPMENT_TEAM: ""   # set locally; never commit a personal team id
+    DEVELOPMENT_TEAM: ""   # set locally (local.mk); never commit a personal team id
+    CODE_SIGN_STYLE: Automatic
 packages:
   DuongondroCore:
     path: Core
@@ -34,13 +35,16 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        ITSAppUsesNonExemptEncryption: true
+        # No encryption beyond the system's yet. Becomes true with phase 3's sealing
+        # (standard algorithms, the mass-market exemption): docs/12-release-checklist.
+        ITSAppUsesNonExemptEncryption: false
         CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu]
         # Resources in groups are copied flat into the bundle root, so bare names.
         UIAppFonts: [IBMPlexSans-SemiBold.ttf, IBMPlexSans-Bold.ttf]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.duongondro.ios
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
     preBuildScripts:

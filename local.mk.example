@@ -1,0 +1,5 @@
+# Copy to local.mk (never committed) for `make device` and `make testflight`.
+TEAM_ID = <Apple Developer team id>
+ASC_KEY_ID = <App Store Connect API key id, a team key with the App Manager role>
+ASC_ISSUER_ID = <its issuer id>
+ASC_KEY_PATH = $(HOME)/.appstoreconnect/private_keys/AuthKey_$(ASC_KEY_ID).p8
