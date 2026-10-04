@@ -26,6 +26,9 @@ enum SecretName {
     static let pendingRecovery = "recovery-pending"
     static let deviceID = "device-id"
     static let identitySeed = "identity-seed"
+    /// The account a set-up in progress belongs to: Keychain items outlive the
+    /// app, so secrets left by another account's unfinished set-up are not reused.
+    static let setUpUser = "set-up-user"
     static func practiceKey(_ version: Int) -> String { "practice-key-\(version)" }
 }
 

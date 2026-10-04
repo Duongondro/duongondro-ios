@@ -109,6 +109,33 @@ final class ApplyTests: XCTestCase {
         XCTAssertTrue(try db.snapshot().sessions.isEmpty)
     }
 
+    /// A session read back from the database, pushed (sealed time and outer time
+    /// through JSON), then pulled by another phone: the two times must agree for
+    /// every sub-millisecond start, which rounding down got wrong about one in nine.
+    func testSealedAndOuterTimesAgreeAfterEveryRoundTrip() throws {
+        let other = try AppDatabase.inMemory()
+        try db.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == "dorje-sempa" }!, sortOrder: 0))
+        for i in 0..<500 {
+            let t = Date(timeIntervalSince1970: 1_791_180_000 + Double(i) * 0.0137 + Double.random(in: 0..<0.001))
+            try db.insert(Session(practiceID: "dorje-sempa", amount: 1, startedAt: t, startExact: true,
+                                  timeZoneID: "Europe/Amsterdam", loggedAt: t))
+        }
+        let sealKey = E2EE.sealKey(practiceKey: practiceKey, user: user)
+        let otherEngine = SyncEngine(account: Account(api: APIClient(baseURL: URL(string: "http://127.0.0.1:9")!),
+                                                      secrets: engine.account.secrets, database: other))
+        for record in try db.dirtySessions() {
+            let json = try SealedSession(record, practiceName: nil).encoded()
+            let sealed = try E2EE.sealSession(sealKey: sealKey, session: record.session.id, user: user, keyVersion: 1, json: json)
+            let outer = PracticeLogInput(sealed: sealed, keyVersion: 1, updatedAt: SyncEngine.outerTime(record.updatedAt), deleted: false)
+            struct Wire: Decodable { let updatedAt: Date }
+            let wire = try APIClient.decoder.decode(Wire.self, from: APIClient.encoder.encode(outer))
+            let log = PracticeLog(id: record.session.id, sealed: sealed, keyVersion: 1, updatedAt: wire.updatedAt)
+            XCTAssertEqual(try otherEngine.apply(log, user: user, generation: other.generation), .applied)
+            XCTAssertEqual(try otherEngine.apply(log, user: user, generation: other.generation), .unchanged, "applied once, then the same")
+            XCTAssertEqual(try engine.apply(log, user: user, generation: db.generation), .unchanged, "the pusher sees its own write")
+        }
+    }
+
     func testPaddingHidesTheLengthOfNames() throws {
         let s = Session(practiceID: "custom-a", amount: 1, startedAt: Date(timeIntervalSince1970: 1_791_176_400),
                         startExact: true, timeZoneID: "Europe/Amsterdam", loggedAt: Date(timeIntervalSince1970: 1_791_176_400))

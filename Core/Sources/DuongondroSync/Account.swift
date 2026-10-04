@@ -83,6 +83,12 @@ public final class Account: @unchecked Sendable {
             identity = local
             practiceKey = key
         } else {
+            if try secrets.read(SecretName.setUpUser) != Data(me.id.uuidString.lowercased().utf8) {
+                for name in [SecretName.identitySeed, SecretName.practiceKey(me.keyVersion), SecretName.pendingRecovery] {
+                    try secrets.delete(name)
+                }
+                try secrets.write(SecretName.setUpUser, Data(me.id.uuidString.lowercased().utf8))
+            }
             if let seed = try secrets.read(SecretName.identitySeed) {
                 identity = try Curve25519.Signing.PrivateKey(rawRepresentation: seed)
             } else {
@@ -157,7 +163,8 @@ public final class Account: @unchecked Sendable {
     /// A new recovery code, replacing the old one (the old code stops working).
     public func newRecoveryCode() async throws -> String {
         guard let state = try database.syncState() else { throw Failure.accountHasNoKeys }
-        try secrets.delete(SecretName.pendingRecovery)
+        // A code left pending by a failed attempt is finished, not replaced, so the
+        // two boxes never end up under different codes.
         return try await putRecoveryBoxes(user: state.userID, identity: try identity(),
                                           practiceKey: try practiceKey(state.keyVersion))
     }
@@ -245,6 +252,7 @@ public final class Account: @unchecked Sendable {
               let deviceID = UUID(uuidString: String(decoding: idData, as: UTF8.self)),
               let key = try deviceKeys.current() else { throw Failure.missingSecret }
         let identityPublic = try identity().publicKey
+        let generation = database.generation
         var newest = (try database.syncState())?.keyVersion ?? 1
         for w in try await api.wraps(device: deviceID) where w.kind == Int(E2EE.WrapKind.practiceKey.rawValue) {
             if try secrets.read(SecretName.practiceKey(w.keyVersion)) != nil {
@@ -257,6 +265,8 @@ public final class Account: @unchecked Sendable {
                   E2EE.verifyWrap(wrapped, aad: aad, recipientPk: key.publicKey, signature: w.authenticator, identity: identityPublic)
             else { continue }
             let secret = try E2EE.unwrap(wrapped, with: key.agreement, aad: aad)
+            // Not after "Delete everything": the purge removed the keys for good.
+            guard database.generation == generation else { throw AppDatabase.Erased() }
             try secrets.write(SecretName.practiceKey(w.keyVersion), secret)
             newest = max(newest, w.keyVersion)
         }

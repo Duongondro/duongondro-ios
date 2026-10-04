@@ -109,7 +109,10 @@ public enum Statements {
 
     static func date(_ millis: Int64) -> Date { Date(timeIntervalSince1970: Double(millis) / 1000) }
 
-    static func millis(_ date: Date) -> Int64 { Int64((date.timeIntervalSince1970 * 1000).rounded(.down)) }
+    /// To the nearest millisecond: a Date read back from the database or parsed from
+    /// RFC 3339 can sit a hair below its millisecond, and rounding down would then
+    /// name the one before, so the sealed time and the outer one would disagree.
+    static func millis(_ date: Date) -> Int64 { Int64((date.timeIntervalSince1970 * 1000).rounded()) }
 
     static func base64url(_ data: Data) -> String {
         data.base64EncodedString()

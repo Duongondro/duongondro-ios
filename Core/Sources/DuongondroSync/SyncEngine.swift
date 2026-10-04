@@ -119,7 +119,8 @@ public struct SyncEngine: Sendable {
         let sealed = try E2EE.sealSession(sealKey: sealKey, session: record.session.id, user: state.userID,
                                           keyVersion: UInt32(state.keyVersion), json: json)
         return try await account.api.putLog(id: record.session.id, PracticeLogInput(
-            sealed: sealed, keyVersion: state.keyVersion, updatedAt: record.updatedAt, deleted: record.deletedAt != nil))
+            sealed: sealed, keyVersion: state.keyVersion, updatedAt: Self.outerTime(record.updatedAt),
+            deleted: record.deletedAt != nil))
     }
 
     enum Applied { case applied, unchanged, unreadable, refused }
@@ -152,6 +153,10 @@ public struct SyncEngine: Sendable {
         let json = try E2EE.openSession(sealKey: sealKey, session: log.id, user: user, keyVersion: UInt32(log.keyVersion), sealed: sealed)
         return try JSONDecoder().decode(SealedSession.self, from: json)
     }
+
+    /// The outer updatedAt: exactly the millisecond sealed inside, so the two agree
+    /// after the trip through RFC 3339 however the Date was stored.
+    static func outerTime(_ updatedAt: Date) -> Date { date(Statements.millis(updatedAt)) }
 
     static func date(_ millis: Int64) -> Date { Date(timeIntervalSince1970: Double(millis) / 1000) }
 }

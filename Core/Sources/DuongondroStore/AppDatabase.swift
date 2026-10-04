@@ -402,6 +402,9 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     /// A change's time: now, but always after the row's last change, so a local
     /// edit made after pulling a newer remote one (or after the clock moved back)
     /// still wins under last-write-wins.
+    /// Sync compares times to the millisecond, the precision sealed and sent.
+    static func millis(_ date: Date) -> Int64 { Int64((date.timeIntervalSince1970 * 1000).rounded()) }
+
     static func nextStamp(for id: UUID, _ db: Database, now: Date = Date()) throws -> Date {
         let last = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id.uuidString.lowercased()])
         guard let last, last >= now else { return now }
@@ -415,7 +418,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     private var generationValue = 0
 
     /// Thrown by a write that names a generation `eraseAll` has since ended.
-    public struct Erased: Error {}
+    public struct Erased: Error { public init() {} }
 
     /// A write that runs only if no erase happened since `generation` was read.
     /// The check is inside the transaction, so an erase cannot slip in between.
@@ -434,7 +437,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         try write(generation) { db in
             let key = id.uuidString.lowercased()
             guard let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [key]),
-                  local < updatedAt else { return false }
+                  Self.millis(local) < Self.millis(updatedAt) else { return false }
             try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 0 WHERE id = ?",
                            arguments: [deletedAt, updatedAt, key])
             return true
@@ -450,7 +453,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         try write(generation) { db in
             let id = r.session.id.uuidString.lowercased()
             let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id])
-            if let local, local >= r.updatedAt { return false }
+            if let local, Self.millis(local) >= Self.millis(r.updatedAt) { return false }
             // A deletion of a session this phone never had changes nothing here.
             if local == nil, r.deletedAt != nil { return false }
             if try Int.fetchOne(db, sql: "SELECT 1 FROM practices WHERE id = ?", arguments: [r.session.practiceID]) == nil {
