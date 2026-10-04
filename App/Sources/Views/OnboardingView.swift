@@ -168,9 +168,8 @@ struct PrimaryButton: View {
                 .foregroundStyle(Theme.onAccent)
                 .frame(maxWidth: .infinity, minHeight: 50)
         }
-        .buttonStyle(.borderedProminent)
+        .primaryButtonStyle()
         .tint(fill)
-        .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.card))
     }
 }
 
@@ -184,8 +183,7 @@ private struct ChoiceButton: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity, minHeight: 50)
         }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.card))
+        .secondaryButtonStyle()
     }
 }
 
@@ -283,6 +281,7 @@ private struct PracticesStep: View {
                     .cardStyle()
                 }
             }
+            .plainBottomEdge()
             PrimaryButton(title: "Continue") { flow.go(.counts(0)) }
                 .disabled(flow.chosen.isEmpty)
                 .padding(.vertical, Theme.Space.l)
@@ -370,18 +369,18 @@ private struct CountsStep: View {
 
     var body: some View {
         if flow.chosen.indices.contains(index) {
-            Form {
-                Group { sections($flow.chosen[index]) }
-                    .themedRows()
-            }
-            .themedList()
-            .padding(.horizontal, -Theme.Space.xl)
-            .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 0) {
+                Form {
+                    Group { sections($flow.chosen[index]) }
+                        .themedRows()
+                }
+                .themedList()
+                .plainBottomEdge()
+                .padding(.horizontal, -Theme.Space.xl)
                 PrimaryButton(title: "Continue") {
                     flow.go(index + 1 < flow.chosen.count ? .counts(index + 1) : .mala)
                 }
                 .padding(.vertical, Theme.Space.l)
-                .background(Theme.ground)
             }
         }
     }
@@ -391,7 +390,7 @@ private struct CountsStep: View {
         Section {
             PracticeName(practice: p.wrappedValue.practice)
         } header: {
-            Text("\(index + 1) of \(flow.chosen.count) practices")
+            Text("Practice \(index + 1) of \(flow.chosen.count)")
         }
         if !p.wrappedValue.streakOnly {
             Section {

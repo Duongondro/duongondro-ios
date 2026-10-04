@@ -79,17 +79,6 @@ extension UIColor {
 }
 
 extension View {
-    /// Modern feedback where available, plain haptics on iOS 16. One layout per
-    /// screen; availability lives in helpers like this, never in forked screens.
-    @ViewBuilder
-    func countTapFeedback<T: Equatable>(trigger: T) -> some View {
-        if #available(iOS 17.0, *) {
-            sensoryFeedback(.increase, trigger: trigger)
-        } else {
-            onChange(of: trigger) { _ in UIImpactFeedbackGenerator(style: .light).impactOccurred() }
-        }
-    }
-
     /// Lists and forms on the warm ground with card-coloured rows.
     func themedList() -> some View {
         scrollContentBackground(.hidden)

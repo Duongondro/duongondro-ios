@@ -52,6 +52,7 @@ struct PracticeView: View {
             .padding(.bottom, Theme.Space.xxl)
         }
         .countTapFeedback(trigger: taps)
+        .successFeedback(trigger: model.practisedToday(practiceID))
         .background(Theme.ground.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: Binding(get: { customAmount != nil }, set: { if !$0 { customAmount = nil } })) {
@@ -85,6 +86,7 @@ struct PracticeView: View {
             }
             HStack(spacing: Theme.Space.xs) {
                 Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
+                    .symbolBounce(value: streak.current)
                 Text("\(streak.current) days")
                 if streak.longest > streak.current {
                     Text("· longest \(streak.longest)").foregroundStyle(Theme.muted)
@@ -119,8 +121,7 @@ private struct StartRow: View {
                 Label("Start", systemImage: "play.fill")
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.bordered)
-            .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.card))
+            .secondaryButtonStyle()
         }
     }
 }
@@ -141,7 +142,7 @@ private struct UndoBar: View {
             Button("Undo") { model.undo() }
                 .bold()
         }
-        .cardStyle()
+        .floatingBar()
         .transition(.opacity)
     }
 }
@@ -162,8 +163,7 @@ private struct BigButton: View {
             .foregroundStyle(Theme.onAccent)
             .frame(maxWidth: .infinity, minHeight: 88)
         }
-        .buttonStyle(.borderedProminent)
-        .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.bigButton))
+        .primaryButtonStyle(radius: Theme.Radius.bigButton)
     }
 }
 
@@ -216,9 +216,9 @@ struct AfterMidnightSheet: View {
             Button("Count it for \(prompt.sheet.alternative.weekdayName(in: tz)) instead") {
                 model.choose(day: prompt.sheet.alternative, for: prompt)
             }
-            .buttonStyle(.bordered)
+            .secondaryButtonStyle()
             Button("Keep \(prompt.sheet.countedFor.weekdayName(in: tz))") { dismiss() }
-                .buttonStyle(.borderedProminent)
+                .primaryButtonStyle()
         }
         .multilineTextAlignment(.center)
         .padding(Theme.Space.xl)

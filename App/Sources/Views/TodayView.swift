@@ -18,6 +18,7 @@ struct TodayView: View {
                         PracticeRow(practice: practice)
                     }
                     .buttonStyle(.plain)
+                    .edgeScrollTransition()
                 }
             }
             .padding(.horizontal, Theme.Space.xl)
@@ -36,6 +37,7 @@ private struct HeadlineStreakCard: View {
             Image(systemName: "flame.fill")
                 .font(Typography.title)
                 .foregroundStyle(Theme.flame)
+                .symbolBounce(value: result.current)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: Theme.Space.xs) {
                 Text("\(result.current) days")
@@ -69,6 +71,7 @@ private struct PracticeRow: View {
             Image(systemName: done ? "checkmark.circle.fill" : "circle")
                 .font(.title2)
                 .foregroundStyle(done ? Theme.accent : Theme.muted)
+                .symbolBounce(value: done)
                 .accessibilityLabel(done ? Text("Done today") : Text("Not yet today"))
             VStack(alignment: .leading, spacing: 2) {
                 PracticeName(practice: practice.practice)
