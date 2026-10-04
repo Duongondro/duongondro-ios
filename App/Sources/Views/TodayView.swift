@@ -81,10 +81,13 @@ private struct PracticeRow: View {
             }
             Spacer(minLength: Theme.Space.s)
             if streak.current > 0 {
-                Label("\(streak.current)", systemImage: "flame.fill")
+                Label {
+                    Text("\(streak.current)").foregroundStyle(Theme.flameText)
+                } icon: {
+                    Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
+                }
                     .labelStyle(.titleAndIcon)
                     .font(Typography.headline)
-                    .foregroundStyle(Theme.flame)
                     .accessibilityLabel(Text("\(streak.current) days"))
             }
             Image(systemName: "chevron.right").foregroundStyle(Theme.muted).accessibilityHidden(true)

@@ -23,6 +23,8 @@ enum Theme {
     static let streakCard = Color(light: 0xF6E9EB, dark: 0x4A1C27)
     /// Streak flames are gold, never orange.
     static let flame = Color(light: 0xC9952B, dark: 0xE3B341)
+    /// Streak numbers as text: gold only reads on dark (2.7:1 on white), so burgundy in light mode.
+    static let flameText = Color(light: 0x7A1F2E, dark: 0xE3B341)
     /// Welcome follows the system appearance: warm off-white with a burgundy
     /// button, or near-black burgundy with a gold one (design: Look).
     static let welcomeGround = Color(light: 0xF7F3F1, dark: 0x1E0C11)
