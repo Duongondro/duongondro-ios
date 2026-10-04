@@ -31,7 +31,7 @@ private struct PracticeRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(practice.name).font(.headline)
+                Text(practice.name).font(Typography.headline)
                 if let second = practice.secondName {
                     Text(second).font(.subheadline).foregroundStyle(Theme.muted)
                 }
@@ -53,7 +53,7 @@ struct PracticeView: View {
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 4) {
-                Text(practice.name).font(.largeTitle.bold())
+                Text(practice.name).font(Typography.largeTitle)
                 if let second = practice.secondName {
                     Text(second).foregroundStyle(Theme.muted)
                 }
@@ -78,7 +78,7 @@ struct PracticeView: View {
                 }
             } label: {
                 Text("+\(mala)")
-                    .font(.system(size: 40, weight: .heavy, design: .rounded))
+                    .font(Typography.count)
                     .frame(maxWidth: .infinity, minHeight: 88)
             }
             .buttonStyle(.borderedProminent)

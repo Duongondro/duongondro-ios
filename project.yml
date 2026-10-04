@@ -31,6 +31,8 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         ITSAppUsesNonExemptEncryption: true
         CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu]
+        # Resources in groups are copied flat into the bundle root, so bare names.
+        UIAppFonts: [IBMPlexSans-SemiBold.ttf, IBMPlexSans-Bold.ttf]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.duongondro.ios

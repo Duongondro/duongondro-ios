@@ -18,6 +18,29 @@ enum Theme {
     }
 }
 
+/// Headings use IBM Plex Sans (SemiBold, Bold; registered in project.yml as
+/// UIAppFonts). Prose, buttons and labels keep the system font. Both scale with
+/// Dynamic Type. Codes and recovery words use `.monospaced`, never a bundled face.
+/// PostScript names are read from the font files: the SemiBold file's is `IBMPlexSans-SmBld`.
+enum Typography {
+    static let semiBold = "IBMPlexSans-SmBld"
+    static let bold = "IBMPlexSans-Bold"
+
+    static func heading(_ size: CGFloat, relativeTo style: Font.TextStyle = .title2) -> Font {
+        .custom(semiBold, size: size, relativeTo: style)
+    }
+
+    static func headingBold(_ size: CGFloat, relativeTo style: Font.TextStyle = .title2) -> Font {
+        .custom(bold, size: size, relativeTo: style)
+    }
+
+    static var largeTitle: Font { headingBold(34, relativeTo: .largeTitle) }
+    static var title: Font { heading(22, relativeTo: .title2) }
+    static var headline: Font { heading(17, relativeTo: .headline) }
+    /// Big numbers such as the +mala button.
+    static var count: Font { headingBold(40, relativeTo: .largeTitle) }
+}
+
 extension Color {
     init(light: UInt32, dark: UInt32) {
         self.init(UIColor { traits in
