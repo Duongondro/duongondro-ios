@@ -48,6 +48,13 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(r?.lifetime, 4 * 111_111 + 35_556)
     }
 
+    func testOpeningCountClampsWithinALaterRound() {
+        XCTAssertEqual(TrackedPractice.openingCount(round: 1, inRound: 350_000, target: 111_111), 350_000)
+        XCTAssertEqual(TrackedPractice.openingCount(round: 2, inRound: 350_000, target: 111_111), 2 * 111_111 - 1)
+        XCTAssertEqual(TrackedPractice.openingCount(round: 0, inRound: 5, target: 111_111), 5)
+        XCTAssertEqual(TrackedPractice.openingCount(round: 3, inRound: 5, target: nil), 5)
+    }
+
     func testStreakOnlyNeverForNgondro() {
         let ds = Catalogue.builtIn.first { $0.id == "dorje-sempa" }!
         XCTAssertFalse(TrackedPractice(practice: ds, streakOnly: true).streakOnly)

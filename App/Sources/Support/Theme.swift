@@ -22,6 +22,10 @@ enum Theme {
     static let streakCard = Color(light: 0xF6E9EB, dark: 0x4A1C27)
     /// Streak flames are gold, never orange.
     static let flame = Color(light: 0xC9952B, dark: 0xE3B341)
+    /// Welcome follows the system appearance: warm off-white with a burgundy
+    /// button, or near-black burgundy with a gold one (design: Look).
+    static let welcomeGround = Color(light: 0xF7F3F1, dark: 0x1E0C11)
+    static let welcomePrimary = Color(light: 0x7A1F2E, dark: 0xE3B341)
     /// Text and icons on an accent-filled button.
     static let onAccent = Color(light: 0xFFFFFF, dark: 0x120A0C)
 
@@ -84,6 +88,17 @@ extension View {
         } else {
             onChange(of: trigger) { _ in UIImpactFeedbackGenerator(style: .light).impactOccurred() }
         }
+    }
+
+    /// Lists and forms on the warm ground with card-coloured rows.
+    func themedList() -> some View {
+        scrollContentBackground(.hidden)
+            .background(Theme.ground.ignoresSafeArea())
+    }
+
+    /// Card-coloured rows; apply to a Group around a list's sections.
+    func themedRows() -> some View {
+        listRowBackground(Theme.card)
     }
 
     func cardStyle() -> some View {

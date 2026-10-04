@@ -39,5 +39,6 @@ struct RootView: View {
         .sheet(item: $model.afterMidnight) { prompt in
             AfterMidnightSheet(prompt: prompt)
         }
+        .onChange(of: model.snapshot) { _ in Reminders.reschedule(model) }
     }
 }

@@ -30,6 +30,8 @@ targets:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: Duongöndro
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         ITSAppUsesNonExemptEncryption: true
@@ -47,10 +49,12 @@ targets:
         basedOnDependencyAnalysis: false
         outputFiles:
           - $(DERIVED_FILE_DIR)/BuildInfo.plist
+          - $(DERIVED_FILE_DIR)/Contributors.json
     postBuildScripts:
       - name: Copy build identity
         script: |
           cp "$DERIVED_FILE_DIR/BuildInfo.plist" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/BuildInfo.plist"
+          cp "$DERIVED_FILE_DIR/Contributors.json" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Contributors.json"
         basedOnDependencyAnalysis: false
 schemes:
   Duongondro:

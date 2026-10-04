@@ -84,9 +84,14 @@ public struct TrackedPractice: Identifiable, Hashable, Codable, Sendable {
     }
 
     /// The opening count for someone in `round` (1-based) with `inRound` done in it.
+    /// In round 1 the count may run past the target (a lifetime total typed in
+    /// one go, which then lands in its own round); in a later round it is the
+    /// count within that round, so it stops short of the target.
     public static func openingCount(round: Int, inRound: Int, target: Int?) -> Int {
         guard let target, target > 0 else { return max(0, inRound) }
-        return max(0, round - 1) * target + max(0, inRound)
+        let r = max(1, round)
+        let count = r > 1 ? min(max(0, inRound), target - 1) : max(0, inRound)
+        return (r - 1) * target + count
     }
 
     /// Lifetime total: the opening count plus every logged session.
