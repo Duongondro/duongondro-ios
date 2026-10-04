@@ -109,7 +109,7 @@ private struct StartRow: View {
         if let started = model.started[practiceID] {
             HStack {
                 Image(systemName: "timer").foregroundStyle(Theme.accent)
-                Text("Started \(started.shortTime) · ") + Text(started, style: .timer)
+                Text("Started \(started.shortTime) · \(Text(started, style: .timer))")
                 Spacer()
                 Button("Cancel") { model.cancelStart(practiceID) }
             }
@@ -144,6 +144,15 @@ private struct UndoBar: View {
         }
         .floatingBar()
         .transition(.opacity)
+        .onAppear { announce() }
+        .onChange(of: pending.amount) { _ in announce() }
+    }
+
+    /// VoiceOver hears that something was added and Undo is there.
+    private func announce() {
+        let text = streakOnly ? String(localized: "Marked done. Undo available.")
+                              : String(localized: "Added \(pending.amount.grouped). Undo available.")
+        UIAccessibility.post(notification: .announcement, argument: text)
     }
 }
 
@@ -161,7 +170,7 @@ private struct BigButton: View {
             }
             .font(Typography.count)
             .foregroundStyle(Theme.onAccent)
-            .frame(maxWidth: .infinity, minHeight: 88)
+            .frame(maxWidth: .infinity, minHeight: Theme.Size.bigButton)
         }
         .primaryButtonStyle(radius: Theme.Radius.bigButton)
     }
@@ -173,7 +182,7 @@ private struct CustomAmountSheet: View {
     @State private var text = ""
     @FocusState private var focused: Bool
 
-    private var amount: Int? { Int(text.filter(\.isNumber)).flatMap { $0 > 0 ? $0 : nil } }
+    private var amount: Int? { Int(text.filter { $0.isASCII && $0.isNumber }.prefix(9)).flatMap { $0 > 0 ? $0 : nil } }
 
     var body: some View {
         NavigationStack {

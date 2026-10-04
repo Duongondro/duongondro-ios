@@ -62,4 +62,26 @@ final class AppDatabaseTests: XCTestCase {
         try db.eraseAll()
         XCTAssertEqual(try db.snapshot(), Snapshot())
     }
+
+    /// The on-disk pool, with an observation running as in the app: erasing
+    /// succeeds and leaves no rows behind in the file or its WAL.
+    func testEraseAllOnDiskWithObserver() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let path = dir.appendingPathComponent("t.sqlite").path
+        let db = try AppDatabase.open(path: path)
+        try db.save(TrackedPractice(practice: practice("mandala")))
+        try db.insert(Session(practiceID: "mandala", amount: 777_001, startedAt: .now, startExact: true, timeZoneID: ams, loggedAt: .now))
+        let seen = expectation(description: "observed")
+        seen.assertForOverFulfill = false
+        let cancellable = AppDatabase.snapshotObservation().start(in: db.writer, onError: { _ in }, onChange: { _ in seen.fulfill() })
+        wait(for: [seen], timeout: 2)
+        try db.eraseAll()
+        XCTAssertEqual(try db.snapshot(), Snapshot())
+        cancellable.cancel()
+        for suffix in ["", "-wal"] {
+            let bytes = (try? Data(contentsOf: URL(fileURLWithPath: path + suffix))) ?? Data()
+            XCTAssertNil(bytes.range(of: Data("mandala".utf8)), "no trace in \(suffix.isEmpty ? "file" : suffix)")
+        }
+    }
 }

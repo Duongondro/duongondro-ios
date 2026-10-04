@@ -65,7 +65,7 @@ private struct GeneralSection: View {
                 }))
             if let minutes = model.preferences.reminderMinutes {
                 DatePicker("Time", selection: Binding(
-                    get: { Calendar.current.startOfDay(for: Date()).addingTimeInterval(TimeInterval(minutes * 60)) },
+                    get: { Calendar.current.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: Date()) ?? Date() },
                     set: { d in
                         let c = Calendar.current.dateComponents([.hour, .minute], from: d)
                         model.update { $0.reminderMinutes = (c.hour ?? 20) * 60 + (c.minute ?? 0) }

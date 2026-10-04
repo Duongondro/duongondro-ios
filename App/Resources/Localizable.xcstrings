@@ -1,30 +1,72 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "%lld days" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : { "stringUnit" : { "state" : "translated", "value" : "%lld day" } },
-              "other" : { "stringUnit" : { "state" : "translated", "value" : "%lld days" } }
+  "sourceLanguage": "en",
+  "strings": {
+    "%lld days": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
             }
           }
         }
       }
     },
-    "· longest %lld" : {
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : { "stringUnit" : { "state" : "translated", "value" : "· longest %lld day" } },
-              "other" : { "stringUnit" : { "state" : "translated", "value" : "· longest %lld days" } }
+    "Your streak of %lld days ends at midnight.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Your streak of %lld day ends at midnight."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Your streak of %lld days ends at midnight."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "· longest %lld": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· longest %lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· longest %lld days"
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

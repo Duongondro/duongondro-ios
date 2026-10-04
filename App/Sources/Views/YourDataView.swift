@@ -18,7 +18,7 @@ struct YourDataView: View {
                 }
                 Section {
                     NavigationLink { DeleteEverythingView() } label: {
-                        Label("Delete everything", systemImage: "trash").foregroundStyle(.red)
+                        Label("Delete everything", systemImage: "trash").foregroundStyle(Theme.destructive)
                     }
                 } footer: {
                     Text("Removes all your data from this phone. It cannot be undone.")
@@ -37,11 +37,12 @@ struct YourDataView: View {
     }
 
     private func export() {
-        // Anything still in the undo window belongs in the export.
+        // Anything still in the undo window belongs in the export. The published
+        // snapshot updates asynchronously, so read the database directly.
         model.commitPending()
         do {
             // Local mode: no account, so no server half (GET /api/me/export arrives with phase 3).
-            let zip = try DataExport.zip(snapshot: model.snapshot, server: nil, covers: Covers.all(),
+            let zip = try DataExport.zip(snapshot: try model.database.snapshot(), server: nil, covers: Covers.all(),
                                          appVersion: BuildIdentity.current.version)
             exported = ExportedFile(url: try ExportFile.write(zip, name: DataExport.fileName()))
         } catch {

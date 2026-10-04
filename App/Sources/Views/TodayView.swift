@@ -73,7 +73,7 @@ private struct PracticeRow: View {
                 .foregroundStyle(done ? Theme.accent : Theme.muted)
                 .symbolBounce(value: done)
                 .accessibilityLabel(done ? Text("Done today") : Text("Not yet today"))
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                 PracticeName(practice: practice.practice)
                 ProgressLine(practice: practice)
                     .font(.footnote)
@@ -101,7 +101,7 @@ struct PracticeName: View {
     var large = false
 
     var body: some View {
-        VStack(alignment: large ? .center : .leading, spacing: 2) {
+        VStack(alignment: large ? .center : .leading, spacing: Theme.Space.xxs) {
             Text(practice.name)
                 .font(large ? Typography.title : Typography.headline)
                 .multilineTextAlignment(large ? .center : .leading)

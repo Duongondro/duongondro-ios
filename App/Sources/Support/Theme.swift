@@ -4,6 +4,7 @@ import SwiftUI
 enum Theme {
     /// Spacing steps, so views carry no layout literals either.
     enum Space {
+        static let xxs: CGFloat = 2
         static let xs: CGFloat = 4
         static let s: CGFloat = 8
         static let m: CGFloat = 12
@@ -26,8 +27,20 @@ enum Theme {
     /// button, or near-black burgundy with a gold one (design: Look).
     static let welcomeGround = Color(light: 0xF7F3F1, dark: 0x1E0C11)
     static let welcomePrimary = Color(light: 0x7A1F2E, dark: 0xE3B341)
+    /// Destructive actions and warnings.
+    static let destructive = Color(light: 0xB3261E, dark: 0xF2827A)
     /// Text and icons on an accent-filled button.
     static let onAccent = Color(light: 0xFFFFFF, dark: 0x120A0C)
+
+    /// Fixed control sizes.
+    enum Size {
+        /// The +mala button's minimum height.
+        static let bigButton: CGFloat = 88
+        /// Full-width buttons in onboarding.
+        static let button: CGFloat = 50
+        /// The entry part of a number field.
+        static let numberField: CGFloat = 120
+    }
 
     /// Small, platform-specific corner radii (design: Look).
     enum Radius {
@@ -91,7 +104,7 @@ extension View {
     }
 
     func cardStyle() -> some View {
-        padding(16)
+        padding(Theme.Space.l)
             .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous).stroke(Theme.cardBorder, lineWidth: 1))
     }

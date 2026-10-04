@@ -8,9 +8,12 @@ import DuongondroStore
 /// after the server confirms; in local mode there is nothing on any server.
 @MainActor
 enum Purge {
+    /// Every step runs even if an earlier one fails; the first error is thrown
+    /// at the end, so a database error never leaves keys or files behind.
     static func run(_ model: AppModel) throws {
         model.discardInFlight()
-        try model.database.eraseAll()
+        var failure: Error?
+        do { try model.database.eraseAll() } catch { failure = error }
         deleteKeychainItems()
         let fm = FileManager.default
         for folder in [Covers.folderURL(), ExportFile.folderURL()] {
@@ -19,6 +22,7 @@ enum Purge {
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
         center.removeAllDeliveredNotifications()
+        if let failure { throw failure }
     }
 
     /// Every Keychain item this app owns, the device key included (a Secure
@@ -26,7 +30,9 @@ enum Purge {
     static func deleteKeychainItems() {
         for itemClass in [kSecClassGenericPassword, kSecClassInternetPassword, kSecClassKey,
                           kSecClassCertificate, kSecClassIdentity] {
-            SecItemDelete([kSecClass as String: itemClass] as CFDictionary)
+            // Synchronizable "any" reaches iCloud Keychain items too.
+            SecItemDelete([kSecClass as String: itemClass,
+                           kSecAttrSynchronizable as String: kSecAttrSynchronizableAny] as CFDictionary)
         }
     }
 }

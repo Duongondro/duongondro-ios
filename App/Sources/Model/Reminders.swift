@@ -24,21 +24,29 @@ enum Reminders {
         center.removePendingNotificationRequests(withIdentifiers: days.map { prefix + $0.description })
         guard let minutes = model.preferences.reminderMinutes, !model.snapshot.activePractices.isEmpty else { return }
         let practisedToday = model.snapshot.sessions.contains { $0.day == today }
-        let streak = model.headline(now: now).current
 
         for day in days {
             if day == today && practisedToday { continue }
-            let fire = day.startOfDay(in: tz).addingTimeInterval(TimeInterval(minutes * 60))
-            guard fire > now else { continue }
+            guard let fire = fireDate(on: day, minutes: minutes, in: tz), fire > now else { continue }
+            // The streak as it will stand when the reminder fires: tomorrow's is
+            // still alive then only if today gets logged.
+            let streak = model.headline(now: fire).current
             let content = UNMutableNotificationContent()
             content.title = String(localized: "Nothing logged today")
-            content.body = day == today && streak > 0
-                ? String(localized: "Your \(streak)-day streak ends at midnight.")
+            content.body = streak > 0
+                ? String(localized: "Your streak of \(streak) days ends at midnight.")
                 : String(localized: "A short session still counts.")
             content.sound = .default
             let comps = Calendar.gregorian(in: tz).dateComponents([.year, .month, .day, .hour, .minute], from: fire)
             let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
             center.add(UNNotificationRequest(identifier: prefix + day.description, content: content, trigger: trigger))
         }
+    }
+
+    /// The wall-clock time `minutes` after midnight on `day`, built from
+    /// components so a DST change that day does not shift it by an hour.
+    static func fireDate(on day: CivilDate, minutes: Int, in tz: TimeZone) -> Date? {
+        Calendar.gregorian(in: tz).date(from: DateComponents(year: day.year, month: day.month, day: day.day,
+                                                             hour: minutes / 60, minute: minutes % 60))
     }
 }

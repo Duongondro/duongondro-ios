@@ -166,7 +166,7 @@ struct PrimaryButton: View {
             Text(title)
                 .font(.headline)
                 .foregroundStyle(Theme.onAccent)
-                .frame(maxWidth: .infinity, minHeight: 50)
+                .frame(maxWidth: .infinity, minHeight: Theme.Size.button)
         }
         .primaryButtonStyle()
         .tint(fill)
@@ -181,7 +181,7 @@ private struct ChoiceButton: View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
-                .frame(maxWidth: .infinity, minHeight: 50)
+                .frame(maxWidth: .infinity, minHeight: Theme.Size.button)
         }
         .secondaryButtonStyle()
     }
@@ -347,7 +347,7 @@ struct CustomPracticeSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Add") {
                         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-                        let goal = Int(target.filter(\.isNumber)).flatMap { $0 > 0 ? $0 : nil }
+                        let goal = Int(target.filter { $0.isASCII && $0.isNumber }.prefix(9)).flatMap { $0 > 0 ? $0 : nil }
                         let p = Practice(id: "custom-" + UUID().uuidString.lowercased(), name: trimmed, group: .anyTime,
                                          target: streakOnly ? nil : goal, streakOnlyAllowed: true, isCustom: true)
                         onAdd(p, streakOnly)
@@ -435,10 +435,10 @@ struct NumberField: View {
             Spacer(minLength: Theme.Space.s)
             TextField("0", text: Binding(
                 get: { value == 0 ? "" : String(value) },
-                set: { value = Int($0.filter(\.isNumber).prefix(9)) ?? 0 }))
+                set: { value = Int($0.filter { $0.isASCII && $0.isNumber }.prefix(9)) ?? 0 }))
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.trailing)
-                .frame(maxWidth: 120)
+                .frame(maxWidth: Theme.Size.numberField)
         }
     }
 }

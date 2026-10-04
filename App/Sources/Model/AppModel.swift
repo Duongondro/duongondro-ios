@@ -13,12 +13,20 @@ final class AppModel: ObservableObject {
     @Published private(set) var started: [String: Date] = [:]
     /// A session just written whose estimated start fell before midnight.
     @Published var afterMidnight: AfterMidnightPrompt?
-    /// Set when the database could not be opened from disk.
+    /// Set when a read or write failed; shown in a banner.
     @Published private(set) var storageError: String?
+    /// False when the file could not be opened and the app runs on an in-memory
+    /// database: logging is blocked then, since nothing would survive a relaunch.
+    @Published private(set) var persistent = true
+    /// Bumped on returning to the foreground and at a new day (significant time
+    /// change), so "today" and streaks re-render after a night in the background.
+    @Published private(set) var clock = Date()
 
     let database: AppDatabase
     private var observation: SnapshotObservation?
     private var closeTask: Task<Void, Never>?
+    /// The Start tap that belongs to the open undo window, captured when it opened.
+    private var pendingStart: Date?
 
     init(database: AppDatabase) {
         self.database = database
@@ -33,6 +41,7 @@ final class AppModel: ObservableObject {
             return AppModel(database: try AppDatabase.openOnDisk())
         } catch {
             let model = AppModel(database: try! AppDatabase.inMemory())
+            model.persistent = false
             model.storageError = error.localizedDescription
             return model
         }
@@ -81,12 +90,14 @@ final class AppModel: ObservableObject {
     /// +mala, +custom amount or "done today" (0). Opens or extends the undo window;
     /// nothing is written until it closes.
     func add(_ amount: Int, to practiceID: String, at now: Date = Date()) {
+        guard persistent else { return }
         if var p = pending, p.practiceID == practiceID {
             p.add(amount, at: now)
             pending = p
         } else {
             commitPending()
             pending = PendingLog(practiceID: practiceID, amount: amount, at: now)
+            pendingStart = started[practiceID]
         }
         scheduleClose()
     }
@@ -95,6 +106,7 @@ final class AppModel: ObservableObject {
     func undo() {
         closeTask?.cancel()
         pending = nil
+        pendingStart = nil
     }
 
     /// Writes the pending session now: the window closed, another practice was
@@ -103,14 +115,17 @@ final class AppModel: ObservableObject {
         closeTask?.cancel()
         guard let p = pending else { return }
         pending = nil
-        let tapped = started[p.practiceID]
+        // The Start tap from when the window opened; one tapped during the window
+        // is for the next session and stays running.
+        let tapped = pendingStart
+        pendingStart = nil
         let startedAt = SessionStart.estimate(loggedAt: p.startedAt, tappedStart: tapped,
                                               timedSessionLengths: SessionStart.timedLengths(snapshot.sessions))
         let session = Session(practiceID: p.practiceID, amount: p.amount, startedAt: startedAt,
                               startExact: tapped != nil, timeZoneID: TimeZone.current.identifier, loggedAt: p.startedAt)
         do {
             try database.insert(session)
-            started[p.practiceID] = nil
+            if let tapped, started[p.practiceID] == tapped { started[p.practiceID] = nil }
             if let sheet = AfterMidnight.check(session) {
                 afterMidnight = AfterMidnightPrompt(session: session, sheet: sheet)
             }
@@ -121,7 +136,7 @@ final class AppModel: ObservableObject {
 
     func choose(day: CivilDate, for prompt: AfterMidnightPrompt) {
         let startDay = CivilDate.of(prompt.session.startedAt, in: prompt.session.timeZone)
-        try? database.choose(day: day == startDay ? nil : day, forSession: prompt.session.id)
+        perform { try $0.choose(day: day == startDay ? nil : day, forSession: prompt.session.id) }
         afterMidnight = nil
     }
 
@@ -140,9 +155,18 @@ final class AppModel: ObservableObject {
     func discardInFlight() {
         closeTask?.cancel()
         pending = nil
+        pendingStart = nil
         started = [:]
         afterMidnight = nil
     }
+
+    /// Re-renders date-dependent views and reschedules reminders.
+    func tick(now: Date = Date()) {
+        clock = now
+        Reminders.reschedule(self, now: now)
+    }
+
+    func dismissStorageError() { storageError = nil }
 
     // MARK: - Practices and preferences
 

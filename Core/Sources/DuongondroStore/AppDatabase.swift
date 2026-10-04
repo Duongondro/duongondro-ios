@@ -33,9 +33,14 @@ public final class AppDatabase: Sendable {
     }
 
     public static func openOnDisk() throws -> AppDatabase {
+        try open(path: folderURL().appendingPathComponent("duongondro.sqlite").path)
+    }
+
+    /// A DatabasePool at `path`; tests use it to exercise the on-disk paths.
+    public static func open(path: String) throws -> AppDatabase {
         var config = Configuration()
         config.foreignKeysEnabled = true
-        let path = try folderURL().appendingPathComponent("duongondro.sqlite").path
+        config.busyMode = .timeout(2)
         return try AppDatabase(DatabasePool(path: path, configuration: config))
     }
 
@@ -213,7 +218,10 @@ public final class AppDatabase: Sendable {
         }
         try writer.vacuum()
         if let pool = writer as? DatabasePool {
-            try pool.writeWithoutTransaction { try $0.checkpoint(.truncate) }
+            // The busy timeout lets a reader (the snapshot observation) finish.
+            // Should it still be busy, the rows are already deleted and SQLite's
+            // automatic checkpoint folds the WAL in later, so the purge goes on.
+            _ = try? pool.writeWithoutTransaction { try $0.checkpoint(.truncate) }
         }
     }
 

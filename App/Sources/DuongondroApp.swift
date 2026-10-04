@@ -14,8 +14,13 @@ struct DuongondroApp: App {
                 .tint(Theme.accent)
         }
         .onChange(of: scenePhase) { phase in
-            // A session in its undo window is written before the app can be killed.
-            if phase != .active { model.commitPending() }
+            switch phase {
+            // A session in its undo window is written before the app can be
+            // killed; .inactive (Control Center, a call banner) keeps the window.
+            case .background: model.commitPending()
+            case .active: model.tick()
+            default: break
+            }
         }
     }
 }
@@ -40,5 +45,38 @@ struct RootView: View {
             AfterMidnightSheet(prompt: prompt)
         }
         .onChange(of: model.snapshot) { _ in Reminders.reschedule(model) }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
+            model.tick()
+        }
+        .safeAreaInset(edge: .top) {
+            if let error = model.storageError {
+                StorageBanner(message: error, persistent: model.persistent) { model.dismissStorageError() }
+            }
+        }
+    }
+}
+
+/// Says plainly when data is not being saved, instead of losing it quietly.
+private struct StorageBanner: View {
+    let message: String
+    let persistent: Bool
+    let dismiss: () -> Void
+
+    var body: some View {
+        HStack(alignment: .top, spacing: Theme.Space.m) {
+            Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(Theme.destructive)
+            VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                Text(persistent ? "Something could not be saved." : "The database could not be opened. Nothing you log now would be kept, so logging is off until the app restarts.")
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(verbatim: message).font(.footnote).foregroundStyle(Theme.muted)
+            }
+            Spacer(minLength: 0)
+            if persistent {
+                Button { dismiss() } label: { Image(systemName: "xmark") }
+                    .accessibilityLabel(Text("Dismiss"))
+            }
+        }
+        .cardStyle()
+        .padding(.horizontal, Theme.Space.l)
     }
 }
