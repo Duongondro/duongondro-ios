@@ -81,9 +81,11 @@ struct FriendsView: View {
 
     /// One line per friend: the practice they did today, or the streak that is
     /// still waiting for today, whichever is newest.
-    private var news: [NewsItem] {
+    private var news: [NewsItem] { Self.news(account.friends) }
+
+    static func news(_ friends: [Social.FriendView]) -> [NewsItem] {
         let today = CivilDate.of(Date(), in: .current)
-        return account.friends.compactMap { f -> NewsItem? in
+        return friends.compactMap { f -> NewsItem? in
             let live = f.streaks.filter { $0.current > 0 && $0.deadline > Date() }
             if let done = live.filter({ $0.day == today }).max(by: { $0.seq < $1.seq }) {
                 return NewsItem(friend: f, streak: done, doneToday: true)
@@ -110,7 +112,7 @@ struct FriendsView: View {
     }
 }
 
-private struct NewsRow: View {
+struct NewsRow: View {
     @EnvironmentObject private var account: AccountModel
     let item: FriendsView.NewsItem
 
@@ -165,7 +167,7 @@ private struct NewsRow: View {
 }
 
 /// A friend's initial on a soft disc, as in the mockup.
-private struct Initial: View {
+struct Initial: View {
     let name: String
 
     var body: some View {

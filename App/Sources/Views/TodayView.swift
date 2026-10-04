@@ -8,6 +8,7 @@ import DuongondroStore
 /// practice.
 struct TodayView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var account: AccountModel
 
     var body: some View {
         ScrollView {
@@ -40,6 +41,16 @@ struct TodayView: View {
                         .buttonStyle(.plain)
                         .edgeScrollTransition()
                     }
+                }
+                // The mockup's line from Friends: the latest friend who finished today.
+                if let latest = FriendsView.news(account.friends).first(where: \.doneToday) {
+                    Button { model.tab = .friends } label: {
+                        NewsRow(item: latest)
+                            .padding(.horizontal, Theme.Space.l)
+                            .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, Theme.Space.m)
                 }
             }
             .padding(.horizontal, Theme.Space.xl)
@@ -205,5 +216,8 @@ struct ProgressLine: View {
 }
 
 #Preview {
-    NavigationStack { TodayView() }.environmentObject(AppModel.preview())
+    let model = AppModel.preview()
+    return NavigationStack { TodayView() }
+        .environmentObject(model)
+        .environmentObject(AccountModel(database: model.database))
 }

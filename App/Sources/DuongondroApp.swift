@@ -29,7 +29,10 @@ struct DuongondroApp: App {
             case .background: model.commitPending()
             case .active:
                 model.tick()
-                Task { await account.syncNow() }
+                Task {
+                    await account.syncNow()
+                    await account.refreshFriends()
+                }
             default: break
             }
         }
@@ -43,14 +46,17 @@ struct RootView: View {
     var body: some View {
         Group {
             if model.preferences.onboarded {
-                TabView {
+                TabView(selection: $model.tab) {
                     // The mockup's tabs: Today, Friends, You.
                     NavigationStack { TodayView() }
                         .tabItem { Label("Today", systemImage: "clock") }
+                        .tag(AppModel.Tab.today)
                     NavigationStack { FriendsView() }
                         .tabItem { Label("Friends", systemImage: "person.2") }
+                        .tag(AppModel.Tab.friends)
                     NavigationStack { SettingsView() }
                         .tabItem { Label("You", systemImage: "person") }
+                        .tag(AppModel.Tab.you)
                 }
             } else {
                 OnboardingView()

@@ -22,6 +22,10 @@ final class AppModel: ObservableObject {
     /// change), so "today" and streaks re-render after a night in the background.
     @Published private(set) var clock = Date()
 
+    /// The selected tab, so a screen can send the person to another.
+    enum Tab: Hashable { case today, friends, you }
+    @Published var tab = Tab.today
+
     let database: AppDatabase
     private var observation: SnapshotObservation?
     private var closeTask: Task<Void, Never>?
