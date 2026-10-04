@@ -1,5 +1,5 @@
 # One simulator only: whatever iPhone is already installed. Never download runtimes.
-SIM ?= $(shell xcrun simctl list devices available | grep -m1 -o 'iPhone[^(]*' | sed 's/ *$$//')
+SIM ?= $(shell xcrun simctl list devices available | grep -m1 -oE 'iPhone[[:alnum:] ]*' | sed 's/ *$$//')
 
 .PHONY: core-test project build test release
 
