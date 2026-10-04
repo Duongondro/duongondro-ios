@@ -2,30 +2,51 @@ import SwiftUI
 import DuongondroCore
 import DuongondroStore
 
-/// Today: the headline streak and the daily practices. No logging here, so a
-/// stray tap while scrolling never adds a mala to the wrong practice.
+/// Today (design canvas "Today"): the date and title, the headline streak on a
+/// burgundy card, then the daily practices as cards with their progress. No
+/// logging here, so a stray tap while scrolling never adds a mala to the wrong
+/// practice.
 struct TodayView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Theme.Space.m) {
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                    Text(model.clock.formatted(.dateTime.weekday(.wide).day().month(.wide)))
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Theme.muted)
+                    Text("Today")
+                        .font(Typography.largeTitle)
+                        .accessibilityAddTraits(.isHeader)
+                }
+                .padding(.top, Theme.Space.l)
                 HeadlineStreakCard(result: model.headline())
-                ForEach(model.snapshot.activePractices) { practice in
-                    NavigationLink {
-                        PracticeView(practiceID: practice.id)
-                    } label: {
-                        PracticeRow(practice: practice)
+                    .padding(.top, Theme.Space.m)
+                Text("Daily practices")
+                    .font(.footnote.weight(.bold))
+                    .textCase(.uppercase)
+                    .tracking(0.6)
+                    .foregroundStyle(Theme.muted)
+                    .padding(.top, Theme.Space.xl)
+                    .padding(.bottom, Theme.Space.s)
+                VStack(spacing: Theme.Space.s + Theme.Space.xxs) {
+                    ForEach(model.snapshot.activePractices) { practice in
+                        NavigationLink {
+                            PracticeView(practiceID: practice.id)
+                        } label: {
+                            PracticeCard(practice: practice)
+                        }
+                        .buttonStyle(.plain)
+                        .edgeScrollTransition()
                     }
-                    .buttonStyle(.plain)
-                    .edgeScrollTransition()
                 }
             }
             .padding(.horizontal, Theme.Space.xl)
-            .padding(.vertical, Theme.Space.m)
+            .padding(.bottom, Theme.Space.xl)
         }
         .background(Theme.ground.ignoresSafeArea())
-        .navigationTitle("Today")
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
@@ -33,67 +54,112 @@ private struct HeadlineStreakCard: View {
     let result: Streak.Result
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: Theme.Space.m) {
+        HStack(spacing: Theme.Space.m + Theme.Space.xxs) {
             Image(systemName: "flame.fill")
-                .font(Typography.title)
-                .foregroundStyle(Theme.flame)
+                .font(.system(size: Theme.Size.heroFlame))
+                .foregroundStyle(Theme.gold)
                 .symbolBounce(value: result.current)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: Theme.Space.xs) {
+            VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                 Text("\(result.current) days")
-                    .font(Typography.largeTitle)
-                if result.current > 0, let deadline = result.deadline {
-                    Text("Practise before \(CivilDate.of(deadline.addingTimeInterval(-1), in: .current).weekdayName()) ends")
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
+                    .font(Typography.headingBold(28, relativeTo: .title))
+                if result.current > 0 {
+                    Text("Practice streak · longest \(result.longest)")
+                        .font(.subheadline.weight(.medium))
+                        .opacity(0.9)
                 } else {
                     Text("Any practice today starts a streak.")
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
+                        .font(.subheadline.weight(.medium))
+                        .opacity(0.9)
                 }
             }
             Spacer(minLength: 0)
         }
-        .padding(Theme.Space.l)
+        .foregroundStyle(Theme.heroInk)
+        .padding(.vertical, Theme.Space.l)
+        .padding(.horizontal, Theme.Space.l + Theme.Space.xxs)
         .background(Theme.hero, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }
 
-private struct PracticeRow: View {
+/// One daily practice: the name with its streak, a progress bar for counted
+/// practices, and a line saying where it stands. A streak-only practice shows a
+/// filled check once done today.
+private struct PracticeCard: View {
     @EnvironmentObject private var model: AppModel
     let practice: TrackedPractice
 
     var body: some View {
         let streak = model.streak(of: practice.id)
         let done = model.practisedToday(practice.id)
+        let sessions = model.snapshot.sessions(of: practice.id)
+        let rounds = practice.streakOnly ? nil : practice.rounds(sessions: sessions)
         HStack(spacing: Theme.Space.m) {
-            Image(systemName: done ? "checkmark.circle.fill" : "circle")
-                .font(.title2)
-                .foregroundStyle(done ? Theme.accent : Theme.muted)
-                .symbolBounce(value: done)
-                .accessibilityLabel(done ? Text("Done today") : Text("Not yet today"))
-            VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                PracticeName(practice: practice.practice)
-                ProgressLine(practice: practice)
+            VStack(alignment: .leading, spacing: Theme.Space.xs + Theme.Space.xxs) {
+                HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
+                    Text(practice.practice.name)
+                        .font(.headline)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if streak.current > 0 {
+                        HStack(spacing: Theme.Space.xxs) {
+                            Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
+                            Text("\(streak.current)")
+                        }
+                        .font(.subheadline.weight(.bold))
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(Text("\(streak.current) days"))
+                    }
+                }
+                if let rounds, let target = practice.practice.target {
+                    Bar(fraction: Double(rounds.inRound) / Double(target))
+                }
+                Text(statusLine(rounds: rounds, sessions: sessions, done: done))
                     .font(.footnote)
                     .foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer(minLength: Theme.Space.s)
-            if streak.current > 0 {
-                Label {
-                    Text("\(streak.current)").foregroundStyle(Theme.flameText)
-                } icon: {
-                    Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
-                }
-                    .labelStyle(.titleAndIcon)
-                    .font(Typography.headline)
-                    .accessibilityLabel(Text("\(streak.current) days"))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            if practice.streakOnly && done {
+                Image(systemName: "checkmark")
+                    .font(.footnote.weight(.heavy))
+                    .foregroundStyle(Theme.onAccent)
+                    .frame(width: Theme.Size.checkBadge, height: Theme.Size.checkBadge)
+                    .background(Theme.accent, in: Circle())
+                    .accessibilityLabel(Text("Done today"))
+            } else {
+                Image(systemName: "chevron.right")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(Theme.muted)
+                    .accessibilityHidden(true)
             }
-            Image(systemName: "chevron.right").foregroundStyle(Theme.muted).accessibilityHidden(true)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .cardStyle()
+        .padding(.vertical, Theme.Space.m + Theme.Space.xxs)
+        .padding(.leading, Theme.Space.l)
+        .padding(.trailing, Theme.Space.m + Theme.Space.xxs)
+        .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous).stroke(Theme.cardBorder, lineWidth: 1))
+    }
+
+    /// "Diamond Mind · 43,308 of 111,111", "12,960 of 111,111 · not yet today",
+    /// "Loving Eyes · done today".
+    private func statusLine(rounds: RoundProgress?, sessions: [Session], done: Bool) -> String {
+        var parts: [String] = []
+        if let second = practice.practice.secondName { parts.append(second) }
+        if let rounds, let target = practice.practice.target {
+            let progress = rounds.round > 1
+                ? String(localized: "round \(rounds.round) · \(rounds.inRound.grouped) of \(target.grouped)")
+                : String(localized: "\(rounds.inRound.grouped) of \(target.grouped)")
+            parts.append(progress)
+        } else if !practice.streakOnly {
+            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) in total"))
+        }
+        if practice.streakOnly {
+            parts.append(done ? String(localized: "done today") : String(localized: "not yet today"))
+        } else if !done {
+            parts.append(String(localized: "not yet today"))
+        }
+        return parts.joined(separator: " · ")
     }
 }
 

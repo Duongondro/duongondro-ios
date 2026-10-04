@@ -32,10 +32,11 @@ struct RootView: View {
         Group {
             if model.preferences.onboarded {
                 TabView {
+                    // The mockup's tabs: Today, Friends, You. Friends arrives with accounts.
                     NavigationStack { TodayView() }
-                        .tabItem { Label("Today", systemImage: "flame") }
+                        .tabItem { Label("Today", systemImage: "clock") }
                     NavigationStack { SettingsView() }
-                        .tabItem { Label("Settings", systemImage: "gearshape") }
+                        .tabItem { Label("You", systemImage: "person") }
                 }
             } else {
                 OnboardingView()

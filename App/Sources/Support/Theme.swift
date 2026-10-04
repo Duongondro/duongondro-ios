@@ -77,6 +77,7 @@ enum Theme {
         /// The onboarding progress dashes.
         static let stepDash = CGSize(width: 28, height: 4)
         static let checkBadge: CGFloat = 30
+        static let heroFlame: CGFloat = 34
         /// The entry part of a number field.
         static let numberField: CGFloat = 120
     }

@@ -2,13 +2,16 @@ import SwiftUI
 import DuongondroCore
 import DuongondroStore
 
-/// A practice's own screen: the only place counts are logged. Each +mala opens
-/// a few seconds' Undo; the session is written only when that window closes.
+/// A practice's own screen (design canvas "Practice"): the name, where the count
+/// stands, and at the bottom, under the thumb, the big +mala button with Custom,
+/// Start and History beside it. The only place counts are logged. Each +mala
+/// opens a few seconds' Undo; the session is written only when that window closes.
 struct PracticeView: View {
     @EnvironmentObject private var model: AppModel
     let practiceID: String
     @State private var taps = 0
     @State private var customAmount: String?
+    @State private var showsHistory = false
 
     var body: some View {
         if let practice = model.snapshot.practices.first(where: { $0.id == practiceID }) {
@@ -22,12 +25,26 @@ struct PracticeView: View {
         let streak = model.streak(of: practice.id)
         let mala = model.malaSize(of: practice)
         let doneToday = model.practisedToday(practice.id)
-        return ScrollView {
-            VStack(spacing: Theme.Space.l) {
-                PracticeName(practice: practice.practice, large: true)
-                    .padding(.top, Theme.Space.l)
-                stats(practice, streak: streak)
-                StartRow(practiceID: practice.id)
+        return VStack(alignment: .leading, spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: Theme.Space.xl) {
+                    header(practice)
+                    if practice.streakOnly {
+                        streakOnlyStatus(streak: streak, done: doneToday)
+                    } else {
+                        countBlock(practice, streak: streak, mala: mala)
+                    }
+                }
+                .padding(.horizontal, Theme.Space.xl)
+                .padding(.top, Theme.Space.s)
+            }
+            .plainBottomEdge()
+            VStack(spacing: Theme.Space.m) {
+                // The Undo toast sits above the button, which is pinned to the bottom,
+                // so the button never moves under the thumb mid-count.
+                if let pending = model.pending, pending.practiceID == practice.id {
+                    UndoToast(pending: pending, streakOnly: practice.streakOnly)
+                }
                 if practice.streakOnly {
                     BigButton(title: doneToday ? "Done today" : "Mark today done", systemImage: "checkmark") {
                         taps += 1
@@ -40,16 +57,20 @@ struct PracticeView: View {
                         model.add(mala, to: practice.id)
                     }
                     .accessibilityLabel(Text("Add one mala, \(mala)"))
-                    Button("Add another amount") { customAmount = "" }
-                        .font(.body.weight(.medium))
                 }
-                // Below the button, so it never moves under the thumb mid-count.
-                if let pending = model.pending, pending.practiceID == practice.id {
-                    UndoBar(pending: pending, streakOnly: practice.streakOnly)
+                HStack(spacing: Theme.Space.m) {
+                    if !practice.streakOnly {
+                        Button("+ Custom") { customAmount = "" }
+                            .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
+                    }
+                    StartButton(practiceID: practice.id)
+                    Button("History") { showsHistory = true }
+                        .buttonStyle(SoftButtonStyle())
                 }
             }
             .padding(.horizontal, Theme.Space.xl)
-            .padding(.bottom, Theme.Space.xxl)
+            .padding(.bottom, Theme.Space.xl)
+            .animation(.default, value: model.pending?.practiceID)
         }
         .countTapFeedback(trigger: taps)
         .successFeedback(trigger: model.practisedToday(practiceID))
@@ -61,89 +82,162 @@ struct PracticeView: View {
                 model.add(amount, to: practice.id)
             }
         }
+        .sheet(isPresented: $showsHistory) {
+            HistoryView(practice: practice)
+        }
     }
 
-    @ViewBuilder
-    private func stats(_ practice: TrackedPractice, streak: Streak.Result) -> some View {
+    /// "Dorje Sempa", and below it "Diamond Mind · round 1 · 43,308 lifetime".
+    private func header(_ practice: TrackedPractice) -> some View {
         let sessions = model.snapshot.sessions(of: practice.id)
-        VStack(spacing: Theme.Space.s) {
-            if let r = practice.rounds(sessions: sessions), let target = practice.practice.target {
-                Text(r.inRound.grouped)
-                    .font(Typography.count)
+        var parts: [String] = []
+        if let second = practice.practice.secondName { parts.append(second) }
+        if !practice.streakOnly {
+            if let r = practice.rounds(sessions: sessions) { parts.append(String(localized: "round \(r.round)")) }
+            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime"))
+        } else {
+            parts.append(String(localized: "streak only"))
+        }
+        return VStack(alignment: .leading, spacing: Theme.Space.xs) {
+            Text(practice.practice.name)
+                .font(Typography.headingBold(30, relativeTo: .largeTitle))
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            Text(parts.joined(separator: " · "))
+                .font(.subheadline)
+                .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    /// The count in the current round, its target, a bar, today's total and the streak.
+    private func countBlock(_ practice: TrackedPractice, streak: Streak.Result, mala: Int) -> some View {
+        let sessions = model.snapshot.sessions(of: practice.id)
+        let rounds = practice.rounds(sessions: sessions)
+        let shown = rounds?.inRound ?? practice.lifetime(sessions: sessions)
+        let today = CivilDate.of(model.clock, in: .current)
+        let todayTotal = sessions.filter { $0.day == today }.reduce(0) { $0 + $1.amount }
+        return VStack(alignment: .leading, spacing: Theme.Space.s + Theme.Space.xxs) {
+            HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
+                Text(shown.grouped)
+                    .font(Typography.headingBold(52, relativeTo: .largeTitle))
+                    .foregroundStyle(Theme.accent)
                     .contentTransition(.numericText())
-                Text("Round \(r.round) · \(r.inRound.grouped) of \(target.grouped)")
-                    .foregroundStyle(Theme.muted)
-                ProgressView(value: Double(r.inRound), total: Double(target))
-                if r.round > 1 {
-                    Text("\(r.lifetime.grouped) in all rounds")
-                        .font(.footnote)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                if let target = practice.practice.target {
+                    Text("of \(target.grouped)")
                         .foregroundStyle(Theme.muted)
                 }
-            } else if !practice.streakOnly {
-                Text(practice.lifetime(sessions: sessions).grouped)
-                    .font(Typography.count)
-                    .contentTransition(.numericText())
             }
-            HStack(spacing: Theme.Space.xs) {
-                Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
-                    .symbolBounce(value: streak.current)
-                Text("\(streak.current) days")
-                if streak.longest > streak.current {
-                    Text("· longest \(streak.longest)").foregroundStyle(Theme.muted)
-                }
+            if let rounds, let target = practice.practice.target {
+                Bar(fraction: Double(rounds.inRound) / Double(target), height: Theme.Size.barThick)
             }
-            .font(Typography.headline)
-            .accessibilityElement(children: .combine)
+            HStack {
+                Text(todayTotal >= mala
+                     ? String(localized: "Today \(todayTotal.grouped) · \(todayTotal / mala) malas")
+                     : String(localized: "Today \(todayTotal.grouped)"))
+                    .foregroundStyle(Theme.muted)
+                Spacer()
+                StreakBadge(streak: streak)
+            }
+            .font(.subheadline)
         }
-        .frame(maxWidth: .infinity)
-        .cardStyle()
+    }
+
+    private func streakOnlyStatus(streak: Streak.Result, done: Bool) -> some View {
+        VStack(alignment: .leading, spacing: Theme.Space.s) {
+            HStack(spacing: Theme.Space.s) {
+                Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
+                Text("\(streak.current) days")
+                    .foregroundStyle(Theme.accent)
+            }
+            .font(Typography.headingBold(52, relativeTo: .largeTitle))
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            Text(done ? "Done today" : "Not yet today")
+                .font(.subheadline)
+                .foregroundStyle(Theme.muted)
+            if streak.longest > streak.current {
+                Text("Longest \(streak.longest)")
+                    .font(.subheadline)
+                    .foregroundStyle(Theme.muted)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 
-/// Start: records the exact start, so the session needs no estimate.
-private struct StartRow: View {
+private struct StreakBadge: View {
+    let streak: Streak.Result
+
+    var body: some View {
+        HStack(spacing: Theme.Space.xs) {
+            Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
+                .symbolBounce(value: streak.current)
+            Text("\(streak.current) days")
+                .foregroundStyle(Theme.ink)
+        }
+        .font(.subheadline.weight(.bold))
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Start: records the exact start, so the session needs no estimate. While a
+/// session runs it shows the time since, and a tap cancels it.
+private struct StartButton: View {
     @EnvironmentObject private var model: AppModel
     let practiceID: String
 
     var body: some View {
         if let started = model.started[practiceID] {
-            HStack {
-                Image(systemName: "timer").foregroundStyle(Theme.accent)
-                Text("Started \(started.shortTime) · \(Text(started, style: .timer))")
-                Spacer()
-                Button("Cancel") { model.cancelStart(practiceID) }
+            Button { model.cancelStart(practiceID) } label: {
+                Text(started, style: .timer)
+                    .monospacedDigit()
             }
-            .cardStyle()
+            .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
+            .accessibilityLabel(Text("Started \(started.shortTime). Tap to cancel."))
         } else {
-            Button {
-                model.start(practiceID)
-            } label: {
-                Label("Start", systemImage: "play.fill")
-                    .frame(maxWidth: .infinity)
-            }
-            .secondaryButtonStyle()
+            Button("Start") { model.start(practiceID) }
+                .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
         }
     }
 }
 
-private struct UndoBar: View {
+/// "Added 108 · Undo" on a dark strip, with a ring that empties as the window closes.
+private struct UndoToast: View {
     @EnvironmentObject private var model: AppModel
     let pending: PendingLog
     let streakOnly: Bool
 
     var body: some View {
-        HStack {
-            if streakOnly {
-                Text("Marked done")
-            } else {
-                Text("Added \(pending.amount.grouped)")
+        HStack(spacing: Theme.Space.m) {
+            TimelineView(.animation(minimumInterval: 0.1)) { context in
+                let left = max(0, pending.deadline.timeIntervalSince(context.date)) / PendingLog.window
+                ZStack {
+                    Circle().stroke(Theme.toastTrack, lineWidth: Theme.Radius.bar)
+                    Circle().trim(from: 0, to: left)
+                        .stroke(Theme.toastInk, style: StrokeStyle(lineWidth: Theme.Radius.bar, lineCap: .round))
+                        .rotationEffect(.degrees(-90))
+                }
+                .frame(width: Theme.Space.xl, height: Theme.Space.xl)
             }
+            .accessibilityHidden(true)
+            Text(streakOnly ? "Marked done" : "Added \(pending.amount.grouped)")
+                .font(.subheadline.weight(.semibold))
             Spacer()
             Button("Undo") { model.undo() }
-                .bold()
+                .font(.subheadline.weight(.heavy))
+                .underline()
+                .frame(minHeight: Theme.Size.minTap)
+                .padding(.horizontal, Theme.Space.m)
         }
-        .floatingBar()
-        .transition(.opacity)
+        .foregroundStyle(Theme.toastInk)
+        .padding(.leading, Theme.Space.l)
+        .padding(.trailing, Theme.Space.s)
+        .frame(minHeight: Theme.Size.secondary)
+        .background(Theme.toast, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .transition(.move(edge: .bottom).combined(with: .opacity))
         .onAppear { announce() }
         .onChange(of: pending.amount) { _ in announce() }
     }
@@ -156,7 +250,7 @@ private struct UndoBar: View {
     }
 }
 
-/// The large +mala button: 8 pt corners, the one big control on the screen.
+/// The large +mala button: 88 pt, 8 pt corners, the one big control on the screen.
 private struct BigButton: View {
     let title: LocalizedStringKey
     let systemImage: String?
@@ -174,8 +268,62 @@ private struct BigButton: View {
             .minimumScaleFactor(0.7)
             .foregroundStyle(Theme.onAccent)
             .frame(maxWidth: .infinity, minHeight: Theme.Size.bigButton)
+            .background(Theme.accent, in: RoundedRectangle(cornerRadius: Theme.Radius.bigButton, style: .continuous))
         }
-        .primaryButtonStyle(radius: Theme.Radius.bigButton)
+        .buttonStyle(.plain)
+    }
+}
+
+/// Every session of one practice, newest day first, with each day's total.
+private struct HistoryView: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+    let practice: TrackedPractice
+
+    var body: some View {
+        let sessions = model.snapshot.sessions(of: practice.id)
+        let days = Dictionary(grouping: sessions, by: \.day).sorted { $0.key > $1.key }
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: Theme.Space.l) {
+                    if days.isEmpty {
+                        Text("Nothing logged yet.")
+                            .foregroundStyle(Theme.muted)
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, Theme.Space.xxl)
+                    }
+                    ForEach(days, id: \.key) { day, list in
+                        CardSection(header: LocalizedStringKey(day.startOfDay(in: .current).addingTimeInterval(12 * 3600).formatted(.dateTime.weekday(.wide).day().month(.wide)))) {
+                            ForEach(list.sorted { $0.startedAt > $1.startedAt }) { s in
+                                HStack {
+                                    Text(s.startedAt.shortTime)
+                                        .foregroundStyle(Theme.muted)
+                                        .monospacedDigit()
+                                    Spacer()
+                                    Text(practice.streakOnly ? String(localized: "done") : s.amount.grouped)
+                                        .font(.body.weight(.semibold))
+                                }
+                            }
+                            if !practice.streakOnly && list.count > 1 {
+                                HStack {
+                                    Text("Total")
+                                    Spacer()
+                                    Text(list.reduce(0) { $0 + $1.amount }.grouped)
+                                        .font(.body.weight(.bold))
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(Theme.Space.xl)
+            }
+            .background(Theme.ground.ignoresSafeArea())
+            .navigationTitle("History")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
+            }
+        }
     }
 }
 
@@ -212,29 +360,53 @@ private struct CustomAmountSheet: View {
     }
 }
 
-/// "Counted for Sunday · you started around 23:30", with the one-tap switch.
+/// After a session logged past midnight (design canvas "Logged after midnight"):
+/// which day it counts for, with the one alternative, then Done.
 struct AfterMidnightSheet: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.dismiss) private var dismiss
     let prompt: AfterMidnightPrompt
+    @State private var choice: CivilDate?
 
     var body: some View {
         let tz = prompt.session.timeZone
-        VStack(spacing: Theme.Space.l) {
-            Text("Counted for \(prompt.sheet.countedFor.weekdayName(in: tz))")
-                .font(Typography.title)
-            Text("You started around \(prompt.sheet.startedAround.shortTime).")
-                .foregroundStyle(Theme.muted)
-            Button("Count it for \(prompt.sheet.alternative.weekdayName(in: tz)) instead") {
-                model.choose(day: prompt.sheet.alternative, for: prompt)
+        let counted = prompt.sheet.countedFor
+        let alternative = prompt.sheet.alternative
+        let selected = choice ?? counted
+        VStack(alignment: .leading, spacing: Theme.Space.l) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(prompt.session.amount > 0 ? "Logged \(prompt.session.amount.grouped)" : "Marked done")
+                    .font(Typography.headingBold(26, relativeTo: .title))
+                Spacer()
+                Text(prompt.session.loggedAt.shortTime)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Theme.muted)
             }
-            .secondaryButtonStyle()
-            Button("Keep \(prompt.sheet.countedFor.weekdayName(in: tz))") { dismiss() }
-                .primaryButtonStyle()
+            Text("Counted for **\(selected.weekdayName(in: tz))**: you started around \(prompt.sheet.startedAround.shortTime), before midnight. Your streak is safe.")
+                .foregroundStyle(Theme.soft)
+                .fixedSize(horizontal: false, vertical: true)
+            SegmentedChoice(options: [(counted, dayLabel(counted, tz)), (alternative, dayLabel(alternative, tz))],
+                            selection: Binding(get: { selected }, set: { choice = $0 }),
+                            filled: true, height: Theme.Size.field)
+            Text("Tap Start next time and the app knows exactly.")
+                .font(.footnote)
+                .foregroundStyle(Theme.muted)
+            Button("Done") {
+                if selected != counted { model.choose(day: selected, for: prompt) } else { dismiss() }
+            }
+            .buttonStyle(SoftButtonStyle())
         }
-        .multilineTextAlignment(.center)
-        .padding(Theme.Space.xl)
+        .padding(.horizontal, Theme.Space.xl)
+        .padding(.top, Theme.Space.xl)
+        .padding(.bottom, Theme.Space.l)
+        .background(Theme.card.ignoresSafeArea())
         .presentationDetents([.medium])
+        .presentationDragIndicator(.visible)
+    }
+
+    /// "Sunday 4".
+    private func dayLabel(_ day: CivilDate, _ tz: TimeZone) -> String {
+        "\(day.weekdayName(in: tz)) \(day.day)"
     }
 }
 
