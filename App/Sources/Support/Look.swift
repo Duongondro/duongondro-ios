@@ -8,6 +8,19 @@ import SwiftUI
 /// - iOS 17–18: sensory feedback, symbol effects, scroll transitions.
 /// - iOS 16: the same layouts with plain fills and UIKit haptics.
 extension View {
+    /// The ground colour behind the status bar, so a page without a navigation
+    /// bar does not scroll its title under the clock.
+    func statusBarScrim() -> some View {
+        overlay(alignment: .top) {
+            GeometryReader { g in
+                Theme.ground
+                    .frame(height: g.safeAreaInsets.top)
+                    .offset(y: -g.safeAreaInsets.top)
+            }
+            .allowsHitTesting(false)
+        }
+    }
+
     /// A light tap per count added.
     @ViewBuilder
     func countTapFeedback<T: Equatable>(trigger: T) -> some View {

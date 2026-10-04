@@ -27,6 +27,12 @@ targets:
         product: DuongondroCore
       - package: DuongondroCore
         product: DuongondroStore
+      - package: DuongondroCore
+        product: DuongondroCrypto
+      - package: DuongondroCore
+        product: DuongondroAPI
+      - package: DuongondroCore
+        product: DuongondroSync
     info:
       path: App/Info.plist
       properties:
@@ -41,6 +47,10 @@ targets:
         CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu]
         # Resources in groups are copied flat into the bundle root, so bare names.
         UIAppFonts: [IBMPlexSans-SemiBold.ttf, IBMPlexSans-Bold.ttf]
+        # Plain HTTP only to this Mac's development server (debug builds' default);
+        # everything else stays HTTPS.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.duongondro.ios

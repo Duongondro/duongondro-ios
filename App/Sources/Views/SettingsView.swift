@@ -26,6 +26,7 @@ struct SettingsView: View {
                     }
                 }
                 GeneralSection()
+                AccountSection()
                 CardSection(header: "Your data") {
                     NavigationLink { YourDataView() } label: {
                         SettingsRow("Export and delete", chevron: true)
@@ -38,6 +39,7 @@ struct SettingsView: View {
         }
         .buttonStyle(.plain)
         .background(Theme.ground.ignoresSafeArea())
+        .statusBarScrim()
         .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $adding) { AddPracticeView() }
     }

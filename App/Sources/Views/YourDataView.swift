@@ -66,6 +66,7 @@ struct YourDataView: View {
 /// Typed confirmation, then the purge, then Welcome.
 private struct DeleteEverythingView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var account: AccountModel
     @State private var typed = ""
     @State private var failure: String?
     private let word = String(localized: "delete", comment: "The word typed to confirm deleting everything; lowercase")
@@ -91,7 +92,15 @@ private struct DeleteEverythingView: View {
                         .frame(minHeight: Theme.Size.minTap)
                 }
                 Button("Delete everything") {
-                    do { try Purge.run(model) } catch { failure = error.localizedDescription }
+                    Task {
+                        do {
+                            try await account.deleteOnServer()
+                            try Purge.run(model)
+                            account.forget()
+                        } catch {
+                            failure = error.localizedDescription
+                        }
+                    }
                 }
                 .buttonStyle(FilledButtonStyle(fill: Theme.destructive, height: Theme.Size.button))
                 .disabled(!confirmed)

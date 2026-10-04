@@ -116,15 +116,21 @@ public enum RecoveryCode {
         }.joined(separator: "-")
     }
 
-    public static func decode(_ code: String) -> Data? {
-        let cleaned = code.uppercased().compactMap { c -> Character? in
+    /// What was typed, as the code's characters: upper case, no separators,
+    /// O read as 0 and I or L as 1.
+    public static func normalise(_ typed: String) -> String {
+        String(typed.uppercased().compactMap { c -> Character? in
             switch c {
-            case "-", " ": return nil
+            case "-", " ", "\n": return nil
             case "O": return "0"
             case "I", "L": return "1"
             default: return c
             }
-        }
+        })
+    }
+
+    public static func decode(_ code: String) -> Data? {
+        let cleaned = normalise(code)
         guard cleaned.count == 26 else { return nil }
         var bits = 0, value = 0
         var out = Data()

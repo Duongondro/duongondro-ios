@@ -46,6 +46,7 @@ struct TodayView: View {
             .padding(.bottom, Theme.Space.xl)
         }
         .background(Theme.ground.ignoresSafeArea())
+        .statusBarScrim()
         .toolbar(.hidden, for: .navigationBar)
     }
 }

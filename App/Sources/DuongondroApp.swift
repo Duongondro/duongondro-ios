@@ -4,13 +4,21 @@ import DuongondroStore
 
 @main
 struct DuongondroApp: App {
-    @StateObject private var model = AppModel.live()
+    @StateObject private var model: AppModel
+    @StateObject private var account: AccountModel
     @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        let model = AppModel.live()
+        _model = StateObject(wrappedValue: model)
+        _account = StateObject(wrappedValue: AccountModel(database: model.database))
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(model)
+                .environmentObject(account)
                 .tint(Theme.accent)
         }
         .onChange(of: scenePhase) { phase in
@@ -18,7 +26,9 @@ struct DuongondroApp: App {
             // A session in its undo window is written before the app can be
             // killed; .inactive (Control Center, a call banner) keeps the window.
             case .background: model.commitPending()
-            case .active: model.tick()
+            case .active:
+                model.tick()
+                Task { await account.syncNow() }
             default: break
             }
         }
@@ -27,6 +37,7 @@ struct DuongondroApp: App {
 
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var account: AccountModel
 
     var body: some View {
         Group {
@@ -45,7 +56,13 @@ struct RootView: View {
         .sheet(item: $model.afterMidnight) { prompt in
             AfterMidnightSheet(prompt: prompt)
         }
-        .onChange(of: model.snapshot) { _ in Reminders.reschedule(model) }
+        .onChange(of: model.snapshot) { _ in
+            Reminders.reschedule(model)
+            account.scheduleSync()
+        }
+        .fullScreenCover(isPresented: Binding(get: { account.recoveryCode != nil }, set: { _ in })) {
+            if let code = account.recoveryCode { RecoveryCodeView(code: code).environmentObject(account) }
+        }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
             model.tick()
         }

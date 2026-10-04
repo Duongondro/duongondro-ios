@@ -18,6 +18,11 @@ public struct APIClient: Sendable {
 
     public func me() async throws -> Me { try await get("api/me") }
 
+    /// Deletes everything the server holds about this account (GDPR Article 17).
+    public func deleteMe() async throws {
+        let _: Empty = try await request("DELETE", "api/me", query: [], body: Optional<Empty>.none)
+    }
+
     public func setIdentity(publicKey: Data) async throws {
         try await send("PUT", "api/me/identity", body: IdentityKey(publicKey: publicKey))
     }
