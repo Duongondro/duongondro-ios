@@ -136,6 +136,14 @@ final class AppModel: ObservableObject {
         }
     }
 
+    /// Drops the undo window and Start timers without writing anything.
+    func discardInFlight() {
+        closeTask?.cancel()
+        pending = nil
+        started = [:]
+        afterMidnight = nil
+    }
+
     // MARK: - Practices and preferences
 
     func save(_ p: TrackedPractice) { perform { try $0.save(p) } }

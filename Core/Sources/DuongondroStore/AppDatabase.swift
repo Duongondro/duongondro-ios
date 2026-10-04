@@ -204,10 +204,16 @@ public final class AppDatabase: Sendable {
         }
     }
 
-    /// Deletes every row: "Delete everything" and its local half.
+    /// Deletes every row: "Delete everything" and its local half. Then VACUUM
+    /// rewrites the file and the WAL is truncated, so deleted rows do not linger
+    /// in free pages.
     public func eraseAll() throws {
         try writer.write { db in
             try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences;")
+        }
+        try writer.vacuum()
+        if let pool = writer as? DatabasePool {
+            try pool.writeWithoutTransaction { try $0.checkpoint(.truncate) }
         }
     }
 

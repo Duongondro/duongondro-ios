@@ -26,7 +26,7 @@ let package = Package(
         ),
         .testTarget(
             name: "DuongondroStoreTests",
-            dependencies: ["DuongondroStore"]
+            dependencies: ["DuongondroStore", .product(name: "GRDB", package: "GRDB.swift")]
         ),
     ]
 )
