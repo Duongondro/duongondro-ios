@@ -181,6 +181,7 @@ private struct GeneralSection: View {
 /// One practice's own settings: target, streak-only, mala override, archive.
 struct PracticeSettingsView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var account: AccountModel
     @Environment(\.dismiss) private var dismiss
     let practiceID: String
 
@@ -193,6 +194,15 @@ struct PracticeSettingsView: View {
                             TextField("Name", text: binding(p, \.practice.name))
                         } else {
                             PracticeName(practice: p.practice)
+                        }
+                    }
+                    if account.status == .ready {
+                        Section {
+                            Toggle("Friends see this streak", isOn: Binding(
+                                get: { model.snapshot.publicPractices.contains(p.id) },
+                                set: { on in Task { await account.setPublic(p.id, on) } }))
+                        } footer: {
+                            Text("Only the number of days practised in the app, never counts or totals.")
                         }
                     }
                     if p.practice.streakOnlyAllowed {

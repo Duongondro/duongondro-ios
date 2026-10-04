@@ -33,6 +33,8 @@ targets:
         product: DuongondroAPI
       - package: DuongondroCore
         product: DuongondroSync
+      - package: DuongondroCore
+        product: DuongondroQR
     info:
       path: App/Info.plist
       properties:

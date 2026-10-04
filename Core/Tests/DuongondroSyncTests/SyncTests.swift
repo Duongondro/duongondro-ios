@@ -293,3 +293,39 @@ final class LiveSocialTests: XCTestCase {
         XCTAssertTrue(after[0].streaks.isEmpty)
     }
 }
+
+/// Not a test: development data for the Friends screen. With DUONGONDRO_SEED_FRIENDS
+/// set to a file path, it makes two accounts on the development server, Ania
+/// (Chenrezig done today) and Piotr (Dorje Sempa waiting for today), befriends
+/// them, and writes Ania's invite link to that file, to paste into the app:
+///   DUONGONDRO_TEST_API=http://127.0.0.1:8080 DUONGONDRO_SEED_FRIENDS=/tmp/link swift test --filter SeedFriends
+final class SeedFriends: XCTestCase {
+    func testSeed() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard let s = env["DUONGONDRO_TEST_API"], let base = URL(string: s), let out = env["DUONGONDRO_SEED_FRIENDS"] else {
+            throw XCTSkip("development data only")
+        }
+        func person(_ name: String, _ practice: String, days: [Double]) async throws -> Account {
+            let dev = try await APIClient(baseURL: base).devSession()
+            let db = try AppDatabase.inMemory()
+            let account = Account(api: APIClient(baseURL: base, token: dev.token), secrets: MemorySecretStore(),
+                                  database: db, preferSoftwareKey: true)
+            _ = try await account.setUpFirstDevice()
+            try await account.api.setDisplayName(name)
+            try db.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == practice }!, sortOrder: 0))
+            for d in days {
+                let t = Date().addingTimeInterval(-d * 86400 - 600)
+                try db.insert(Session(practiceID: practice, amount: 108, startedAt: t, startExact: true,
+                                      timeZoneID: TimeZone.current.identifier, loggedAt: t))
+            }
+            try await Social(account: account).setPublic(practice, true)
+            return account
+        }
+        let ania = try await person("Ania", "chenrezig", days: Array(0..<9).map(Double.init))
+        let piotr = try await person("Piotr", "dorje-sempa", days: Array(1..<24).map(Double.init))
+        let (link, _) = try await Social(account: ania).createInvite()
+        try await Social(account: piotr).redeem(try await Social(account: piotr).check(link))
+        let (piotrLink, _) = try await Social(account: piotr).createInvite()
+        try "\(link.string)\n\(piotrLink.string)\n".write(toFile: out, atomically: true, encoding: .utf8)
+    }
+}

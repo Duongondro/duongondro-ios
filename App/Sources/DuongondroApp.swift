@@ -1,6 +1,7 @@
 import SwiftUI
 import DuongondroCore
 import DuongondroStore
+import DuongondroSync
 
 @main
 struct DuongondroApp: App {
@@ -43,9 +44,11 @@ struct RootView: View {
         Group {
             if model.preferences.onboarded {
                 TabView {
-                    // The mockup's tabs: Today, Friends, You. Friends arrives with accounts.
+                    // The mockup's tabs: Today, Friends, You.
                     NavigationStack { TodayView() }
                         .tabItem { Label("Today", systemImage: "clock") }
+                    NavigationStack { FriendsView() }
+                        .tabItem { Label("Friends", systemImage: "person.2") }
                     NavigationStack { SettingsView() }
                         .tabItem { Label("You", systemImage: "person") }
                 }
@@ -59,6 +62,14 @@ struct RootView: View {
         .onChange(of: model.snapshot) { _ in
             Reminders.reschedule(model)
             account.scheduleSync()
+        }
+        // Invite and add-friend links (Universal Links on duongondro.app).
+        .onOpenURL { url in
+            if let link = InviteLink(url.absoluteString) { account.pendingInvite = link }
+        }
+        .sheet(isPresented: Binding(get: { account.pendingInvite != nil && account.recoveryCode == nil },
+                                    set: { if !$0 { account.pendingInvite = nil } })) {
+            if let link = account.pendingInvite { AcceptInviteView(link: link).environmentObject(account) }
         }
         .fullScreenCover(isPresented: Binding(get: { account.recoveryCode != nil }, set: { _ in })) {
             if let code = account.recoveryCode { RecoveryCodeView(code: code).environmentObject(account) }

@@ -24,11 +24,35 @@ final class AccountModel: ObservableObject {
     /// A set-up, restore or new code is under way.
     @Published private(set) var busy = false
     /// The code to show once, right after set-up or after making a new one.
-    @Published var recoveryCode: String?
+    @Published var recoveryCode: String? {
+        didSet { if recoveryCode != nil { recoveryUnconfirmed = true } }
+    }
+    /// A code was made but never confirmed (the app was closed before "Done"):
+    /// Settings asks for a new one.
+    @Published var recoveryUnconfirmed = UserDefaults.standard.bool(forKey: "recoveryUnconfirmed") {
+        didSet { UserDefaults.standard.set(recoveryUnconfirmed, forKey: "recoveryUnconfirmed") }
+    }
+
+    /// The code was written down and checked.
+    func confirmRecoveryCode() {
+        recoveryCode = nil
+        recoveryUnconfirmed = false
+    }
+
+    /// Friends as last fetched, each streak verified against the pinned key.
+    @Published private(set) var friends: [Social.FriendView] = []
+    @Published private(set) var friendsLoaded = false
+    /// Friends poked today from this phone (the server allows one a day).
+    @Published private(set) var poked: Set<UUID> = []
+    /// The name friends see, as the server has it.
+    @Published private(set) var displayName = ""
+    /// An invite opened from a link or pasted, waiting to be accepted.
+    @Published var pendingInvite: InviteLink?
 
     let database: AppDatabase
     let secrets = KeychainStore()
     private var account: Account?
+    private var social: Social?
     private var pendingSync: Task<Void, Never>?
 
     /// Where the API lives: this Mac's development server in debug builds
@@ -53,6 +77,7 @@ final class AccountModel: ObservableObject {
     private func open(token: String) {
         let account = Account(api: APIClient(baseURL: Self.serverURL, token: token), secrets: secrets, database: database)
         self.account = account
+        social = Social(account: account)
         status = account.hasKeys ? .ready : .needsKeys
     }
 
@@ -67,7 +92,9 @@ final class AccountModel: ObservableObject {
     /// account or, with `user`, an existing one (a second simulator).
     func signInForDevelopment(user: UUID? = nil) async {
         await run {
-            let session = try await APIClient(baseURL: Self.serverURL).devSession(user: user)
+            // The account this phone already holds keys for, if any: a new one
+            // would not match the keys and sync state kept here.
+            let session = try await APIClient(baseURL: Self.serverURL).devSession(user: user ?? self.userID)
             try self.secrets.write(Self.tokenName, Data(session.token.utf8))
             self.open(token: session.token)
         }
@@ -120,9 +147,18 @@ final class AccountModel: ObservableObject {
         syncing = true
         defer { syncing = false }
         do {
-            _ = try await SyncEngine(account: account).sync()
+            let result = try await SyncEngine(account: account).sync()
+            // Public streaks follow the sessions just synced; a failure here
+            // leaves the counts synced and tries again next time.
+            _ = try? await social?.publishStreaks()
             lastSync = Date()
-            error = nil
+            if result.refused > 0 {
+                error = String(localized: "\(result.refused) changes could not be synced. Check that the phone's clock is right.")
+            } else if result.unreadable > 0 {
+                error = String(localized: "\(result.unreadable) sessions from another phone cannot be opened here yet.")
+            } else {
+                error = nil
+            }
         } catch APIError.unauthorized {
             // The session ended (removed elsewhere): keys stay, sign in again.
             try? secrets.delete(Self.tokenName)
@@ -135,13 +171,88 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    // MARK: Friends
+
+    func refreshFriends() async {
+        guard status == .ready, let social else { return }
+        do {
+            friends = try await social.friends()
+            friendsLoaded = true
+            if displayName.isEmpty, let me = try? await social.account.api.me() { displayName = me.displayName }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    /// One poke per friend per day; a second is answered "already" by the server.
+    func poke(_ friend: UUID) async {
+        guard let social else { return }
+        do {
+            try await social.account.api.poke(friend)
+            poked.insert(friend)
+        } catch APIError.conflict {
+            poked.insert(friend)
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func createInvite(_ kind: InviteLink.Kind) async -> (link: InviteLink, expiresAt: Date)? {
+        guard let social else { return nil }
+        do {
+            return try await social.createInvite(kind)
+        } catch {
+            self.error = error.localizedDescription
+            return nil
+        }
+    }
+
+    /// Checks an invite; needs no account (the invite record is public by id).
+    func check(_ link: InviteLink) async throws -> Social.CheckedInvite {
+        let api = APIClient(baseURL: Self.serverURL)
+        let anonymous = Account(api: api, secrets: MemorySecretStore(), database: database)
+        return try await Social(account: social?.account ?? anonymous).check(link)
+    }
+
+    func accept(_ invite: Social.CheckedInvite) async throws {
+        guard status == .ready, let social else { throw Account.Failure.accountHasNoKeys }
+        try await social.redeem(invite)
+        pendingInvite = nil
+        await refreshFriends()
+    }
+
+    func setPublic(_ practice: String, _ isPublic: Bool) async {
+        guard let social else { return }
+        await run { try await social.setPublic(practice, isPublic) }
+    }
+
+    func setDisplayName(_ name: String) async {
+        guard let social else { return }
+        let trimmed = String(name.trimmingCharacters(in: .whitespacesAndNewlines).prefix(64))
+        await run {
+            try await social.account.api.setDisplayName(trimmed)
+            self.displayName = trimmed
+        }
+    }
+
     // MARK: Deleting
 
     /// The server half of "Delete everything": it must succeed before the phone
     /// wipes itself, or the server would keep data the person believes gone.
     /// Without an account there is nothing to delete there.
+    struct SignInToDelete: LocalizedError {
+        var errorDescription: String? {
+            String(localized: "This phone belongs to an account, but is signed out. Sign in again first, so the server's copy is deleted too.")
+        }
+    }
+
     func deleteOnServer() async throws {
-        guard let account else { return }
+        guard let account else {
+            // No session, but an account: wiping only the phone would leave the
+            // server's copy behind with no way to reach it.
+            if case .some(.some) = try? database.syncState() { throw SignInToDelete() }
+            return
+        }
         pendingSync?.cancel()
         try await account.api.deleteMe()
     }
@@ -150,9 +261,14 @@ final class AccountModel: ObservableObject {
     func forget() {
         pendingSync?.cancel()
         account = nil
+        social = nil
+        friends = []
+        friendsLoaded = false
+        displayName = ""
         status = .none
         lastSync = nil
         recoveryCode = nil
+        recoveryUnconfirmed = false
         error = nil
     }
 

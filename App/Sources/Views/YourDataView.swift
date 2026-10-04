@@ -69,6 +69,10 @@ private struct DeleteEverythingView: View {
     @EnvironmentObject private var account: AccountModel
     @State private var typed = ""
     @State private var failure: String?
+    @State private var running = false
+    /// Set once the server confirmed: a retry after a failed local wipe skips it
+    /// (the session is gone with the account, so a second delete would fail).
+    @State private var serverDeleted = false
     private let word = String(localized: "delete", comment: "The word typed to confirm deleting everything; lowercase")
 
     var body: some View {
@@ -92,9 +96,14 @@ private struct DeleteEverythingView: View {
                         .frame(minHeight: Theme.Size.minTap)
                 }
                 Button("Delete everything") {
+                    running = true
                     Task {
+                        defer { running = false }
                         do {
-                            try await account.deleteOnServer()
+                            if !serverDeleted {
+                                try await account.deleteOnServer()
+                                serverDeleted = true
+                            }
                             try Purge.run(model)
                             account.forget()
                         } catch {
@@ -103,7 +112,7 @@ private struct DeleteEverythingView: View {
                     }
                 }
                 .buttonStyle(FilledButtonStyle(fill: Theme.destructive, height: Theme.Size.button))
-                .disabled(!confirmed)
+                .disabled(!confirmed || running)
                 .opacity(confirmed ? 1 : 0.4)
             }
             .padding(.horizontal, Theme.Space.xl)

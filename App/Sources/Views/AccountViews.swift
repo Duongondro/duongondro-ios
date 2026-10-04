@@ -9,8 +9,18 @@ import DuongondroSync
 struct AccountSection: View {
     @EnvironmentObject private var account: AccountModel
     @State private var restoring = false
+    @State private var naming = false
+    @State private var replacingCode = false
+    @State private var name = ""
 
     var body: some View {
+        Group { rows }
+            // Outside the switch: the status changes while a restore runs, and a
+            // sheet hung on one branch would vanish with it.
+            .sheet(isPresented: $restoring) { RestoreView() }
+    }
+
+    @ViewBuilder private var rows: some View {
         switch account.status {
         case .none:
             #if DEBUG
@@ -35,11 +45,20 @@ struct AccountSection: View {
                 Button { Task { await account.setUp() } } label: { SettingsRow("Set up encryption", chevron: true) }
                 Button { restoring = true } label: { SettingsRow("Restore with a recovery code", chevron: true) }
             }
-            .sheet(isPresented: $restoring) { RestoreView() }
         case .ready:
             CardSection(header: "Account") {
-                Button { Task { await account.newRecoveryCode() } } label: {
-                    SettingsRow("Recovery code", detail: Text("Make a new one"), chevron: true)
+                Button { naming = true } label: {
+                    SettingsRow("Your name", detail: Text(verbatim: account.displayName), chevron: true)
+                }
+                Button { replacingCode = true } label: {
+                    SettingsRow("Recovery code", detail: account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"),
+                                chevron: true)
+                }
+                .disabled(account.busy)
+                .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
+                    Button("Make a new code") { Task { await account.newRecoveryCode() } }
+                } message: {
+                    Text("The code you wrote down stops working.")
                 }
                 Button { Task { await account.syncNow() } } label: {
                     SettingsRow("Sync", detail: syncDetail)
@@ -48,6 +67,15 @@ struct AccountSection: View {
             CardSection(header: "This device") {
                 SettingsRow("Device key", detail: Text(tierName))
             }
+            .alert("Your name", isPresented: $naming) {
+                TextField("Name", text: $name)
+                Button("Save") { Task { await account.setDisplayName(name) } }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Friends see this name next to your streaks.")
+            }
+            .onChange(of: naming) { open in if open { name = account.displayName } }
+            .task { await account.refreshFriends() }
         }
         if let error = account.error {
             Text(verbatim: error)
@@ -86,7 +114,7 @@ struct RecoveryCodeView: View {
 
     var body: some View {
         if checking {
-            RecoveryCheckView(groups: groups) { account.recoveryCode = nil } back: { checking = false }
+            RecoveryCheckView(groups: groups) { account.confirmRecoveryCode() } back: { checking = false }
         } else {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
                 Text("Write down your recovery code")
