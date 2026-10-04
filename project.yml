@@ -1,0 +1,58 @@
+name: Duongondro
+options:
+  bundleIdPrefix: app.duongondro
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "0.1"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""   # set locally; never commit a personal team id
+packages:
+  DuongondroCore:
+    path: Core
+targets:
+  Duongondro:
+    type: application
+    platform: iOS
+    sources:
+      - path: App/Sources
+      - path: App/Resources
+    dependencies:
+      - package: DuongondroCore
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Duongöndro
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: true
+        CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.duongondro.ios
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+    preBuildScripts:
+      - name: Build identity
+        script: "\"$SRCROOT/Scripts/build-info.sh\""
+        basedOnDependencyAnalysis: false
+        outputFiles:
+          - $(DERIVED_FILE_DIR)/BuildInfo.plist
+    postBuildScripts:
+      - name: Copy build identity
+        script: |
+          cp "$DERIVED_FILE_DIR/BuildInfo.plist" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/BuildInfo.plist"
+        basedOnDependencyAnalysis: false
+schemes:
+  Duongondro:
+    build:
+      targets:
+        Duongondro: all
+    run:
+      config: Debug
+    archive:
+      config: Release
