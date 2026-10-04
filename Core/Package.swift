@@ -10,6 +10,7 @@ let package = Package(
         .library(name: "DuongondroCrypto", targets: ["DuongondroCrypto"]),
         .library(name: "DuongondroAPI", targets: ["DuongondroAPI"]),
         .library(name: "DuongondroSync", targets: ["DuongondroSync"]),
+        .library(name: "DuongondroQR", targets: ["DuongondroQR"]),
     ],
     dependencies: [
         .package(url: "https://github.com/groue/GRDB.swift", from: "7.0.0"),
@@ -19,6 +20,8 @@ let package = Package(
         .target(name: "DuongondroCore"),
         // End-to-end encryption in CryptoKit: the byte formats of docs/crypto.md.
         .target(name: "DuongondroCrypto"),
+        // QR encoder for invite codes: iOS's generator is byte-mode only, which needs version 4.
+        .target(name: "DuongondroQR"),
         // The typed client of duongondro-api's api/openapi.yaml.
         .target(name: "DuongondroAPI"),
         // Phase 3 on the phone: keys, account set-up and recovery, and sync.
@@ -40,6 +43,10 @@ let package = Package(
             name: "DuongondroCryptoTests",
             dependencies: ["DuongondroCrypto"],
             resources: [.copy("Resources")]
+        ),
+        .testTarget(
+            name: "DuongondroQRTests",
+            dependencies: ["DuongondroQR"]
         ),
         .testTarget(
             name: "DuongondroSyncTests",
