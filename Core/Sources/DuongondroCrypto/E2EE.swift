@@ -119,6 +119,10 @@ public enum E2EE {
     public struct Wrapped: Equatable, Sendable {
         public let epk: Data
         public let box: Data
+        public init(epk: Data, box: Data) {
+            self.epk = epk
+            self.box = box
+        }
     }
 
     /// Wraps a 32-byte secret to a device's public key with a fresh ephemeral key

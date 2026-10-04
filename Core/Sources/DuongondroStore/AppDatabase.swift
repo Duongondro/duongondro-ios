@@ -280,6 +280,25 @@ public final class AppDatabase: Sendable {
         }
     }
 
+    /// Gives every session whose id is not a UUIDv7 (logged by builds before sync,
+    /// which used version 4) a new v7 id from its logging time. Safe because such a
+    /// session never reached the server, which accepts only v7; nothing else refers
+    /// to a session's id. Returns how many were re-keyed.
+    @discardableResult
+    public func rekeyLegacySessionIDs() throws -> Int {
+        try writer.write { db in
+            var n = 0
+            for row in try Row.fetchAll(db, sql: "SELECT id, logged_at FROM sessions") {
+                guard let id = UUID(uuidString: row["id"]), !id.isV7 else { continue }
+                let loggedAt: Date = row["logged_at"]
+                try db.execute(sql: "UPDATE sessions SET id = ?, dirty = 1 WHERE id = ?",
+                               arguments: [UUID.v7(at: loggedAt).uuidString.lowercased(), id.uuidString.lowercased()])
+                n += 1
+            }
+            return n
+        }
+    }
+
     /// Marks every session dirty: after a key rotation or a server restore, everything is pushed again.
     public func markAllDirty() throws {
         try writer.write { db in try db.execute(sql: "UPDATE sessions SET dirty = 1") }

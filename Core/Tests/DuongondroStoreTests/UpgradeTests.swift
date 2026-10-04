@@ -220,3 +220,32 @@ final class SyncStoreTests: XCTestCase {
         XCTAssertNil(try db.syncState())
     }
 }
+
+final class SessionIDTests: XCTestCase {
+    func testNewSessionsGetV7IdsFromTheirLoggingTime() {
+        let t = Date(timeIntervalSince1970: 1_791_180_000.123)
+        let s = Session(practiceID: "x", amount: 1, startedAt: t, startExact: true, timeZoneID: "UTC", loggedAt: t)
+        XCTAssertTrue(s.id.isV7)
+        let ms = s.id.uuid
+        let stamp = [ms.0, ms.1, ms.2, ms.3, ms.4, ms.5].reduce(UInt64(0)) { ($0 << 8) | UInt64($1) }
+        XCTAssertEqual(stamp, 1_791_180_000_123)
+        XCTAssertFalse(UUID().isV7)
+    }
+
+    func testLegacyV4SessionsAreRekeyedBeforeTheirFirstPush() throws {
+        let db = try AppDatabase.inMemory()
+        try db.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == "dorje-sempa" }!, sortOrder: 0))
+        let t = Date(timeIntervalSince1970: 1_791_180_000)
+        let legacy = Session(id: UUID(), practiceID: "dorje-sempa", amount: 108, startedAt: t, startExact: true,
+                             timeZoneID: "UTC", loggedAt: t)
+        let modern = Session(practiceID: "dorje-sempa", amount: 216, startedAt: t, startExact: true, timeZoneID: "UTC", loggedAt: t)
+        try db.insert(legacy)
+        try db.insert(modern)
+        XCTAssertEqual(try db.rekeyLegacySessionIDs(), 1)
+        let ids = try db.snapshot().sessions.map(\.id)
+        XCTAssertTrue(ids.allSatisfy(\.isV7))
+        XCTAssertTrue(ids.contains(modern.id), "a v7 id is kept")
+        XCTAssertEqual(try db.snapshot().sessions.map(\.amount).sorted(), [108, 216])
+        XCTAssertEqual(try db.rekeyLegacySessionIDs(), 0)
+    }
+}

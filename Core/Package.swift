@@ -8,6 +8,8 @@ let package = Package(
         .library(name: "DuongondroCore", targets: ["DuongondroCore"]),
         .library(name: "DuongondroStore", targets: ["DuongondroStore"]),
         .library(name: "DuongondroCrypto", targets: ["DuongondroCrypto"]),
+        .library(name: "DuongondroAPI", targets: ["DuongondroAPI"]),
+        .library(name: "DuongondroSync", targets: ["DuongondroSync"]),
     ],
     dependencies: [
         .package(url: "https://github.com/groue/GRDB.swift", from: "7.0.0"),
@@ -17,6 +19,13 @@ let package = Package(
         .target(name: "DuongondroCore"),
         // End-to-end encryption in CryptoKit: the byte formats of docs/crypto.md.
         .target(name: "DuongondroCrypto"),
+        // The typed client of duongondro-api's api/openapi.yaml.
+        .target(name: "DuongondroAPI"),
+        // Phase 3 on the phone: keys, account set-up and recovery, and sync.
+        .target(
+            name: "DuongondroSync",
+            dependencies: ["DuongondroCore", "DuongondroStore", "DuongondroCrypto", "DuongondroAPI"]
+        ),
         // The local GRDB database, as in CodeShare.
         .target(
             name: "DuongondroStore",
@@ -30,6 +39,11 @@ let package = Package(
         .testTarget(
             name: "DuongondroCryptoTests",
             dependencies: ["DuongondroCrypto"],
+            resources: [.copy("Resources")]
+        ),
+        .testTarget(
+            name: "DuongondroSyncTests",
+            dependencies: ["DuongondroSync", "DuongondroStore", "DuongondroCrypto", "DuongondroAPI"],
             resources: [.copy("Resources")]
         ),
         .testTarget(
