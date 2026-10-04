@@ -108,6 +108,24 @@ public final class AppDatabase: Sendable {
                 );
                 """)
         }
+        migrator.registerMigration("v2") { db in
+            // Sync: last write wins on the client clock, so every session carries
+            // when it last changed, and a deletion is a mark (a sealed tombstone on
+            // the server), never a missing row. Rows from v1 changed when logged.
+            try db.execute(sql: """
+                ALTER TABLE sessions ADD COLUMN updated_at DATETIME;
+                UPDATE sessions SET updated_at = logged_at;
+                ALTER TABLE sessions ADD COLUMN deleted_at DATETIME;
+                -- One row once an account exists: who, which practice-key version
+                -- this device holds, and how far the last sync read.
+                CREATE TABLE sync_state (
+                    id          INTEGER PRIMARY KEY CHECK (id = 1),
+                    user_id     TEXT NOT NULL,
+                    key_version INTEGER NOT NULL,
+                    cursor      TEXT
+                );
+                """)
+        }
         return migrator
     }
 
@@ -119,7 +137,7 @@ public final class AppDatabase: Sendable {
 
     public static func fetchSnapshot(_ db: Database) throws -> Snapshot {
         let practices = try Row.fetchAll(db, sql: "SELECT * FROM practices ORDER BY sort_order, id").map(TrackedPractice.init(row:))
-        let sessions = try Row.fetchAll(db, sql: "SELECT * FROM sessions ORDER BY started_at, id").map(Session.init(row:))
+        let sessions = try Row.fetchAll(db, sql: "SELECT * FROM sessions WHERE deleted_at IS NULL ORDER BY started_at, id").map(Session.init(row:))
         let seeds = try Row.fetchAll(db, sql: "SELECT * FROM streak_seeds ORDER BY practice_id").map(StreakSeed.init(row:))
         var preferences = Preferences()
         if let json = try String.fetchOne(db, sql: "SELECT json FROM preferences WHERE id = 1"),
@@ -167,18 +185,18 @@ public final class AppDatabase: Sendable {
     public func insert(_ s: Session) throws {
         try writer.write { db in
             try db.execute(sql: """
-                INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day, logged_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day, logged_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, arguments: [s.id.uuidString.lowercased(), s.practiceID, s.amount, s.startedAt, s.startExact,
-                                 s.timeZoneID, s.chosenDay?.description, s.loggedAt])
+                                 s.timeZoneID, s.chosenDay?.description, s.loggedAt, s.loggedAt])
         }
     }
 
     /// The after-midnight switch: count `id` for `day` instead (nil: its start's own date).
     public func choose(day: CivilDate?, forSession id: UUID) throws {
         try writer.write { db in
-            try db.execute(sql: "UPDATE sessions SET chosen_day = ?, dirty = 1 WHERE id = ?",
-                           arguments: [day?.description, id.uuidString.lowercased()])
+            try db.execute(sql: "UPDATE sessions SET chosen_day = ?, updated_at = ?, dirty = 1 WHERE id = ?",
+                           arguments: [day?.description, Date(), id.uuidString.lowercased()])
         }
     }
 
@@ -218,7 +236,7 @@ public final class AppDatabase: Sendable {
     /// in free pages.
     public func eraseAll() throws {
         try writer.write { db in
-            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences;")
+            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM practices; DELETE FROM preferences; DELETE FROM sync_state;")
         }
         try writer.vacuum()
         if let pool = writer as? DatabasePool {
@@ -226,6 +244,87 @@ public final class AppDatabase: Sendable {
             // Should it still be busy, the rows are already deleted and SQLite's
             // automatic checkpoint folds the WAL in later, so the purge goes on.
             _ = try? pool.writeWithoutTransaction { try $0.checkpoint(.truncate) }
+        }
+    }
+
+    // MARK: - Sync
+
+    /// The account this phone syncs with, once there is one.
+    public func syncState() throws -> SyncState? {
+        try writer.read { db in
+            try Row.fetchOne(db, sql: "SELECT * FROM sync_state WHERE id = 1").map {
+                SyncState(userID: UUID(uuidString: $0["user_id"]) ?? UUID(), keyVersion: $0["key_version"], cursor: $0["cursor"])
+            }
+        }
+    }
+
+    public func saveSyncState(_ state: SyncState) throws {
+        try writer.write { db in
+            try db.execute(sql: "INSERT OR REPLACE INTO sync_state (id, user_id, key_version, cursor) VALUES (1, ?, ?, ?)",
+                           arguments: [state.userID.uuidString.lowercased(), state.keyVersion, state.cursor])
+        }
+    }
+
+    /// Sessions changed here since the server last acknowledged them, deletions included.
+    public func dirtySessions() throws -> [SyncRecord] {
+        try writer.read { db in
+            try Row.fetchAll(db, sql: "SELECT * FROM sessions WHERE dirty = 1 ORDER BY updated_at, id").map(SyncRecord.init(row:))
+        }
+    }
+
+    /// Marks a session synced, unless it changed again after `updatedAt` was read.
+    public func markSynced(_ id: UUID, updatedAt: Date) throws {
+        try writer.write { db in
+            try db.execute(sql: "UPDATE sessions SET dirty = 0 WHERE id = ? AND updated_at = ?",
+                           arguments: [id.uuidString.lowercased(), updatedAt])
+        }
+    }
+
+    /// Marks every session dirty: after a key rotation or a server restore, everything is pushed again.
+    public func markAllDirty() throws {
+        try writer.write { db in try db.execute(sql: "UPDATE sessions SET dirty = 1") }
+    }
+
+    /// Deletes a session as a mark, so the deletion syncs.
+    public func delete(session id: UUID, at now: Date = Date()) throws {
+        try writer.write { db in
+            try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 1 WHERE id = ?",
+                           arguments: [now, now, id.uuidString.lowercased()])
+        }
+    }
+
+    /// Applies a session from the server: the newer write wins (a local change made
+    /// later stays and is pushed); a practice this phone does not track yet is
+    /// added, from the catalogue or as a custom practice with the session's name.
+    /// Returns whether anything changed.
+    @discardableResult
+    public func applyRemote(_ r: SyncRecord, practiceName: String? = nil) throws -> Bool {
+        try writer.write { db in
+            let id = r.session.id.uuidString.lowercased()
+            if let local: Date = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id]),
+               local >= r.updatedAt {
+                return false
+            }
+            if try Int.fetchOne(db, sql: "SELECT 1 FROM practices WHERE id = ?", arguments: [r.session.practiceID]) == nil {
+                let order = try Int.fetchOne(db, sql: "SELECT COALESCE(MAX(sort_order) + 1, 0) FROM practices") ?? 0
+                let practice = Catalogue.builtIn.first { $0.id == r.session.practiceID }
+                    ?? Practice(id: r.session.practiceID, name: practiceName ?? r.session.practiceID, group: .anyTime,
+                                target: nil, streakOnlyAllowed: true, isCustom: true)
+                try Self.upsert(TrackedPractice(practice: practice, streakOnly: practice.streakOnlyByDefault, sortOrder: order), db)
+            }
+            let s = r.session
+            try db.execute(sql: """
+                INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day,
+                                      logged_at, updated_at, deleted_at, dirty)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+                ON CONFLICT (id) DO UPDATE SET
+                    practice_id = excluded.practice_id, amount = excluded.amount, started_at = excluded.started_at,
+                    start_exact = excluded.start_exact, time_zone = excluded.time_zone, chosen_day = excluded.chosen_day,
+                    logged_at = excluded.logged_at, updated_at = excluded.updated_at, deleted_at = excluded.deleted_at,
+                    dirty = 0
+                """, arguments: [id, s.practiceID, s.amount, s.startedAt, s.startExact, s.timeZoneID,
+                                 s.chosenDay?.description, s.loggedAt, r.updatedAt, r.deletedAt])
+            return true
         }
     }
 
@@ -343,5 +442,39 @@ extension StreakSeed {
         let lastDay: String = row["last_day"]
         self.init(practiceID: row["practice_id"], days: row["days"], longest: row["longest"],
                   lastDay: CivilDate(lastDay) ?? CivilDate(year: 1970, month: 1, day: 1), timeZoneID: row["time_zone"])
+    }
+}
+
+// MARK: - Sync records
+
+/// The account a phone syncs with: the user, the practice-key version it holds,
+/// and the cursor of its last read (`<generation>:<xid8>`).
+public struct SyncState: Equatable, Sendable {
+    public var userID: UUID
+    public var keyVersion: Int
+    public var cursor: String?
+
+    public init(userID: UUID, keyVersion: Int, cursor: String? = nil) {
+        self.userID = userID
+        self.keyVersion = keyVersion
+        self.cursor = cursor
+    }
+}
+
+/// A session as sync sees it: its content, when it last changed, and whether it is deleted.
+public struct SyncRecord: Equatable, Sendable {
+    public var session: Session
+    public var updatedAt: Date
+    public var deletedAt: Date?
+
+    public init(session: Session, updatedAt: Date, deletedAt: Date? = nil) {
+        self.session = session
+        self.updatedAt = updatedAt
+        self.deletedAt = deletedAt
+    }
+
+    init(row: Row) {
+        let session = Session(row: row)
+        self.init(session: session, updatedAt: row["updated_at"] ?? session.loggedAt, deletedAt: row["deleted_at"])
     }
 }

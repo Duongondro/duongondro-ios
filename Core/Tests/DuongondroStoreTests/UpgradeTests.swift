@@ -134,3 +134,89 @@ final class UpgradeTests: XCTestCase {
         XCTAssertEqual(snap.sessions.count, 3)
     }
 }
+
+/// Sync bookkeeping (migration v2) on top of the v1 data.
+final class SyncStoreTests: XCTestCase {
+    func db() throws -> AppDatabase { try AppDatabase.inMemory() }
+
+    func session(_ practice: String = "dorje-sempa", at t: Date) -> Session {
+        Session(practiceID: practice, amount: 108, startedAt: t, startExact: true, timeZoneID: "Europe/Amsterdam", loggedAt: t)
+    }
+
+    func testV1RowsGetAnUpdateTimeAndStayDirty() throws {
+        let path = FileManager.default.temporaryDirectory.appendingPathComponent("v1s-\(UUID().uuidString).sqlite").path
+        addTeardownBlock { try? FileManager.default.removeItem(atPath: path) }
+        let queue = try DatabaseQueue(path: path)
+        try queue.write { try $0.execute(sql: UpgradeTests.v1Database) }
+        try queue.close()
+        let db = try AppDatabase.open(path: path)
+        let dirty = try db.dirtySessions()
+        XCTAssertEqual(dirty.count, 3, "every v1 session is pushed once an account exists")
+        for r in dirty { XCTAssertEqual(r.updatedAt, r.session.loggedAt) }
+        XCTAssertNil(try db.syncState())
+    }
+
+    func testPushedSessionsAreMarkedSyncedUnlessChangedSince() throws {
+        let db = try db()
+        try db.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == "dorje-sempa" }!, sortOrder: 0))
+        let s = session(at: Date(timeIntervalSince1970: 1_790_000_000))
+        try db.insert(s)
+        let pushed = try XCTUnwrap(db.dirtySessions().first)
+        try db.choose(day: CivilDate("2026-01-01"), forSession: s.id)   // changes after the push read it
+        try db.markSynced(s.id, updatedAt: pushed.updatedAt)
+        XCTAssertEqual(try db.dirtySessions().count, 1, "the later change still has to go")
+        let again = try XCTUnwrap(db.dirtySessions().first)
+        try db.markSynced(s.id, updatedAt: again.updatedAt)
+        XCTAssertTrue(try db.dirtySessions().isEmpty)
+    }
+
+    func testRemoteSessionsLastWriteWinsAndAddTheirPractice() throws {
+        let db = try db()
+        let t = Date(timeIntervalSince1970: 1_790_000_000)
+        let remote = SyncRecord(session: session("chenrezig", at: t), updatedAt: t)
+        XCTAssertTrue(try db.applyRemote(remote))
+        var snap = try db.snapshot()
+        XCTAssertEqual(snap.practices.map(\.id), ["chenrezig"], "the practice comes from the catalogue")
+        XCTAssertEqual(snap.sessions.count, 1)
+        XCTAssertTrue(try db.dirtySessions().isEmpty, "what came from the server is not pushed back")
+
+        // An older write loses; a newer one wins; a deletion is a newer write.
+        var older = remote
+        older.session.amount = 1
+        older.updatedAt = t.addingTimeInterval(-60)
+        XCTAssertFalse(try db.applyRemote(older))
+        var deleted = remote
+        deleted.updatedAt = t.addingTimeInterval(60)
+        deleted.deletedAt = deleted.updatedAt
+        XCTAssertTrue(try db.applyRemote(deleted))
+        snap = try db.snapshot()
+        XCTAssertTrue(snap.sessions.isEmpty)
+
+        let custom = SyncRecord(session: session("custom-x", at: t), updatedAt: t)
+        try db.applyRemote(custom, practiceName: "Evening Chenrezig")
+        let practice = try XCTUnwrap(db.snapshot().practices.first { $0.id == "custom-x" })
+        XCTAssertEqual(practice.practice.name, "Evening Chenrezig")
+        XCTAssertTrue(practice.practice.isCustom)
+    }
+
+    func testLocalDeletionSyncs() throws {
+        let db = try db()
+        try db.save(TrackedPractice(practice: Catalogue.builtIn.first { $0.id == "dorje-sempa" }!, sortOrder: 0))
+        let s = session(at: Date(timeIntervalSince1970: 1_790_000_000))
+        try db.insert(s)
+        try db.markSynced(s.id, updatedAt: try XCTUnwrap(db.dirtySessions().first).updatedAt)
+        try db.delete(session: s.id)
+        let tombstone = try XCTUnwrap(db.dirtySessions().first)
+        XCTAssertNotNil(tombstone.deletedAt)
+        XCTAssertTrue(try db.snapshot().sessions.isEmpty)
+    }
+
+    func testSyncStateRoundTrips() throws {
+        let db = try db()
+        let state = SyncState(userID: UUID(), keyVersion: 2, cursor: "abc:123")
+        try db.saveSyncState(state)
+        XCTAssertEqual(try db.syncState(), state)
+        try db.eraseAll()
+        XCTAssertNil(try db.syncState())
+    }
+}
