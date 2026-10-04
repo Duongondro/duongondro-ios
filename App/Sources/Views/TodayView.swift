@@ -1,92 +1,136 @@
 import SwiftUI
 import DuongondroCore
+import DuongondroStore
 
-/// Today: daily practices and streaks. No logging here, so a stray tap while
-/// scrolling never adds a mala to the wrong practice.
+/// Today: the headline streak and the daily practices. No logging here, so a
+/// stray tap while scrolling never adds a mala to the wrong practice.
 struct TodayView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                ForEach(model.practices) { practice in
+            VStack(alignment: .leading, spacing: Theme.Space.m) {
+                HeadlineStreakCard(result: model.headline())
+                ForEach(model.snapshot.activePractices) { practice in
                     NavigationLink {
-                        PracticeView(practice: practice)
+                        PracticeView(practiceID: practice.id)
                     } label: {
                         PracticeRow(practice: practice)
                     }
                     .buttonStyle(.plain)
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.vertical, Theme.Space.m)
         }
         .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Today")
     }
 }
 
-private struct PracticeRow: View {
-    let practice: Practice
+private struct HeadlineStreakCard: View {
+    let result: Streak.Result
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(practice.name).font(Typography.headline)
-                if let second = practice.secondName {
-                    Text(second).font(.subheadline).foregroundStyle(Theme.muted)
+        HStack(alignment: .firstTextBaseline, spacing: Theme.Space.m) {
+            Image(systemName: "flame.fill")
+                .font(Typography.title)
+                .foregroundStyle(Theme.flame)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                Text("\(result.current) days")
+                    .font(Typography.largeTitle)
+                if result.current > 0, let deadline = result.deadline {
+                    Text("Practise before \(CivilDate.of(deadline.addingTimeInterval(-1), in: .current).weekdayName()) ends")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                } else {
+                    Text("Any practice today starts a streak.")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
                 }
             }
-            Spacer()
-            Image(systemName: "chevron.right").foregroundStyle(Theme.muted)
+            Spacer(minLength: 0)
+        }
+        .padding(Theme.Space.l)
+        .background(Theme.streakCard, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .accessibilityElement(children: .combine)
+    }
+}
+
+private struct PracticeRow: View {
+    @EnvironmentObject private var model: AppModel
+    let practice: TrackedPractice
+
+    var body: some View {
+        let streak = model.streak(of: practice.id)
+        let done = model.practisedToday(practice.id)
+        HStack(spacing: Theme.Space.m) {
+            Image(systemName: done ? "checkmark.circle.fill" : "circle")
+                .font(.title2)
+                .foregroundStyle(done ? Theme.accent : Theme.muted)
+                .accessibilityLabel(done ? Text("Done today") : Text("Not yet today"))
+            VStack(alignment: .leading, spacing: 2) {
+                PracticeName(practice: practice.practice)
+                ProgressLine(practice: practice)
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+            }
+            Spacer(minLength: Theme.Space.s)
+            if streak.current > 0 {
+                Label("\(streak.current)", systemImage: "flame.fill")
+                    .labelStyle(.titleAndIcon)
+                    .font(Typography.headline)
+                    .foregroundStyle(Theme.flame)
+                    .accessibilityLabel(Text("\(streak.current) days"))
+            }
+            Image(systemName: "chevron.right").foregroundStyle(Theme.muted).accessibilityHidden(true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .cardStyle()
     }
 }
 
-/// A practice's own screen: the only place counts are logged.
-struct PracticeView: View {
-    @EnvironmentObject private var model: AppModel
+/// The leading name and, below it, the English second line. Wraps rather than
+/// truncates: German and Hungarian run long.
+struct PracticeName: View {
     let practice: Practice
-    @State private var taps = 0
+    var large = false
 
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 4) {
-                Text(practice.name).font(Typography.largeTitle)
-                if let second = practice.secondName {
-                    Text(second).foregroundStyle(Theme.muted)
-                }
+        VStack(alignment: large ? .center : .leading, spacing: 2) {
+            Text(practice.name)
+                .font(large ? Typography.title : Typography.headline)
+                .multilineTextAlignment(large ? .center : .leading)
+                .fixedSize(horizontal: false, vertical: true)
+            if let second = practice.secondName {
+                Text(second)
+                    .font(.subheadline)
+                    .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(large ? .center : .leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer()
-            if let pending = model.pending, pending.practiceID == practice.id {
-                HStack {
-                    Text("Added \(pending.amount)")
-                    Spacer()
-                    Button("Undo") { model.pending = nil }.bold()
-                }
-                .cardStyle()
-            }
-            let mala = practice.effectiveMalaSize(default: model.malaSize)
-            Button {
-                taps += 1
-                if var p = model.pending, p.practiceID == practice.id {
-                    p.add(mala, at: Date())
-                    model.pending = p
-                } else {
-                    model.pending = PendingLog(practiceID: practice.id, amount: mala, at: Date())
-                }
-            } label: {
-                Text("+\(mala)")
-                    .font(Typography.count)
-                    .frame(maxWidth: .infinity, minHeight: 88)
-            }
-            .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.bigButton))
-            .countTapFeedback(trigger: taps)
         }
-        .padding(20)
-        .background(Theme.ground.ignoresSafeArea())
-        .navigationBarTitleDisplayMode(.inline)
     }
+}
+
+/// "Round 5 · 35,556 of 111,111", a lifetime total, or "Streak only".
+struct ProgressLine: View {
+    @EnvironmentObject private var model: AppModel
+    let practice: TrackedPractice
+
+    var body: some View {
+        let sessions = model.snapshot.sessions(of: practice.id)
+        if practice.streakOnly {
+            Text("Streak only")
+        } else if let r = practice.rounds(sessions: sessions), let target = practice.practice.target {
+            Text("Round \(r.round) · \(r.inRound.grouped) of \(target.grouped)")
+        } else {
+            Text("\(practice.lifetime(sessions: sessions).grouped) in total")
+        }
+    }
+}
+
+#Preview {
+    NavigationStack { TodayView() }.environmentObject(AppModel.preview())
 }

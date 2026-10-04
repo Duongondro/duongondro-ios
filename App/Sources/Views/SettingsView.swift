@@ -1,4 +1,5 @@
 import SwiftUI
+import DuongondroStore
 
 struct SettingsView: View {
     @EnvironmentObject private var model: AppModel
@@ -15,7 +16,10 @@ struct SettingsView: View {
                 } label: {
                     LabeledContent("Language", value: Locale.current.localizedString(forLanguageCode: Locale.current.language.languageCode?.identifier ?? "en") ?? "")
                 }
-                Stepper("A mala counts as \(model.malaSize)", value: $model.malaSize, in: 100...108, step: 8)
+                Picker("A mala counts as", selection: Binding(get: { model.preferences.malaSize }, set: { v in model.update { $0.malaSize = v } })) {
+                    Text(verbatim: "100").tag(100)
+                    Text(verbatim: "108").tag(108)
+                }
             }
             Section("About") {
                 LabeledContent("Version", value: build.version)

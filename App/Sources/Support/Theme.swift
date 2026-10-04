@@ -2,12 +2,28 @@ import SwiftUI
 
 /// All colours, radii and spacing. No literals in views.
 enum Theme {
+    /// Spacing steps, so views carry no layout literals either.
+    enum Space {
+        static let xs: CGFloat = 4
+        static let s: CGFloat = 8
+        static let m: CGFloat = 12
+        static let l: CGFloat = 16
+        static let xl: CGFloat = 20
+        static let xxl: CGFloat = 32
+    }
+
     static let accent = Color(light: 0x7A1F2E, dark: 0xE8909C)
     static let gold = Color(light: 0xD4A72C, dark: 0xE3B341)
     static let ground = Color(light: 0xF7F3F1, dark: 0x120A0C)
     static let card = Color(light: 0xFFFFFF, dark: 0x2B1C20)
     static let cardBorder = Color(light: 0xFFFFFF, dark: 0x46323A)
     static let muted = Color(light: 0x6B5A60, dark: 0xC2B2B7)
+    /// The headline streak card: burgundy-tinted in dark mode.
+    static let streakCard = Color(light: 0xF6E9EB, dark: 0x4A1C27)
+    /// Streak flames are gold, never orange.
+    static let flame = Color(light: 0xC9952B, dark: 0xE3B341)
+    /// Text and icons on an accent-filled button.
+    static let onAccent = Color(light: 0xFFFFFF, dark: 0x120A0C)
 
     /// Small, platform-specific corner radii (design: Look).
     enum Radius {
