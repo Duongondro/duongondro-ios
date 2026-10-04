@@ -9,6 +9,14 @@ extension APIClient {
         try await send("PATCH", "api/me", body: MeUpdate(displayName: name))
     }
 
+    /// A problem worth knowing about, without personal data (design: Keys, the
+    /// Secure Enclave fallback).
+    public func reportClientError(message: String, appVersion: String, osVersion: String,
+                                  context: [String: String] = [:]) async throws {
+        try await send("POST", "api/client-errors", body: ClientErrorReport(
+            kind: "error", message: message, appVersion: appVersion, osVersion: osVersion, context: context))
+    }
+
     // MARK: Invitations
 
     public func createInvite(_ invite: InviteInput) async throws {
@@ -85,6 +93,14 @@ extension APIClient {
 }
 
 struct MeUpdate: Codable { let displayName: String }
+
+struct ClientErrorReport: Codable {
+    let kind: String
+    let message: String
+    let appVersion: String
+    let osVersion: String
+    let context: [String: String]
+}
 
 public struct ServerVersion: Codable, Equatable, Sendable {
     public let revision: String

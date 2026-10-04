@@ -125,6 +125,7 @@ final class AccountModel: ObservableObject {
         await run {
             self.recoveryCode = try await account.setUpFirstDevice()
             self.status = .ready
+            await self.reportFallback(account)
             await self.syncNow()
         }
     }
@@ -135,6 +136,7 @@ final class AccountModel: ObservableObject {
         await run {
             try await account.restore(recoveryCode: code)
             self.status = .ready
+            await self.reportFallback(account)
             ok = true
             await self.syncNow()
         }
@@ -190,6 +192,17 @@ final class AccountModel: ObservableObject {
 
     func loadServerVersion() async {
         serverVersion = try? await APIClient(baseURL: Self.serverURL).version()
+    }
+
+    /// A Secure Enclave that refused to make a key is reported (design: Keys),
+    /// so a pattern across devices shows; the key then lives in the Keychain.
+    private func reportFallback(_ account: Account) async {
+        guard account.deviceKeyFellBack else { return }
+        let info = Bundle.main.infoDictionary ?? [:]
+        try? await account.api.reportClientError(
+            message: "secure enclave key creation failed; software key used",
+            appVersion: info["CFBundleShortVersionString"] as? String ?? "?",
+            osVersion: ProcessInfo.processInfo.operatingSystemVersionString)
     }
 
     // MARK: Friends
