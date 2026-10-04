@@ -7,6 +7,7 @@ let package = Package(
     products: [
         .library(name: "DuongondroCore", targets: ["DuongondroCore"]),
         .library(name: "DuongondroStore", targets: ["DuongondroStore"]),
+        .library(name: "DuongondroCrypto", targets: ["DuongondroCrypto"]),
     ],
     dependencies: [
         .package(url: "https://github.com/groue/GRDB.swift", from: "7.0.0"),
@@ -14,6 +15,8 @@ let package = Package(
     targets: [
         // Pure logic, no dependencies: practices, day keys, sessions, streaks.
         .target(name: "DuongondroCore"),
+        // End-to-end encryption in CryptoKit: the byte formats of docs/crypto.md.
+        .target(name: "DuongondroCrypto"),
         // The local GRDB database, as in CodeShare.
         .target(
             name: "DuongondroStore",
@@ -22,6 +25,11 @@ let package = Package(
         .testTarget(
             name: "DuongondroCoreTests",
             dependencies: ["DuongondroCore"],
+            resources: [.copy("Resources")]
+        ),
+        .testTarget(
+            name: "DuongondroCryptoTests",
+            dependencies: ["DuongondroCrypto"],
             resources: [.copy("Resources")]
         ),
         .testTarget(
