@@ -168,7 +168,10 @@ private struct BigButton: View {
                 if let systemImage { Image(systemName: systemImage) }
                 Text(title)
             }
-            .font(Typography.count)
+            // The count reads large; a sentence (streak-only practices) stays on one line.
+            .font(systemImage == nil ? Typography.count : Typography.headingBold(22, relativeTo: .title2))
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
             .foregroundStyle(Theme.onAccent)
             .frame(maxWidth: .infinity, minHeight: Theme.Size.bigButton)
         }

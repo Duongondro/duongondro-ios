@@ -74,9 +74,6 @@
     "Archiving hides the practice from Today and keeps its counts and history." : {
 
     },
-    "Count your practice. Keep your streak. Let your friends nag." : {
-
-    },
     "Counted for %@" : {
 
     },
@@ -95,6 +92,9 @@
     "Done today" : {
 
     },
+    "End-to-end encrypted and fully open source." : {
+
+    },
     "Everyone with a commit in the app, server, design or Android repositories, most commits first. Generated from git history when this build was made." : {
 
     },
@@ -102,6 +102,15 @@
 
     },
     "From paper or a spreadsheet; rough is fine." : {
+
+    },
+    "I already have an account" : {
+
+    },
+    "I have an invite" : {
+
+    },
+    "Just me, on this phone" : {
 
     },
     "Lock screens say “A friend practised” instead of the practice." : {
@@ -165,6 +174,9 @@
 
     },
     "Today" : {
+
+    },
+    "Track your meditation practice together with your friends." : {
 
     },
     "Type “%@” to confirm" : {
