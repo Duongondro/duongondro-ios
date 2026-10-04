@@ -126,6 +126,10 @@ public final class AppDatabase: Sendable {
            let decoded = try? JSONDecoder().decode(Preferences.self, from: Data(json.utf8)) {
             preferences = decoded
         }
+        // Someone with practices has been through onboarding, whatever the preferences
+        // row says: an update must never send them back to Welcome, where finishing
+        // again would overwrite their opening counts and streak seeds.
+        if !practices.isEmpty { preferences.onboarded = true }
         return Snapshot(practices: practices, sessions: sessions, seeds: seeds, preferences: preferences)
     }
 
@@ -284,16 +288,42 @@ public struct Preferences: Codable, Equatable, Sendable {
     public var discreetNotifications = false
 
     public init() {}
+
+    // Every key is optional when reading, so a preferences row written by an older
+    // or newer version still decodes: a missing key keeps its default, an unknown
+    // one is ignored. Synthesised decoding would fail on any added field instead.
+    enum CodingKeys: String, CodingKey {
+        case onboarded, finishedShortRefuge, finishedNgondro, malaSize, reminderMinutes, discreetNotifications
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let d = Preferences()
+        onboarded = try c.decodeIfPresent(Bool.self, forKey: .onboarded) ?? d.onboarded
+        finishedShortRefuge = try c.decodeIfPresent(Bool.self, forKey: .finishedShortRefuge) ?? d.finishedShortRefuge
+        finishedNgondro = try c.decodeIfPresent(Bool.self, forKey: .finishedNgondro) ?? d.finishedNgondro
+        malaSize = try c.decodeIfPresent(Int.self, forKey: .malaSize) ?? d.malaSize
+        reminderMinutes = try c.decodeIfPresent(Int.self, forKey: .reminderMinutes) ?? d.reminderMinutes
+        discreetNotifications = try c.decodeIfPresent(Bool.self, forKey: .discreetNotifications) ?? d.discreetNotifications
+    }
 }
 
 // MARK: - Rows
 
 extension TrackedPractice {
     init(row: Row) {
-        let practice = Practice(id: row["id"], name: row["name"], secondName: row["second_name"],
+        var practice = Practice(id: row["id"], name: row["name"], secondName: row["second_name"],
                                 group: PracticeGroup(rawValue: row["grp"]) ?? .anyTime, target: row["target"],
                                 streakOnlyAllowed: row["streak_only_allowed"], malaSize: row["mala_size"],
                                 isCustom: row["is_custom"])
+        // A built-in practice shows the catalogue's current name, second line and
+        // group, so a rename in an update reaches everyone who already tracks it. The
+        // target, mala size and streak-only choice stay the user's.
+        if !practice.isCustom, let current = Catalogue.builtIn.first(where: { $0.id == practice.id }) {
+            practice.name = current.name
+            practice.secondName = current.secondName
+            practice.group = current.group
+        }
         self.init(practice: practice, streakOnly: row["streak_only"], openingCount: row["opening_count"],
                   archived: row["archived"], sortOrder: row["sort_order"])
     }
