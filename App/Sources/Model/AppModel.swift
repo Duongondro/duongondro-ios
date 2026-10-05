@@ -3,14 +3,12 @@ import DuongondroCore
 import DuongondroStore
 
 /// What the UI shows, published from the database, plus the in-memory state
-/// that must never reach it early: the undo window and running Start timers.
+/// that must never reach it early: the undo window.
 @MainActor
 final class AppModel: ObservableObject {
     @Published private(set) var snapshot = Snapshot()
     /// The open undo window, at most one at a time.
     @Published private(set) var pending: PendingLog?
-    /// Start taps per practice; cleared when a session from that practice is written.
-    @Published private(set) var started: [String: Date] = [:]
     /// A session just written whose estimated start fell before midnight.
     @Published var afterMidnight: AfterMidnightPrompt?
     /// Set when a read or write failed; shown in a banner.
@@ -29,8 +27,6 @@ final class AppModel: ObservableObject {
     let database: AppDatabase
     private var observation: SnapshotObservation?
     private var closeTask: Task<Void, Never>?
-    /// The Start tap that belongs to the open undo window, captured when it opened.
-    private var pendingStart: Date?
 
     init(database: AppDatabase) {
         self.database = database
@@ -87,10 +83,6 @@ final class AppModel: ObservableObject {
 
     // MARK: - Logging
 
-    func start(_ practiceID: String, at now: Date = Date()) { started[practiceID] = now }
-
-    func cancelStart(_ practiceID: String) { started[practiceID] = nil }
-
     /// +mala, +custom amount or "done today" (0). Opens or extends the undo window;
     /// nothing is written until it closes.
     func add(_ amount: Int, to practiceID: String, at now: Date = Date()) {
@@ -101,7 +93,6 @@ final class AppModel: ObservableObject {
         } else {
             commitPending()
             pending = PendingLog(practiceID: practiceID, amount: amount, at: now)
-            pendingStart = started[practiceID]
         }
         scheduleClose()
     }
@@ -110,7 +101,6 @@ final class AppModel: ObservableObject {
     func undo() {
         closeTask?.cancel()
         pending = nil
-        pendingStart = nil
     }
 
     /// Writes the pending session now: the window closed, another practice was
@@ -119,17 +109,13 @@ final class AppModel: ObservableObject {
         closeTask?.cancel()
         guard let p = pending else { return }
         pending = nil
-        // The Start tap from when the window opened; one tapped during the window
-        // is for the next session and stays running.
-        let tapped = pendingStart
-        pendingStart = nil
-        let startedAt = SessionStart.estimate(loggedAt: p.startedAt, tappedStart: tapped,
+        // Always estimated; the after-midnight sheet corrects a wrong day in one tap.
+        let startedAt = SessionStart.estimate(loggedAt: p.startedAt, tappedStart: nil,
                                               timedSessionLengths: SessionStart.timedLengths(snapshot.sessions))
         let session = Session(practiceID: p.practiceID, amount: p.amount, startedAt: startedAt,
-                              startExact: tapped != nil, timeZoneID: TimeZone.current.identifier, loggedAt: p.startedAt)
+                              startExact: false, timeZoneID: TimeZone.current.identifier, loggedAt: p.startedAt)
         do {
             try database.insert(session)
-            if let tapped, started[p.practiceID] == tapped { started[p.practiceID] = nil }
             if let sheet = AfterMidnight.check(session) {
                 afterMidnight = AfterMidnightPrompt(session: session, sheet: sheet)
             }
@@ -155,12 +141,10 @@ final class AppModel: ObservableObject {
         }
     }
 
-    /// Drops the undo window and Start timers without writing anything.
+    /// Drops the undo window without writing anything.
     func discardInFlight() {
         closeTask?.cancel()
         pending = nil
-        pendingStart = nil
-        started = [:]
         afterMidnight = nil
     }
 

@@ -73,30 +73,6 @@
         }
       }
     },
-    "Counted for **%@**: you started around %@, before midnight. Your streak is safe." : {
-      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Započítáno na **%1$@**: začala jsi kolem %2$@, před půlnocí. Tvá série je v bezpečí."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaliczone na **%1$@**: zaczęłaś około %2$@, przed północą. Twoja seria jest bezpieczna."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Započítané na **%1$@**: začala si okolo %2$@, pred polnocou. Tvoja séria je v bezpečí."
-          }
-        }
-      }
-    },
     "Have you finished ngöndro?" : {
       "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
       "extractionState" : "manual",
@@ -129,6 +105,42 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dokončila si meditáciu útočiska?"
+          }
+        }
+      }
+    },
+    "I started after midnight" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Začala jsem po půlnoci"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaczęłam po północy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я начала после полуночи"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Začala som po polnoci"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я почала після опівночі"
           }
         }
       }

@@ -1,6 +1,5 @@
 import DuongondroCore
 import Foundation
-import SwiftUI
 
 extension Gender {
     /// UserDefaults key (`@AppStorage`) for this person's own gender, kept on the phone
@@ -51,13 +50,5 @@ enum Gendered {
             if variant != missing { format = variant }
         }
         return args.isEmpty ? format : String(format: format, locale: .appLanguage, arguments: args)
-    }
-}
-
-extension Text {
-    /// Text already localized (by `Gendered`), with inline Markdown such as **bold**;
-    /// not looked up again.
-    init(markdown: String) {
-        self.init((try? AttributedString(markdown: markdown)) ?? AttributedString(markdown))
     }
 }

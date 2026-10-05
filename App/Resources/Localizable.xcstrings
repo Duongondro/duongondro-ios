@@ -4398,62 +4398,55 @@
         }
       }
     },
-    "Counted for **%@**: you started around %@, before midnight. Your streak is safe." : {
-      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
-      "extractionState" : "manual",
+    "Counted for %@" : {
+      "comment" : "Title of the after-midnight sheet: the weekday the session counted for.",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Započítáno na **%1$@**: začátek byl kolem %2$@, před půlnocí. Tvá série je v bezpečí."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gezählt für **%1$@**: Du hast gegen %2$@ begonnen, vor Mitternacht. Deine Serie ist sicher."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Counted for **%1$@**: you started around %2$@, before midnight. Your streak is safe."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elszámolva erre a napra: **%1$@**. Kb. %2$@ körül kezdtél, még éjfél előtt. A sorozatod biztonságban van."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaliczone na **%1$@**: sesja zaczęła się około %2$@, przed północą. Twoja seria jest bezpieczna."
+            "value" : "Gezählt für %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Засчитано за **%1$@**: вы начали около %2$@, до полуночи. Ваша серия в безопасности."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Započítané na **%1$@**: začal(a) si okolo %2$@, pred polnocou. Tvoja séria je v bezpečí."
+            "value" : "Засчитано за день: %@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Зараховано за **%1$@**: ви почали близько %2$@, до опівночі. Ваша серія в безпеці."
+            "value" : "Зараховано за день: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaliczone na dzień: %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Započítáno na den: %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Započítané na deň: %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Beszámítva: %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Contado para **%1$@**: empezaste alrededor de las %2$@, antes de medianoche. Tu racha está a salvo."
+            "value" : "Contado para el %@"
           }
         }
       }
@@ -6538,6 +6531,60 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Tengo una invitación"
+          }
+        }
+      }
+    },
+    "I started after midnight" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ich habe nach Mitternacht angefangen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я начал(а) после полуночи"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я почав(-ла) після опівночі"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zacząłem/zaczęłam po północy"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Začal(a) jsem po půlnoci"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Začal(a) som po polnoci"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Éjfél után kezdtem"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Empecé después de medianoche"
           }
         }
       }
@@ -11386,58 +11433,6 @@
         }
       }
     },
-    "Start" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Začít"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Start"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Indítás"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Start"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Начать"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Začať"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Почати"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Iniciar"
-          }
-        }
-      }
-    },
     "Start practising" : {
       "localizations" : {
         "cs" : {
@@ -11486,58 +11481,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Empezar a practicar"
-          }
-        }
-      }
-    },
-    "Started %@. Tap to cancel." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zahájeno %@. Klepnutím zrušíš."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gestartet um %@. Tippen zum Abbrechen."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elindítva: %@. Koppints a megszakításhoz."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Rozpoczęto %@. Dotknij, aby anulować."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Начато в %@. Нажмите, чтобы отменить."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Začaté o %@. Ťuknutím zrušíš."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Розпочато %@. Торкніться, щоб скасувати."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Iniciado a las %@. Toca para cancelar."
           }
         }
       }
@@ -11960,58 +11903,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Toca Fuente para abrir este commit exacto en GitHub."
-          }
-        }
-      }
-    },
-    "Tap Start next time and the app knows exactly." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Příště klepni na Začít a aplikace to bude vědět přesně."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tippe nächstes Mal auf „Start“, dann weiß die App es genau."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Legközelebb koppints az Indításra, és az alkalmazás pontosan tudni fogja."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Następnym razem dotknij Start, a aplikacja będzie wiedzieć dokładnie."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "В следующий раз нажмите «Начать», и приложение будет знать точно."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nabudúce ťukni na Začať a aplikácia bude vedieť presne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Наступного разу торкніться «Почати», і застосунок знатиме точно."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toca Iniciar la próxima vez y la app lo sabrá con exactitud."
           }
         }
       }

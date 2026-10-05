@@ -68,7 +68,6 @@ struct PracticeView: View {
                         Button("+ Custom") { customAmount = "" }
                             .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
                     }
-                    StartButton(practiceID: practice.id)
                     Button("History") { showsHistory = true }
                         .buttonStyle(SoftButtonStyle())
                 }
@@ -196,27 +195,6 @@ private struct StreakBadge: View {
         }
         .font(.subheadline.weight(.bold))
         .accessibilityElement(children: .combine)
-    }
-}
-
-/// Start: records the exact start, so the session needs no estimate. While a
-/// session runs it shows the time since, and a tap cancels it.
-private struct StartButton: View {
-    @EnvironmentObject private var model: AppModel
-    let practiceID: String
-
-    var body: some View {
-        if let started = model.started[practiceID] {
-            Button { model.cancelStart(practiceID) } label: {
-                Text(started, style: .timer)
-                    .monospacedDigit()
-            }
-            .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
-            .accessibilityLabel(Text("Started \(started.shortTime). Tap to cancel."))
-        } else {
-            Button("Start") { model.start(practiceID) }
-                .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
-        }
     }
 }
 
@@ -376,42 +354,33 @@ private struct CustomAmountSheet: View {
     }
 }
 
-/// After a session logged past midnight (design canvas "Logged after midnight"):
-/// which day it counts for, with the one alternative, then Done.
+/// After a session logged past midnight whose estimated start fell before it
+/// (design: Social › Which day a session counts for): the day it counted for, OK,
+/// or the one alternative.
 struct AfterMidnightSheet: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.dismiss) private var dismiss
     let prompt: AfterMidnightPrompt
-    @State private var choice: CivilDate?
 
     var body: some View {
-        let tz = prompt.session.timeZone
-        let counted = prompt.sheet.countedFor
-        let alternative = prompt.sheet.alternative
-        let selected = choice ?? counted
         VStack(alignment: .leading, spacing: Theme.Space.l) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(prompt.session.amount > 0 ? "Logged \(prompt.session.amount.grouped)" : "Marked done")
+            VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                Text("Counted for \(prompt.sheet.countedFor.weekdayName(in: prompt.session.timeZone))")
                     .font(Typography.headingBold(26, relativeTo: .title))
-                Spacer()
-                Text(prompt.session.loggedAt.shortTime)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(Theme.muted)
-            }
-            Text(markdown: Gendered.mine("Counted for **%@**: you started around %@, before midnight. Your streak is safe.",
-                                          selected.weekdayName(in: tz), prompt.sheet.startedAround.shortTime))
-                .foregroundStyle(Theme.soft)
-                .fixedSize(horizontal: false, vertical: true)
-            SegmentedChoice(options: [(counted, dayLabel(counted, tz)), (alternative, dayLabel(alternative, tz))],
-                            selection: Binding(get: { selected }, set: { choice = $0 }),
-                            filled: true, height: Theme.Size.field)
-            Text("Tap Start next time and the app knows exactly.")
-                .font(.footnote)
+                    .foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack(spacing: Theme.Space.xs) {
+                    Text(prompt.session.amount > 0 ? "Logged \(prompt.session.amount.grouped)" : "Marked done")
+                    Text(verbatim: "·")
+                    Text(prompt.session.loggedAt.shortTime)
+                }
+                .font(.subheadline)
                 .foregroundStyle(Theme.muted)
-            Button("Done") {
-                if selected != counted { model.choose(day: selected, for: prompt) } else { dismiss() }
             }
-            .buttonStyle(SoftButtonStyle())
+            Button("OK") { dismiss() }
+                .buttonStyle(FilledButtonStyle())
+            Button(Gendered.mine("I started after midnight")) { model.choose(day: prompt.sheet.alternative, for: prompt) }
+                .buttonStyle(SoftButtonStyle())
         }
         .padding(.horizontal, Theme.Space.xl)
         .padding(.top, Theme.Space.xl)
@@ -419,11 +388,6 @@ struct AfterMidnightSheet: View {
         .sheetBackground(Theme.card)
         .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
-    }
-
-    /// "Sunday 4".
-    private func dayLabel(_ day: CivilDate, _ tz: TimeZone) -> String {
-        "\(day.weekdayName(in: tz)) \(day.day)"
     }
 }
 
