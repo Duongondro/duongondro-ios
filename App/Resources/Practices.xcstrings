@@ -17,6 +17,12 @@
             "state" : "translated",
             "value" : "Schronienie i Oświecona Postawa"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zuflucht und Erleuchtungsgeist"
+          }
         }
       }
     },
@@ -34,6 +40,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dordże Sempa"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dorje Sempa"
           }
         }
       }
@@ -71,10 +83,16 @@
             "state" : "translated",
             "value" : "Czenrezig"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liebevolle Augen"
+          }
         }
       }
     },
-    "Meditation on the 16th Karmapa" : {
+    "16th Karmapa Meditation" : {
       "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
       "extractionState" : "manual",
       "localizations" : {
@@ -82,6 +100,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Meditácia na 16. Karmapu"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medytacja XVI Karmapy"
           }
         }
       }
@@ -119,6 +143,12 @@
             "state" : "translated",
             "value" : "Diamentowy Umysł"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamantgeist-Meditation"
+          }
         }
       }
     },
@@ -131,6 +161,12 @@
             "state" : "translated",
             "value" : "Podarowanie Mandali"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mandala-Gaben"
+          }
         }
       }
     },
@@ -142,6 +178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Medytacja na Lamę"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditation auf den Lama"
           }
         }
       }
@@ -166,6 +208,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Medytacja VIII Karmapy"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8. Karmapa-Meditation"
           }
         }
       }
