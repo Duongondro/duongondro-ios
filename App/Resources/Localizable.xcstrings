@@ -5913,7 +5913,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Abys je mohl pozvat, nastav si účet v části Ty."
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Abys je mohl pozvat, nastav si účet v části Profil."
           }
         },
         "de" : {
@@ -5931,25 +5931,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Aby ich zaprosić, skonfiguruj konto w zakładce Ty."
+            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Aby ich zaprosić, skonfiguruj konto w zakładce Profil."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзья видят только ваши публичные серии и ничего больше. Чтобы пригласить их, настройте аккаунт на вкладке «Вы»."
+            "value" : "Друзья видят только ваши публичные серии и ничего больше. Чтобы пригласить их, настройте аккаунт на вкладке «Профиль»."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Priatelia vidia tvoje verejné série a nič iné. Ak ich chceš pozvať, najprv si na karte Ty nastav účet."
+            "value" : "Priatelia vidia tvoje verejné série a nič iné. Ak ich chceš pozvať, najprv si na karte Profil nastav účet."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Налаштуйте обліковий запис у розділі «Ви», щоб запрошувати друзів."
+            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Налаштуйте обліковий запис у розділі «Профіль», щоб запрошувати друзів."
           }
         },
         "es" : {
@@ -10287,7 +10287,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nejdřív si nastav účet v části Ty, pak odkaz otevři znovu."
+            "value" : "Nejdřív si nastav účet v části Profil, pak odkaz otevři znovu."
           }
         },
         "de" : {
@@ -10305,25 +10305,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Najpierw skonfiguruj konto w zakładce Ty, a potem otwórz link ponownie."
+            "value" : "Najpierw skonfiguruj konto w zakładce Profil, a potem otwórz link ponownie."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Сначала настройте аккаунт на вкладке «Вы», затем откройте ссылку снова."
+            "value" : "Сначала настройте аккаунт на вкладке «Профиль», затем откройте ссылку снова."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Najprv si na karte Ty nastav účet a potom otvor odkaz znova."
+            "value" : "Najprv si na karte Profil nastav účet a potom otvor odkaz znova."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Спершу налаштуйте обліковий запис у розділі «Ви», потім відкрийте посилання ще раз."
+            "value" : "Спершу налаштуйте обліковий запис у розділі «Профіль», потім відкрийте посилання ще раз."
           }
         },
         "es" : {
@@ -14203,7 +14203,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ty"
+            "value" : "Profil"
           }
         },
         "de" : {
@@ -14221,25 +14221,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ty"
+            "value" : "Profil"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вы"
+            "value" : "Профиль"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ty"
+            "value" : "Profil"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ви"
+            "value" : "Профіль"
           }
         },
         "es" : {
