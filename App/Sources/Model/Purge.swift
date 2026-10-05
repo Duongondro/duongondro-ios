@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import Security
 import UserNotifications
 import DuongondroStore
@@ -42,6 +43,43 @@ enum Covers {
     static func folderURL() -> URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Covers", isDirectory: true)
+    }
+
+    static func url(for practiceID: String) -> URL {
+        folderURL().appendingPathComponent(practiceID + ".jpg")
+    }
+
+    /// The person's own photo for a practice, if they chose one.
+    static func photo(for practiceID: String) -> UIImage? {
+        UIImage(contentsOfFile: url(for: practiceID).path)
+    }
+
+    /// The thangka a built-in practice shows by default, if the app has one.
+    static func builtIn(for practiceID: String) -> UIImage? {
+        UIImage(named: "cover-" + practiceID)
+    }
+
+    /// Saves a chosen photo, scaled down and re-encoded (which also drops its
+    /// location and camera metadata), in a folder kept out of device backups.
+    static func save(_ data: Data, for practiceID: String) throws {
+        guard let image = UIImage(data: data) else { throw CocoaError(.fileReadCorruptFile) }
+        let longest: CGFloat = 1600
+        let scale = min(1, longest / max(image.size.width, image.size.height))
+        let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        let scaled = UIGraphicsImageRenderer(size: size, format: format).image { _ in image.draw(in: CGRect(origin: .zero, size: size)) }
+        guard let jpeg = scaled.jpegData(compressionQuality: 0.85) else { throw CocoaError(.fileWriteUnknown) }
+        var folder = folderURL()
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        var values = URLResourceValues()
+        values.isExcludedFromBackup = true
+        try? folder.setResourceValues(values)
+        try jpeg.write(to: url(for: practiceID), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
+    }
+
+    static func remove(for practiceID: String) {
+        try? FileManager.default.removeItem(at: url(for: practiceID))
     }
 
     /// Every cover on the phone, by practice id, for the export.

@@ -57,6 +57,8 @@ enum Theme {
     /// QR codes stay burgundy on white in both themes: a camera needs the contrast.
     static let qrInk = Color(light: 0x7A1F2E, dark: 0x7A1F2E)
     static let qrGround = Color(light: 0xFFFFFF, dark: 0xFFFFFF)
+    /// Covers sit a little back in the dark theme, so a bright thangka does not glare.
+    static let coverOpacity = (light: 1.0, dark: 0.82)
     static let destructive = Color(light: 0xB3261E, dark: 0xF2827A)
     /// Text and icons on an accent-filled button.
     static let onAccent = Color(light: 0xFFFFFF, dark: 0x120A0C)

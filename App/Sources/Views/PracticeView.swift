@@ -12,6 +12,8 @@ struct PracticeView: View {
     @State private var taps = 0
     @State private var customAmount: String?
     @State private var showsHistory = false
+    /// Bumped when a cover is added, so the header reloads it.
+    @State private var coverVersion = 0
 
     var body: some View {
         if let practice = model.snapshot.practices.first(where: { $0.id == practiceID }) {
@@ -27,6 +29,7 @@ struct PracticeView: View {
         let doneToday = model.practisedToday(practice.id)
         return VStack(alignment: .leading, spacing: 0) {
             ScrollView {
+                CoverView(practiceID: practice.id).id(coverVersion)
                 VStack(alignment: .leading, spacing: Theme.Space.xl) {
                     header(practice)
                     if practice.streakOnly {
@@ -36,9 +39,11 @@ struct PracticeView: View {
                     }
                 }
                 .padding(.horizontal, Theme.Space.xl)
-                .padding(.top, Theme.Space.s)
+                .padding(.top, hasCover(practice.id) ? Theme.Space.xl : Theme.Space.s)
             }
             .plainBottomEdge()
+            // The cover runs up under the status bar, as in the mockup.
+            .ignoresSafeArea(edges: hasCover(practice.id) ? .top : [])
             VStack(spacing: Theme.Space.m) {
                 // The Undo toast sits above the button, which is pinned to the bottom,
                 // so the button never moves under the thumb mid-count.
@@ -89,6 +94,11 @@ struct PracticeView: View {
         }
     }
 
+    private func hasCover(_ id: String) -> Bool {
+        _ = coverVersion
+        return Covers.photo(for: id) != nil || Covers.builtIn(for: id) != nil
+    }
+
     /// "Dorje Sempa", and below it "Diamond Mind · round 1 · 43,308 lifetime".
     private func header(_ practice: TrackedPractice) -> some View {
         let sessions = model.snapshot.sessions(of: practice.id)
@@ -109,6 +119,10 @@ struct PracticeView: View {
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
+            if !hasCover(practice.id) {
+                AddCoverButton(practiceID: practice.id) { coverVersion += 1 }
+                    .padding(.top, Theme.Space.xs)
+            }
         }
     }
 
