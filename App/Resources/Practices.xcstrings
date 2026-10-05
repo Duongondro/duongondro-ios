@@ -3,7 +3,7 @@
   "version" : "1.0",
   "strings" : {
     "Refuge and the Enlightened Attitude" : {
-      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
@@ -11,11 +11,17 @@
             "state" : "needs_review",
             "value" : "Prijatie útočiska a rozvoj osvieteného postoja"
           }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schronienie i Oświecona Postawa"
+          }
         }
       }
     },
     "Diamond Mind" : {
-      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
@@ -23,11 +29,17 @@
             "state" : "needs_review",
             "value" : "Meditácia na Diamantovú myseľ"
           }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dordże Sempa"
+          }
         }
       }
     },
     "Meditation on the Buddha of Limitless Light" : {
-      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
@@ -35,17 +47,29 @@
             "state" : "needs_review",
             "value" : "Meditácia na Buddhu neobmedzeného svetla"
           }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amitabha"
+          }
         }
       }
     },
     "Loving Eyes" : {
-      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Meditácia na buddhu Milujúce oči"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czenrezig"
           }
         }
       }
@@ -58,6 +82,114 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Meditácia na 16. Karmapu"
+          }
+        }
+      }
+    },
+    "Short refuge" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medytacja Schronienia"
+          }
+        }
+      }
+    },
+    "Prostrations" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokłony"
+          }
+        }
+      }
+    },
+    "Dorje Sempa" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamentowy Umysł"
+          }
+        }
+      }
+    },
+    "Mandala offering" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podarowanie Mandali"
+          }
+        }
+      }
+    },
+    "Meditation on the Lama" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medytacja na Lamę"
+          }
+        }
+      }
+    },
+    "Guru Yoga" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guru Joga"
+          }
+        }
+      }
+    },
+    "8th Karmapa Meditation" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medytacja VIII Karmapy"
+          }
+        }
+      }
+    },
+    "Amitabha" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medytacja na Buddę Nieograniczonego Światła"
+          }
+        }
+      }
+    },
+    "Chenrezig" : {
+      "extractionState" : "manual",
+      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kochające Oczy"
           }
         }
       }
