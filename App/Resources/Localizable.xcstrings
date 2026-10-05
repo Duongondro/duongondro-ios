@@ -6251,7 +6251,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Czy ngöndro masz już za sobą?"
+            "value" : "Czy ukończyłeś/aś ngöndro?"
           }
         },
         "ru" : {
@@ -6305,7 +6305,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Czy Short refuge masz już za sobą?"
+            "value" : "Czy ukończyłeś/aś Medytację Schronienia?"
           }
         },
         "ru" : {

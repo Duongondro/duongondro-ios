@@ -101,6 +101,12 @@
       "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
       "extractionState" : "manual",
       "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy ukończyłaś ngöndro?"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -113,6 +119,12 @@
       "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
       "extractionState" : "manual",
       "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy ukończyłaś Medytację Schronienia?"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
