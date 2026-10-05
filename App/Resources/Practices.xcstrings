@@ -1,0 +1,66 @@
+{
+  "sourceLanguage" : "en",
+  "version" : "1.0",
+  "strings" : {
+    "Refuge and the Enlightened Attitude" : {
+      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prijatie útočiska a rozvoj osvieteného postoja"
+          }
+        }
+      }
+    },
+    "Diamond Mind" : {
+      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meditácia na Diamantovú myseľ"
+          }
+        }
+      }
+    },
+    "Meditation on the Buddha of Limitless Light" : {
+      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meditácia na Buddhu neobmedzeného svetla"
+          }
+        }
+      }
+    },
+    "Loving Eyes" : {
+      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meditácia na buddhu Milujúce oči"
+          }
+        }
+      }
+    },
+    "Meditation on the 16th Karmapa" : {
+      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meditácia na 16. Karmapu"
+          }
+        }
+      }
+    }
+  }
+}

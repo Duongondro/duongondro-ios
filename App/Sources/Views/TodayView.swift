@@ -14,7 +14,7 @@ struct TodayView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: Theme.Space.xs) {
-                    Text(model.clock.formatted(.dateTime.weekday(.wide).day().month(.wide)))
+                    Text(model.clock.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(.appLanguage)))
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Theme.muted)
                     Text("Today")
@@ -110,7 +110,7 @@ private struct PracticeCard: View {
         HStack(spacing: Theme.Space.m) {
             VStack(alignment: .leading, spacing: Theme.Space.xs + Theme.Space.xxs) {
                 HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
-                    Text(practice.practice.name)
+                    Text(practice.practice.shownName)
                         .font(.headline)
                         .fixedSize(horizontal: false, vertical: true)
                     if streak.current > 0 {
@@ -157,19 +157,19 @@ private struct PracticeCard: View {
     /// "Loving Eyes · done today".
     private func statusLine(rounds: RoundProgress?, sessions: [Session], done: Bool) -> String {
         var parts: [String] = []
-        if let second = practice.practice.secondName { parts.append(second) }
+        if let second = practice.practice.shownSecondName { parts.append(second) }
         if let rounds, let target = practice.practice.target {
             let progress = rounds.round > 1
-                ? String(localized: "round \(rounds.round) · \(rounds.inRound.grouped) of \(target.grouped)")
-                : String(localized: "\(rounds.inRound.grouped) of \(target.grouped)")
+                ? String(localized: "round \(rounds.round) · \(rounds.inRound.grouped) of \(target.grouped)", bundle: .appLanguage, locale: .appLanguage)
+                : String(localized: "\(rounds.inRound.grouped) of \(target.grouped)", bundle: .appLanguage, locale: .appLanguage)
             parts.append(progress)
         } else if !practice.streakOnly {
-            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) in total"))
+            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) in total", bundle: .appLanguage, locale: .appLanguage))
         }
         if practice.streakOnly {
-            parts.append(done ? String(localized: "done today") : String(localized: "not yet today"))
+            parts.append(done ? String(localized: "done today", bundle: .appLanguage, locale: .appLanguage) : String(localized: "not yet today", bundle: .appLanguage, locale: .appLanguage))
         } else if !done {
-            parts.append(String(localized: "not yet today"))
+            parts.append(String(localized: "not yet today", bundle: .appLanguage, locale: .appLanguage))
         }
         return parts.joined(separator: " · ")
     }
@@ -183,12 +183,12 @@ struct PracticeName: View {
 
     var body: some View {
         VStack(alignment: large ? .center : .leading, spacing: Theme.Space.xxs) {
-            Text(practice.name)
+            Text(verbatim: practice.shownName)
                 .font(large ? Typography.title : Typography.headline)
                 .multilineTextAlignment(large ? .center : .leading)
                 .fixedSize(horizontal: false, vertical: true)
-            if let second = practice.secondName {
-                Text(second)
+            if let second = practice.shownSecondName {
+                Text(verbatim: second)
                     .font(.subheadline)
                     .foregroundStyle(Theme.muted)
                     .multilineTextAlignment(large ? .center : .leading)

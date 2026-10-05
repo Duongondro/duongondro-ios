@@ -103,15 +103,15 @@ struct PracticeView: View {
     private func header(_ practice: TrackedPractice) -> some View {
         let sessions = model.snapshot.sessions(of: practice.id)
         var parts: [String] = []
-        if let second = practice.practice.secondName { parts.append(second) }
+        if let second = practice.practice.shownSecondName { parts.append(second) }
         if !practice.streakOnly {
-            if let r = practice.rounds(sessions: sessions) { parts.append(String(localized: "round \(r.round)")) }
-            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime"))
+            if let r = practice.rounds(sessions: sessions) { parts.append(String(localized: "round \(r.round)", bundle: .appLanguage, locale: .appLanguage)) }
+            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime", bundle: .appLanguage, locale: .appLanguage))
         } else {
-            parts.append(String(localized: "streak only"))
+            parts.append(String(localized: "streak only", bundle: .appLanguage, locale: .appLanguage))
         }
         return VStack(alignment: .leading, spacing: Theme.Space.xs) {
-            Text(practice.practice.name)
+            Text(practice.practice.shownName)
                 .font(Typography.headingBold(30, relativeTo: .largeTitle))
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
@@ -151,8 +151,8 @@ struct PracticeView: View {
             }
             HStack {
                 Text(todayTotal >= mala
-                     ? String(localized: "Today \(todayTotal.grouped) · \(todayTotal / mala) malas")
-                     : String(localized: "Today \(todayTotal.grouped)"))
+                     ? String(localized: "Today \(todayTotal.grouped) · \(todayTotal / mala) malas", bundle: .appLanguage, locale: .appLanguage)
+                     : String(localized: "Today \(todayTotal.grouped)", bundle: .appLanguage, locale: .appLanguage))
                     .foregroundStyle(Theme.muted)
                 Spacer()
                 StreakBadge(streak: streak)
@@ -260,8 +260,8 @@ private struct UndoToast: View {
 
     /// VoiceOver hears that something was added and Undo is there.
     private func announce() {
-        let text = streakOnly ? String(localized: "Marked done. Undo available.")
-                              : String(localized: "Added \(pending.amount.grouped). Undo available.")
+        let text = streakOnly ? String(localized: "Marked done. Undo available.", bundle: .appLanguage, locale: .appLanguage)
+                              : String(localized: "Added \(pending.amount.grouped). Undo available.", bundle: .appLanguage, locale: .appLanguage)
         UIAccessibility.post(notification: .announcement, argument: text)
     }
 }
@@ -309,14 +309,14 @@ private struct HistoryView: View {
                             .padding(.top, Theme.Space.xxl)
                     }
                     ForEach(days, id: \.key) { day, list in
-                        CardSection(header: LocalizedStringKey(day.startOfDay(in: .current).addingTimeInterval(12 * 3600).formatted(.dateTime.weekday(.wide).day().month(.wide)))) {
+                        CardSection(header: LocalizedStringKey(day.startOfDay(in: .current).addingTimeInterval(12 * 3600).formatted(.dateTime.weekday(.wide).day().month(.wide).locale(.appLanguage)))) {
                             ForEach(list.sorted { $0.startedAt > $1.startedAt }) { s in
                                 HStack {
                                     Text(s.startedAt.shortTime)
                                         .foregroundStyle(Theme.muted)
                                         .monospacedDigit()
                                     Spacer()
-                                    Text(practice.streakOnly ? String(localized: "done") : s.amount.grouped)
+                                    Text(practice.streakOnly ? String(localized: "done", bundle: .appLanguage, locale: .appLanguage) : s.amount.grouped)
                                         .font(.body.weight(.semibold))
                                 }
                             }

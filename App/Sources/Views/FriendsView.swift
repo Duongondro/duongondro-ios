@@ -59,7 +59,7 @@ struct FriendsView: View {
                             ForEach(account.friends) { f in
                                 NavigationLink { FriendDetailView(friendID: f.userID) } label: {
                                     HStack(spacing: Theme.Space.m) {
-                                        Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend") : f.displayName)
+                                        Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : f.displayName)
                                             .foregroundStyle(Theme.ink)
                                         Spacer(minLength: Theme.Space.s)
                                         if f.keyChanged {
@@ -141,7 +141,7 @@ struct FriendsView: View {
     }
 
     static func practiceName(_ id: String) -> String {
-        Catalogue.builtIn.first { $0.id == id }?.name ?? String(localized: "their own practice")
+        Catalogue.builtIn.first { $0.id == id }?.shownName ?? String(localized: "their own practice", bundle: .appLanguage, locale: .appLanguage)
     }
 }
 
@@ -179,10 +179,10 @@ struct NewsRow: View {
     }
 
     private var practice: String { FriendsView.practiceName(item.streak.practice) }
-    private var name: String { item.friend.displayName.isEmpty ? String(localized: "A friend") : item.friend.displayName }
+    private var name: String { item.friend.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : item.friend.displayName }
 
     private var title: String {
-        item.doneToday ? String(localized: "\(name) finished \(practice)") : String(localized: "\(name) hasn't practised yet")
+        item.doneToday ? String(localized: "\(name) finished \(practice)", bundle: .appLanguage, locale: .appLanguage) : String(localized: "\(name) hasn't practised yet", bundle: .appLanguage, locale: .appLanguage)
     }
 
     private var detail: String {
@@ -190,17 +190,17 @@ struct NewsRow: View {
             // Streak statements from this app carry their sending time as seq.
             let sent = Date(timeIntervalSince1970: Double(item.streak.seq) / 1000)
             let when = sent <= Date() && sent > Date().addingTimeInterval(-86400)
-                ? " · " + sent.formatted(.relative(presentation: .named)) : ""
-            return String(localized: "Day \(item.streak.current)") + when
+                ? " · " + sent.formatted(Date.RelativeFormatStyle(presentation: .named, locale: .appLanguage)) : ""
+            return String(localized: "Day \(item.streak.current)", bundle: .appLanguage, locale: .appLanguage) + when
         }
         // The deadline in this phone's clock: "at midnight" only when it is this
         // phone's midnight too.
         let deadline = item.streak.deadline
         let parts = Calendar.current.dateComponents([.hour, .minute], from: deadline)
         let ends = parts.hour == 0 && parts.minute == 0 && deadline.timeIntervalSinceNow <= 86400
-            ? String(localized: "ends at midnight")
-            : String(localized: "ends \(deadline.formatted(.dateTime.weekday(.abbreviated).hour().minute()))")
-        return String(localized: "\(practice) streak: \(item.streak.current) days, \(ends)")
+            ? String(localized: "ends at midnight", bundle: .appLanguage, locale: .appLanguage)
+            : String(localized: "ends \(deadline.formatted(.dateTime.weekday(.abbreviated).hour().minute().locale(.appLanguage)))", bundle: .appLanguage, locale: .appLanguage)
+        return String(localized: "\(practice) streak: \(item.streak.current) days, \(ends)", bundle: .appLanguage, locale: .appLanguage)
     }
 }
 

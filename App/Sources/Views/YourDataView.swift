@@ -73,7 +73,7 @@ private struct DeleteEverythingView: View {
     /// Set once the server confirmed: a retry after a failed local wipe skips it
     /// (the session is gone with the account, so a second delete would fail).
     @State private var serverDeleted = false
-    private let word = String(localized: "delete", comment: "The word typed to confirm deleting everything; lowercase")
+    private let word = String(localized: "delete", bundle: .appLanguage, locale: .appLanguage, comment: "The word typed to confirm deleting everything; lowercase")
 
     var body: some View {
         let confirmed = typed.trimmingCharacters(in: .whitespaces).lowercased() == word.lowercased()

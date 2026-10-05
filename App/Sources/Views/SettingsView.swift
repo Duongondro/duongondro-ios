@@ -108,19 +108,13 @@ private struct PracticeListView: View {
 private struct GeneralSection: View {
     @EnvironmentObject private var model: AppModel
 
-    static let showsLanguage = false
+    @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
 
     var body: some View {
         CardSection(header: "General") {
-            // Hidden until the translations exist: only English works so far. When they
-            // land, the language is picked in the app itself, as in CodeShare, not by a
-            // trip to the system Settings app.
-            if Self.showsLanguage {
-                Button {
-                    if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
-                } label: {
-                    SettingsRow("Language", detail: Text(verbatim: currentLanguage), chevron: true)
-                }
+            // Picked in the app itself, as in CodeShare, not by a trip to Settings.
+            NavigationLink { LanguageView() } label: {
+                SettingsRow("Language", detail: language.nativeName.map { Text(verbatim: $0) } ?? Text("System"), chevron: true)
             }
             HStack {
                 Text("A mala counts as").foregroundStyle(Theme.ink)
@@ -186,11 +180,6 @@ private struct GeneralSection: View {
         }
     }
 
-    /// The language in its own name, from the platform's CLDR data.
-    private var currentLanguage: String {
-        let code = Bundle.main.preferredLocalizations.first ?? "en"
-        return Locale(identifier: code).localizedString(forLanguageCode: code)?.localizedCapitalized ?? code
-    }
 }
 
 /// One practice's own settings: target, streak-only, mala override, archive.
@@ -256,7 +245,7 @@ struct PracticeSettingsView: View {
                 .themedRows()
             }
             .themedList()
-            .navigationTitle(Text(p.practice.name))
+            .navigationTitle(Text(verbatim: p.practice.shownName))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -318,5 +307,44 @@ private struct AddPracticeView: View {
         q.sortOrder = (model.snapshot.practices.map(\.sortOrder).max() ?? -1) + 1
         model.save(q)
         dismiss()
+    }
+}
+
+/// Settings › Language: System, then each language in its own name.
+private struct LanguageView: View {
+    @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
+
+    var body: some View {
+        List {
+            Section {
+                ForEach(AppLanguage.allCases) { option in
+                    Button { language = option } label: {
+                        HStack {
+                            if let name = option.spokenNativeName {
+                                Text(name).foregroundStyle(Theme.ink)
+                            } else {
+                                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                                    Text("System").foregroundStyle(Theme.ink)
+                                    Text("Follow the phone's language").font(.footnote).foregroundStyle(Theme.muted)
+                                }
+                            }
+                            Spacer()
+                            if option == language {
+                                Image(systemName: "checkmark").foregroundStyle(Theme.accent)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(option == language ? .isSelected : [])
+                }
+            } footer: {
+                Text("Translations other than English are drafts awaiting review by practitioners. Practice names follow each country's practice books as they are collected.")
+            }
+            .themedRows()
+        }
+        .themedList()
+        .navigationTitle("Language")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

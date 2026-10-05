@@ -189,11 +189,11 @@ struct AcceptInviteView: View {
                         try await account.accept(checked)
                         dismiss()
                     } catch Social.Failure.ownInvite {
-                        problem = String(localized: "This is your own invite. Send it to a friend instead.")
+                        problem = String(localized: "This is your own invite. Send it to a friend instead.", bundle: .appLanguage, locale: .appLanguage)
                     } catch APIError.notFound {
-                        problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.")
+                        problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.", bundle: .appLanguage, locale: .appLanguage)
                     } catch {
-                        problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.")
+                        problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.", bundle: .appLanguage, locale: .appLanguage)
                     }
                     working = false
                 }
@@ -219,13 +219,13 @@ struct AcceptInviteView: View {
             do {
                 checked = try await account.check(link)
             } catch Social.Failure.expired {
-                problem = String(localized: "This invite has expired. Ask for a new one.")
+                problem = String(localized: "This invite has expired. Ask for a new one.", bundle: .appLanguage, locale: .appLanguage)
             } catch Social.Failure.notAuthentic {
-                problem = String(localized: "This invite does not check out, so it was not accepted. Ask your friend to send it again.")
+                problem = String(localized: "This invite does not check out, so it was not accepted. Ask your friend to send it again.", bundle: .appLanguage, locale: .appLanguage)
             } catch APIError.notFound {
-                problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.")
+                problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.", bundle: .appLanguage, locale: .appLanguage)
             } catch {
-                problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.")
+                problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.", bundle: .appLanguage, locale: .appLanguage)
             }
         }
     }

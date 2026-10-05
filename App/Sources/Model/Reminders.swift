@@ -33,10 +33,10 @@ enum Reminders {
             // still alive then only if today gets logged.
             let streak = model.headline(now: fire).current
             let content = UNMutableNotificationContent()
-            content.title = String(localized: "Nothing logged today")
+            content.title = String(localized: "Nothing logged today", bundle: .appLanguage, locale: .appLanguage)
             content.body = streak > 0
-                ? String(localized: "Your streak of \(streak) days ends at midnight.")
-                : String(localized: "A short session still counts.")
+                ? String(localized: "Your streak of \(streak) days ends at midnight.", bundle: .appLanguage, locale: .appLanguage)
+                : String(localized: "A short session still counts.", bundle: .appLanguage, locale: .appLanguage)
             content.sound = .default
             let comps = Calendar.gregorian(in: tz).dateComponents([.year, .month, .day, .hour, .minute], from: fire)
             let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
@@ -68,10 +68,10 @@ enum Reminders {
                     if sessions.contains(where: { $0.day == day }) { continue }
                     guard let fire = fireDate(on: day, minutes: minutes, in: tz), fire > now else { continue }
                     let content = UNMutableNotificationContent()
-                    content.title = String(localized: "Shouldn't you be meditating?")
+                    content.title = String(localized: "Shouldn't you be meditating?", bundle: .appLanguage, locale: .appLanguage)
                     content.body = discreet
-                        ? String(localized: "You usually sit down around now.")
-                        : String(localized: "You usually sit down for \(p.practice.name) around now.")
+                        ? String(localized: "You usually sit down around now.", bundle: .appLanguage, locale: .appLanguage)
+                        : String(localized: "You usually sit down for \(p.practice.shownName) around now.", bundle: .appLanguage, locale: .appLanguage)
                     content.sound = .default
                     let comps = Calendar.gregorian(in: tz).dateComponents([.year, .month, .day, .hour, .minute], from: fire)
                     try? await center.add(UNNotificationRequest(identifier: usualPrefix + p.id + "-" + day.description, content: content,

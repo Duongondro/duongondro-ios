@@ -91,7 +91,7 @@ struct AccountSection: View {
 
     private var syncDetail: Text {
         if account.syncing { return Text("Syncing…") }
-        if let last = account.lastSync { return Text(last.formatted(.relative(presentation: .named))) }
+        if let last = account.lastSync { return Text(last.formatted(Date.RelativeFormatStyle(presentation: .named, locale: .appLanguage))) }
         return Text("Not yet")
     }
 

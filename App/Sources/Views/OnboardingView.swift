@@ -433,8 +433,8 @@ private struct PracticeChoiceRow: View {
 
     @ViewBuilder
     private func nameText(chosen: Bool) -> some View {
-        let name = Text(practice.name).font(.system(size: 16, weight: chosen ? .bold : .regular)).foregroundColor(Theme.ink)
-        if let second = practice.secondName {
+        let name = Text(verbatim: practice.shownName).font(.system(size: 16, weight: chosen ? .bold : .regular)).foregroundColor(Theme.ink)
+        if let second = practice.shownSecondName {
             if second.count > inlineLimit {
                 VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                     name
@@ -504,7 +504,7 @@ private struct CountsStep: View {
                         Text("\(index + 1) of \(flow.chosen.count) practices")
                             .font(.system(size: 14, weight: .bold))
                             .foregroundStyle(Theme.muted)
-                        StepHeader(title: "Where are you with \(p.wrappedValue.practice.name)?", titleSize: 28)
+                        StepHeader(title: "Where are you with \(p.wrappedValue.practice.shownName)?", titleSize: 28)
                         card(p)
                         if !p.wrappedValue.streakOnly, p.wrappedValue.showsRound {
                             Stepper(value: p.round, in: 1...99) { Text("Round \(p.wrappedValue.round)") }
@@ -559,7 +559,7 @@ private struct CountsStep: View {
                 Text("Last practised")
                     .font(.system(size: 14))
                     .foregroundStyle(Theme.soft)
-                SegmentedChoice(options: [(true, String(localized: "Today")), (false, String(localized: "Yesterday"))],
+                SegmentedChoice(options: [(true, String(localized: "Today", bundle: .appLanguage, locale: .appLanguage)), (false, String(localized: "Yesterday", bundle: .appLanguage, locale: .appLanguage))],
                                 selection: p.lastWasToday)
             }
         }

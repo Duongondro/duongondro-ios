@@ -172,9 +172,9 @@ final class AccountModel: ObservableObject {
             _ = try? await social?.publishStreaks()
             lastSync = Date()
             if result.refused > 0 {
-                error = String(localized: "\(result.refused) changes could not be synced. Check that the phone's clock is right.")
+                error = String(localized: "\(result.refused) changes could not be synced. Check that the phone's clock is right.", bundle: .appLanguage, locale: .appLanguage)
             } else if result.unreadable > 0 {
-                error = String(localized: "\(result.unreadable) sessions from another phone cannot be opened here yet.")
+                error = String(localized: "\(result.unreadable) sessions from another phone cannot be opened here yet.", bundle: .appLanguage, locale: .appLanguage)
             } else {
                 error = nil
             }
@@ -183,7 +183,7 @@ final class AccountModel: ObservableObject {
             try? secrets.delete(Self.tokenName)
             self.account = nil
             status = .none
-            error = String(localized: "Signed out. Sign in again to keep syncing.")
+            error = String(localized: "Signed out. Sign in again to keep syncing.", bundle: .appLanguage, locale: .appLanguage)
         } catch {
             // Offline or the server is away: the data is safe here and syncs later.
             self.error = error.localizedDescription
@@ -308,7 +308,7 @@ final class AccountModel: ObservableObject {
     /// Without an account there is nothing to delete there.
     struct SignInToDelete: LocalizedError {
         var errorDescription: String? {
-            String(localized: "This phone belongs to an account, but is signed out. Sign in again first, so the server's copy is deleted too.")
+            String(localized: "This phone belongs to an account, but is signed out. Sign in again first, so the server's copy is deleted too.", bundle: .appLanguage, locale: .appLanguage)
         }
     }
 
@@ -348,9 +348,9 @@ final class AccountModel: ObservableObject {
             try await work()
             error = nil
         } catch Account.Failure.badRecoveryCode {
-            error = String(localized: "That recovery code does not open this account.")
+            error = String(localized: "That recovery code does not open this account.", bundle: .appLanguage, locale: .appLanguage)
         } catch Account.Failure.accountHasKeys {
-            error = String(localized: "This account already has keys: restore it with its recovery code instead.")
+            error = String(localized: "This account already has keys: restore it with its recovery code instead.", bundle: .appLanguage, locale: .appLanguage)
             status = .needsKeys
         } catch {
             self.error = error.localizedDescription

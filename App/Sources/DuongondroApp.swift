@@ -8,6 +8,8 @@ struct DuongondroApp: App {
     @StateObject private var model: AppModel
     @StateObject private var account: AccountModel
     @Environment(\.scenePhase) private var scenePhase
+    /// Settings › Language. System (the default) follows the phone.
+    @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
 
     init() {
         let model = AppModel.live()
@@ -20,6 +22,9 @@ struct DuongondroApp: App {
             RootView()
                 .environmentObject(model)
                 .environmentObject(account)
+                // The interface language for every view below: string lookups and
+                // formatting. Always set (System = the phone's own locale).
+                .environment(\.locale, language.locale())
                 .tint(Theme.accent)
         }
         .onChange(of: scenePhase) { phase in
