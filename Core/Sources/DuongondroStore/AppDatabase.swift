@@ -649,13 +649,15 @@ extension TrackedPractice {
                                 group: PracticeGroup(rawValue: row["grp"]) ?? .anyTime, target: row["target"],
                                 streakOnlyAllowed: row["streak_only_allowed"], malaSize: row["mala_size"],
                                 isCustom: row["is_custom"])
-        // A built-in practice shows the catalogue's current name, second line and
-        // group, so a rename in an update reaches everyone who already tracks it. The
-        // target, mala size and streak-only choice stay the user's.
+        // A built-in practice shows the catalogue's current name, second line, group
+        // and whether it may be streak-only, so a change in an update reaches everyone
+        // who already tracks it. The target, mala size and streak-only choice stay the
+        // user's (a choice the practice no longer allows simply stops applying).
         if !practice.isCustom, let current = Catalogue.builtIn.first(where: { $0.id == practice.id }) {
             practice.name = current.name
             practice.secondName = current.secondName
             practice.group = current.group
+            practice.streakOnlyAllowed = current.streakOnlyAllowed
         }
         self.init(practice: practice, streakOnly: row["streak_only"], openingCount: row["opening_count"],
                   archived: row["archived"], sortOrder: row["sort_order"])

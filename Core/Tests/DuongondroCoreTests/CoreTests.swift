@@ -23,6 +23,7 @@ final class CoreTests: XCTestCase {
 
     func testKarmapaMeditationsStartStreakOnly() {
         let byID = Dictionary(uniqueKeysWithValues: Catalogue.builtIn.map { ($0.id, $0) })
+        XCTAssertFalse(byID["short-refuge"]!.streakOnlyAllowed, "short refuge is always counted")
         XCTAssertTrue(byID["16th-karmapa"]!.streakOnlyByDefault)
         XCTAssertNil(byID["16th-karmapa"]!.target)
         XCTAssertTrue(byID["8th-karmapa"]!.streakOnlyByDefault)

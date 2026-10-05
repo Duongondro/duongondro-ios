@@ -321,3 +321,17 @@ final class FriendPinTests: XCTestCase {
         XCTAssertEqual(try db.seenSeq(friend, practice: "chenrezig"), 5)
     }
 }
+
+final class CatalogueOverlayTests: XCTestCase {
+    /// A short refuge tracked as streak-only before the catalogue forbade it is
+    /// counted again on the next read.
+    func testStreakOnlyFollowsTheCatalogue() throws {
+        let db = try AppDatabase.inMemory()
+        var old = Catalogue.builtIn.first { $0.id == "short-refuge" }!
+        old.streakOnlyAllowed = true
+        try db.save(TrackedPractice(practice: old, streakOnly: true, sortOrder: 0))
+        let read = try XCTUnwrap(db.snapshot().practices.first)
+        XCTAssertFalse(read.practice.streakOnlyAllowed)
+        XCTAssertFalse(read.streakOnly)
+    }
+}

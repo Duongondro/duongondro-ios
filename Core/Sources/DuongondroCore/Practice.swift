@@ -47,7 +47,7 @@ public struct Practice: Identifiable, Hashable, Codable, Sendable {
 
 public enum Catalogue {
     public static let builtIn: [Practice] = [
-        Practice(id: "short-refuge", name: "Short refuge", group: .beforeNgondro, target: 11_111, streakOnlyAllowed: true),
+        Practice(id: "short-refuge", name: "Short refuge", group: .beforeNgondro, target: 11_111, streakOnlyAllowed: false),
         Practice(id: "refuge", name: "Refuge and the Enlightened Attitude", secondName: "Prostrations", group: .ngondro, target: 111_111, streakOnlyAllowed: false),
         Practice(id: "dorje-sempa", name: "Dorje Sempa", secondName: "Diamond Mind", group: .ngondro, target: 111_111, streakOnlyAllowed: false),
         Practice(id: "mandala", name: "Mandala offering", group: .ngondro, target: 111_111, streakOnlyAllowed: false),
