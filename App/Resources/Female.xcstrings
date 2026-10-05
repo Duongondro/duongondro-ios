@@ -1,0 +1,198 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ finished %@" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ dokončila %2$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ ukończyła %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ завершила %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ dokončila %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ завершила %2$@"
+          }
+        }
+      }
+    },
+    "%@ hasn't practised yet" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ zatím nepraktikovala"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ jeszcze nie praktykowała"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ ещё не практиковала"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ ešte necvičila"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ ще не практикувала"
+          }
+        }
+      }
+    },
+    "Counted for **%@**: you started around %@, before midnight. Your streak is safe." : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Započítáno na **%1$@**: začala jsi kolem %2$@, před půlnocí. Tvá série je v bezpečí."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaliczone na **%1$@**: zaczęłaś około %2$@, przed północą. Twoja seria jest bezpieczna."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Započítané na **%1$@**: začala si okolo %2$@, pred polnocou. Tvoja séria je v bezpečí."
+          }
+        }
+      }
+    },
+    "Have you finished ngöndro?" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dokončila si ngöndro?"
+          }
+        }
+      }
+    },
+    "Have you finished short refuge?" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dokončila si meditáciu útočiska?"
+          }
+        }
+      }
+    },
+    "I wrote it down" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zapsala jsem si ho"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zapisałam"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я записала"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zapísala som si ho"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я записала"
+          }
+        }
+      }
+    },
+    "The code you wrote down stops working." : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kód, ktorý si si zapísala, prestane fungovať."
+          }
+        }
+      }
+    },
+    "The code you wrote down when you set up your first phone. Spaces and dashes do not matter." : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kód, ktorý si si zapísala pri nastavení prvého telefónu. Medzery a pomlčky nezáležia."
+          }
+        }
+      }
+    },
+    "The database could not be opened. Nothing you log now would be kept, so logging is off until the app restarts." : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Databázu sa nepodarilo otvoriť. Nič, čo by si teraz zaznamenala, by sa neuložilo, preto je zaznamenávanie vypnuté do reštartu aplikácie."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

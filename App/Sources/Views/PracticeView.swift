@@ -398,7 +398,8 @@ struct AfterMidnightSheet: View {
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(Theme.muted)
             }
-            Text("Counted for **\(selected.weekdayName(in: tz))**: you started around \(prompt.sheet.startedAround.shortTime), before midnight. Your streak is safe.")
+            Text(markdown: Gendered.mine("Counted for **%@**: you started around %@, before midnight. Your streak is safe.",
+                                          selected.weekdayName(in: tz), prompt.sheet.startedAround.shortTime))
                 .foregroundStyle(Theme.soft)
                 .fixedSize(horizontal: false, vertical: true)
             SegmentedChoice(options: [(counted, dayLabel(counted, tz)), (alternative, dayLabel(alternative, tz))],

@@ -4,11 +4,13 @@
     "" : {},
     "  " : {},
     "%@ finished %@" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ má hotovo: %2$@"
+            "value" : "%1$@ dokončil(a) %2$@"
           }
         },
         "de" : {
@@ -32,7 +34,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@: ukończono %2$@"
+            "value" : "%1$@ ukończył(a) %2$@"
           }
         },
         "ru" : {
@@ -44,13 +46,13 @@
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ dokončené: %2$@"
+            "value" : "%1$@ dokončil(a) %2$@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@: завершено %2$@"
+            "value" : "%1$@ завершив(-ла) %2$@"
           }
         },
         "es" : {
@@ -62,11 +64,13 @@
       }
     },
     "%@ hasn't practised yet" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ zatím nepraktikuje"
+            "value" : "%@ zatím nepraktikoval(a)"
           }
         },
         "de" : {
@@ -84,7 +88,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "U %@ nie ma jeszcze praktyki"
+            "value" : "%@ jeszcze nie praktykował(a)"
           }
         },
         "ru" : {
@@ -102,7 +106,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "У %@ ще немає практики"
+            "value" : "%@ ще не практикував(-ла)"
           }
         },
         "es" : {
@@ -4395,6 +4399,8 @@
       }
     },
     "Counted for **%@**: you started around %@, before midnight. Your streak is safe." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -5700,6 +5706,58 @@
         }
       }
     },
+    "Female" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Weiblich"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Женский"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Жіноча"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kobieta"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Žena"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Žena"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nő"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Femenino"
+          }
+        }
+      }
+    },
     "Follow the phone's language" : {
       "localizations" : {
         "de" : {
@@ -5913,7 +5971,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Abys je mohl pozvat, nastav si účet v části Profil."
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Pro pozvání přátel si nastav účet v části Profil."
           }
         },
         "de" : {
@@ -6008,6 +6066,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "De un cuaderno o una hoja de cálculo; un número aproximado está bien."
+          }
+        }
+      }
+    },
+    "Gender" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Geschlecht"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Пол"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Стать"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Płeć"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pohlaví"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pohlavie"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nem"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Género"
           }
         }
       }
@@ -6117,6 +6227,8 @@
       }
     },
     "Have you finished ngöndro?" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6169,6 +6281,8 @@
       }
     },
     "Have you finished short refuge?" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6429,6 +6543,8 @@
       }
     },
     "I wrote it down" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -7572,6 +7688,58 @@
         }
       }
     },
+    "Male" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Männlich"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Мужской"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Чоловіча"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mężczyzna"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Muž"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Muž"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Férfi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Masculino"
+          }
+        }
+      }
+    },
     "Mark today done" : {
       "localizations" : {
         "cs" : {
@@ -8040,6 +8208,58 @@
         }
       }
     },
+    "Non-binary" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nichtbinär"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Небинарный"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Небінарна"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Osoba niebinarna"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nebinární osoba"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nebinárna osoba"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nem bináris"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No binario"
+          }
+        }
+      }
+    },
     "None" : {
       "localizations" : {
         "cs" : {
@@ -8192,6 +8412,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sin confirmar"
+          }
+        }
+      }
+    },
+    "Not given" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keine Angabe"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не указан"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не вказано"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie podano"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neuvedeno"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neuvedené"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nincs megadva"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin indicar"
           }
         }
       }
@@ -8712,6 +8984,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Solo el número de días practicados en la app, nunca conteos ni totales."
+          }
+        }
+      }
+    },
+    "Optional. Polish, Czech, Slovak, Russian and Ukrainian use it to conjugate words about you, on this phone and your friends'. Without it, they use neutral forms." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Freiwillig. Polnisch, Tschechisch, Slowakisch, Russisch und Ukrainisch beugen damit Wörter über dich, auf diesem Telefon und auf denen deiner Freunde. Ohne Angabe gelten neutrale Formen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Необязательно. В польском, чешском, словацком, русском и украинском по нему согласуются слова о вас — на этом телефоне и у ваших друзей. Без него используются нейтральные формы."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Необов’язково. Польська, чеська, словацька, російська й українська узгоджують за нею слова про вас — на цьому телефоні й у ваших друзів. Без неї використовуються нейтральні форми."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcjonalne. Polski, czeski, słowacki, rosyjski i ukraiński odmieniają według niej słowa o Tobie, na tym telefonie i u Twoich przyjaciół. Bez niej używane są formy neutralne."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nepovinné. Polština, čeština, slovenština, ruština a ukrajinština podle něj ohýbají slova o tobě, v tomto telefonu i u tvých přátel. Bez něj se použijí neutrální tvary."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nepovinné. Poľština, čeština, slovenčina, ruština a ukrajinčina podľa neho ohýbajú slová o tebe, v tomto telefóne aj u tvojich priateľov. Bez neho sa použijú neutrálne tvary."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nem kötelező. A lengyel, cseh, szlovák, orosz és ukrán nyelv ez alapján ragozza a rólad szóló szavakat, ezen a telefonon és a barátaidén is. Enélkül semleges alakokat használnak."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. El polaco, el checo, el eslovaco, el ruso y el ucraniano lo usan para conjugar las palabras sobre ti, en este teléfono y en los de tus amigos. Sin él, usan formas neutras."
           }
         }
       }
@@ -12005,6 +12329,8 @@
       }
     },
     "The code you wrote down stops working." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -12057,6 +12383,8 @@
       }
     },
     "The code you wrote down when you set up your first phone. Spaces and dashes do not matter." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -12109,6 +12437,8 @@
       }
     },
     "The database could not be opened. Nothing you log now would be kept, so logging is off until the app restarts." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

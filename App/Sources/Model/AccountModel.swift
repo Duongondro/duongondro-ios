@@ -215,6 +215,7 @@ final class AccountModel: ObservableObject {
             if let me = try? await social.account.api.me() {
                 displayName = me.displayName
                 deviceCount = me.devices.count
+                await reconcileGender(server: me.gender.flatMap(Gender.init(rawValue:)), social: social)
             }
         } catch {
             self.error = error.localizedDescription
@@ -298,6 +299,24 @@ final class AccountModel: ObservableObject {
         await run {
             try await social.account.api.setDisplayName(trimmed)
             self.displayName = trimmed
+        }
+    }
+
+    /// This person's grammatical gender: kept on the phone, so the app conjugates
+    /// without an account, and on the server, so friends' phones can too.
+    func setGender(_ gender: Gender?) async {
+        UserDefaults.standard.set(gender?.rawValue ?? "", forKey: Gender.storageKey)
+        guard status == .ready, let social else { return }
+        await run { try await social.account.api.setGender(gender?.rawValue) }
+    }
+
+    /// The server's value wins once there is one (another phone may have changed
+    /// it); a value given before the account existed goes up.
+    private func reconcileGender(server: Gender?, social: Social) async {
+        if let server {
+            if server != Gender.stored() { UserDefaults.standard.set(server.rawValue, forKey: Gender.storageKey) }
+        } else if let mine = Gender.stored() {
+            try? await social.account.api.setGender(mine.rawValue)
         }
     }
 

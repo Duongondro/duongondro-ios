@@ -182,7 +182,8 @@ struct NewsRow: View {
     private var name: String { item.friend.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : item.friend.displayName }
 
     private var title: String {
-        item.doneToday ? String(localized: "\(name) finished \(practice)", bundle: .appLanguage, locale: .appLanguage) : String(localized: "\(name) hasn't practised yet", bundle: .appLanguage, locale: .appLanguage)
+        item.doneToday ? Gendered.string("%@ finished %@", for: item.friend.gender, name, practice)
+            : Gendered.string("%@ hasn't practised yet", for: item.friend.gender, name)
     }
 
     private var detail: String {

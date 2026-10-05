@@ -203,6 +203,8 @@ public struct Me: Codable, Equatable, Sendable {
     public let identityPublicKey: Data?
     public let keyVersion: Int
     public let displayName: String
+    /// "male", "female" or "nonbinary"; nil when not given.
+    public let gender: String?
     public let devices: [Device]
 }
 

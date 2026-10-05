@@ -58,7 +58,7 @@ struct AccountSection: View {
                 .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
                     Button("Make a new code") { Task { await account.newRecoveryCode() } }
                 } message: {
-                    Text("The code you wrote down stops working.")
+                    Text(verbatim: Gendered.mine("The code you wrote down stops working."))
                 }
                 Button { Task { await account.syncNow() } } label: {
                     SettingsRow("Sync", detail: syncDetail)
@@ -133,7 +133,7 @@ struct RecoveryCodeView: View {
                     .font(.subheadline)
                     .foregroundStyle(Theme.muted)
                 Spacer(minLength: 0)
-                Button("I wrote it down") { checking = true }
+                Button(Gendered.mine("I wrote it down")) { checking = true }
                     .buttonStyle(FilledButtonStyle())
             }
             .padding(.horizontal, Theme.Space.xl + Theme.Space.xs)
@@ -247,7 +247,7 @@ struct RestoreView: View {
                 .foregroundStyle(Theme.ink)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
-            Text("The code you wrote down when you set up your first phone. Spaces and dashes do not matter.")
+            Text(verbatim: Gendered.mine("The code you wrote down when you set up your first phone. Spaces and dashes do not matter."))
                 .foregroundStyle(Theme.soft)
                 .fixedSize(horizontal: false, vertical: true)
             TextField("", text: $code, axis: .vertical)

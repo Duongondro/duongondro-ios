@@ -251,6 +251,7 @@ final class LiveSocialTests: XCTestCase {
         let (b, _) = try await person()
         try await a.api.setDisplayName("Tomasz")
         try await b.api.setDisplayName("Ania")
+        try await a.api.setGender("male")
 
         let (link, _) = try await Social(account: a).createInvite()
         // A link whose secret was changed does not check: the MAC fails.
@@ -279,12 +280,14 @@ final class LiveSocialTests: XCTestCase {
         let friendsOfB = try await Social(account: b).friends()
         XCTAssertEqual(friendsOfB.count, 1)
         XCTAssertEqual(friendsOfB[0].displayName, "Tomasz")
+        XCTAssertEqual(friendsOfB[0].gender, .male)
         XCTAssertFalse(friendsOfB[0].keyChanged)
         XCTAssertEqual(friendsOfB[0].streaks.first?.practice, "dorje-sempa")
         XCTAssertEqual(friendsOfB[0].streaks.first?.current, 2)
 
         let friendsOfA = try await socialA.friends()
         XCTAssertEqual(friendsOfA.map(\.displayName), ["Ania"])
+        XCTAssertNil(friendsOfA[0].gender, "a gender nobody gave")
         try await a.api.poke(friendsOfA[0].userID)
 
         // Private again: B sees no streak.

@@ -109,6 +109,8 @@ private struct GeneralSection: View {
     @EnvironmentObject private var model: AppModel
 
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
+    @AppStorage(Gender.storageKey) private var gender = ""
+    @EnvironmentObject private var account: AccountModel
 
     var body: some View {
         CardSection(header: "General") {
@@ -116,6 +118,29 @@ private struct GeneralSection: View {
             NavigationLink { LanguageView() } label: {
                 SettingsRow("Language", detail: language.nativeName.map { Text(verbatim: $0) } ?? Text("System"), chevron: true)
             }
+            VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                HStack {
+                    Text("Gender").foregroundStyle(Theme.ink)
+                    Spacer(minLength: Theme.Space.s)
+                    Picker("Gender", selection: Binding(get: { gender }, set: { v in
+                        gender = v
+                        Task { await account.setGender(Gender(rawValue: v)) }
+                    })) {
+                        Text("Not given").tag("")
+                        Text("Male").tag(Gender.male.rawValue)
+                        Text("Female").tag(Gender.female.rawValue)
+                        Text("Non-binary").tag(Gender.nonbinary.rawValue)
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                    .tint(Theme.accent)
+                }
+                Text("Optional. Polish, Czech, Slovak, Russian and Ukrainian use it to conjugate words about you, on this phone and your friends'. Without it, they use neutral forms.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.vertical, Theme.Space.s)
             HStack {
                 Text("A mala counts as").foregroundStyle(Theme.ink)
                 Spacer(minLength: Theme.Space.s)

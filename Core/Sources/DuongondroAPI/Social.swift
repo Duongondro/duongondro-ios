@@ -9,6 +9,12 @@ extension APIClient {
         try await send("PATCH", "api/me", body: MeUpdate(displayName: name))
     }
 
+    /// Sets or clears (nil) the grammatical gender friends' phones conjugate with:
+    /// "male", "female" or "nonbinary".
+    public func setGender(_ gender: String?) async throws {
+        try await send("PUT", "api/me/gender", body: GenderUpdate(gender: gender))
+    }
+
     /// A problem worth knowing about, without personal data (design: Keys, the
     /// Secure Enclave fallback).
     public func reportClientError(message: String, appVersion: String, osVersion: String,
@@ -93,6 +99,7 @@ extension APIClient {
 }
 
 struct MeUpdate: Codable { let displayName: String }
+struct GenderUpdate: Codable { let gender: String? }
 
 struct ClientErrorReport: Codable {
     let kind: String
@@ -147,6 +154,8 @@ struct RedemptionResult: Codable { let inviterId: UUID }
 public struct Friend: Codable, Equatable, Sendable {
     public let userId: UUID
     public let displayName: String
+    /// "male", "female" or "nonbinary"; nil when not given.
+    public let gender: String?
     public let notifyDone: Bool
     public let identityPublicKey: Data?
     public let since: Date
