@@ -46,7 +46,7 @@ targets:
         # No encryption beyond the system's yet. Becomes true with phase 3's sealing
         # (standard algorithms, the mass-market exemption): docs/12-release-checklist.
         ITSAppUsesNonExemptEncryption: false
-        CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu]
+        CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu, es]
         # Resources in groups are copied flat into the bundle root, so bare names.
         UIAppFonts: [IBMPlexSans-SemiBold.ttf, IBMPlexSans-Bold.ttf]
         # Plain HTTP only to this Mac's development server (debug builds' default);

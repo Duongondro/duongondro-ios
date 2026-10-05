@@ -52,6 +52,12 @@
             "state" : "needs_review",
             "value" : "%1$@: завершено %2$@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ terminó %2$@"
+          }
         }
       }
     },
@@ -97,6 +103,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "У %@ ще немає практики"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ aún no ha practicado"
           }
         }
       }
@@ -144,6 +156,12 @@
             "state" : "needs_review",
             "value" : "Разом: %@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ en total"
+          }
         }
       }
     },
@@ -189,6 +207,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ за весь час"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ en toda la vida"
           }
         }
       }
@@ -241,6 +265,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ з %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ de %2$@"
           }
         }
       }
@@ -530,6 +560,40 @@
               }
             }
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Racha de %1$@: %2$lld día, %3$@"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Racha de %1$@: %2$lld días, %3$@"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Racha de %1$@: %2$lld días, %3$@"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -572,6 +636,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%lld"
@@ -858,6 +928,40 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "Не вдалося синхронізувати %lld зміни. Перевірте, чи правильно налаштовано годинник на телефоні."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld cambio no se pudo sincronizar. Revisa que el reloj de tu teléfono esté en hora."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld cambios no se pudieron sincronizar. Revisa que el reloj de tu teléfono esté en hora."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld cambios no se pudieron sincronizar. Revisa que el reloj de tu teléfono esté en hora."
                     }
                   }
                 }
@@ -1152,6 +1256,40 @@
               }
             }
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld día"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld días"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld días"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1434,6 +1572,40 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%1$lld дня · найдовша %2$lld"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld día · la más larga %2$lld"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld días · la más larga %2$lld"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld días · la más larga %2$lld"
                     }
                   }
                 }
@@ -1728,6 +1900,40 @@
               }
             }
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld de %2$lld práctica"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld de %2$lld prácticas"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld de %2$lld prácticas"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2016,6 +2222,40 @@
               }
             }
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld sesión de otro teléfono todavía no se puede abrir aquí."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld sesiones de otro teléfono todavía no se pueden abrir aquí."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld sesiones de otro teléfono todavía no se pueden abrir aquí."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2061,6 +2301,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "+ Додати свою"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "+ Añade la tuya"
           }
         }
       }
@@ -2108,6 +2354,12 @@
             "state" : "needs_review",
             "value" : "+ Інше"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "+ Otra"
+          }
         }
       }
     },
@@ -2150,6 +2402,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "+%lld"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "+%lld"
@@ -2203,6 +2461,12 @@
             "state" : "needs_review",
             "value" : "Друг"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo"
+          }
         }
       }
     },
@@ -2248,6 +2512,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Одна мала — це"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una mala cuenta como"
           }
         }
       }
@@ -2295,6 +2565,12 @@
             "state" : "needs_review",
             "value" : "Навіть коротка практика зараховується."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una sesión corta también cuenta."
+          }
         }
       }
     },
@@ -2340,6 +2616,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Про застосунок"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Acerca de"
           }
         }
       }
@@ -2387,6 +2669,12 @@
             "state" : "needs_review",
             "value" : "Про застосунок і учасників"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Acerca de y colaboradores"
+          }
         }
       }
     },
@@ -2432,6 +2720,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Прийняти"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aceptar"
           }
         }
       }
@@ -2479,6 +2773,12 @@
             "state" : "needs_review",
             "value" : "Якщо прийняти, ви станете друзями: кожен бачить публічні серії іншого, але ніколи не кількості."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Al aceptar, los dos se hacen amigos: cada uno ve las rachas públicas del otro, nunca los conteos."
+          }
         }
       }
     },
@@ -2524,6 +2824,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Обліковий запис"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cuenta"
           }
         }
       }
@@ -2571,6 +2877,12 @@
             "state" : "needs_review",
             "value" : "Облікові записи ще не готові"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las cuentas todavía no están listas"
+          }
         }
       }
     },
@@ -2616,6 +2928,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Додати"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir"
           }
         }
       }
@@ -2663,6 +2981,12 @@
             "state" : "needs_review",
             "value" : "Додати обкладинку"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir una foto de portada"
+          }
         }
       }
     },
@@ -2708,6 +3032,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Додати друга"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir un amigo"
           }
         }
       }
@@ -2755,6 +3085,12 @@
             "state" : "needs_review",
             "value" : "Додати практику"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir una práctica"
+          }
         }
       }
     },
@@ -2800,6 +3136,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Додати іншу кількість"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir otra cantidad"
           }
         }
       }
@@ -2847,6 +3189,12 @@
             "state" : "needs_review",
             "value" : "Додати одну малу, %lld"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir una mala, %lld"
+          }
         }
       }
     },
@@ -2892,6 +3240,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Додано %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se añadió %@"
           }
         }
       }
@@ -2939,6 +3293,12 @@
             "state" : "needs_review",
             "value" : "Додано %@. Можна скасувати."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se añadió %@. Puedes deshacerlo."
+          }
         }
       }
     },
@@ -2984,6 +3344,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Усі чотири частини, по 111 111. Повторні кола — пізніше."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las cuatro partes, 111,111 cada una. Las rondas de repetición vienen después."
           }
         }
       }
@@ -3031,6 +3397,12 @@
             "state" : "needs_review",
             "value" : "Кількість"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cantidad"
+          }
         }
       }
     },
@@ -3076,6 +3448,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Вечірнє нагадування, коли серії загрожує обрив. Його планує сам телефон, і нічого з нього не виходить."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un recordatorio por la tarde cuando tu racha está en riesgo. Se programa en este teléfono; nada sale de él."
           }
         }
       }
@@ -3123,6 +3501,12 @@
             "state" : "needs_review",
             "value" : "За годину до того часу, коли ви зазвичай практикуєте; телефон визначає його за останні два тижні."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una hora antes de la hora en que sueles practicar, calculada en este teléfono con las últimas dos semanas."
+          }
         }
       }
     },
@@ -3168,6 +3552,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Будь-яка практика сьогодні розпочинає серію."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cualquier práctica hoy inicia una racha."
           }
         }
       }
@@ -3215,6 +3605,12 @@
             "state" : "needs_review",
             "value" : "Будь-хто з цим кодом може приєднатися · діє 7 днів"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cualquiera con este código puede unirse · vence en 7 días"
+          }
         }
       }
     },
@@ -3260,6 +3656,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "В архів"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivar"
           }
         }
       }
@@ -3307,6 +3709,12 @@
             "state" : "needs_review",
             "value" : "В архіві"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivadas"
+          }
         }
       }
     },
@@ -3352,6 +3760,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "В архіві (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivadas (%lld)"
           }
         }
       }
@@ -3399,6 +3813,12 @@
             "state" : "needs_review",
             "value" : "Архівація ховає практику із «Сьогодні», але зберігає її кількості та історію."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Al archivar, la práctica deja de verse en Hoy, pero se conservan sus conteos y su historial."
+          }
         }
       }
     },
@@ -3444,6 +3864,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Назад"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Atrás"
           }
         }
       }
@@ -3491,6 +3917,12 @@
             "state" : "needs_review",
             "value" : "Заблокувати"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bloquear"
+          }
         }
       }
     },
@@ -3536,6 +3968,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Заблокувати?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Bloquear?"
           }
         }
       }
@@ -3583,6 +4021,12 @@
             "state" : "needs_review",
             "value" : "Скасувати"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancelar"
+          }
         }
       }
     },
@@ -3628,6 +4072,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Змінити обкладинку"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cambiar portada"
           }
         }
       }
@@ -3675,6 +4125,12 @@
             "state" : "needs_review",
             "value" : "Перевірте код відновлення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Revisa tu código de recuperación"
+          }
         }
       }
     },
@@ -3720,6 +4176,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Обрати фото"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elegir una foto"
           }
         }
       }
@@ -3767,6 +4229,12 @@
             "state" : "needs_review",
             "value" : "Далі"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Continuar"
+          }
         }
       }
     },
@@ -3812,6 +4280,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Скопіювати повний хеш"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copiar el hash completo"
           }
         }
       }
@@ -3859,6 +4333,12 @@
             "state" : "needs_review",
             "value" : "Не вдалося видалити"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo eliminar"
+          }
         }
       }
     },
@@ -3904,6 +4384,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не вдалося зв’язатися з Duongöndro. Перевірте з’єднання й спробуйте ще раз."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo conectar con Duongöndro. Revisa la conexión e inténtalo de nuevo."
           }
         }
       }
@@ -3957,6 +4443,12 @@
             "state" : "needs_review",
             "value" : "Зараховано за **%1$@**: ви почали близько %2$@, до опівночі. Ваша серія в безпеці."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Contado para **%1$@**: empezaste alrededor de las %2$@, antes de medianoche. Tu racha está a salvo."
+          }
         }
       }
     },
@@ -4002,6 +4494,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Підрахунок"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Conteo"
           }
         }
       }
@@ -4049,6 +4547,12 @@
             "state" : "needs_review",
             "value" : "Уже записані кількості залишаються."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los conteos registrados hasta ahora se conservan."
+          }
         }
       }
     },
@@ -4094,6 +4598,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Обкладинка"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Portada"
           }
         }
       }
@@ -4141,6 +4651,12 @@
             "state" : "needs_review",
             "value" : "Щоденні практики"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prácticas diarias"
+          }
         }
       }
     },
@@ -4186,6 +4702,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "День %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Día %lld"
           }
         }
       }
@@ -4233,6 +4755,12 @@
             "state" : "needs_review",
             "value" : "Дні практики в застосунку, підписані самим другом. Кількості залишаються приватними."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Días practicados en la app, firmados por cada persona. Los conteos siguen siendo privados."
+          }
         }
       }
     },
@@ -4278,6 +4806,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Типово (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Predeterminado (%lld)"
           }
         }
       }
@@ -4325,6 +4859,12 @@
             "state" : "needs_review",
             "value" : "Видалити все"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminar todo"
+          }
         }
       }
     },
@@ -4370,6 +4910,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Лише збірки для розробки: новий обліковий запис на сервері розробки цього Mac."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo en versiones de desarrollo: una cuenta nueva en el servidor de desarrollo de este Mac."
           }
         }
       }
@@ -4417,6 +4963,12 @@
             "state" : "needs_review",
             "value" : "Ключ пристрою"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clave del dispositivo"
+          }
         }
       }
     },
@@ -4462,6 +5014,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Непомітні сповіщення"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notificaciones discretas"
           }
         }
       }
@@ -4509,6 +5067,12 @@
             "state" : "needs_review",
             "value" : "Закрити"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Descartar"
+          }
         }
       }
     },
@@ -4554,6 +5118,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Готово"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Listo"
           }
         }
       }
@@ -4601,6 +5171,12 @@
             "state" : "needs_review",
             "value" : "Виконано сьогодні"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hecho hoy"
+          }
         }
       }
     },
@@ -4643,6 +5219,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Duongöndro"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Duongöndro"
@@ -4693,6 +5275,12 @@
             "state" : "needs_review",
             "value" : "Наскрізне шифрування та повністю відкритий код."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cifrado de extremo a extremo y totalmente de código abierto."
+          }
         }
       }
     },
@@ -4738,6 +5326,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Припиняє дружбу з обох боків і зупиняє запрошення та підштовхування між вами."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Termina la amistad para ambos y detiene las invitaciones y los toques entre los dos."
           }
         }
       }
@@ -4785,6 +5379,12 @@
             "state" : "needs_review",
             "value" : "Вечірнє нагадування"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Recordatorio de la tarde"
+          }
         }
       }
     },
@@ -4830,6 +5430,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Усі, хто робив коміти в репозиторії застосунку, сервера, дизайну чи Android; спершу ті, хто зробив найбільше комітів. Створюється з історії git під час збірки застосунку."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todas las personas que hicieron commits en los repositorios de la app, el servidor, el diseño o Android, empezando por quien más hizo. Se genera a partir del historial de git al compilar la app."
           }
         }
       }
@@ -4877,6 +5483,12 @@
             "state" : "needs_review",
             "value" : "Усе залишається на цьому телефоні"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todo se queda en este teléfono"
+          }
         }
       }
     },
@@ -4922,6 +5534,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Експортувати всі мої дані"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportar todos mis datos"
           }
         }
       }
@@ -4969,6 +5587,12 @@
             "state" : "needs_review",
             "value" : "Експорт і видалення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportar y eliminar"
+          }
         }
       }
     },
@@ -5014,6 +5638,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не вдалося експортувати"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Falló la exportación"
           }
         }
       }
@@ -5061,6 +5691,12 @@
             "state" : "needs_review",
             "value" : "Спершу експортуйте, якщо хочете мати копію."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporta primero si quieres una copia."
+          }
         }
       }
     },
@@ -5106,6 +5742,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "A telefon nyelve szerint"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar el idioma del teléfono"
           }
         }
       }
@@ -5153,6 +5795,12 @@
             "state" : "needs_review",
             "value" : "Друзі"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Amigos"
+          }
         }
       }
     },
@@ -5198,6 +5846,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Друзі бачать це ім’я поруч із вашими серіями."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus amigos ven este nombre junto a tus rachas."
           }
         }
       }
@@ -5245,6 +5899,12 @@
             "state" : "needs_review",
             "value" : "Друзі бачать цю серію"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus amigos ven esta racha"
+          }
         }
       }
     },
@@ -5290,6 +5950,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Налаштуйте обліковий запис у розділі «Ви», щоб запрошувати друзів."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus amigos ven tus rachas públicas y nada más. Configura tu cuenta en Tú para invitarlos."
           }
         }
       }
@@ -5337,6 +6003,12 @@
             "state" : "needs_review",
             "value" : "З паперу чи таблиці; приблизно — теж добре."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "De un cuaderno o una hoja de cálculo; un número aproximado está bien."
+          }
         }
       }
     },
@@ -5382,6 +6054,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Загальне"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "General"
           }
         }
       }
@@ -5429,6 +6107,12 @@
             "state" : "needs_review",
             "value" : "Група %lld"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Grupo %lld"
+          }
         }
       }
     },
@@ -5475,6 +6159,12 @@
             "state" : "needs_review",
             "value" : "Ви завершили ngöndro?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Ya terminaste el ngöndro?"
+          }
         }
       }
     },
@@ -5483,7 +6173,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Máš za sebou Short refuge?"
+            "value" : "Máš za sebou meditaci útočiště?"
           }
         },
         "de" : {
@@ -5507,7 +6197,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вы уже завершили Short refuge?"
+            "value" : "Вы уже завершили медитацию Прибежища?"
           }
         },
         "sk" : {
@@ -5520,6 +6210,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ви завершили Short refuge?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Ya terminaste el Short refuge?"
           }
         }
       }
@@ -5567,6 +6263,12 @@
             "state" : "needs_review",
             "value" : "Історія"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Historial"
+          }
         }
       }
     },
@@ -5612,6 +6314,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Скільки зараховується за одну малу?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Cuánto cuenta una mala?"
           }
         }
       }
@@ -5659,6 +6367,12 @@
             "state" : "needs_review",
             "value" : "У мене вже є обліковий запис"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya tengo una cuenta"
+          }
         }
       }
     },
@@ -5704,6 +6418,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "У мене є запрошення"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tengo una invitación"
           }
         }
       }
@@ -5751,6 +6471,12 @@
             "state" : "needs_review",
             "value" : "Записано"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya lo anoté"
+          }
         }
       }
     },
@@ -5796,6 +6522,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Я на одному з наступних кіл"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Voy en una ronda posterior"
           }
         }
       }
@@ -5843,6 +6575,12 @@
             "state" : "needs_review",
             "value" : "Якщо ви втратите цей телефон, цей код — єдиний шлях до ваших кількостей. Більше його ні в кого немає, навіть у нас."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si pierdes este teléfono, este código es la única manera de recuperar tus conteos. Nadie más lo tiene, ni siquiera nosotros."
+          }
         }
       }
     },
@@ -5888,6 +6626,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Запросити"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Invitar"
           }
         }
       }
@@ -5935,6 +6679,12 @@
             "state" : "needs_review",
             "value" : "Запросити друга"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Invitar a un amigo"
+          }
         }
       }
     },
@@ -5980,6 +6730,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Лише я, на цьому телефоні"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo yo, en este teléfono"
           }
         }
       }
@@ -6027,6 +6783,12 @@
             "state" : "needs_review",
             "value" : "Ключ змінився"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La clave cambió"
+          }
         }
       }
     },
@@ -6072,6 +6834,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Зв’язка ключів"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Llavero"
           }
         }
       }
@@ -6119,6 +6887,12 @@
             "state" : "needs_review",
             "value" : "Мова"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Idioma"
+          }
         }
       }
     },
@@ -6164,6 +6938,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Остання практика"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Última práctica"
           }
         }
       }
@@ -6211,6 +6991,12 @@
             "state" : "needs_review",
             "value" : "Рейтинг · ведеться в застосунку"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clasificación · registrada en la app"
+          }
         }
       }
     },
@@ -6256,6 +7042,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ліцензії"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Licencias"
           }
         }
       }
@@ -6303,6 +7095,12 @@
             "state" : "needs_review",
             "value" : "Посилання або QR-код, діє 7 днів"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enlace o código QR, válido por 7 días"
+          }
         }
       }
     },
@@ -6348,6 +7146,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "На екрані блокування буде «Друг виконав практику» замість назви практики."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La pantalla de bloqueo dice «Un amigo practicó» en lugar de nombrar la práctica."
           }
         }
       }
@@ -6395,6 +7199,12 @@
             "state" : "needs_review",
             "value" : "Записано %@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se registró %@"
+          }
         }
       }
     },
@@ -6440,6 +7250,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Найдовша %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Máxima %lld"
           }
         }
       }
@@ -6487,6 +7303,12 @@
             "state" : "needs_review",
             "value" : "Найдовша серія (необов’язково)"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Racha más larga (opcional)"
+          }
         }
       }
     },
@@ -6532,6 +7354,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Створили"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hecho por"
           }
         }
       }
@@ -6579,6 +7407,12 @@
             "state" : "needs_review",
             "value" : "Створити новий код"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Crear un código nuevo"
+          }
         }
       }
     },
@@ -6624,6 +7458,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Створити новий"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Crear uno nuevo"
           }
         }
       }
@@ -6671,6 +7511,12 @@
             "state" : "needs_review",
             "value" : "Створити новий код відновлення?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Crear un código de recuperación nuevo?"
+          }
         }
       }
     },
@@ -6716,6 +7562,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Створюємо ваші ключі…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Creando tus claves…"
           }
         }
       }
@@ -6763,6 +7615,12 @@
             "state" : "needs_review",
             "value" : "Позначити сьогодні виконаним"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marcar hoy como hecho"
+          }
         }
       }
     },
@@ -6808,6 +7666,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Позначено виконаним"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marcado como hecho"
           }
         }
       }
@@ -6855,6 +7719,12 @@
             "state" : "needs_review",
             "value" : "Позначено виконаним. Можна скасувати."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marcado como hecho. Puedes deshacerlo."
+          }
         }
       }
     },
@@ -6900,6 +7770,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ім’я"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nombre"
           }
         }
       }
@@ -6947,6 +7823,12 @@
             "state" : "needs_review",
             "value" : "Далі ми запитаємо про дві з цих груп, щоб переконатися."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A continuación te pediremos dos de estos grupos, para estar seguros."
+          }
         }
       }
     },
@@ -6992,6 +7874,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Без облікового запису й без мережі. Зареєструватися можна пізніше, і все збережеться."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin cuenta y sin red. Puedes registrarte después y conservar todo."
           }
         }
       }
@@ -7039,6 +7927,12 @@
             "state" : "needs_review",
             "value" : "На цьому телефоні ще немає облікового запису"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hay una cuenta en este teléfono"
+          }
         }
       }
     },
@@ -7084,6 +7978,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Друзів поки немає. Запрошення робить вас друзями: вони бачать ваші публічні серії, але ніколи не кількості."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no tienes amigos. Una invitación los hace amigos a los dos; ellos ven tus rachas públicas, nunca tus conteos."
           }
         }
       }
@@ -7131,6 +8031,12 @@
             "state" : "needs_review",
             "value" : "Без нагадувань"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin recordatorios"
+          }
         }
       }
     },
@@ -7176,6 +8082,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Немає"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ninguno"
           }
         }
       }
@@ -7223,6 +8135,12 @@
             "state" : "needs_review",
             "value" : "Поки нічого не поширено"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hay ninguna compartida"
+          }
         }
       }
     },
@@ -7268,6 +8186,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не підтверджено"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin confirmar"
           }
         }
       }
@@ -7315,6 +8239,12 @@
             "state" : "needs_review",
             "value" : "Не зараз"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ahora no"
+          }
         }
       }
     },
@@ -7360,6 +8290,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ще ні"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todavía no"
           }
         }
       }
@@ -7407,6 +8343,12 @@
             "state" : "needs_review",
             "value" : "Сьогодні ще ні"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hoy"
+          }
         }
       }
     },
@@ -7452,6 +8394,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Сьогодні нічого не записано"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nada registrado hoy"
           }
         }
       }
@@ -7499,6 +8447,12 @@
             "state" : "needs_review",
             "value" : "Поки нічого не записано."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hay nada registrado."
+          }
         }
       }
     },
@@ -7544,6 +8498,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Сповіщення"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notificaciones"
           }
         }
       }
@@ -7591,6 +8551,12 @@
             "state" : "needs_review",
             "value" : "Нагадати в мій звичний час"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avisarme a mi hora habitual"
+          }
         }
       }
     },
@@ -7633,6 +8599,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "OK"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "OK"
@@ -7683,6 +8655,12 @@
             "state" : "needs_review",
             "value" : "Один ZIP з усіма практиками, сесіями та серіями; його можна прочитати й без цього застосунку."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un ZIP con todas tus prácticas, sesiones y rachas, que se puede leer sin esta app."
+          }
         }
       }
     },
@@ -7728,6 +8706,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Лише кількість днів практики в застосунку, ніколи не кількості чи підсумки."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo el número de días practicados en la app, nunca conteos ni totales."
           }
         }
       }
@@ -7775,6 +8759,12 @@
             "state" : "needs_review",
             "value" : "Вставити посилання-запрошення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pegar un enlace de invitación"
+          }
         }
       }
     },
@@ -7820,6 +8810,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Вставити запрошення"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pegar invitación"
           }
         }
       }
@@ -7867,6 +8863,12 @@
             "state" : "needs_review",
             "value" : "Вставте посилання, яке надіслав друг."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pega el enlace que te envió tu amigo."
+          }
         }
       }
     },
@@ -7912,6 +8914,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Оберіть усі, які ви виконуєте."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elige todas las que practiques."
           }
         }
       }
@@ -7959,6 +8967,12 @@
             "state" : "needs_review",
             "value" : "Підштовхнути"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dar un toque"
+          }
         }
       }
     },
@@ -8004,6 +9018,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Підштовхнути %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dar un toque a %@"
           }
         }
       }
@@ -8051,6 +9071,12 @@
             "state" : "needs_review",
             "value" : "Підштовхнуто"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toque enviado"
+          }
         }
       }
     },
@@ -8096,6 +9122,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Підштовхнуто: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le diste un toque a %@"
           }
         }
       }
@@ -8143,6 +9175,12 @@
             "state" : "needs_review",
             "value" : "Серія практики · найдовша %lld"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Racha de práctica · máxima %lld"
+          }
         }
       }
     },
@@ -8188,6 +9226,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Практики"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prácticas"
           }
         }
       }
@@ -8235,6 +9279,12 @@
             "state" : "needs_review",
             "value" : "Практикуймо разом у Duongöndro: %@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Practica conmigo en Duongöndro: %@"
+          }
         }
       }
     },
@@ -8280,6 +9330,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Публічні серії"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rachas públicas"
           }
         }
       }
@@ -8327,6 +9383,12 @@
             "state" : "needs_review",
             "value" : "QR-код посилання-запрошення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Código QR del enlace de invitación"
+          }
         }
       }
     },
@@ -8372,6 +9434,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Код відновлення"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Código de recuperación"
           }
         }
       }
@@ -8419,6 +9487,12 @@
             "state" : "needs_review",
             "value" : "Нагадати в цей час"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Recordarme a esta hora"
+          }
         }
       }
     },
@@ -8464,6 +9538,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Видаляє всі ваші дані з цього телефона. Це неможливо скасувати."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elimina todos tus datos de este teléfono. No se puede deshacer."
           }
         }
       }
@@ -8511,6 +9591,12 @@
             "state" : "needs_review",
             "value" : "Поскаржитися"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reportar"
+          }
         }
       }
     },
@@ -8556,6 +9642,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Скаргу надіслано. Дякуємо."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reportado. Gracias."
           }
         }
       }
@@ -8603,6 +9695,12 @@
             "state" : "needs_review",
             "value" : "Скарги отримують ті, хто веде Duongöndro."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los reportes llegan a las personas que administran Duongöndro."
+          }
         }
       }
     },
@@ -8648,6 +9746,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Відновити"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaurar"
           }
         }
       }
@@ -8695,6 +9799,12 @@
             "state" : "needs_review",
             "value" : "Відновити за кодом відновлення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaurar con un código de recuperación"
+          }
         }
       }
     },
@@ -8741,6 +9851,12 @@
             "state" : "needs_review",
             "value" : "Відновіть за допомогою коду відновлення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaura con tu código de recuperación"
+          }
         }
       }
     },
@@ -8786,6 +9902,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Коло %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ronda %lld"
           }
         }
       }
@@ -8839,6 +9961,12 @@
             "state" : "needs_review",
             "value" : "Коло %1$lld · %2$@ з %3$@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ronda %1$lld · %2$@ de %3$@"
+          }
         }
       }
     },
@@ -8884,6 +10012,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Зберегти"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar"
           }
         }
       }
@@ -8931,6 +10065,12 @@
             "state" : "needs_review",
             "value" : "Скануйте камерою будь-якого телефона"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escanea con la cámara de cualquier teléfono"
+          }
         }
       }
     },
@@ -8973,6 +10113,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Secure Enclave"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Secure Enclave"
@@ -9023,6 +10169,12 @@
             "state" : "needs_review",
             "value" : "Надіслати"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar"
+          }
         }
       }
     },
@@ -9068,6 +10220,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Сервер"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servidor"
           }
         }
       }
@@ -9115,6 +10273,12 @@
             "state" : "needs_review",
             "value" : "Налаштувати шифрування"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Configurar el cifrado"
+          }
         }
       }
     },
@@ -9160,6 +10324,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Спершу налаштуйте обліковий запис у розділі «Ви», потім відкрийте посилання ще раз."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primero configura tu cuenta en Tú y luego abre el enlace de nuevo."
           }
         }
       }
@@ -9207,6 +10377,12 @@
             "state" : "needs_review",
             "value" : "Налаштування"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajustes"
+          }
         }
       }
     },
@@ -9252,6 +10428,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Поділитися посиланням-запрошенням"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compartir enlace de invitación"
           }
         }
       }
@@ -9299,6 +10481,12 @@
             "state" : "needs_review",
             "value" : "Може, вже час помедитувати?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿No deberías estar meditando?"
+          }
         }
       }
     },
@@ -9344,6 +10532,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Показати мій код для додавання в друзі"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar mi código para añadirme"
           }
         }
       }
@@ -9391,6 +10585,12 @@
             "state" : "needs_review",
             "value" : "Знову показувати в «Сьогодні»"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Volver a mostrar en Hoy"
+          }
         }
       }
     },
@@ -9436,6 +10636,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Показати код ще раз"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar el código de nuevo"
           }
         }
       }
@@ -9483,6 +10689,12 @@
             "state" : "needs_review",
             "value" : "Показати код запрошення"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar el código de invitación"
+          }
         }
       }
     },
@@ -9528,6 +10740,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Покажіть це особисто · діє 10 хвилин"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Muéstralo en persona · vence en 10 minutos"
           }
         }
       }
@@ -9575,6 +10793,12 @@
             "state" : "needs_review",
             "value" : "Увійти для розробки"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iniciar sesión para desarrollo"
+          }
         }
       }
     },
@@ -9620,6 +10844,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ви вийшли. Увійдіть знову, щоб продовжити синхронізацію."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sesión cerrada. Inicia sesión de nuevo para seguir sincronizando."
           }
         }
       }
@@ -9667,6 +10897,12 @@
             "state" : "needs_review",
             "value" : "Досі"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hasta ahora"
+          }
         }
       }
     },
@@ -9712,6 +10948,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Дещо не вдалося зберегти."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Algo no se pudo guardar."
           }
         }
       }
@@ -9759,6 +11001,12 @@
             "state" : "needs_review",
             "value" : "Джерело"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fuente"
+          }
         }
       }
     },
@@ -9804,6 +11052,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Вихідний код"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Código fuente"
           }
         }
       }
@@ -9851,6 +11105,12 @@
             "state" : "needs_review",
             "value" : "Почати"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iniciar"
+          }
         }
       }
     },
@@ -9897,6 +11157,12 @@
             "state" : "needs_review",
             "value" : "Почати практику"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Empezar a practicar"
+          }
         }
       }
     },
@@ -9942,6 +11208,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Розпочато %@. Торкніться, щоб скасувати."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iniciado a las %@. Toca para cancelar."
           }
         }
       }
@@ -9995,6 +11267,12 @@
             "state" : "needs_review",
             "value" : "Крок %1$lld з %2$lld"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Paso %1$lld de %2$lld"
+          }
         }
       }
     },
@@ -10040,6 +11318,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Лише серія"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo racha"
           }
         }
       }
@@ -10087,6 +11371,12 @@
             "state" : "needs_review",
             "value" : "Лише серія, без кількості"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo la racha, sin conteo"
+          }
         }
       }
     },
@@ -10132,6 +11422,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Серія, днів"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Racha, días"
           }
         }
       }
@@ -10179,6 +11475,12 @@
             "state" : "needs_review",
             "value" : "Синхронізація"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sincronización"
+          }
         }
       }
     },
@@ -10224,6 +11526,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Синхронізація…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sincronizando…"
           }
         }
       }
@@ -10271,6 +11579,12 @@
             "state" : "needs_review",
             "value" : "Rendszer"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sistema"
+          }
         }
       }
     },
@@ -10316,6 +11630,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Торкніться «Джерело», щоб відкрити цей коміт на GitHub."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toca Fuente para abrir este commit exacto en GitHub."
           }
         }
       }
@@ -10363,6 +11683,12 @@
             "state" : "needs_review",
             "value" : "Наступного разу торкніться «Почати», і застосунок знатиме точно."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toca Iniciar la próxima vez y la app lo sabrá con exactitud."
+          }
         }
       }
     },
@@ -10408,6 +11734,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ціль (необов’язково)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Objetivo (opcional)"
           }
         }
       }
@@ -10455,6 +11787,12 @@
             "state" : "needs_review",
             "value" : "Ціль на коло"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Objetivo por ronda"
+          }
         }
       }
     },
@@ -10500,6 +11838,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Учителі радять по-різному. Для кожної практики це можна змінити пізніше в налаштуваннях."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los maestros no coinciden. Cada práctica puede cambiarlo después en Ajustes."
           }
         }
       }
@@ -10547,6 +11891,12 @@
             "state" : "needs_review",
             "value" : "Повідомляти, коли вони практикують"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avisarme cuando practiquen"
+          }
         }
       }
     },
@@ -10592,6 +11942,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не збігається. Погляньте на код ще раз."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No coincide. Mira el código otra vez."
           }
         }
       }
@@ -10639,6 +11995,12 @@
             "state" : "needs_review",
             "value" : "Цей код відновлення не відкриває цей обліковий запис."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ese código de recuperación no abre esta cuenta."
+          }
         }
       }
     },
@@ -10684,6 +12046,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Код, який ви записали, перестане діяти."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código que anotaste deja de funcionar."
           }
         }
       }
@@ -10731,6 +12099,12 @@
             "state" : "needs_review",
             "value" : "Код, який ви записали, налаштовуючи перший телефон. Пробіли й дефіси не мають значення."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código que anotaste al configurar tu primer teléfono. Los espacios y los guiones no importan."
+          }
         }
       }
     },
@@ -10776,6 +12150,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не вдалося відкрити базу даних. Усе, що ви запишете зараз, не збереглося б, тому запис вимкнено до перезапуску застосунку."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo abrir la base de datos. Nada de lo que registres ahora se conservaría, así que el registro está desactivado hasta que reinicies la app."
           }
         }
       }
@@ -10823,6 +12203,12 @@
             "state" : "needs_review",
             "value" : "Тепер сервер указує для цього друга інший ключ, ніж той, який цей телефон бачив уперше, тому його серії приховано. Можливо, це новий телефон без відновлення, або хтось посередині. Зустріньтеся з ним або попросіть нове запрошення: коли ви його приймете, ключ перевіриться знову."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ahora el servidor indica una clave distinta para este amigo que la que vio este teléfono al principio, así que sus rachas están ocultas. Puede ser un teléfono nuevo sin restaurar, o alguien en el medio. Encuéntrate con esa persona o pide una invitación nueva: al aceptarla se verifica su clave otra vez."
+          }
         }
       }
     },
@@ -10831,7 +12217,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meditace Short refuge, kterou děláš před začátkem ngöndro."
+            "value" : "Meditace útočiště, kterou děláš před začátkem ngöndro."
           }
         },
         "de" : {
@@ -10855,7 +12241,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Медитация Short refuge, которую вы делаете перед началом ngöndro."
+            "value" : "Медитация Прибежища, которую вы делаете перед началом ngöndro."
           }
         },
         "sk" : {
@@ -10868,6 +12254,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Медитація Short refuge, яку виконують перед початком ngöndro."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La meditación de Short refuge que haces antes de empezar el ngöndro."
           }
         }
       }
@@ -10915,6 +12307,12 @@
             "state" : "needs_review",
             "value" : "Їхній ключ змінився"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Su clave cambió"
+          }
         }
       }
     },
@@ -10960,6 +12358,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "У цього облікового запису вже є ключі: натомість відновіть його за допомогою коду відновлення."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cuenta ya tiene claves: restáurala con su código de recuperación."
           }
         }
       }
@@ -11007,6 +12411,12 @@
             "state" : "needs_review",
             "value" : "У цій збірці немає сервера. Ваша практика зберігається на цьому телефоні, а з’єднання з друзями з’явиться пізніше."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta versión no tiene servidor. Tu práctica se guarda en este teléfono y, al unirte con amigos, se tomará de ahí más adelante."
+          }
         }
       }
     },
@@ -11052,6 +12462,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Це видалить усі практики, сесії та серії на цьому телефоні, ваші нагадування й усі ключі, які зберігає застосунок, а потім поверне вас на початок."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esto elimina todas las prácticas, sesiones y rachas de este teléfono, tus recordatorios y las claves que guarda la app, y luego vuelve al inicio."
           }
         }
       }
@@ -11099,6 +12515,12 @@
             "state" : "needs_review",
             "value" : "Цей пристрій"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este dispositivo"
+          }
         }
       }
     },
@@ -11144,6 +12566,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Це запрошення неможливо використати: його термін міг закінчитися, або його відкликали."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta invitación no se puede usar: puede haber vencido o haber sido retirada."
           }
         }
       }
@@ -11191,6 +12619,12 @@
             "state" : "needs_review",
             "value" : "Це запрошення не пройшло перевірку, тому його не прийнято. Попросіть друга надіслати його ще раз."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta invitación no pasó la verificación, así que no se aceptó. Pídele a tu amigo que la envíe de nuevo."
+          }
         }
       }
     },
@@ -11236,6 +12670,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Термін дії цього запрошення минув. Попросіть нове."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta invitación venció. Pide una nueva."
           }
         }
       }
@@ -11283,6 +12723,12 @@
             "state" : "needs_review",
             "value" : "Це ваше власне запрошення. Надішліть його другові."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta es tu propia invitación. Envíasela a un amigo."
+          }
         }
       }
     },
@@ -11328,6 +12774,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Цей телефон прив’язаний до облікового запису, але ви з нього вийшли. Спершу увійдіть знову, щоб копію на сервері теж було видалено."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este teléfono pertenece a una cuenta, pero la sesión está cerrada. Inicia sesión de nuevo primero, para que también se elimine la copia del servidor."
           }
         }
       }
@@ -11375,6 +12827,12 @@
             "state" : "needs_review",
             "value" : "Цієї практики більше немає."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta práctica ya no existe."
+          }
         }
       }
     },
@@ -11420,6 +12878,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Час"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hora"
           }
         }
       }
@@ -11467,6 +12931,12 @@
             "state" : "needs_review",
             "value" : "Сьогодні"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hoy"
+          }
         }
       }
     },
@@ -11512,6 +12982,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Сьогодні %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hoy %@"
           }
         }
       }
@@ -11801,6 +13277,40 @@
               }
             }
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Hoy %1$@ · %2$lld mala"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Hoy %1$@ · %2$lld malas"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Hoy %1$@ · %2$lld malas"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -11846,6 +13356,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Усього"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Total"
           }
         }
       }
@@ -11893,6 +13409,12 @@
             "state" : "needs_review",
             "value" : "Ведіть облік медитаційної практики разом із друзями."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lleva el registro de tu práctica de meditación junto con tus amigos."
+          }
         }
       }
     },
@@ -11938,6 +13460,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Az angolon kívüli fordítások vázlatok, amelyeket gyakorlók még átnéznek. A gyakorlatok neve az egyes országok gyakorlókönyveit követi, ahogy összegyűjtjük őket."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las traducciones que no son al inglés son borradores pendientes de revisión por practicantes. Los nombres de las prácticas seguirán los libros de práctica de cada país, a medida que se recopilen."
           }
         }
       }
@@ -11985,6 +13513,12 @@
             "state" : "needs_review",
             "value" : "Довірене середовище"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entorno de confianza"
+          }
         }
       }
     },
@@ -12030,6 +13564,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Введіть «%@» для підтвердження"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escribe «%@» para confirmar"
           }
         }
       }
@@ -12077,6 +13617,12 @@
             "state" : "needs_review",
             "value" : "Скасувати"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deshacer"
+          }
         }
       }
     },
@@ -12122,6 +13668,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Видалити з друзів"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar amistad"
           }
         }
       }
@@ -12169,6 +13721,12 @@
             "state" : "needs_review",
             "value" : "Видалити з друзів?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Quitar amistad?"
+          }
         }
       }
     },
@@ -12214,6 +13772,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Використати типове"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar el valor predeterminado"
           }
         }
       }
@@ -12261,6 +13825,12 @@
             "state" : "needs_review",
             "value" : "Версія"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Versión"
+          }
         }
       }
     },
@@ -12306,6 +13876,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Що сталося?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Qué pasó?"
           }
         }
       }
@@ -12353,6 +13929,12 @@
             "state" : "needs_review",
             "value" : "Коли вам нагадати?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Cuándo quieres que te recordemos?"
+          }
         }
       }
     },
@@ -12398,6 +13980,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "На якому етапі ви з %@?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Cómo vas con %@?"
           }
         }
       }
@@ -12445,6 +14033,12 @@
             "state" : "needs_review",
             "value" : "Які з них ви практикуєте щодня?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Cuáles practicas a diario?"
+          }
         }
       }
     },
@@ -12490,6 +14084,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Запишіть свій код відновлення"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Anota tu código de recuperación"
           }
         }
       }
@@ -12537,6 +14137,12 @@
             "state" : "needs_review",
             "value" : "Так"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sí"
+          }
         }
       }
     },
@@ -12582,6 +14188,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Учора"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ayer"
           }
         }
       }
@@ -12629,6 +14241,12 @@
             "state" : "needs_review",
             "value" : "Ви"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tú"
+          }
         }
       }
     },
@@ -12674,6 +14292,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ви перестанете бачити серії одне одного. Запрошення знову зробить вас друзями."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ninguno de los dos verá ya las rachas del otro. Una invitación puede volver a hacerlos amigos."
           }
         }
       }
@@ -12721,6 +14345,12 @@
             "state" : "needs_review",
             "value" : "Зазвичай ви сідаєте медитувати приблизно в цей час."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sueles sentarte a meditar más o menos a esta hora."
+          }
         }
       }
     },
@@ -12766,6 +14396,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Зазвичай ви сідаєте на %@ приблизно в цей час."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sueles sentarte a practicar %@ más o menos a esta hora."
           }
         }
       }
@@ -12813,6 +14449,12 @@
             "state" : "needs_review",
             "value" : "Вас запрошено"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Estás invitado"
+          }
         }
       }
     },
@@ -12858,6 +14500,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваші кількості шифруються на цьому телефоні, перш ніж його залишити. Налаштуйте ключі на першому телефоні; на новому відновіть їх за допомогою коду відновлення."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus conteos se cifran en este teléfono antes de salir de él. Configura las claves en tu primer teléfono; en uno nuevo, restáuralas con tu código de recuperación."
           }
         }
       }
@@ -12905,6 +14553,12 @@
             "state" : "needs_review",
             "value" : "Ваші дані"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus datos"
+          }
         }
       }
     },
@@ -12950,6 +14604,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваші пристрої"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus dispositivos"
           }
         }
       }
@@ -12997,6 +14657,12 @@
             "state" : "needs_review",
             "value" : "Ваші друзі"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus amigos"
+          }
         }
       }
     },
@@ -13042,6 +14708,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваше ім’я"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu nombre"
           }
         }
       }
@@ -13089,6 +14761,12 @@
             "state" : "needs_review",
             "value" : "Ваша власна практика"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu propia práctica"
+          }
         }
       }
     },
@@ -13135,6 +14813,12 @@
             "state" : "needs_review",
             "value" : "Ваше фото залишається на цьому телефоні: воно не синхронізується й не потрапляє в резервну копію."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu foto se queda en este teléfono: no se sincroniza ni se respalda."
+          }
         }
       }
     },
@@ -13180,6 +14864,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваші практики"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus prácticas"
           }
         }
       }
@@ -13469,6 +15159,40 @@
               }
             }
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Tu racha de %lld día termina a medianoche."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Tu racha de %lld días termina a medianoche."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Tu racha de %lld días termina a medianoche."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -13514,6 +15238,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваша попередня серія враховується на вашому екрані «Сьогодні». Друзі бачать лише дні, відстежені в застосунку."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu racha hasta ahora cuenta en tu propia pantalla de Hoy. Tus amigos solo ven los días registrados en la app."
           }
         }
       }
@@ -13562,6 +15292,12 @@
             "state" : "needs_review",
             "value" : "видалити"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "eliminar"
+          }
         }
       }
     },
@@ -13607,6 +15343,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "виконано"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "hecho"
           }
         }
       }
@@ -13654,6 +15396,12 @@
             "state" : "needs_review",
             "value" : "виконано сьогодні"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "hecho hoy"
+          }
         }
       }
     },
@@ -13699,6 +15447,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "закінчується %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "termina %@"
           }
         }
       }
@@ -13746,6 +15500,12 @@
             "state" : "needs_review",
             "value" : "закінчується опівночі"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "termina a medianoche"
+          }
         }
       }
     },
@@ -13791,6 +15551,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "сьогодні ще ні"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "aún no hoy"
           }
         }
       }
@@ -13838,6 +15604,12 @@
             "state" : "needs_review",
             "value" : "з %@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "de %@"
+          }
         }
       }
     },
@@ -13883,6 +15655,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "коло %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ronda %lld"
           }
         }
       }
@@ -13936,6 +15714,12 @@
             "state" : "needs_review",
             "value" : "коло %1$lld · %2$@ з %3$@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ronda %1$lld · %2$@ de %3$@"
+          }
         }
       }
     },
@@ -13982,6 +15766,12 @@
             "state" : "needs_review",
             "value" : "лише серія"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "solo racha"
+          }
         }
       }
     },
@@ -14027,6 +15817,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "їхня власна практика"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "su propia práctica"
           }
         }
       }

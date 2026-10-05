@@ -47,6 +47,12 @@
             "state" : "translated",
             "value" : "Dorje Sempa"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dorje Sempa"
+          }
         }
       }
     },
@@ -125,6 +131,18 @@
             "state" : "translated",
             "value" : "Medytacja Schronienia"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meditace útočiště"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Медитация Прибежища"
+          }
         }
       }
     },
@@ -160,6 +178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Diamantgeist-Meditation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meditación en Mente de Diamante"
           }
         }
       }
@@ -226,6 +250,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "8. Karmapa-Meditation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Octavo Karmapa"
           }
         }
       }
