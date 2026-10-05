@@ -6173,7 +6173,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Máš za sebou meditaci útočiště?"
+            "value" : "Máš za sebou krátké útočiště?"
           }
         },
         "de" : {
@@ -6203,7 +6203,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dokončil(a) si Short refuge?"
+            "value" : "Dokončil(a) si meditáciu útočiska?"
           }
         },
         "uk" : {
@@ -12217,7 +12217,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meditace útočiště, kterou děláš před začátkem ngöndro."
+            "value" : "Krátké útočiště je meditace, kterou děláš před začátkem ngöndro."
           }
         },
         "de" : {
@@ -12247,7 +12247,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meditácia Short refuge, ktorú robíš pred začiatkom ngöndro."
+            "value" : "Meditácia útočiska, ktorú robíš pred začiatkom ngöndro."
           }
         },
         "uk" : {

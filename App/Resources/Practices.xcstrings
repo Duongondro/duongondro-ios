@@ -3,12 +3,12 @@
   "version" : "1.0",
   "strings" : {
     "Refuge and the Enlightened Attitude" : {
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Prijatie útočiska a rozvoj osvieteného postoja"
           }
         },
@@ -23,17 +23,23 @@
             "state" : "translated",
             "value" : "Zuflucht und Erleuchtungsgeist"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přijetí útočiště a rozvoj osvíceného postoje"
+          }
         }
       }
     },
     "Diamond Mind" : {
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meditácia na Diamantovú myseľ"
+            "state" : "translated",
+            "value" : "Dorje Sempa"
           }
         },
         "pl" : {
@@ -53,20 +59,32 @@
             "state" : "needs_review",
             "value" : "Dorje Sempa"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dorje Sempa"
+          }
         }
       }
     },
     "Meditation on the Buddha of Limitless Light" : {
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meditácia na Buddhu neobmedzeného svetla"
+            "state" : "translated",
+            "value" : "Amitabha"
           }
         },
         "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amitabha"
+          }
+        },
+        "cs" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Amitabha"
@@ -75,13 +93,13 @@
       }
     },
     "Loving Eyes" : {
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meditácia na buddhu Milujúce oči"
+            "state" : "translated",
+            "value" : "Chenrezig"
           }
         },
         "pl" : {
@@ -95,16 +113,22 @@
             "state" : "translated",
             "value" : "Liebevolle Augen"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chenrezig"
+          }
         }
       }
     },
     "16th Karmapa Meditation" : {
-      "comment" : "Practice name from a Slovak Diamond Way meditation app (duongondro-design docs/14-localisation.md); needs a second source.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "extractionState" : "manual",
       "localizations" : {
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Meditácia na 16. Karmapu"
           }
         },
@@ -119,12 +143,18 @@
             "state" : "translated",
             "value" : "16. Karmapa-Meditation"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditace na 16. Karmapu"
+          }
         }
       }
     },
     "Short refuge" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -134,8 +164,8 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meditace útočiště"
+            "state" : "translated",
+            "value" : "Krátké útočiště"
           }
         },
         "ru" : {
@@ -143,12 +173,18 @@
             "state" : "needs_review",
             "value" : "Медитация Прибежища"
           }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditácia útočiska"
+          }
         }
       }
     },
     "Prostrations" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -164,13 +200,13 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Poklony"
           }
         },
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Poklony"
           }
         },
@@ -190,7 +226,7 @@
     },
     "Dorje Sempa" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -209,12 +245,24 @@
             "state" : "needs_review",
             "value" : "Meditación en Mente de Diamante"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditace na Diamantovou mysl"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditácia na Diamantovú myseľ"
+          }
         }
       }
     },
     "Mandala offering" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -227,12 +275,24 @@
             "state" : "translated",
             "value" : "Mandala-Gaben"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Darování mandaly"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Darovanie mandaly"
+          }
         }
       }
     },
     "Meditation on the Lama" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -245,24 +305,48 @@
             "state" : "translated",
             "value" : "Meditation auf den Lama"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditace na Lamu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditácia na Lamu"
+          }
         }
       }
     },
     "Guru Yoga" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guru Joga"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guru jóga"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guru joga"
+          }
         }
       }
     },
     "8th Karmapa Meditation" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
@@ -281,29 +365,65 @@
             "state" : "needs_review",
             "value" : "Octavo Karmapa"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditace na 8. Karmapu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditácia na 8. Karmapu"
+          }
         }
       }
     },
     "Amitabha" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Medytacja na Buddę Nieograniczonego Światła"
           }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditace na Buddhu neomezeného světla"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditácia na Buddhu neobmedzeného svetla"
+          }
         }
       }
     },
     "Chenrezig" : {
       "extractionState" : "manual",
-      "comment" : "Practice name or second line; Slovak from a Slovak Diamond Way meditation app (needs a second source), Polish from the owner's practice books (5 Oct 2026). The Polish books lead with the translated name and put the Tibetan or Sanskrit one second.",
+      "comment" : "Practice name or second line, as each country's practice books have it (duongondro-design docs/14-localisation.md). Where the books lead with the translated name (Polish, German, Czech, Slovak), the Tibetan or Sanskrit name goes second.",
       "localizations" : {
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kochające Oczy"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditace na buddhu Milující oči"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditácia na buddhu Milujúce oči"
           }
         }
       }
