@@ -107,6 +107,12 @@
             "state" : "translated",
             "value" : "Medytacja XVI Karmapy"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "16. Karmapa-Meditation"
+          }
         }
       }
     },
@@ -130,6 +136,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pokłony"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbeugungen"
           }
         }
       }
