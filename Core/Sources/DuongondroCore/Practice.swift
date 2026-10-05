@@ -1,7 +1,8 @@
 import Foundation
 
-/// Where a practice sits on the path. The path only gates short refuge →
-/// ngöndro → 8th Karmapa; it never judges combinations within ngöndro.
+/// Where a practice sits on the path. The path only gates ngöndro (after short
+/// refuge) and the 8th Karmapa (after ngöndro); short refuge itself stays open to
+/// everyone, since returning to it is nobody's business but the practitioner's.
 public enum PracticeGroup: String, Codable, Sendable {
     case beforeNgondro
     case ngondro
@@ -64,7 +65,7 @@ public enum Catalogue {
             case .anyTime: return true
             case .afterNgondro: return finishedNgondro
             case .ngondro: return finishedNgondro || finishedShortRefuge
-            case .beforeNgondro: return !finishedNgondro && !finishedShortRefuge
+            case .beforeNgondro: return true
             }
         }
     }

@@ -13,10 +13,12 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(inNgondro.contains("dorje-sempa"))
         XCTAssertTrue(inNgondro.contains("mandala"))
         XCTAssertFalse(inNgondro.contains("8th-karmapa"))
+        XCTAssertTrue(inNgondro.contains("short-refuge"), "short refuge stays open: we don't judge")
 
         let done = Catalogue.available(finishedNgondro: true, finishedShortRefuge: true).map(\.id)
         XCTAssertTrue(done.contains("8th-karmapa"))
         XCTAssertTrue(done.contains("dorje-sempa"), "repeat rounds stay available")
+        XCTAssertTrue(done.contains("short-refuge"))
     }
 
     func testKarmapaMeditationsStartStreakOnly() {
