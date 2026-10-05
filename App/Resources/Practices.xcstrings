@@ -176,8 +176,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поклоны"
+            "state" : "translated",
+            "value" : "Простирания"
           }
         },
         "uk" : {
