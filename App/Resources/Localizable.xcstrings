@@ -6251,13 +6251,13 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Czy ukończyłeś/aś ngöndro?"
+            "value" : "Czy ukończyłeś/aś nyndro?"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вы уже завершили ngöndro?"
+            "value" : "Вы уже завершили нёндро?"
           }
         },
         "sk" : {
@@ -12565,13 +12565,13 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Medytacja Short refuge, którą wykonuje się przed rozpoczęciem ngöndro."
+            "value" : "Medytacja Schronienia, którą wykonuje się przed rozpoczęciem nyndro."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Медитация Прибежища, которую вы делаете перед началом ngöndro."
+            "value" : "Медитация Прибежища, которую вы делаете перед началом нёндро."
           }
         },
         "sk" : {
