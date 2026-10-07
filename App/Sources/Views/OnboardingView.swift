@@ -268,9 +268,19 @@ private struct WelcomeStep: View {
                 .frame(width: Theme.Size.emblem)
                 .accessibilityHidden(true)
             VStack(spacing: Theme.Space.m) {
-                Text(verbatim: "Duongöndro")
-                    .font(Typography.headingBold(44, relativeTo: .largeTitle))
-                    .foregroundStyle(Theme.welcomeTitle)
+                VStack(spacing: Theme.Space.xs) {
+                    Text(verbatim: "Duongöndro")
+                        .font(Typography.headingBold(44, relativeTo: .largeTitle))
+                        .foregroundStyle(Theme.welcomeTitle)
+                    // The motto stays English in every language, on one line,
+                    // shrinking rather than wrapping.
+                    Text(verbatim: "A ngöndro tracker for the TikTok generation")
+                        .font(.footnote)
+                        .foregroundStyle(Theme.welcomeSoft)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 Text("Track your meditation practice together with your friends.")
                     .font(.title3)
                     .foregroundStyle(Theme.welcomeSoft)
