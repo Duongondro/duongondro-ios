@@ -109,7 +109,8 @@ private struct StorageBanner: View {
         HStack(alignment: .top, spacing: Theme.Space.m) {
             Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(Theme.destructive)
             VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                Text(persistent ? "Something could not be saved." : "The database could not be opened. Nothing you log now would be kept, so logging is off until the app restarts.")
+                (persistent ? Text("Something could not be saved.")
+                 : Text(verbatim: Gendered.mine("The database could not be opened. Nothing you log now would be kept, so logging is off until the app restarts.")))
                     .fixedSize(horizontal: false, vertical: true)
                 Text(verbatim: message).font(.footnote).foregroundStyle(Theme.muted)
             }

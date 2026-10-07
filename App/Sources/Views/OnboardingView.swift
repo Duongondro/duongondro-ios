@@ -332,7 +332,7 @@ private struct FinishedNgondroStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
     var body: some View {
-        QuestionLayout(title: "Have you finished ngöndro?",
+        QuestionLayout(title: LocalizedStringKey(Gendered.mine("Have you finished ngöndro?")),
                        detail: "All four parts, 111,111 each. Repeat rounds come later.") {
             ChoiceButton(title: "Yes", filled: true) {
                 flow.finishedNgondro = true
@@ -352,7 +352,7 @@ private struct FinishedShortRefugeStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
     var body: some View {
-        QuestionLayout(title: "Have you finished short refuge?",
+        QuestionLayout(title: LocalizedStringKey(Gendered.mine("Have you finished short refuge?")),
                        detail: "The short refuge meditation you do before starting ngöndro.") {
             ChoiceButton(title: "Yes", filled: true) {
                 flow.finishedShortRefuge = true

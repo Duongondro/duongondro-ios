@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import Security
 import UserNotifications
+import DuongondroCore
 import DuongondroStore
 
 /// The local half of "Delete everything" (design: Data export and deletion ›
@@ -23,6 +24,7 @@ enum Purge {
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
         center.removeAllDeliveredNotifications()
+        UserDefaults.standard.removeObject(forKey: Gender.storageKey)
         if let failure { throw failure }
     }
 

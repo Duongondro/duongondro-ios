@@ -4,11 +4,13 @@
     "" : {},
     "  " : {},
     "%@ finished %@" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ má hotovo: %2$@"
+            "value" : "%1$@ dokončil(a) %2$@"
           }
         },
         "de" : {
@@ -32,7 +34,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@: ukończono %2$@"
+            "value" : "%1$@ ukończył(a) %2$@"
           }
         },
         "ru" : {
@@ -44,13 +46,13 @@
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ dokončené: %2$@"
+            "value" : "%1$@ dokončil(a) %2$@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@: завершено %2$@"
+            "value" : "%1$@ завершив(-ла) %2$@"
           }
         },
         "es" : {
@@ -62,11 +64,13 @@
       }
     },
     "%@ hasn't practised yet" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ zatím nepraktikuje"
+            "value" : "%@ zatím nepraktikoval(a)"
           }
         },
         "de" : {
@@ -84,7 +88,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "U %@ nie ma jeszcze praktyki"
+            "value" : "%@ jeszcze nie praktykował(a)"
           }
         },
         "ru" : {
@@ -102,7 +106,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "У %@ ще немає практики"
+            "value" : "%@ ще не практикував(-ла)"
           }
         },
         "es" : {
@@ -4394,60 +4398,55 @@
         }
       }
     },
-    "Counted for **%@**: you started around %@, before midnight. Your streak is safe." : {
+    "Counted for %@" : {
+      "comment" : "Title of the after-midnight sheet: the weekday the session counted for.",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Započítáno na **%1$@**: začátek byl kolem %2$@, před půlnocí. Tvá série je v bezpečí."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gezählt für **%1$@**: Du hast gegen %2$@ begonnen, vor Mitternacht. Deine Serie ist sicher."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Counted for **%1$@**: you started around %2$@, before midnight. Your streak is safe."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elszámolva erre a napra: **%1$@**. Kb. %2$@ körül kezdtél, még éjfél előtt. A sorozatod biztonságban van."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaliczone na **%1$@**: sesja zaczęła się około %2$@, przed północą. Twoja seria jest bezpieczna."
+            "value" : "Gezählt für %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Засчитано за **%1$@**: вы начали около %2$@, до полуночи. Ваша серия в безопасности."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Započítané na **%1$@**: začal(a) si okolo %2$@, pred polnocou. Tvoja séria je v bezpečí."
+            "value" : "Засчитано за день: %@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Зараховано за **%1$@**: ви почали близько %2$@, до опівночі. Ваша серія в безпеці."
+            "value" : "Зараховано за день: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaliczone na dzień: %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Započítáno na den: %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Započítané na deň: %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Beszámítva: %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Contado para **%1$@**: empezaste alrededor de las %2$@, antes de medianoche. Tu racha está a salvo."
+            "value" : "Contado para el %@"
           }
         }
       }
@@ -5856,6 +5855,58 @@
         }
       }
     },
+    "Female" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Weiblich"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Женский"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Жіноча"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kobieta"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Žena"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Žena"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nő"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Femenino"
+          }
+        }
+      }
+    },
     "Follow the phone's language" : {
       "localizations" : {
         "de" : {
@@ -6069,7 +6120,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Abys je mohl pozvat, nastav si účet v části Ty."
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Pro pozvání přátel si nastav účet v části Profil."
           }
         },
         "de" : {
@@ -6087,25 +6138,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Aby ich zaprosić, skonfiguruj konto w zakładce Ty."
+            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Aby ich zaprosić, skonfiguruj konto w zakładce Profil."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзья видят только ваши публичные серии и ничего больше. Чтобы пригласить их, настройте аккаунт на вкладке «Вы»."
+            "value" : "Друзья видят только ваши публичные серии и ничего больше. Чтобы пригласить их, настройте аккаунт на вкладке «Профиль»."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Priatelia vidia tvoje verejné série a nič iné. Ak ich chceš pozvať, najprv si na karte Ty nastav účet."
+            "value" : "Priatelia vidia tvoje verejné série a nič iné. Ak ich chceš pozvať, najprv si na karte Profil nastav účet."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Налаштуйте обліковий запис у розділі «Ви», щоб запрошувати друзів."
+            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Налаштуйте обліковий запис у розділі «Профіль», щоб запрошувати друзів."
           }
         },
         "es" : {
@@ -6164,6 +6215,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "De un cuaderno o una hoja de cálculo; un número aproximado está bien."
+          }
+        }
+      }
+    },
+    "Gender" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Geschlecht"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Пол"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Стать"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Płeć"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pohlaví"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pohlavie"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nem"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Género"
           }
         }
       }
@@ -6273,6 +6376,8 @@
       }
     },
     "Have you finished ngöndro?" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6295,13 +6400,13 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Czy ngöndro masz już za sobą?"
+            "value" : "Czy ukończyłeś/aś nyndro?"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вы уже завершили ngöndro?"
+            "value" : "Вы уже завершили нёндро?"
           }
         },
         "sk" : {
@@ -6325,11 +6430,13 @@
       }
     },
     "Have you finished short refuge?" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Máš za sebou meditaci útočiště?"
+            "value" : "Máš za sebou krátké útočiště?"
           }
         },
         "de" : {
@@ -6347,7 +6454,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Czy Short refuge masz już za sobą?"
+            "value" : "Czy ukończyłeś/aś Medytację Schronienia?"
           }
         },
         "ru" : {
@@ -6359,7 +6466,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dokončil(a) si Short refuge?"
+            "value" : "Dokončil(a) si meditáciu útočiska?"
           }
         },
         "uk" : {
@@ -6532,7 +6639,63 @@
         }
       }
     },
+    "I started after midnight" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ich habe nach Mitternacht angefangen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я начал(а) после полуночи"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Я почав(-ла) після опівночі"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zacząłem/zaczęłam po północy"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Začal(a) jsem po půlnoci"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Začal(a) som po polnoci"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Éjfél után kezdtem"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Empecé después de medianoche"
+          }
+        }
+      }
+    },
     "I wrote it down" : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -7676,6 +7839,58 @@
         }
       }
     },
+    "Male" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Männlich"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Мужской"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Чоловіча"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mężczyzna"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Muž"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Muž"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Férfi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Masculino"
+          }
+        }
+      }
+    },
     "Mark today done" : {
       "localizations" : {
         "cs" : {
@@ -8144,6 +8359,58 @@
         }
       }
     },
+    "Non-binary" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nichtbinär"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Небинарный"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Небінарна"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Osoba niebinarna"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nebinární osoba"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nebinárna osoba"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nem bináris"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No binario"
+          }
+        }
+      }
+    },
     "None" : {
       "localizations" : {
         "cs" : {
@@ -8296,6 +8563,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sin confirmar"
+          }
+        }
+      }
+    },
+    "Not given" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keine Angabe"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не указан"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не вказано"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie podano"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neuvedeno"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neuvedené"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nincs megadva"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin indicar"
           }
         }
       }
@@ -8816,6 +9135,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Solo el número de días practicados en la app, nunca conteos ni totales."
+          }
+        }
+      }
+    },
+    "Optional. Polish, Czech, Slovak, Russian and Ukrainian use it to conjugate words about you, on this phone and your friends'. Without it, they use neutral forms." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Freiwillig. Polnisch, Tschechisch, Slowakisch, Russisch und Ukrainisch beugen damit Wörter über dich, auf diesem Telefon und auf denen deiner Freunde. Ohne Angabe gelten neutrale Formen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Необязательно. В польском, чешском, словацком, русском и украинском по нему согласуются слова о вас — на этом телефоне и у ваших друзей. Без него используются нейтральные формы."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Необов’язково. Польська, чеська, словацька, російська й українська узгоджують за нею слова про вас — на цьому телефоні й у ваших друзів. Без неї використовуються нейтральні форми."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcjonalne. Polski, czeski, słowacki, rosyjski i ukraiński odmieniają według niej słowa o Tobie, na tym telefonie i u Twoich przyjaciół. Bez niej używane są formy neutralne."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nepovinné. Polština, čeština, slovenština, ruština a ukrajinština podle něj ohýbají slova o tobě, v tomto telefonu i u tvých přátel. Bez něj se použijí neutrální tvary."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nepovinné. Poľština, čeština, slovenčina, ruština a ukrajinčina podľa neho ohýbajú slová o tebe, v tomto telefóne aj u tvojich priateľov. Bez neho sa použijú neutrálne tvary."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nem kötelező. A lengyel, cseh, szlovák, orosz és ukrán nyelv ez alapján ragozza a rólad szóló szavakat, ezen a telefonon és a barátaidén is. Enélkül semleges alakokat használnak."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. El polaco, el checo, el eslovaco, el ruso y el ucraniano lo usan para conjugar las palabras sobre ti, en este teléfono y en los de tus amigos. Sin él, usan formas neutras."
           }
         }
       }
@@ -10391,7 +10762,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nejdřív si nastav účet v části Ty, pak odkaz otevři znovu."
+            "value" : "Nejdřív si nastav účet v části Profil, pak odkaz otevři znovu."
           }
         },
         "de" : {
@@ -10409,25 +10780,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Najpierw skonfiguruj konto w zakładce Ty, a potem otwórz link ponownie."
+            "value" : "Najpierw skonfiguruj konto w zakładce Profil, a potem otwórz link ponownie."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Сначала настройте аккаунт на вкладке «Вы», затем откройте ссылку снова."
+            "value" : "Сначала настройте аккаунт на вкладке «Профиль», затем откройте ссылку снова."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Najprv si na karte Ty nastav účet a potom otvor odkaz znova."
+            "value" : "Najprv si na karte Profil nastav účet a potom otvor odkaz znova."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Спершу налаштуйте обліковий запис у розділі «Ви», потім відкрийте посилання ще раз."
+            "value" : "Спершу налаштуйте обліковий запис у розділі «Профіль», потім відкрийте посилання ще раз."
           }
         },
         "es" : {
@@ -11901,6 +12272,8 @@
       }
     },
     "The code you wrote down stops working." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -11953,6 +12326,8 @@
       }
     },
     "The code you wrote down when you set up your first phone. Spaces and dashes do not matter." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -12005,6 +12380,8 @@
       }
     },
     "The database could not be opened. Nothing you log now would be kept, so logging is off until the app restarts." : {
+      "comment" : "Looked up by Gendered: the neutral form; Male.xcstrings and Female.xcstrings hold the gendered ones (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -12113,7 +12490,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meditace útočiště, kterou děláš před začátkem ngöndro."
+            "value" : "Krátké útočiště, meditace, kterou děláš před začátkem ngöndro."
           }
         },
         "de" : {
@@ -12131,19 +12508,19 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Medytacja Short refuge, którą wykonuje się przed rozpoczęciem ngöndro."
+            "value" : "Medytacja Schronienia, którą wykonuje się przed rozpoczęciem nyndro."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Медитация Прибежища, которую вы делаете перед началом ngöndro."
+            "value" : "Медитация Прибежища, которую вы делаете перед началом нёндро."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meditácia Short refuge, ktorú robíš pred začiatkom ngöndro."
+            "value" : "Meditácia útočiska, ktorú robíš pred začiatkom ngöndro."
           }
         },
         "uk" : {
@@ -14151,7 +14528,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ty"
+            "value" : "Profil"
           }
         },
         "de" : {
@@ -14169,25 +14546,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ty"
+            "value" : "Profil"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вы"
+            "value" : "Профиль"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ty"
+            "value" : "Profil"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ви"
+            "value" : "Профіль"
           }
         },
         "es" : {

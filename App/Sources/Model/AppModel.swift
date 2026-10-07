@@ -109,6 +109,7 @@ final class AppModel: ObservableObject {
         closeTask?.cancel()
         guard let p = pending else { return }
         pending = nil
+        // Always estimated; the after-midnight sheet corrects a wrong day in one tap.
         let startedAt = SessionStart.estimate(loggedAt: p.startedAt, tappedStart: nil,
                                               timedSessionLengths: SessionStart.timedLengths(snapshot.sessions))
         let session = Session(practiceID: p.practiceID, amount: p.amount, startedAt: startedAt,

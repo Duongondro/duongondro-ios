@@ -191,6 +191,8 @@ public actor Social {
     public struct FriendView: Equatable, Sendable, Identifiable {
         public let userID: UUID
         public let displayName: String
+        /// For conjugating in the Slavic languages; nil when not given.
+        public let gender: Gender?
         public let notifyDone: Bool
         /// The server now names a different key than the one pinned: nothing from
         /// this friend is shown until it is sorted out (meet, re-invite).
@@ -230,7 +232,8 @@ public actor Social {
                                                 longest: st.longest, deadline: st.deadline, seq: st.seq))
                 }
             }
-            views.append(FriendView(userID: f.userId, displayName: f.displayName, notifyDone: f.notifyDone,
+            views.append(FriendView(userID: f.userId, displayName: f.displayName, gender: f.gender.flatMap(Gender.init(rawValue:)),
+                                    notifyDone: f.notifyDone,
                                     keyChanged: keyChanged, streaks: streaks.sorted { $0.current > $1.current }))
         }
         return views
