@@ -347,6 +347,8 @@ private struct MalaSizeRows: View {
     let defaultSize: Int?
     @State private var custom: Bool
     @State private var text: String
+    /// The last text the field took: a keystroke that leaves the range goes back to it.
+    @State private var accepted: String
 
     init(value: Binding<Int?>, defaultSize: Int?) {
         _value = value
@@ -354,6 +356,7 @@ private struct MalaSizeRows: View {
         let v = value.wrappedValue
         _custom = State(initialValue: v != nil && v != 108)
         _text = State(initialValue: v.map { String($0) } ?? "")
+        _accepted = State(initialValue: v.map { String($0) } ?? "")
     }
 
     private var choice: Choice {
@@ -386,17 +389,20 @@ private struct MalaSizeRows: View {
                         .frame(maxWidth: Theme.Size.numberField)
                         .accessibilityLabel(Text("Custom value"))
                         .onChange(of: text) { t in
-                            let digits = String(t.filter { $0.isASCII && $0.isNumber }.prefix(5))
-                            if digits != t { text = digits }
-                            if let n = Int(digits), Self.bounds.contains(n) { value = n }
+                            // Digits only, and only a number in range is taken; anything
+                            // else leaves the field as it was, so no hint is needed.
+                            // Emptied, it picks nothing until retyped.
+                            let digits = t.filter { $0.isASCII && $0.isNumber }
+                            if digits.isEmpty {
+                                accepted = ""
+                            } else if let n = Int(digits.prefix(6)), Self.bounds.contains(n) {
+                                accepted = String(n)
+                                value = n
+                            }
+                            if text != accepted { text = accepted }
                         }
                 }
                 .frame(minHeight: Theme.Size.minTap)
-                if !(Int(text).map { Self.bounds.contains($0) } ?? false) {
-                    Text("A whole number from 1 to 10,000.")
-                        .font(.footnote)
-                        .foregroundStyle(Theme.muted)
-                }
             }
         }
     }
@@ -409,6 +415,7 @@ private struct MalaSizeRows: View {
             custom = true
             if value == nil { value = defaultSize ?? 108 }
             text = String(value ?? 108)
+            accepted = text
         }
     }
 }

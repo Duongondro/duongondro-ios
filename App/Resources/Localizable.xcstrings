@@ -2574,58 +2574,6 @@
         }
       }
     },
-    "A whole number from 1 to 10,000." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Celé číslo od 1 do 10 000."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eine ganze Zahl von 1 bis 10.000."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Un número entero de 1 a 10.000."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egész szám 1 és 10 000 között."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Liczba całkowita od 1 do 10 000."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Целое число от 1 до 10 000."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Celé číslo od 1 do 10 000."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ціле число від 1 до 10 000."
-          }
-        }
-      }
-    },
     "About" : {
       "localizations" : {
         "cs" : {
