@@ -20,7 +20,6 @@ struct OnboardingView: View {
                     case .finishedShortRefuge: FinishedShortRefugeStep()
                     case .practices: PracticesStep()
                     case .counts(let index): CountsStep(index: index).id(index)
-                    case .mala: MalaStep()
                     case .reminder: ReminderStep()
                     case .door: DoorStep()
                     }
@@ -43,7 +42,7 @@ struct OnboardingView: View {
 enum OnboardingDoor: Equatable { case invite, justMe, existingAccount }
 
 enum OnboardingStep: Hashable {
-    case welcome, finishedNgondro, finishedShortRefuge, practices, counts(Int), mala, reminder, door
+    case welcome, finishedNgondro, finishedShortRefuge, practices, counts(Int), reminder, door
 }
 
 /// What the user said about one chosen practice.
@@ -70,7 +69,6 @@ final class OnboardingFlow: ObservableObject {
     @Published var finishedShortRefuge = false
     /// Chosen practices, in the order picked. Kept when the user goes back.
     @Published var chosen: [OnboardingPractice] = []
-    @Published var malaSize = 108
     @Published var reminder: Date? = Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: Date())
 
     var canGoBack: Bool { !history.isEmpty }
@@ -122,7 +120,6 @@ final class OnboardingFlow: ObservableObject {
         prefs.onboarded = true
         prefs.finishedNgondro = finishedNgondro
         prefs.finishedShortRefuge = finishedShortRefuge || finishedNgondro
-        prefs.malaSize = malaSize
         prefs.reminderMinutes = reminder.map { r in
             let c = Calendar.current.dateComponents([.hour, .minute], from: r)
             return (c.hour ?? 20) * 60 + (c.minute ?? 0)
@@ -139,7 +136,7 @@ extension OnboardingStep {
         case .welcome, .finishedNgondro: return 1
         case .finishedShortRefuge: return 2
         case .practices: return 3
-        case .counts, .mala: return 4
+        case .counts: return 4
         case .reminder, .door: return 5
         }
     }
@@ -540,7 +537,7 @@ private struct CountsStep: View {
                 }
                 .plainBottomEdge()
                 PrimaryButton(title: "Continue") {
-                    flow.go(index + 1 < flow.chosen.count ? .counts(index + 1) : .mala)
+                    flow.go(index + 1 < flow.chosen.count ? .counts(index + 1) : .reminder)
                 }
                 .padding(.bottom, Theme.Space.xl)
             }
@@ -612,22 +609,6 @@ struct NumberField: View {
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.trailing)
                 .frame(maxWidth: Theme.Size.numberField)
-        }
-    }
-}
-
-private struct MalaStep: View {
-    @EnvironmentObject private var flow: OnboardingFlow
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.l) {
-            StepHeader(title: "How much does one mala count?",
-                       detail: "Teachers differ. Each practice can change this later in Settings.")
-                .padding(.top, Theme.Space.s)
-            Spacer(minLength: 0)
-            ChoiceButton(title: "100") { flow.malaSize = 100; flow.go(.reminder) }
-            ChoiceButton(title: "108") { flow.malaSize = 108; flow.go(.reminder) }
-                .padding(.bottom, Theme.Space.xl)
         }
     }
 }

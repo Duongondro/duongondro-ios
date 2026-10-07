@@ -116,19 +116,9 @@ private struct GeneralSection: View {
             NavigationLink { LanguageView() } label: {
                 SettingsRow("Language", detail: language.nativeName.map { Text(verbatim: $0) } ?? Text("System"), chevron: true)
             }
-            HStack {
-                Text("A mala counts as").foregroundStyle(Theme.ink)
-                Spacer(minLength: Theme.Space.s)
-                Picker("A mala counts as", selection: Binding(get: { model.preferences.malaSize },
-                                                               set: { v in model.update { $0.malaSize = v } })) {
-                    Text(verbatim: "100").tag(100)
-                    Text(verbatim: "108").tag(108)
-                }
-                .labelsHidden()
-                .pickerStyle(.menu)
-                .tint(Theme.accent)
-            }
-            .frame(minHeight: Theme.Size.minTap)
+            MalaSizeRows(value: Binding(get: { model.preferences.malaSize },
+                                        set: { v in model.update { $0.malaSize = v ?? 108 } }),
+                         defaultSize: nil)
             Toggle(isOn: Binding(
                 get: { model.preferences.reminderMinutes != nil },
                 set: { on in
@@ -224,11 +214,7 @@ struct PracticeSettingsView: View {
                             NumberField(title: "Target per round",
                                         value: Binding(get: { p.practice.target ?? 0 },
                                                        set: { binding(p, \.practice.target).wrappedValue = $0 > 0 ? $0 : nil }))
-                            Picker("A mala counts as", selection: binding(p, \.practice.malaSize)) {
-                                Text("Default (\(model.preferences.malaSize))").tag(Int?.none)
-                                Text(verbatim: "100").tag(Int?.some(100))
-                                Text(verbatim: "108").tag(Int?.some(108))
-                            }
+                            MalaSizeRows(value: binding(p, \.practice.malaSize), defaultSize: model.preferences.malaSize)
                         }
                     }
                     Section {
@@ -346,5 +332,83 @@ private struct LanguageView: View {
         .themedList()
         .navigationTitle("Language")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// "A mala counts as": 108, or a number the user types (Custom). With a
+/// `defaultSize` (per practice) there is also "Default (N)", which is `nil`.
+/// Any other stored value, such as the 100 an earlier version offered, shows as Custom.
+private struct MalaSizeRows: View {
+    static let bounds = 1...10_000
+
+    private enum Choice: Hashable { case standard, custom, inherited }
+
+    @Binding var value: Int?
+    let defaultSize: Int?
+    @State private var custom: Bool
+    @State private var text: String
+
+    init(value: Binding<Int?>, defaultSize: Int?) {
+        _value = value
+        self.defaultSize = defaultSize
+        let v = value.wrappedValue
+        _custom = State(initialValue: v != nil && v != 108)
+        _text = State(initialValue: v.map { String($0) } ?? "")
+    }
+
+    private var choice: Choice {
+        if custom { return .custom }
+        return value == nil ? .inherited : .standard
+    }
+
+    var body: some View {
+        Group {
+            HStack {
+                Text("A mala counts as").foregroundStyle(Theme.ink)
+                Spacer(minLength: Theme.Space.s)
+                Picker("A mala counts as", selection: Binding(get: { choice }, set: choose)) {
+                    if let d = defaultSize { Text("Default (\(d))").tag(Choice.inherited) }
+                    Text(verbatim: "108").tag(Choice.standard)
+                    Text("Custom…").tag(Choice.custom)
+                }
+                .labelsHidden()
+                .pickerStyle(.menu)
+                .tint(Theme.accent)
+            }
+            .frame(minHeight: Theme.Size.minTap)
+            if custom {
+                HStack(spacing: Theme.Space.m) {
+                    Text("Custom value").foregroundStyle(Theme.ink)
+                    Spacer(minLength: Theme.Space.s)
+                    TextField("108", text: $text)
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.trailing)
+                        .frame(maxWidth: Theme.Size.numberField)
+                        .accessibilityLabel(Text("Custom value"))
+                        .onChange(of: text) { t in
+                            let digits = String(t.filter { $0.isASCII && $0.isNumber }.prefix(5))
+                            if digits != t { text = digits }
+                            if let n = Int(digits), Self.bounds.contains(n) { value = n }
+                        }
+                }
+                .frame(minHeight: Theme.Size.minTap)
+                if !(Int(text).map { Self.bounds.contains($0) } ?? false) {
+                    Text("A whole number from 1 to 10,000.")
+                        .font(.footnote)
+                        .foregroundStyle(Theme.muted)
+                }
+            }
+        }
+    }
+
+    private func choose(_ c: Choice) {
+        switch c {
+        case .inherited: custom = false; value = nil
+        case .standard: custom = false; value = 108
+        case .custom:
+            custom = true
+            if value == nil { value = defaultSize ?? 108 }
+            text = String(value ?? 108)
+        }
     }
 }
