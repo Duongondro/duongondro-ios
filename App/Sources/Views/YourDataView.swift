@@ -22,7 +22,7 @@ struct YourDataView: View {
                 // With an account, the server and the person's other phones lose it too.
                 CardSection(footer: account.status == .none
                             ? LocalizedStringKey("Removes all your data from this phone. It cannot be undone.")
-                            : LocalizedStringKey("Deletes your account and all its data, on the server, on this phone and on your other phones. It cannot be undone.")) {
+                            : LocalizedStringKey("Deletes your account and its data on the server, and everything on this phone. Your other phones are signed out but keep their copy. It cannot be undone.")) {
                     NavigationLink { DeleteEverythingView() } label: {
                         HStack {
                             Label("Delete everything", systemImage: "trash").foregroundStyle(Theme.destructive)
@@ -87,7 +87,7 @@ private struct DeleteEverythingView: View {
                     VStack(alignment: .leading, spacing: Theme.Space.s) {
                         Text(account.status == .none
                              ? LocalizedStringKey("This deletes every practice, session and streak on this phone, your reminders and any keys the app holds, then returns to the start.")
-                             : LocalizedStringKey("This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, invitations, passkeys and sign-ins. Your other phones drop their copy at their next sync. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start."))
+                             : LocalizedStringKey("This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, invitations, passkeys and sign-ins. Your other phones are signed out and keep their own copy until you delete it there. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start."))
                             .foregroundStyle(Theme.ink)
                             .fixedSize(horizontal: false, vertical: true)
                         Text("Export first if you want a copy.")
