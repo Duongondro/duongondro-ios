@@ -11166,58 +11166,6 @@
         }
       }
     },
-    "Start" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Začít"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Start"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Indítás"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Start"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Начать"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Začať"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Почати"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Iniciar"
-          }
-        }
-      }
-    },
     "Start practising" : {
       "localizations" : {
         "cs" : {
@@ -11266,58 +11214,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Empezar a practicar"
-          }
-        }
-      }
-    },
-    "Started %@. Tap to cancel." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zahájeno %@. Klepnutím zrušíš."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gestartet um %@. Tippen zum Abbrechen."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elindítva: %@. Koppints a megszakításhoz."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Rozpoczęto %@. Dotknij, aby anulować."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Начато в %@. Нажмите, чтобы отменить."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Začaté o %@. Ťuknutím zrušíš."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Розпочато %@. Торкніться, щоб скасувати."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Iniciado a las %@. Toca para cancelar."
           }
         }
       }
@@ -11740,58 +11636,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Toca Fuente para abrir este commit exacto en GitHub."
-          }
-        }
-      }
-    },
-    "Tap Start next time and the app knows exactly." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Příště klepni na Začít a aplikace to bude vědět přesně."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tippe nächstes Mal auf „Start“, dann weiß die App es genau."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Legközelebb koppints az Indításra, és az alkalmazás pontosan tudni fogja."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Następnym razem dotknij Start, a aplikacja będzie wiedzieć dokładnie."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "В следующий раз нажмите «Начать», и приложение будет знать точно."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nabudúce ťukni na Začať a aplikácia bude vedieť presne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Наступного разу торкніться «Почати», і застосунок знатиме точно."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toca Iniciar la próxima vez y la app lo sabrá con exactitud."
           }
         }
       }

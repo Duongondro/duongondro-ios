@@ -4,7 +4,7 @@ import DuongondroStore
 
 /// A practice's own screen (design canvas "Practice"): the name, where the count
 /// stands, and at the bottom, under the thumb, the big +mala button with Custom,
-/// Start and History beside it. The only place counts are logged. Each +mala
+/// History beside it. The only place counts are logged. Each +mala
 /// opens a few seconds' Undo; the session is written only when that window closes.
 struct PracticeView: View {
     @EnvironmentObject private var model: AppModel
@@ -68,7 +68,6 @@ struct PracticeView: View {
                         Button("+ Custom") { customAmount = "" }
                             .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
                     }
-                    StartButton(practiceID: practice.id)
                     Button("History") { showsHistory = true }
                         .buttonStyle(SoftButtonStyle())
                 }
@@ -196,27 +195,6 @@ private struct StreakBadge: View {
         }
         .font(.subheadline.weight(.bold))
         .accessibilityElement(children: .combine)
-    }
-}
-
-/// Start: records the exact start, so the session needs no estimate. While a
-/// session runs it shows the time since, and a tap cancels it.
-private struct StartButton: View {
-    @EnvironmentObject private var model: AppModel
-    let practiceID: String
-
-    var body: some View {
-        if let started = model.started[practiceID] {
-            Button { model.cancelStart(practiceID) } label: {
-                Text(started, style: .timer)
-                    .monospacedDigit()
-            }
-            .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
-            .accessibilityLabel(Text("Started \(started.shortTime). Tap to cancel."))
-        } else {
-            Button("Start") { model.start(practiceID) }
-                .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
-        }
     }
 }
 
@@ -404,9 +382,6 @@ struct AfterMidnightSheet: View {
             SegmentedChoice(options: [(counted, dayLabel(counted, tz)), (alternative, dayLabel(alternative, tz))],
                             selection: Binding(get: { selected }, set: { choice = $0 }),
                             filled: true, height: Theme.Size.field)
-            Text("Tap Start next time and the app knows exactly.")
-                .font(.footnote)
-                .foregroundStyle(Theme.muted)
             Button("Done") {
                 if selected != counted { model.choose(day: selected, for: prompt) } else { dismiss() }
             }
