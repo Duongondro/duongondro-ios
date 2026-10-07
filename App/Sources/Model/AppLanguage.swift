@@ -36,8 +36,8 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     /// Localisation › Language picker), never a hard-coded list; nil for System.
     var nativeName: String? {
         guard self != .system else { return nil }
-        let name = Locale(identifier: rawValue).localizedString(forLanguageCode: rawValue) ?? rawValue
-        return name.prefix(1).uppercased(with: Locale(identifier: rawValue)) + name.dropFirst()
+        // As CLDR writes it, never capitalised: "polski", "čeština", "Deutsch".
+        return Locale(identifier: rawValue).localizedString(forLanguageCode: rawValue) ?? rawValue
     }
 
     /// `nativeName` tagged with its own language, so VoiceOver reads each in its voice.

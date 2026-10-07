@@ -74,8 +74,8 @@ struct InviteView: View {
     }
 }
 
-/// A 300 pt burgundy disc with a white tile holding the code, and a small gold
-/// vajra above it, outside the code's quiet zone.
+/// A 300 pt burgundy disc with a white tile holding the code, and the app's
+/// emblem (the endless knot) above it, outside the code's quiet zone.
 struct QRBadge: View {
     let text: String?
 
@@ -95,10 +95,12 @@ struct QRBadge: View {
             } else {
                 ProgressView()
             }
-            Vajra()
-                .stroke(Theme.gold, style: StrokeStyle(lineWidth: 1.6, lineCap: .round))
-                .frame(width: 16, height: 26)
-                .offset(y: -150 + 29)
+            // The endless knot, as on Welcome, centred in the 52 pt band above the tile.
+            Image("Emblem")
+                .resizable()
+                .scaledToFit()
+                .frame(width: Theme.Size.badgeEmblem)
+                .offset(y: -150 + 26)
                 .accessibilityHidden(true)
         }
         .frame(width: 300, height: 300)
@@ -128,27 +130,6 @@ private struct QRModules: View {
                 context.fill(Path(roundedRect: inner, cornerRadius: m * 0.9), with: .color(ink))
             }
         }
-    }
-}
-
-/// The mockup's small vajra: a hub with two prongs above and two below.
-private struct Vajra: Shape {
-    func path(in rect: CGRect) -> Path {
-        let sx = rect.width / 16, sy = rect.height / 26
-        func p(_ x: CGFloat, _ y: CGFloat) -> CGPoint { CGPoint(x: rect.minX + x * sx, y: rect.minY + y * sy) }
-        var path = Path()
-        path.addEllipse(in: CGRect(origin: p(6, 11), size: CGSize(width: 4 * sx, height: 4 * sy)))
-        path.move(to: p(8, 11)); path.addLine(to: p(8, 2))
-        path.move(to: p(8, 11)); path.addCurve(to: p(4, 4.5), control1: p(8, 8), control2: p(4, 7))
-        path.addCurve(to: p(6, 2.2), control1: p(4, 3.4), control2: p(5, 2.6))
-        path.move(to: p(8, 11)); path.addCurve(to: p(12, 4.5), control1: p(8, 8), control2: p(12, 7))
-        path.addCurve(to: p(10, 2.2), control1: p(12, 3.4), control2: p(11, 2.6))
-        path.move(to: p(8, 15)); path.addLine(to: p(8, 24))
-        path.move(to: p(8, 15)); path.addCurve(to: p(4, 21.5), control1: p(8, 18), control2: p(4, 19))
-        path.addCurve(to: p(6, 23.8), control1: p(4, 22.6), control2: p(5, 23.4))
-        path.move(to: p(8, 15)); path.addCurve(to: p(12, 21.5), control1: p(8, 18), control2: p(12, 19))
-        path.addCurve(to: p(10, 23.8), control1: p(12, 22.6), control2: p(11, 23.4))
-        return path
     }
 }
 

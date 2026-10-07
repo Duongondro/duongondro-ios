@@ -12,7 +12,7 @@ extension APIClient {
     /// Sets or clears (nil) the grammatical gender friends' phones conjugate with:
     /// "male", "female" or "nonbinary".
     public func setGender(_ gender: String?) async throws {
-        try await send("PUT", "api/me/gender", body: GenderUpdate(gender: gender))
+        try await send("PATCH", "api/me", body: GenderUpdate(gender: gender))
     }
 
     /// A problem worth knowing about, without personal data (design: Keys, the
@@ -99,7 +99,18 @@ extension APIClient {
 }
 
 struct MeUpdate: Codable { let displayName: String }
-struct GenderUpdate: Codable { let gender: String? }
+/// `PATCH /api/me` with only `gender`: a value sets it, an explicit null clears it
+/// (an absent field would leave it as it was).
+struct GenderUpdate: Encodable {
+    let gender: String?
+
+    private enum CodingKeys: String, CodingKey { case gender }
+
+    func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(gender, forKey: .gender)
+    }
+}
 
 struct ClientErrorReport: Codable {
     let kind: String

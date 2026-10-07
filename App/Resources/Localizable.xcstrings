@@ -4607,6 +4607,110 @@
         }
       }
     },
+    "Custom value" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vlastní hodnota"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eigener Wert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Valor personalizado"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egyéni érték"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Własna wartość"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Своё значение"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vlastná hodnota"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Власне значення"
+          }
+        }
+      }
+    },
+    "Custom…" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vlastní hodnota…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eigener Wert…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Personalizado…"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egyéni érték…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Własna wartość…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Своё значение…"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vlastná hodnota…"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Власне значення…"
+          }
+        }
+      }
+    },
     "Daily practices" : {
       "localizations" : {
         "cs" : {
@@ -4863,6 +4967,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Eliminar todo"
+          }
+        }
+      }
+    },
+    "Deletes your account and its data on the server, and everything on this phone. Your other phones are signed out but keep their copy. It cannot be undone." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Smaže tvůj účet a jeho data na serveru a vše v tomto telefonu. Tvé další telefony se odhlásí, ale svou kopii si ponechají. Nelze to vrátit."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Löscht dein Konto und seine Daten auf dem Server sowie alles auf diesem Handy. Deine anderen Handys werden abgemeldet, behalten aber ihre Kopie. Das lässt sich nicht rückgängig machen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elimina tu cuenta y sus datos del servidor, y todo lo que hay en este teléfono. Tus otros teléfonos cierran sesión, pero conservan su copia. No se puede deshacer."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Törli a fiókodat és annak adatait a szerverről, valamint mindent erről a telefonról. A többi telefonodon kijelentkezel, de azok megtartják a saját példányukat. Nem vonható vissza."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usuwa Twoje konto i jego dane na serwerze oraz wszystko na tym telefonie. Twoje inne telefony zostaną wylogowane, ale zachowają swoją kopię. Nie można tego cofnąć."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удаляет ваш аккаунт и его данные на сервере, а также всё на этом телефоне. Другие ваши телефоны выйдут из аккаунта, но сохранят свою копию. Это нельзя отменить."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zmaže tvoj účet a jeho údaje na serveri a všetko v tomto telefóne. Tvoje ďalšie telefóny sa odhlásia, ale svoju kópiu si ponechajú. Nedá sa to vrátiť späť."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Видаляє ваш обліковий запис і його дані на сервері, а також усе на цьому телефоні. Інші ваші телефони вийдуть з облікового запису, але збережуть свою копію. Це неможливо скасувати."
           }
         }
       }
@@ -6232,7 +6388,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hast du das ngöndro abgeschlossen?"
+            "value" : "Hast du das Ngöndro abgeschlossen?"
           }
         },
         "hu" : {
@@ -6375,58 +6531,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Historial"
-          }
-        }
-      }
-    },
-    "How much does one mala count?" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kolik se počítá jedna mala?"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wie viel zählt eine Mala?"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mennyit számít egy mala?"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ile liczy jedna mala?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Сколько засчитывается за одну малу?"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Koľko sa počíta jedna mala?"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Скільки зараховується за одну малу?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Cuánto cuenta una mala?"
           }
         }
       }
@@ -12011,58 +12115,6 @@
         }
       }
     },
-    "Teachers differ. Each practice can change this later in Settings." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Učitelé to vidí různě. Každá praktika to může později změnit v Nastavení."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lehrer sehen das unterschiedlich. Jede Übung kann das später in den Einstellungen ändern."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A tanítók eltérnek ebben. Minden gyakorlatnál módosíthatod később a Beállításokban."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nauczyciele podchodzą do tego różnie. Każda praktyka może to później zmienić w Ustawieniach."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Учителя говорят по-разному. Для каждой практики это можно изменить позже в настройках."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Učitelia sa líšia. Každé cvičenie to môže neskôr zmeniť v Nastaveniach."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Учителі радять по-різному. Для кожної практики це можна змінити пізніше в налаштуваннях."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Los maestros no coinciden. Cada práctica puede cambiarlo después en Ajustes."
-          }
-        }
-      }
-    },
     "Tell me when they practise" : {
       "localizations" : {
         "cs" : {
@@ -12444,7 +12496,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Meditation „Short refuge“, die du vor Beginn des ngöndro machst."
+            "value" : "Die Meditation „Short refuge“, die du vor Beginn des Ngöndro machst."
           }
         },
         "hu" : {
@@ -12689,6 +12741,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Esto elimina todas las prácticas, sesiones y rachas de este teléfono, tus recordatorios y las claves que guarda la app, y luego vuelve al inicio."
+          }
+        }
+      }
+    },
+    "This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, invitations, passkeys and sign-ins. Your other phones are signed out and keep their own copy until you delete it there. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tím se smaže tvůj účet a vše, co je s ním uložené na serveru: zašifrovaná sezení, přátelé, veřejné série, pozvánky, přístupové klíče a způsoby přihlášení. Tvé další telefony se odhlásí a svou kopii si ponechají, dokud ji tam nesmažeš. V tomto telefonu se smaže každá praktika, sezení a série, tvá připomenutí i klíče aplikace a vrátíš se na začátek."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das löscht dein Konto und alles, was mit ihm auf dem Server gespeichert ist: deine verschlüsselten Sitzungen, Freunde, öffentlichen Serien, Einladungen, Passkeys und Anmeldungen. Deine anderen Handys werden abgemeldet und behalten ihre eigene Kopie, bis du sie dort löschst. Auf diesem Handy löscht es jede Übung, Sitzung und Serie, deine Erinnerungen und die Schlüssel der App und kehrt dann zum Anfang zurück."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esto elimina tu cuenta y todo lo que se guarda con ella en el servidor: tus sesiones cifradas, amigos, rachas públicas, invitaciones, llaves de acceso y formas de iniciar sesión. Tus otros teléfonos cierran sesión y conservan su propia copia hasta que la elimines allí. En este teléfono elimina todas las prácticas, sesiones y rachas, tus recordatorios y las claves de la app, y luego vuelve al inicio."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez törli a fiókodat és mindent, amit vele együtt a szerver tárol: a titkosított üléseidet, a barátaidat, a nyilvános sorozataidat, a meghívóidat, a jelkulcsaidat és a bejelentkezési módjaidat. A többi telefonodon kijelentkezel, és azok megtartják a saját példányukat, amíg ott nem törlöd. Erről a telefonról töröl minden gyakorlatot, ülést és sorozatot, az emlékeztetőidet és az alkalmazás kulcsait, majd visszatér a kezdéshez."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usunie to Twoje konto i wszystko, co jest z nim zapisane na serwerze: zaszyfrowane sesje, znajomych, publiczne serie, zaproszenia, klucze dostępu i sposoby logowania. Twoje inne telefony zostaną wylogowane i zachowają swoją kopię, dopóki jej tam nie usuniesz. Na tym telefonie usunie każdą praktykę, sesję i serię, Twoje przypomnienia i klucze aplikacji, a potem wróci do początku."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Будут удалены ваш аккаунт и всё, что хранится с ним на сервере: зашифрованные занятия, друзья, публичные серии, приглашения, ключи доступа и способы входа. Другие ваши телефоны выйдут из аккаунта и сохранят свою копию, пока вы не удалите её там. На этом телефоне будут удалены все практики, занятия и серии, ваши напоминания и ключи приложения, после чего приложение вернётся к началу."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zmaže tvoj účet a všetko, čo je s ním uložené na serveri: zašifrované sedenia, priateľov, verejné série, pozvánky, prístupové kľúče a spôsoby prihlásenia. Tvoje ďalšie telefóny sa odhlásia a svoju kópiu si ponechajú, kým ju tam nezmažeš. V tomto telefóne zmaže všetky cvičenia, sedenia a série, tvoje pripomienky aj kľúče aplikácie a vráti sa na začiatok."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це видалить ваш обліковий запис і все, що зберігається з ним на сервері: зашифровані сесії, друзів, публічні серії, запрошення, ключі доступу та способи входу. Інші ваші телефони вийдуть з облікового запису й збережуть свою копію, доки ви не видалите її там. На цьому телефоні буде видалено всі практики, сесії та серії, ваші нагадування й ключі застосунку, а потім вас буде повернено на початок."
           }
         }
       }

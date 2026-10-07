@@ -4,7 +4,7 @@ import DuongondroStore
 
 /// A practice's own screen (design canvas "Practice"): the name, where the count
 /// stands, and at the bottom, under the thumb, the big +mala button with Custom,
-/// Start and History beside it. The only place counts are logged. Each +mala
+/// History beside it. The only place counts are logged. Each +mala
 /// opens a few seconds' Undo; the session is written only when that window closes.
 struct PracticeView: View {
     @EnvironmentObject private var model: AppModel
