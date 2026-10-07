@@ -72,6 +72,8 @@ enum Theme {
         /// Welcome's two door buttons, and its emblem.
         static let welcomeButton: CGFloat = 56
         static let emblem: CGFloat = 220
+        /// The emblem above the invite QR code, on its badge.
+        static let badgeEmblem: CGFloat = 44
         /// The smallest tap target (Apple's 44 pt).
         static let minTap: CGFloat = 44
         /// Onboarding answers (Yes / Not yet) and its Continue.
