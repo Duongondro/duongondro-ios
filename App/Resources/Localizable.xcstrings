@@ -12269,58 +12269,6 @@
         }
       }
     },
-    "Set up your account under You first, then open the link again." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nejdřív si nastav účet v části Profil, pak odkaz otevři znovu."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Richte zuerst unter „Du“ dein Konto ein und öffne dann den Link noch einmal."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Előbb állítsd be a fiókodat a Te fülön, aztán nyisd meg újra a linket."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Najpierw skonfiguruj konto w zakładce Profil, a potem otwórz link ponownie."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Сначала настройте аккаунт на вкладке «Профиль», затем откройте ссылку снова."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Najprv si na karte Profil nastav účet a potom otvor odkaz znova."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Спершу налаштуйте обліковий запис у розділі «Профіль», потім відкрийте посилання ще раз."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Primero configura tu cuenta en Tú y luego abre el enlace de nuevo."
-          }
-        }
-      }
-    },
     "Settings" : {
       "localizations" : {
         "cs" : {

@@ -59,6 +59,10 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
+        # Universal Links (invite and magic links) and passkeys on duongondro.app,
+        # matched by the site's apple-app-site-association. Release signing needs the
+        # App ID's Associated Domains capability in the profile.
+        CODE_SIGN_ENTITLEMENTS: App/Duongondro.entitlements
     preBuildScripts:
       - name: Build identity
         script: "\"$SRCROOT/Scripts/build-info.sh\""

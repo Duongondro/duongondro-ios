@@ -74,11 +74,18 @@ struct RootView: View {
             Reminders.reschedule(model)
             account.scheduleSync()
         }
-        // Invite and add-friend links (Universal Links on duongondro.app).
-        .onOpenURL { url in
-            if let link = InviteLink(url.absoluteString) { account.pendingInvite = link }
+        // Invite, add-friend and magic links (Universal Links on duongondro.app).
+        .onOpenURL { open($0) }
+        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+            if let url = activity.webpageURL { open(url) }
         }
-        .sheet(isPresented: Binding(get: { account.pendingInvite != nil && account.recoveryCode == nil },
+        // Offered for accepting only to an account with keys, outside onboarding,
+        // not over the recovery code, and not while a sign-up from this very link
+        // finishes (that one redeems it itself). Before that, the invitation step
+        // picks it up.
+        .sheet(isPresented: Binding(get: { account.pendingInvite != nil && account.recoveryCode == nil
+                                               && account.status == .ready && !account.signingUpWithInvite
+                                               && model.preferences.onboarded && account.accountFlow == nil },
                                     set: { if !$0 { account.pendingInvite = nil } })) {
             if let link = account.pendingInvite {
                 // A new identity per link, so a second link never redeems the first's check.
@@ -95,6 +102,19 @@ struct RootView: View {
             if let error = model.storageError {
                 StorageBanner(message: error, persistent: model.persistent) { model.dismissStorageError() }
             }
+        }
+    }
+}
+
+extension RootView {
+    /// An invite link is kept for accepting or for a sign-up; a magic link's token
+    /// only while this phone expects one (it asked in the last 15 minutes), and
+    /// only Check your email redeems it. Anything else is ignored.
+    func open(_ url: URL) {
+        switch AppLink(url) {
+        case .invite(let link): account.pendingInvite = link
+        case .magic(let token): account.opened(magicToken: token)
+        case nil: break
         }
     }
 }

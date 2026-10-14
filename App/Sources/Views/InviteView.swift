@@ -156,10 +156,6 @@ struct AcceptInviteView: View {
                 Text(verbatim: problem).font(.subheadline).foregroundStyle(Theme.destructive)
             } else if checked == nil {
                 ProgressView()
-            } else if account.status != .ready {
-                Text("Set up your account under You first, then open the link again.")
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.muted)
             }
             Spacer(minLength: 0)
             Button {
@@ -182,8 +178,8 @@ struct AcceptInviteView: View {
                 if working { ProgressView().tint(Theme.onAccent) } else { Text("Accept") }
             }
             .buttonStyle(FilledButtonStyle())
-            .disabled(checked == nil || account.status != .ready || working)
-            .opacity(checked == nil || account.status != .ready ? 0.4 : 1)
+            .disabled(checked == nil || working)
+            .opacity(checked == nil ? 0.4 : 1)
             Button("Not now") {
                 account.pendingInvite = nil
                 dismiss()
