@@ -267,6 +267,12 @@ public actor Social {
     /// kept above the last one sent.
     @discardableResult
     public func publishStreaks(timeZone: TimeZone = .current) async throws -> Int {
+        await lockPublishing()
+        defer { unlockPublishing() }
+        return try await publishLocked(timeZone: timeZone)
+    }
+
+    private func publishLocked(timeZone: TimeZone) async throws -> Int {
         let generation = database.generation
         let me = try user()
         let identity = try account.identity()
@@ -317,9 +323,14 @@ public actor Social {
             lastPublished[practice] = nil
             try await publishStreaks()
         } else {
-            // Private here first, so a publish already under way sees it and takes
-            // its statement back down; restored if the server cannot be reached.
+            // After a publish under way, and holding off the next: an actor runs
+            // other calls while one awaits, and a publish that fetched the server's
+            // list before this would merge the streak back and send it again.
+            await lockPublishing()
+            defer { unlockPublishing() }
+            // Private here first; restored if the server cannot be reached.
             try database.setPublic(practice, false)
+            lastPublished[practice] = nil
             do {
                 try await api.deleteStreak(practice: practice)
             } catch APIError.notFound {
@@ -331,6 +342,27 @@ public actor Social {
     }
 
     private var lastPublished: [String: String] = [:]
+
+    /// One publish, or one switch to private, at a time (see setPublic).
+    private var publishingLocked = false
+    private var publishingWaiters: [CheckedContinuation<Void, Never>] = []
+
+    private func lockPublishing() async {
+        if !publishingLocked {
+            publishingLocked = true
+            return
+        }
+        await withCheckedContinuation { publishingWaiters.append($0) }
+    }
+
+    /// Hands the lock straight to the next waiter, if any.
+    private func unlockPublishing() {
+        if publishingWaiters.isEmpty {
+            publishingLocked = false
+        } else {
+            publishingWaiters.removeFirst().resume()
+        }
+    }
     private func content(_ s: Statements.Streak) -> String { "\(s.day) \(s.current) \(s.longest) \(Statements.millis(s.deadline))" }
 
     nonisolated static func constantTimeEqual(_ a: Data, _ b: Data) -> Bool {
