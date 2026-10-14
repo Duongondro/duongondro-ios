@@ -68,7 +68,8 @@ final class NotificationService: UNNotificationServiceExtension {
         numbers.locale = locale
 
         guard let text = PushText.render(
-            locKey: locKey, args: args, discreet: shared?.bool(forKey: PushShared.discreet) ?? false,
+            // Discreet unless the app said otherwise: a missing setting never shows more.
+            locKey: locKey, args: args, discreet: shared?.object(forKey: PushShared.discreet) as? Bool ?? true,
             practiceName: { id in
                 if let p = Catalogue.builtIn.first(where: { $0.id == id }) {
                     return strings.localizedString(forKey: p.name, value: p.name, table: "Practices")

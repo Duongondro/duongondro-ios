@@ -183,7 +183,7 @@ public enum PushPlatform {
 /// but cannot open the database: UserDefaults in the app group, written by the app.
 public enum PushShared {
     public static let appGroup = "group.app.duongondro.ios"
-    /// Settings › Discreet notifications.
+    /// Settings › Discreet notifications; absent means discreet.
     public static let discreet = "discreetNotifications"
     /// The localization the app shows (Settings › Language, resolved): "pl".
     public static let localization = "localization"

@@ -124,7 +124,8 @@ final class PushModel: NSObject, ObservableObject {
         let localization = AppLanguage.stored().localization()
         let names = Dictionary(snapshot.practices.filter(\.practice.isCustom).map { ($0.id, $0.practice.name) },
                                uniquingKeysWith: { a, _ in a })
-        if shared.bool(forKey: PushShared.discreet) != snapshot.preferences.discreetNotifications {
+        // Always written: the extension treats a missing value as discreet.
+        if shared.object(forKey: PushShared.discreet) as? Bool != snapshot.preferences.discreetNotifications {
             shared.set(snapshot.preferences.discreetNotifications, forKey: PushShared.discreet)
         }
         if shared.string(forKey: PushShared.localization) != localization {
