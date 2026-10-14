@@ -64,6 +64,33 @@ public final class Account: @unchecked Sendable {
         ((try? secrets.read(SecretName.identitySeed)) ?? nil) != nil && ((try? database.syncState()) ?? nil) != nil
     }
 
+    /// What a signed-in account needs on this phone.
+    public enum Standing: Equatable, Sendable {
+        /// Keys here and a sync state for this account: nothing to do.
+        case ready
+        /// No keys published yet, or this phone's own interrupted set-up: set up
+        /// (which resumes with the same code).
+        case setUp
+        /// The account has keys this phone does not hold: restore with the recovery code.
+        case restore
+    }
+
+    public func standing() async throws -> Standing {
+        let me = try await api.me()
+        let seed = try secrets.read(SecretName.identitySeed)
+        if try database.syncState()?.userID == me.id, seed != nil { return .ready }
+        guard let published = me.identityPublicKey else { return .setUp }
+        let setUpHere = try secrets.read(SecretName.setUpUser) == Data(me.id.uuidString.lowercased().utf8)
+        guard setUpHere, let seed, let key = try? Curve25519.Signing.PrivateKey(rawRepresentation: seed) else { return .restore }
+        return key.publicKey.rawRepresentation == published ? .setUp : .restore
+    }
+
+    /// The account whose set-up this phone started, if any: its secrets can
+    /// outlive a session the server ended.
+    public var setUpUser: UUID? {
+        ((try? secrets.read(SecretName.setUpUser)) ?? nil).flatMap { UUID(uuidString: String(decoding: $0, as: UTF8.self)) }
+    }
+
     // MARK: First device
 
     /// Sets up a new account's keys on this phone, or finishes a set-up that was

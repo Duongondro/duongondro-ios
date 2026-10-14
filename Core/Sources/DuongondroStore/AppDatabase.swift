@@ -461,6 +461,26 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         }
     }
 
+    /// Forgets the account this phone synced with (signing out, or switching to
+    /// another account): its sync state and friends' pins go; the sessions stay,
+    /// marked dirty, as in local mode, and so do the practices made public.
+    public func clearSyncState() throws {
+        generationLock.withLock { generationValue += 1 }
+        try writer.write { db in
+            try db.execute(sql: "DELETE FROM sync_state; DELETE FROM friends; DELETE FROM friend_seqs; UPDATE public_streaks SET seq = 0; UPDATE sessions SET dirty = 1;")
+        }
+    }
+
+    /// Erases another account's practice before signing in to a new one: the
+    /// practices, sessions and streaks, the sync state and friends. Preferences
+    /// (language, reminders, onboarding) stay.
+    public func erasePractice() throws {
+        generationLock.withLock { generationValue += 1 }
+        try writer.write { db in
+            try db.execute(sql: "DELETE FROM sessions; DELETE FROM streak_seeds; DELETE FROM public_streaks; DELETE FROM practices; DELETE FROM sync_state; DELETE FROM friends; DELETE FROM friend_seqs;")
+        }
+    }
+
     /// Marks every session dirty: after a key rotation or a server restore, everything is pushed again.
     public func markAllDirty() throws {
         try writer.write { db in try db.execute(sql: "UPDATE sessions SET dirty = 1") }
