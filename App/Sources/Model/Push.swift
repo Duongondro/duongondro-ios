@@ -134,7 +134,10 @@ final class PushModel: NSObject, ObservableObject {
         guard ready ?? (account?.status == .ready) else {
             return shared.removePersistentDomain(forName: PushShared.appGroup)
         }
-        let localization = AppLanguage.stored().localization()
+        // Nothing for System: the extension then follows the phone's language as it
+        // is when the push arrives, not as it was when the app last ran.
+        let language = AppLanguage.stored()
+        let localization = language == .system ? nil : language.rawValue
         let names = Dictionary(snapshot.practices.filter(\.practice.isCustom).map { ($0.id, $0.practice.name) },
                                uniquingKeysWith: { a, _ in a })
         // Always written: the extension treats a missing value as discreet.

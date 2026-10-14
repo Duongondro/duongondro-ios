@@ -185,7 +185,8 @@ public enum PushShared {
     public static let appGroup = "group.app.duongondro.ios"
     /// Settings › Discreet notifications; absent means discreet.
     public static let discreet = "discreetNotifications"
-    /// The localization the app shows (Settings › Language, resolved): "pl".
+    /// The language chosen in Settings › Language ("pl"); absent for System, when the
+    /// extension follows the phone.
     public static let localization = "localization"
     /// The person's own practices' names by id, for STREAK_AT_RISK of a custom practice.
     public static let practiceNames = "practiceNames"
