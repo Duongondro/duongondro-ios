@@ -93,16 +93,20 @@ final class PushModel: NSObject, ObservableObject {
         await upload()
     }
 
-    /// Sends the token unless the server already has this one for this device: a new
-    /// token, another device (after a sign-in or restore) or another APNs environment.
-    private func upload() async {
+    /// Sends the token when the server may not have it: a new token, another device
+    /// (after a sign-in or restore), another APNs environment, or a day since it was
+    /// last sent, in case the server dropped it.
+    private func upload(now: Date = Date()) async {
         guard let token, let account, let device = account.pushDevice else { return }
         let platform = PushPlatform.of(profile: Self.profile, simulator: Self.simulator)
         let sent = "\(device.uuidString)|\(platform)|\(token)"
-        guard UserDefaults.standard.string(forKey: AccountModel.Keys.pushSent) != sent else { return }
+        let defaults = UserDefaults.standard
+        let sentAt = defaults.object(forKey: AccountModel.Keys.pushSentAt) as? Date ?? .distantPast
+        guard defaults.string(forKey: AccountModel.Keys.pushSent) != sent || now.timeIntervalSince(sentAt) > 86400 else { return }
         do {
             try await account.putPushToken(token, platform: platform)
-            UserDefaults.standard.set(sent, forKey: AccountModel.Keys.pushSent)
+            defaults.set(sent, forKey: AccountModel.Keys.pushSent)
+            defaults.set(now, forKey: AccountModel.Keys.pushSentAt)
         } catch {
             // Offline: sent at the next launch or return to the foreground.
         }

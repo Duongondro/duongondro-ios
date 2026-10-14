@@ -150,7 +150,8 @@ final class AccountModel: ObservableObject {
         static let lastUser = "account.lastUser"
         /// The push token last sent, with its device and APNs environment (PushModel).
         static let pushSent = "account.pushSent"
-        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent]
+        static let pushSentAt = "account.pushSentAt"
+        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt]
     }
 
     init(database: AppDatabase) {
@@ -616,6 +617,7 @@ final class AccountModel: ObservableObject {
             // server dropped the push token with the session.
             try? secrets.delete(Self.tokenName)
             UserDefaults.standard.removeObject(forKey: Keys.pushSent)
+        UserDefaults.standard.removeObject(forKey: Keys.pushSentAt)
             self.account = nil
             social = nil
             status = .signedOut
@@ -775,6 +777,7 @@ final class AccountModel: ObservableObject {
         UIApplication.shared.unregisterForRemoteNotifications()
         UserDefaults(suiteName: PushShared.appGroup)?.removePersistentDomain(forName: PushShared.appGroup)
         UserDefaults.standard.removeObject(forKey: Keys.pushSent)
+        UserDefaults.standard.removeObject(forKey: Keys.pushSentAt)
     }
 
     // MARK: Signing out
