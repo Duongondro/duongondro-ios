@@ -3,7 +3,8 @@
 <!-- Duongöndro tracks nobody. Practice data reaches the server only end-to-end
      encrypted. The data an account collects (NSPrivacyCollectedDataTypes) is still to
      be declared, together with the App Store privacy labels. UserDefaults holds the
-     app's own settings (CA92.1). GRDB ships its own manifest for the file APIs it uses. -->
+     app's own settings (CA92.1), and the app group's UserDefaults what the notification
+     service extension needs to render a push (1C8F.1). GRDB ships its own manifest for the file APIs it uses. -->
 <plist version="1.0">
 <dict>
 	<key>NSPrivacyTracking</key>
@@ -20,6 +21,7 @@
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
 				<string>CA92.1</string>
+				<string>1C8F.1</string>
 			</array>
 		</dict>
 	</array>

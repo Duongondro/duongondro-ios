@@ -35,6 +35,7 @@ targets:
         product: DuongondroSync
       - package: DuongondroCore
         product: DuongondroQR
+      - target: DuongondroNotifications
     info:
       path: App/Info.plist
       properties:
@@ -56,9 +57,23 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
         # Universal Links (invite and magic links) and passkeys on duongondro.app,
-        # matched by the site's apple-app-site-association. Release signing needs the
-        # App ID's Associated Domains capability in the profile.
+        # matched by the site's apple-app-site-association; push; and the app group
+        # shared with the notification extension. Signing needs the App ID's Associated
+        # Domains, Push Notifications and App Groups capabilities in the profile.
         CODE_SIGN_ENTITLEMENTS: App/Duongondro.entitlements
+      # aps-environment in the entitlements, a build setting rather than two files so
+      # the rest of the entitlements cannot drift apart. It must match the signing
+      # profile: a development profile (any build signed for a phone with the team's
+      # Apple Development certificate, Release included: `make device`, and the
+      # `make testflight` archive, whose export re-signs it with production) refuses
+      # production, so the Makefile passes development for those. Which APNs the
+      # token belongs to is read at run time from the profile the app was signed with
+      # (PushPlatform), never from this setting.
+      configs:
+        Debug:
+          APS_ENVIRONMENT: development
+        Release:
+          APS_ENVIRONMENT: production
     preBuildScripts:
       - name: Build identity
         script: "\"$SRCROOT/Scripts/build-info.sh\""
@@ -88,6 +103,35 @@ targets:
         outputFiles:
           - $(DERIVED_FILE_DIR)/local-networking.stamp
         basedOnDependencyAnalysis: false
+  # Renders the server's pushes in the app's language, with practice names and
+  # Discreet notifications (design: Localisation › Localised pushes). Reads the strings
+  # from the app's bundle and the settings from the app group.
+  DuongondroNotifications:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Notifications
+        excludes: [Info.plist]
+    dependencies:
+      - package: DuongondroCore
+        product: DuongondroCore
+    info:
+      path: Notifications/Info.plist
+      properties:
+        CFBundleDisplayName: Duongöndro
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.usernotifications.service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).NotificationService
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.duongondro.ios.notifications
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Notifications/DuongondroNotifications.entitlements
+        # Strings are the app's: nothing to extract here.
+        SWIFT_EMIT_LOC_STRINGS: NO
 schemes:
   Duongondro:
     build:

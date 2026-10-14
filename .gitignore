@@ -9,3 +9,4 @@ DerivedData/
 xcuserdata/
 .DS_Store
 local.mk
+Notifications/Info.plist

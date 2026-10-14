@@ -3,7 +3,9 @@
 <!-- make testflight fills in TEAM_ID from local.mk. Signing is manual: the upload key
      has the App Manager role, which cannot use Apple's cloud-managed distribution
      certificate, so an Apple Distribution certificate in the login keychain and the
-     "Duongondro App Store" profile (both made through the API) sign the export. -->
+     "Duongondro App Store" profile (both made through the API) sign the export; the
+     notification extension has its own App ID and "Duongondro Notifications App Store"
+     profile. -->
 <plist version="1.0">
 <dict>
 	<key>method</key>
@@ -20,6 +22,8 @@
 	<dict>
 		<key>app.duongondro.ios</key>
 		<string>Duongondro App Store</string>
+		<key>app.duongondro.ios.notifications</key>
+		<string>Duongondro Notifications App Store</string>
 	</dict>
 	<key>uploadSymbols</key>
 	<true/>
