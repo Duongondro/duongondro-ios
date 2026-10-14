@@ -12,8 +12,8 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     public let writer: any DatabaseWriter
     /// True when opening made the file: a first launch, or the first after a
     /// reinstall. The Keychain outlives an uninstall and the database does not,
-    /// so whatever the Keychain holds then belongs to an earlier install. Never
-    /// true for a file that was there, whatever its schema version.
+    /// so a session token in the Keychain then belongs to an earlier install.
+    /// Never true for a file that was there, whatever its schema version.
     public let createdFile: Bool
 
     public init(_ writer: any DatabaseWriter, createdFile: Bool = false) throws {

@@ -140,7 +140,7 @@ final class AccountModel: ObservableObject {
         #endif
     }
 
-    private static let tokenName = "session-token"
+    private static let tokenName = Account.sessionTokenSecret
 
     /// UserDefaults keys for the account's profile, cleared when it leaves this phone.
     enum Keys {
@@ -210,20 +210,22 @@ final class AccountModel: ObservableObject {
     /// (the one it syncs with, or the last one signed out here): then nothing is
     /// kept or uploaded until the person chooses, and this returns false.
     private func signedIn(_ result: SignInResult) -> Bool {
-        let owner = (try? database.syncState())?.userID ?? account?.setUpUser ?? Account(
-            api: anonymous, secrets: secrets, database: database).setUpUser
-        let other = owner ?? UserDefaults.standard.string(forKey: Keys.lastUser).flatMap(UUID.init(uuidString:))
+        let syncUser = (try? database.syncState())?.userID
+        let setUpUser = account?.setUpUser ?? Account(api: anonymous, secrets: secrets, database: database).setUpUser
+        let lastUser = UserDefaults.standard.string(forKey: Keys.lastUser).flatMap(UUID.init(uuidString:))
         let snapshot = try? database.snapshot()
         let holdsPractice = !(snapshot?.sessions.isEmpty ?? true) || !(snapshot?.practices.isEmpty ?? true)
-        if let other, other != result.userId, holdsPractice {
+        switch Account.plan(signingIn: result.userId, syncUser: syncUser, setUpUser: setUpUser, lastUser: lastUser,
+                            holdsPractice: holdsPractice) {
+        case .askAboutPractice:
             heldSignIn = result
             return false
-        }
-        // Another account's keys, sync state and device key never carry over; with
-        // no practice here there is nothing to ask about.
-        if let owner, owner != result.userId {
+        case .forgetOtherAccount:
+            // Another account's keys, sync state and device key never carry over.
             try? database.clearSyncState()
             forgetOtherAccount()
+        case .keep:
+            break
         }
         keep(result)
         return true

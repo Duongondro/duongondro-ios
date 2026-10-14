@@ -1,6 +1,7 @@
 import Foundation
 import DuongondroCore
 import DuongondroStore
+import DuongondroSync
 
 /// What the UI shows, published from the database, plus the undo window. A
 /// session in its window is already in the database, pending (counted on
@@ -42,10 +43,11 @@ final class AppModel: ObservableObject {
         do {
             let database = try AppDatabase.openOnDisk()
             // A database file made just now means a first launch or a reinstall:
-            // the Keychain outlives an uninstall, so a session token, keys or a
-            // recovery code in it belong to an earlier install, and AccountModel
-            // must not open that account. (Delete everything clears them itself.)
-            if database.createdFile { Purge.deleteKeychainItems() }
+            // the Keychain outlives an uninstall, so a session token in it belongs
+            // to an earlier install, and AccountModel must not open that account.
+            // Only the token goes; keys stay for the same account to resume with
+            // (Account.forgetEarlierInstall). Delete everything clears them itself.
+            if database.createdFile { try? Account.forgetEarlierInstall(KeychainStore()) }
             return AppModel(database: database)
         } catch {
             let model = AppModel(database: try! AppDatabase.inMemory())

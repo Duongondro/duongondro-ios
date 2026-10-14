@@ -22,6 +22,7 @@ public final class MemorySecretStore: SecretStore, @unchecked Sendable {
 
 /// The names secrets are stored under.
 enum SecretName {
+    static let sessionToken = "session-token"
     static let deviceKey = "device-key"
     static let pendingRecovery = "recovery-pending"
     static let deviceID = "device-id"

@@ -96,6 +96,47 @@ public final class Account: @unchecked Sendable {
         ((try? secrets.read(SecretName.setUpUser)) ?? nil).flatMap { UUID(uuidString: String(decoding: $0, as: UTF8.self)) }
     }
 
+    // MARK: This phone's account
+
+    /// Where the session token is kept.
+    public static let sessionTokenSecret = SecretName.sessionToken
+
+    /// The first launch after an install (the database file was just made). The
+    /// Keychain outlives an uninstall, so a session token in it belongs to an
+    /// earlier install: it goes, so no account opens before anyone signs in.
+    /// Key material stays, scoped by `set-up-user`: the same account signing in
+    /// again resumes an interrupted set-up with it (`standing`), and another one
+    /// signing in clears it. A set-up interrupted after the identity was published
+    /// but before the recovery boxes were stored has its only copy of the keys here.
+    public static func forgetEarlierInstall(_ secrets: SecretStore) throws {
+        try secrets.delete(SecretName.sessionToken)
+    }
+
+    /// What a sign-in does with what this phone holds.
+    public enum SignInPlan: Equatable, Sendable {
+        /// Nothing of another account here: keep the session.
+        case keep
+        /// Another account's keys or sync state are here, but no practice of its
+        /// own: they go, then the session is kept.
+        case forgetOtherAccount
+        /// This phone holds practice another account may own: ask before mixing it in.
+        case askAboutPractice
+    }
+
+    /// `syncUser` is the account this phone syncs with, `setUpUser` the one whose
+    /// set-up it started (Keychain only), `lastUser` the last one signed out here.
+    /// A Keychain-only owner, with no sync state and nobody signed out here (an
+    /// earlier install's unfinished set-up), owns no practice on this phone, so
+    /// its keys go without asking.
+    public static func plan(signingIn user: UUID, syncUser: UUID?, setUpUser: UUID?, lastUser: UUID?,
+                            holdsPractice: Bool) -> SignInPlan {
+        let owner = syncUser ?? setUpUser
+        let practiceOwner = syncUser == nil && lastUser == nil ? nil : owner ?? lastUser
+        if let practiceOwner, practiceOwner != user, holdsPractice { return .askAboutPractice }
+        if let owner, owner != user { return .forgetOtherAccount }
+        return .keep
+    }
+
     // MARK: First device
 
     /// Sets up a new account's keys on this phone, or finishes a set-up that was
