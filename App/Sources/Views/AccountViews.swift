@@ -80,6 +80,12 @@ struct AccountSection: View {
                     .contentShape(Rectangle())
                 }
                 .disabled(account.busy)
+                // On the row, so the dialog (a popover on newer systems) points at it.
+                .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
+                    Button("Make a new code") { Task { await account.newRecoveryCode() } }
+                } message: {
+                    Text(verbatim: Gendered.mine("The code you wrote down stops working."))
+                }
                 Button { Task { await account.syncNow() } } label: {
                     SettingsRow("Sync", detail: syncDetail)
                 }
@@ -91,6 +97,11 @@ struct AccountSection: View {
                             .foregroundStyle(Theme.destructive)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                             .contentShape(Rectangle())
+                    }
+                    .confirmationDialog("Sign out on this phone?", isPresented: $signingOut, titleVisibility: .visible) {
+                        Button("Sign out on this phone", role: .destructive) { Task { await account.signOut() } }
+                    } message: {
+                        Text("Your counts stay on this phone but stop syncing. To sync them again, sign in and enter your recovery code.")
                     }
                 } else {
                     // Signing out forgets the keys: first the recovery code must be stored and confirmed.
@@ -107,16 +118,6 @@ struct AccountSection: View {
                         .contentShape(Rectangle())
                     }
                 }
-            }
-            .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
-                Button("Make a new code") { Task { await account.newRecoveryCode() } }
-            } message: {
-                Text(verbatim: Gendered.mine("The code you wrote down stops working."))
-            }
-            .confirmationDialog("Sign out on this phone?", isPresented: $signingOut, titleVisibility: .visible) {
-                Button("Sign out on this phone", role: .destructive) { Task { await account.signOut() } }
-            } message: {
-                Text("Your counts stay on this phone but stop syncing. To sync them again, sign in and enter your recovery code.")
             }
             CardSection(header: "This device") {
                 SettingsRow("Device key", detail: Text(tierName))
