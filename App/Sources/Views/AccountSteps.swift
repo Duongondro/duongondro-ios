@@ -110,6 +110,9 @@ struct LabelledField: View {
                 .font(.footnote.weight(.bold))
                 .foregroundStyle(error != nil ? Theme.destructive : Theme.accent)
                 .padding(.leading, Theme.Space.xs)
+            // Bound to what was typed, as typed: a binding that reshapes each
+            // keystroke (grouping a code in fours) loses characters typed quickly.
+            // Codes are read leniently from it instead (CodeEntry.normalise).
             TextField("", text: $text)
                 .font(code ? .title3.monospaced() : .body)
                 .foregroundStyle(Theme.ink)
@@ -138,11 +141,9 @@ struct LabelledField: View {
     }
 }
 
-/// A code kept as its bare characters and shown in groups of four.
-func groupedCode(_ code: Binding<String>, length: Int) -> Binding<String> {
-    Binding(get: { CodeEntry.grouped(code.wrappedValue) },
-            set: { code.wrappedValue = CodeEntry.normalise($0, maxLength: length) })
-}
+/// The characters of a code as typed or pasted: case, spaces, dashes and
+/// look-alikes forgiven, a pasted link read from its last slash.
+func codeCharacters(_ typed: String) -> String { CodeEntry.normalise(typed, maxLength: .max) }
 
 /// A quiet text button under the main ones.
 struct TextAction: View {
@@ -328,18 +329,14 @@ struct InviteStep: View {
     @EnvironmentObject private var account: AccountModel
     @StateObject private var call = StepCall()
 
-    private var length: Int { flow.inviteCode.count }
+    private var length: Int { codeCharacters(flow.inviteCode).count }
     private var complete: Bool { length == Invitation.inviteLength || length == Invitation.admissionLength }
 
     var body: some View {
         AccountPage(title: "Your invitation",
                     detail: Text("Accounts are by invitation for now. Open the link you were sent, or type its code.")) {
             LabelledField(label: "Invitation code",
-                          text: Binding(get: { CodeEntry.grouped(flow.inviteCode) },
-                                        set: {
-                                            flow.inviteCode = CodeEntry.normalise($0, maxLength: Invitation.inviteLength)
-                                            flow.inviteProblem = nil
-                                        }),
+                          text: Binding(get: { flow.inviteCode }, set: { flow.inviteCode = $0; flow.inviteProblem = nil }),
                           hint: "Type or paste the invitation code, or paste the whole invitation link. Case doesn't matter.",
                           error: flow.inviteProblem, code: true, keyboard: .asciiCapable,
                           submit: { if complete { check() } })
@@ -467,19 +464,18 @@ struct CheckEmailStep: View {
     @State private var again = false
 
     private var address: String { flow.email.trimmingCharacters(in: .whitespaces) }
+    private var complete: Bool { codeCharacters(code).count == CodeEntry.signInLength }
 
     var body: some View {
         AccountPage(title: "Check your email",
                     detail: Text("We sent a link to \(address). Open it on this phone, or type the code from the email.")) {
-            LabelledField(label: "Code",
-                          text: Binding(get: { CodeEntry.grouped(code) },
-                                        set: { code = CodeEntry.normalise($0, maxLength: CodeEntry.signInLength); problem = nil }),
+            LabelledField(label: "Code", text: Binding(get: { code }, set: { code = $0; problem = nil }),
                           hint: "Eight letters and digits, as in the email. Case doesn't matter; O and 0, I and 1 count as the same. Works for 15 minutes.",
                           error: problem, code: true, keyboard: .asciiCapable, contentType: .oneTimeCode,
-                          submit: { if code.count == CodeEntry.signInLength { submit() } })
+                          submit: { if complete { submit() } })
         } actions: {
             ErrorLine(text: call.failed ? accountError : nil)
-            StepButton(title: "Continue", enabled: code.count == CodeEntry.signInLength, busy: call.busy) { submit() }
+            StepButton(title: "Continue", enabled: complete, busy: call.busy) { submit() }
             TextAction(title: again ? "Sent again" : "Send it again") {
                 guard !call.busy, !again else { return }
                 call.run {
@@ -500,7 +496,8 @@ struct CheckEmailStep: View {
 
     private func submit() {
         call.run {
-            problem = try await Route.redeemed(try await account.redeemCode(email: address, code: code), flow: flow, account: account)
+            problem = try await Route.redeemed(try await account.redeemCode(email: address, code: codeCharacters(code)),
+                                               flow: flow, account: account)
         }
     }
 
@@ -715,14 +712,12 @@ struct RestoreStep: View {
     @State private var code = ""
     @State private var wrong = false
 
-    private var complete: Bool { code.count == CodeEntry.recoveryLength }
+    private var complete: Bool { codeCharacters(code).count == CodeEntry.recoveryLength }
 
     var body: some View {
         AccountPage(title: "Restore with your recovery code",
                     detail: Text(verbatim: Gendered.mine("The code you wrote down when you set up your first phone. Spaces and dashes do not matter."))) {
-            LabelledField(label: "Recovery code",
-                          text: Binding(get: { CodeEntry.grouped(code) },
-                                        set: { code = CodeEntry.normalise($0, maxLength: CodeEntry.recoveryLength); wrong = false }),
+            LabelledField(label: "Recovery code", text: Binding(get: { code }, set: { code = $0; wrong = false }),
                           error: wrong ? localized("That recovery code does not open this account.") : nil,
                           code: true, keyboard: .asciiCapable, submit: { if complete { submit() } })
         } actions: {
@@ -733,7 +728,7 @@ struct RestoreStep: View {
 
     private func submit() {
         call.run {
-            if try await account.restoreKeys(code: code) { flow.finishOnline() } else { wrong = true }
+            if try await account.restoreKeys(code: codeCharacters(code)) { flow.finishOnline() } else { wrong = true }
         }
     }
 }
