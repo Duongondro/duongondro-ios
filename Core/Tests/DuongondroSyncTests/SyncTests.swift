@@ -57,6 +57,25 @@ final class StatementTests: XCTestCase {
         XCTAssertFalse(RecoveryCode.answersMatch(["A8"], groups: groups, asked: [7]))
     }
 
+    /// Account A's set-up shows a code; Back to the email step, and account B
+    /// signs up in the same onboarding. B must get no code until its own set-up
+    /// made one, and A's must never come back for B.
+    func testACodeOnShowBelongsToTheAccountItWasMadeFor() {
+        let a = UUID(), b = UUID()
+        var onShow = RecoveryCodeOnShow()
+        XCTAssertNil(onShow.code(for: a))
+        onShow.show("AAAA-AAAA", for: a)
+        XCTAssertEqual(onShow.code(for: a), "AAAA-AAAA", "Back, then forward again: the same code")
+        // B signs in: A's sync state is cleared, so this phone syncs with nobody yet.
+        XCTAssertNil(onShow.code(for: nil), "B's recovery step sets up B's keys")
+        XCTAssertNil(onShow.code(for: b))
+        onShow.show("BBBB-BBBB", for: b)
+        XCTAssertEqual(onShow.code(for: b), "BBBB-BBBB")
+        XCTAssertNil(onShow.code(for: a))
+        onShow.forget()
+        XCTAssertNil(onShow.code(for: b), "confirmed, signed out or switched away")
+    }
+
     func testSealedSessionRoundTrips() throws {
         let s = Session(practiceID: "dorje-sempa", amount: 108, startedAt: Date(timeIntervalSince1970: 1_791_176_400),
                         startExact: false, timeZoneID: "Europe/Amsterdam", chosenDay: CivilDate("2026-10-04"),

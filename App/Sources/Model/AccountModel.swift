@@ -40,13 +40,16 @@ final class AccountModel: ObservableObject {
     /// The code was written down and checked.
     func confirmRecoveryCode() {
         recoveryCode = nil
-        shownCode = nil
+        onShow.forget()
         recoveryUnconfirmed = false
     }
 
     /// The recovery code the onboarding is showing, until it is confirmed: a
     /// step shown again (Back, then forward) gets this one rather than a second.
-    @Published private(set) var shownCode: String?
+    /// Only for the account it was made for: another one signed in during the
+    /// same onboarding gets nil, and sets up its own keys.
+    var shownCode: String? { onShow.code(for: userID) }
+    @Published private var onShow = RecoveryCodeOnShow()
 
     /// A set-up, restore or new code is running: the onboarding's Back waits.
     @Published private(set) var keyWorkRunning = false
@@ -241,7 +244,7 @@ final class AccountModel: ObservableObject {
         username = nil
         displayName = ""
         recoveryCode = nil
-        shownCode = nil
+        onShow.forget()
         recoveryUnconfirmed = false
         friends = []
         friendsLoaded = false
@@ -501,7 +504,8 @@ final class AccountModel: ObservableObject {
             if let code = self.shownCode { return code }
             guard let account = self.account else { throw Account.Failure.missingSecret }
             let code = account.hasKeys ? try await account.newRecoveryCode() : try await account.setUpFirstDevice()
-            self.shownCode = code
+            // Both leave this account's sync state behind, so the user is known.
+            if let user = self.userID { self.onShow.show(code, for: user) }
             self.recoveryUnconfirmed = true
             self.status = .ready
             self.afterKeysInBackground(account)
@@ -856,7 +860,7 @@ final class AccountModel: ObservableObject {
         status = .none
         lastSync = nil
         recoveryCode = nil
-        shownCode = nil
+        onShow.forget()
         recoveryUnconfirmed = false
         deviceCount = nil
         serverVersion = nil

@@ -118,8 +118,6 @@ final class OnboardingFlow: ObservableObject {
     @Published var username = ""
     @Published var displayName = ""
     @Published var gender: Gender?
-    /// Made once, so going back and forward shows the same code.
-    @Published var recoveryCode: String?
     /// Set by the view: local mode keeps the onboarding's answers; from Settings
     /// nothing about the practices changes.
     var finishLocal: () -> Void = {}

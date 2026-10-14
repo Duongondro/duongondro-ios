@@ -163,3 +163,30 @@ public enum RecoveryCode {
         return out.count == 16 ? out : nil
     }
 }
+
+/// The recovery code a set-up is showing until it is confirmed, and the account
+/// it was made for. A step shown again (Back, then forward) gets the same code;
+/// any other account, or none, gets nothing, so it sets up its own keys rather
+/// than being shown, and confirming, a code that does not open its boxes.
+public struct RecoveryCodeOnShow: Equatable, Sendable {
+    private var user: UUID?
+    private var code: String?
+
+    public init() {}
+
+    /// The code on show for `user`, the account this phone now syncs with.
+    public func code(for user: UUID?) -> String? {
+        guard let user, user == self.user else { return nil }
+        return code
+    }
+
+    public mutating func show(_ code: String, for user: UUID) {
+        self.user = user
+        self.code = code
+    }
+
+    public mutating func forget() {
+        user = nil
+        code = nil
+    }
+}

@@ -672,7 +672,7 @@ struct RecoveryStep: View {
     var body: some View {
         AccountPage(title: "Write down your recovery code",
                     detail: Text("If you lose this phone, this code is the only way back to your counts. Nobody else has it, not even us.")) {
-            if let code = flow.recoveryCode ?? account.shownCode {
+            if let code = account.shownCode {
                 CodeGrid(groups: code.split(separator: "-").map(String.init))
             } else {
                 ProgressView().frame(maxWidth: .infinity, minHeight: Theme.Size.passkeyBadge)
@@ -687,18 +687,18 @@ struct RecoveryStep: View {
                 StepButton(title: "Try again", busy: setUp.busy) { makeKeys() }
             } else {
                 StepButton(title: LocalizedStringKey(Gendered.mine("I wrote it down")),
-                           enabled: (flow.recoveryCode ?? account.shownCode) != nil) {
+                           enabled: account.shownCode != nil) {
                     flow.go(.recoveryCheck)
                 }
             }
         }
-        .onAppear { if flow.recoveryCode == nil { makeKeys() } }
+        .onAppear { if account.shownCode == nil { makeKeys() } }
     }
 
     /// AccountModel runs the work one at a time and keeps the code, so showing
     /// this step again waits for the same set-up and shows the same code.
     private func makeKeys() {
-        setUp.run { if flow.recoveryCode == nil { flow.recoveryCode = try await account.setUpKeys() } }
+        setUp.run { _ = try await account.setUpKeys() }
     }
 }
 
@@ -707,8 +707,8 @@ struct RecoveryCheckStep: View {
     @EnvironmentObject private var account: AccountModel
 
     var body: some View {
-        // The code the step before showed, wherever it came from.
-        RecoveryCheckView(groups: RecoveryCode.groups(flow.recoveryCode ?? account.shownCode ?? ""), framed: false) {
+        // The code the step before showed: the account's own, never another's.
+        RecoveryCheckView(groups: RecoveryCode.groups(account.shownCode ?? ""), framed: false) {
             account.confirmRecoveryCode()
             flow.finishOnline()
         } back: {
