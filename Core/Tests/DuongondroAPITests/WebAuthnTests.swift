@@ -46,6 +46,8 @@ final class WebAuthnTests: XCTestCase {
         XCTAssertEqual(value["type"], .string("public-key"))
         XCTAssertEqual(value["response"]?["clientDataJSON"], .string("e30"))
         XCTAssertEqual(value["response"]?["attestationObject"], .string("AQ"))
+        // Review found it: not every passkey is the platform's own (hybrid, from another device).
+        XCTAssertNil(value["authenticatorAttachment"])
     }
 
     func testWritesTheAssertionWithItsUserHandle() throws {
@@ -54,6 +56,7 @@ final class WebAuthnTests: XCTestCase {
         XCTAssertEqual(value["response"]?["authenticatorData"], .string("Aw"))
         XCTAssertEqual(value["response"]?["signature"], .string("BA"))
         XCTAssertEqual(value["response"]?["userHandle"], .string("BQ"))
+        XCTAssertNil(value["authenticatorAttachment"])
         let anonymous = WebAuthn.assertion(credentialID: Data([1]), clientDataJSON: Data([2]), authenticatorData: Data([3]),
                                            signature: Data([4]), userHandle: nil)
         XCTAssertNil(anonymous["response"]?["userHandle"])

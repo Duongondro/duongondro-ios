@@ -46,13 +46,14 @@ public enum WebAuthn {
     }
 
     /// A PublicKeyCredential for a registration, as the server's finish call takes it.
+    /// No authenticatorAttachment: a passkey from another device (hybrid) is not
+    /// a platform one, and the member is optional.
     public static func registration(credentialID: Data, clientDataJSON: Data, attestationObject: Data) -> JSONValue {
         let id = base64URL(credentialID)
         return .object([
             "id": .string(id),
             "rawId": .string(id),
             "type": .string("public-key"),
-            "authenticatorAttachment": .string("platform"),
             "response": .object([
                 "clientDataJSON": .string(base64URL(clientDataJSON)),
                 "attestationObject": .string(base64URL(attestationObject)),
@@ -76,7 +77,6 @@ public enum WebAuthn {
             "id": .string(id),
             "rawId": .string(id),
             "type": .string("public-key"),
-            "authenticatorAttachment": .string("platform"),
             "response": .object(response),
             "clientExtensionResults": .object([:]),
         ])
