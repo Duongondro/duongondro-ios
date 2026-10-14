@@ -11,18 +11,25 @@ public enum DataExport {
     public struct Server: Sendable {
         public var account: Data
         public var raw: Data
+        /// The sealed practice sessions, opened on this phone; merged into
+        /// practice.json unless the phone already holds them.
+        public var sessions: [Session]
+        /// Sealed logs this phone holds no key for (written by a newer key).
+        public var unreadable: Int
 
-        public init(account: Data, raw: Data) {
+        public init(account: Data, raw: Data, sessions: [Session] = [], unreadable: Int = 0) {
             self.account = account
             self.raw = raw
+            self.sessions = sessions
+            self.unreadable = unreadable
         }
     }
 
     public static func zip(snapshot: Snapshot, server: Server?, covers: [String: Data] = [:],
                            appVersion: String, now: Date = Date()) throws -> Data {
         var zip = ZipWriter()
-        zip.add("README.txt", Data(readme(hasServer: server != nil, hasCovers: !covers.isEmpty).utf8), modified: now)
-        zip.add("practice.json", try practiceJSON(snapshot, appVersion: appVersion, now: now), modified: now)
+        zip.add("README.txt", Data(readme(hasServer: server != nil, unreadable: server?.unreadable ?? 0, hasCovers: !covers.isEmpty).utf8), modified: now)
+        zip.add("practice.json", try practiceJSON(merged(snapshot, server), appVersion: appVersion, now: now), modified: now)
         if let server {
             zip.add("account.json", server.account, modified: now)
             zip.add("server-raw.json", server.raw, modified: now)
@@ -31,6 +38,19 @@ public enum DataExport {
             zip.add("covers/\(practiceID).jpg", image, modified: now)
         }
         return zip.finish()
+    }
+
+    /// The phone's snapshot plus the server's sessions it does not hold yet, so a
+    /// session synced from another phone appears once.
+    public static func merged(_ snapshot: Snapshot, _ server: Server?) -> Snapshot {
+        guard let server, !server.sessions.isEmpty else { return snapshot }
+        var known = Set(snapshot.sessions.map(\.id))
+        var out = snapshot
+        for session in server.sessions.sorted(by: { ($0.startedAt, $0.id.uuidString) < ($1.startedAt, $1.id.uuidString) })
+        where known.insert(session.id).inserted {
+            out.sessions.append(session)
+        }
+        return out
     }
 
     public static func fileName(now: Date = Date(), timeZone: TimeZone = .current) -> String {
@@ -123,7 +143,7 @@ public enum DataExport {
         return try encoder.encode(file)
     }
 
-    static func readme(hasServer: Bool, hasCovers: Bool) -> String {
+    static func readme(hasServer: Bool, unreadable: Int = 0, hasCovers: Bool) -> String {
         var lines = [
             "Duongöndro: all of your data",
             "",
@@ -135,15 +155,28 @@ public enum DataExport {
         ]
         if hasServer {
             lines += [
+                "  Sessions that came from your other phones through sync are included once.",
+            ]
+        }
+        if hasServer {
+            lines += [
                 "",
                 "account.json",
                 "  Your account, linked sign-ins, devices, friendships, invites, blocks,",
-                "  reports and public streak statements, as the server holds them.",
+                "  reports and public streak statements, as the server holds them. Friends",
+                "  appear with the display name and gender the app shows you.",
                 "",
                 "server-raw.json",
                 "  Exactly what the server stores, sealed blobs as base64. The server cannot",
                 "  read them; practice.json is the same data decrypted.",
             ]
+            if unreadable > 0 {
+                lines += [
+                    "",
+                    "\(unreadable) sealed sessions could not be opened on this phone (they were sealed",
+                    "with a key it does not hold yet), so they are only in server-raw.json.",
+                ]
+            }
         } else {
             lines += [
                 "",

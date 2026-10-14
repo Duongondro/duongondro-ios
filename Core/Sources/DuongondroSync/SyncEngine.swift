@@ -148,9 +148,13 @@ public struct SyncEngine: Sendable {
     }
 
     func open(_ sealed: Data, log: PracticeLog, user: UUID) throws -> SealedSession {
-        let practiceKey = try account.practiceKey(log.keyVersion)
+        try open(sealed, id: log.id, keyVersion: log.keyVersion, user: user)
+    }
+
+    func open(_ sealed: Data, id: UUID, keyVersion: Int, user: UUID) throws -> SealedSession {
+        let practiceKey = try account.practiceKey(keyVersion)
         let sealKey = E2EE.sealKey(practiceKey: practiceKey, user: user)
-        let json = try E2EE.openSession(sealKey: sealKey, session: log.id, user: user, keyVersion: UInt32(log.keyVersion), sealed: sealed)
+        let json = try E2EE.openSession(sealKey: sealKey, session: id, user: user, keyVersion: UInt32(keyVersion), sealed: sealed)
         return try JSONDecoder().decode(SealedSession.self, from: json)
     }
 

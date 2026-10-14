@@ -67,6 +67,12 @@ public struct APIClient: Sendable {
         try await send("PUT", "api/me/recovery-boxes/\(kind)", body: box)
     }
 
+    /// Everything the server stores about this account (GDPR Articles 15 and 20),
+    /// exactly as sent: the bytes become server-raw.json.
+    public func exportMe() async throws -> Data {
+        try await perform("GET", "api/me/export", query: [], body: Optional<Empty>.none)
+    }
+
     // MARK: Sync
 
     public func putLog(id: UUID, _ log: PracticeLogInput) async throws -> PracticeLog {
@@ -102,6 +108,13 @@ public struct APIClient: Sendable {
     }
 
     func request<B: Encodable, T: Decodable>(_ method: String, _ path: String, query: [URLQueryItem], body: B?) async throws -> T {
+        let data = try await perform(method, path, query: query, body: body)
+        if T.self == Empty.self || data.isEmpty { return try Self.decoder.decode(T.self, from: Data("{}".utf8)) }
+        return try Self.decoder.decode(T.self, from: data)
+    }
+
+    /// The response body of a successful call, or the error its status means.
+    func perform<B: Encodable>(_ method: String, _ path: String, query: [URLQueryItem], body: B?) async throws -> Data {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
         if !query.isEmpty { components.queryItems = query }
         var req = URLRequest(url: components.url!)
@@ -115,9 +128,7 @@ public struct APIClient: Sendable {
         let (data, response) = try await session.data(for: req)
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         switch status {
-        case 200..<300:
-            if T.self == Empty.self || data.isEmpty { return try Self.decoder.decode(T.self, from: Data("{}".utf8)) }
-            return try Self.decoder.decode(T.self, from: data)
+        case 200..<300: return data
         case 400: throw APIError.badRequest(Self.message(data))
         case 401: throw APIError.unauthorized
         case 403: throw APIError.forbidden(Self.message(data))

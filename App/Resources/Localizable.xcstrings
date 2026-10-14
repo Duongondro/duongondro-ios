@@ -19287,6 +19287,58 @@
         }
       }
     },
+    "The server part of this export could not be fetched, so it holds only what is on this phone." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Část exportu uložená na serveru se nepodařila stáhnout, takže obsahuje jen to, co je v tomto telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Teil dieses Exports vom Server konnte nicht abgerufen werden; er enthält nur, was auf diesem Telefon liegt."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Az exportnak a szerveren tárolt részét nem sikerült lekérni, ezért csak a telefonon lévő adatokat tartalmazza."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie udało się pobrać z serwera części tego eksportu, więc zawiera on tylko to, co jest na tym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не удалось получить с сервера часть этого экспорта, поэтому в нём только то, что хранится на этом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Časť exportu uloženú na serveri sa nepodarilo stiahnuť, takže obsahuje iba to, čo je v tomto telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не вдалося отримати з сервера частину цього експорту, тому в ньому лише те, що зберігається на цьому телефоні."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo obtener del servidor la parte de esta exportación, así que solo contiene lo que hay en este teléfono."
+          }
+        }
+      }
+    },
     "their own practice" : {
       "localizations" : {
         "cs" : {

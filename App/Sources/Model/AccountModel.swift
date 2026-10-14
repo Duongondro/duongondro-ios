@@ -783,6 +783,13 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    /// The server half of Your data › Export, with its sealed sessions opened on
+    /// this phone. Nil without a ready account (local mode needs no network).
+    func serverExport() async throws -> DataExport.Server? {
+        guard status == .ready, let account else { return nil }
+        return try await account.serverExport()
+    }
+
     func deleteOnServer() async throws {
         guard let account else {
             // No session, but an account: wiping only the phone would leave the

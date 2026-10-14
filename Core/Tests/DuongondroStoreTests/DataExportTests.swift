@@ -81,3 +81,21 @@ final class DataExportTests: XCTestCase {
         }
     }
 }
+
+final class DataExportMergeTests: XCTestCase {
+    func testServerSessionsJoinPracticeJSONOnce() throws {
+        let local = Session(practiceID: "dorje-sempa", amount: 108, startedAt: Date(timeIntervalSince1970: 1_790_000_000),
+                            startExact: true, timeZoneID: "Europe/Amsterdam", loggedAt: Date(timeIntervalSince1970: 1_790_003_600))
+        let remote = Session(practiceID: "dorje-sempa", amount: 21, startedAt: Date(timeIntervalSince1970: 1_790_100_000),
+                             startExact: false, timeZoneID: "Europe/Amsterdam", loggedAt: Date(timeIntervalSince1970: 1_790_100_000))
+        var snapshot = Snapshot()
+        snapshot.sessions = [local]
+        let server = DataExport.Server(account: Data("{}".utf8), raw: Data("{}".utf8), sessions: [local, remote], unreadable: 2)
+        let zip = try DataExport.zip(snapshot: snapshot, server: server, appVersion: "0.1")
+        let out = try DataExportTests().unzip(zip)
+        let json = try JSONSerialization.jsonObject(with: Data(contentsOf: out.appendingPathComponent("practice.json"))) as! [String: Any]
+        XCTAssertEqual((json["sessions"] as! [[String: Any]]).map { $0["amount"] as? Int }, [108, 21])
+        let readme = try String(contentsOf: out.appendingPathComponent("README.txt"), encoding: .utf8)
+        XCTAssertTrue(readme.contains("2 sealed sessions could not be opened"))
+    }
+}

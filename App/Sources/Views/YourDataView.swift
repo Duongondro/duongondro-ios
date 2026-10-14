@@ -8,16 +8,22 @@ struct YourDataView: View {
     @EnvironmentObject private var account: AccountModel
     @State private var exported: ExportedFile?
     @State private var exportError: String?
+    @State private var exporting = false
+    /// The export went out without the server's part.
+    @State private var serverMissing = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
-                CardSection(footer: "One ZIP with every practice, session and streak, readable without this app.") {
-                    Button { export() } label: {
+                CardSection(footer: serverMissing
+                            ? LocalizedStringKey("The server part of this export could not be fetched, so it holds only what is on this phone.")
+                            : LocalizedStringKey("One ZIP with every practice, session and streak, readable without this app.")) {
+                    Button { Task { await export() } } label: {
                         Label("Export all my data", systemImage: "square.and.arrow.up")
                             .foregroundStyle(Theme.accent)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                     }
+                    .disabled(exporting)
                 }
                 // With an account, the server and the person's other phones lose it too.
                 CardSection(footer: account.status == .none
@@ -52,13 +58,23 @@ struct YourDataView: View {
         }
     }
 
-    private func export() {
+    private func export() async {
+        exporting = true
+        defer { exporting = false }
+        serverMissing = false
         // Anything still in the undo window belongs in the export. The published
         // snapshot updates asynchronously, so read the database directly.
         model.commitPending()
+        // With a ready account the server's rows and sealed sessions come first;
+        // offline or failed, the phone's part is exported and the screen says so.
+        var server: DataExport.Server?
         do {
-            // Local mode: no account, so no server half (GET /api/me/export arrives with phase 3).
-            let zip = try DataExport.zip(snapshot: try model.database.snapshot(), server: nil, covers: Covers.all(),
+            server = try await account.serverExport()
+        } catch {
+            serverMissing = true
+        }
+        do {
+            let zip = try DataExport.zip(snapshot: try model.database.snapshot(), server: server, covers: Covers.all(),
                                          appVersion: BuildIdentity.current.version)
             exported = ExportedFile(url: try ExportFile.write(zip, name: DataExport.fileName()))
         } catch {
