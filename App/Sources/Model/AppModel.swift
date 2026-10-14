@@ -132,7 +132,9 @@ final class AppModel: ObservableObject {
     private func resumeWindows(now: Date = Date()) {
         guard persistent else { return }
         do {
-            if let last = try database.finaliseDue(at: now).max(by: { $0.loggedAt < $1.loggedAt }) { offerAfterMidnight(last) }
+            // One sheet at a time: the latest finalised session that asks for one.
+            if let s = try database.finaliseDue(at: now).sorted(by: { $0.loggedAt > $1.loggedAt })
+                .first(where: { AfterMidnight.check($0) != nil }) { offerAfterMidnight(s) }
             let snap = try database.snapshot()
             let open = snap.sessions.filter { snap.pending[$0.id] != nil }.sorted { $0.loggedAt < $1.loggedAt }
             // At most one window: any older one closes now.
