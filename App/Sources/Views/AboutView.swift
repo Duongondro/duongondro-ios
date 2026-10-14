@@ -24,7 +24,7 @@ struct AboutSection: View {
                 SettingsRow("About and contributors", chevron: true)
             }
         }
-        .task { await account.loadServerVersion() }
+        .task(id: account.status) { await account.loadServerVersion() }
     }
 }
 

@@ -605,7 +605,9 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    /// Only with an account: local mode makes no network call at all.
     func loadServerVersion() async {
+        guard status != .none else { return serverVersion = nil }
         serverVersion = try? await APIClient(baseURL: Self.serverURL).version()
     }
 
@@ -799,6 +801,7 @@ final class AccountModel: ObservableObject {
         shownCode = nil
         recoveryUnconfirmed = false
         deviceCount = nil
+        serverVersion = nil
         error = nil
         // Last, as the properties above write some of these back: nothing of the
         // account stays, the last user included, so a later sign-up on this phone
