@@ -63,6 +63,25 @@ final class AppDatabaseTests: XCTestCase {
         XCTAssertEqual(try db.snapshot(), Snapshot())
     }
 
+    /// Only the launch that makes the file says so: the app then clears Keychain
+    /// items an earlier install left behind, and must never do that otherwise.
+    func testOnlyTheOpeningThatMakesTheFileSaysItIsNew() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let path = dir.appendingPathComponent("t.sqlite").path
+        do {
+            let db = try AppDatabase.open(path: path)
+            XCTAssertTrue(db.createdFile)
+            try db.save(TrackedPractice(practice: practice("mandala")))
+        }
+        let again = try AppDatabase.open(path: path)
+        XCTAssertFalse(again.createdFile, "a normal launch")
+        try again.eraseAll()
+        XCTAssertFalse(try AppDatabase.open(path: path).createdFile, "after Delete everything, which clears the Keychain itself")
+        XCTAssertFalse(try AppDatabase.inMemory().createdFile, "the in-memory fallback never clears anything")
+    }
+
     /// The on-disk pool, with an observation running as in the app: erasing
     /// succeeds and leaves no rows behind in the file or its WAL.
     func testEraseAllOnDiskWithObserver() throws {

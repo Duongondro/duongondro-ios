@@ -84,6 +84,10 @@ final class UpgradeTests: XCTestCase {
         return try AppDatabase.open(path: path)
     }
 
+    func testAMigratedFileIsNotNew() throws {
+        XCTAssertFalse(try openV1().createdFile, "a migration must never clear the Keychain")
+    }
+
     func testEveryRowOfAV1DatabaseSurvives() throws {
         let snap = try openV1().snapshot()
         XCTAssertEqual(snap.practices.map(\.id), ["dorje-sempa", "8th-karmapa", "custom-1", "mandala"])

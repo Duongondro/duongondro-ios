@@ -10,9 +10,15 @@ import DuongondroCore
 public final class AppDatabase: @unchecked Sendable {  // the generation counter is lock-protected
     /// A DatabasePool on disk, a DatabaseQueue in tests and previews.
     public let writer: any DatabaseWriter
+    /// True when opening made the file: a first launch, or the first after a
+    /// reinstall. The Keychain outlives an uninstall and the database does not,
+    /// so whatever the Keychain holds then belongs to an earlier install. Never
+    /// true for a file that was there, whatever its schema version.
+    public let createdFile: Bool
 
-    public init(_ writer: any DatabaseWriter) throws {
+    public init(_ writer: any DatabaseWriter, createdFile: Bool = false) throws {
         self.writer = writer
+        self.createdFile = createdFile
         try Self.migrator.migrate(writer)
     }
 
@@ -41,7 +47,8 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         var config = Configuration()
         config.foreignKeysEnabled = true
         config.busyMode = .timeout(2)
-        return try AppDatabase(DatabasePool(path: path, configuration: config))
+        let existed = FileManager.default.fileExists(atPath: path)
+        return try AppDatabase(DatabasePool(path: path, configuration: config), createdFile: !existed)
     }
 
     public static func inMemory() throws -> AppDatabase {

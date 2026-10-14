@@ -40,7 +40,13 @@ final class AppModel: ObservableObject {
     /// The app's database, or an in-memory one (and an error shown) if the file cannot be opened.
     static func live() -> AppModel {
         do {
-            return AppModel(database: try AppDatabase.openOnDisk())
+            let database = try AppDatabase.openOnDisk()
+            // A database file made just now means a first launch or a reinstall:
+            // the Keychain outlives an uninstall, so a session token, keys or a
+            // recovery code in it belong to an earlier install, and AccountModel
+            // must not open that account. (Delete everything clears them itself.)
+            if database.createdFile { Purge.deleteKeychainItems() }
+            return AppModel(database: database)
         } catch {
             let model = AppModel(database: try! AppDatabase.inMemory())
             model.persistent = false
