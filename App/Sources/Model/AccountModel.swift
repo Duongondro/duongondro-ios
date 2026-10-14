@@ -507,7 +507,10 @@ final class AccountModel: ObservableObject {
             guard let account = self.account else { throw Account.Failure.missingSecret }
             let code = account.hasKeys ? try await account.newRecoveryCode() : try await account.setUpFirstDevice()
             // Both leave this account's sync state behind, so the user is known.
-            if let user = self.userID { self.onShow.show(code, for: user) }
+            // Should it not read back, the step says so and offers Try again,
+            // rather than waiting for a code it would never be given.
+            guard let user = self.userID else { throw Account.Failure.missingSecret }
+            self.onShow.show(code, for: user)
             self.recoveryUnconfirmed = true
             self.status = .ready
             self.afterKeysInBackground(account)
