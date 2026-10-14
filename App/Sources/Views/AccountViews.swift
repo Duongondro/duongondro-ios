@@ -368,14 +368,15 @@ struct RecoveryCheckView: View {
                         .onSubmit { focus = n + 1 < asked.count ? n + 1 : nil }
                         .padding(.horizontal, Theme.Space.m)
                         .frame(height: Theme.Size.field)
-                        .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-                        .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-                            .strokeBorder(Theme.inputBorder))
                         // The whole box takes the tap, not only the line of text in
                         // it: a tap above or below that line used to leave the
                         // previous field focused, so the second group went there.
-                        .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-                        .onTapGesture { focus = n }
+                        // The tap is caught behind the field, so the field's own
+                        // caret placement and paste menu are untouched.
+                        .background(FieldBox { focus = n })
+                        .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                            .strokeBorder(Theme.inputBorder)
+                            .allowsHitTesting(false))
                 }
             }
             if wrong {
@@ -452,5 +453,18 @@ struct RestoreView: View {
         .padding(.top, Theme.Space.xl)
         .padding(.bottom, Theme.Space.xxl)
         .background(Theme.ground.ignoresSafeArea())
+    }
+}
+
+/// The filled box behind a text field, which focuses the field when tapped
+/// anywhere the field itself does not cover.
+struct FieldBox: View {
+    let focus: () -> Void
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+            .fill(Theme.card)
+            .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+            .onTapGesture(perform: focus)
     }
 }

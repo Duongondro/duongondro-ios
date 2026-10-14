@@ -126,12 +126,12 @@ struct LabelledField: View {
                 .focused($focused)
                 .padding(.horizontal, Theme.Space.m)
                 .frame(minHeight: Theme.Size.button)
-                .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                // The whole box takes the tap, not only the line of text in it,
+                // caught behind the field so its caret and paste menu are untouched.
+                .background(FieldBox { focused = true })
                 .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-                    .strokeBorder(error != nil ? Theme.destructive : Theme.inputBorder, lineWidth: 1))
-                // The whole box takes the tap, not only the line of text in it.
-                .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-                .onTapGesture { focused = true }
+                    .strokeBorder(error != nil ? Theme.destructive : Theme.inputBorder, lineWidth: 1)
+                    .allowsHitTesting(false))
                 .accessibilityLabel(Text(label))
             if let error {
                 Text(verbatim: error).font(.footnote).foregroundStyle(Theme.destructive)
