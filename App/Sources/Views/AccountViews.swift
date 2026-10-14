@@ -362,6 +362,8 @@ struct RecoveryCheckView: View {
                         .textInputAutocapitalization(.characters)
                         .autocorrectionDisabled()
                         .focused($focus, equals: n)
+                        // VoiceOver reads which group the field wants, as the label above says.
+                        .accessibilityLabel(Text("Group \(i + 1)"))
                         .submitLabel(n + 1 < asked.count ? .next : .done)
                         .onSubmit { focus = n + 1 < asked.count ? n + 1 : nil }
                         .padding(.horizontal, Theme.Space.m)
