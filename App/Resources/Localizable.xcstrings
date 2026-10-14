@@ -6534,61 +6534,61 @@
       }
     },
     "FRIEND_DONE" : {
-      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend logged a practice, neutral form (non-binary or no gender given): %1$@ their name, %2$@ the practice, %3$@ the day of their streak.",
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend logged a practice, neutral form (non-binary or no gender given): %1$@ their name, %3$@ the day of their streak; %2$@, the practice id, is left out.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ právě dokončil(a) %2$@ · den %3$@"
+            "value" : "%1$@ právě praktikoval(a) · den %3$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ hat gerade %2$@ geübt · Tag %3$@"
+            "value" : "%1$@ hat gerade geübt · Tag %3$@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ just did their %2$@ · day %3$@"
+            "value" : "%1$@ just practised · day %3$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ acaba de hacer %2$@ · día %3$@"
+            "value" : "%1$@ acaba de practicar · día %3$@"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ épp befejezte: %2$@ · %3$@. nap"
+            "value" : "%1$@ épp gyakorolt · %3$@. nap"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ właśnie ukończył(a) %2$@ · dzień %3$@"
+            "value" : "%1$@ właśnie praktykował(a) · dzień %3$@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ только что завершил(а) %2$@ · день %3$@"
+            "value" : "%1$@ только что практиковал(а) · день %3$@"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ práve dokončil(a) %2$@ · deň %3$@"
+            "value" : "%1$@ práve cvičil(a) · deň %3$@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ щойно завершив(-ла) %2$@ · день %3$@"
+            "value" : "%1$@ щойно практикував(-ла) · день %3$@"
           }
         }
       }
@@ -6654,7 +6654,187 @@
       }
     },
     "FRIEND_DONE_FEMALE" : {
-      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend logged a practice, the sender is female: %1$@ their name, %2$@ the practice, %3$@ the day of their streak.",
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend logged a practice, the sender is female: %1$@ their name, %3$@ the day of their streak; %2$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ právě praktikovala · den %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ hat gerade geübt · Tag %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ just practised · day %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ acaba de practicar · día %3$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ épp gyakorolt · %3$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ właśnie praktykowała · dzień %3$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ только что практиковала · день %3$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ práve cvičila · deň %3$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ щойно практикувала · день %3$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_MALE" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend logged a practice, the sender is male: %1$@ their name, %3$@ the day of their streak; %2$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ právě praktikoval · den %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ hat gerade geübt · Tag %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ just practised · day %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ acaba de practicar · día %3$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ épp gyakorolt · %3$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ właśnie praktykował · dzień %3$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ только что практиковал · день %3$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ práve cvičil · deň %3$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ щойно практикував · день %3$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_NAMED" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE (neutral form (non-binary or no gender given)): %1$@ their name, %2$@ the practice, %3$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ právě dokončil(a) %2$@ · den %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ hat gerade %2$@ geübt · Tag %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ just did their %2$@ · day %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ acaba de hacer %2$@ · día %3$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ épp befejezte: %2$@ · %3$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ właśnie ukończył(a) %2$@ · dzień %3$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ только что завершил(а) %2$@ · день %3$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ práve dokončil(a) %2$@ · deň %3$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ щойно завершив(-ла) %2$@ · день %3$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_NAMED_FEMALE" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_FEMALE (the sender is female): %1$@ their name, %2$@ the practice, %3$@ the day of their streak.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -6713,8 +6893,8 @@
         }
       }
     },
-    "FRIEND_DONE_MALE" : {
-      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend logged a practice, the sender is male: %1$@ their name, %2$@ the practice, %3$@ the day of their streak.",
+    "FRIEND_DONE_NAMED_MALE" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_MALE (the sender is male): %1$@ their name, %2$@ the practice, %3$@ the day of their streak.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -6769,186 +6949,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ щойно завершив %2$@ · день %3$@"
-          }
-        }
-      }
-    },
-    "FRIEND_DONE_OWN" : {
-      "comment" : "The phone's own push key: FRIEND_DONE for a practice of the friend's own, whose name this phone does not know, neutral form (non-binary or no gender given): %1$@ their name, %2$@ the day of their streak.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ právě praktikoval(a) · den %2$@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ hat gerade geübt · Tag %2$@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ just practised · day %2$@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ acaba de practicar · día %2$@"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ épp gyakorolt · %2$@. nap"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ właśnie praktykował(a) · dzień %2$@"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ только что практиковал(а) · день %2$@"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ práve cvičil(a) · deň %2$@"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ щойно практикував(-ла) · день %2$@"
-          }
-        }
-      }
-    },
-    "FRIEND_DONE_OWN_FEMALE" : {
-      "comment" : "The phone's own push key: FRIEND_DONE for a practice of the friend's own, whose name this phone does not know, the sender is female: %1$@ their name, %2$@ the day of their streak.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ právě praktikovala · den %2$@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ hat gerade geübt · Tag %2$@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ just practised · day %2$@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ acaba de practicar · día %2$@"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ épp gyakorolt · %2$@. nap"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ właśnie praktykowała · dzień %2$@"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ только что практиковала · день %2$@"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ práve cvičila · deň %2$@"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ щойно практикувала · день %2$@"
-          }
-        }
-      }
-    },
-    "FRIEND_DONE_OWN_MALE" : {
-      "comment" : "The phone's own push key: FRIEND_DONE for a practice of the friend's own, whose name this phone does not know, the sender is male: %1$@ their name, %2$@ the day of their streak.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ právě praktikoval · den %2$@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ hat gerade geübt · Tag %2$@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ just practised · day %2$@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ acaba de practicar · día %2$@"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ épp gyakorolt · %2$@. nap"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ właśnie praktykował · dzień %2$@"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ только что практиковал · день %2$@"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ práve cvičil · deň %2$@"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ щойно практикував · день %2$@"
           }
         }
       }
@@ -12841,61 +12841,61 @@
       }
     },
     "STREAK_AT_RISK" : {
-      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). Your public streak ends in under two hours: %1$@ the practice, %2$@ the day of the streak.",
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): your public streak ends in under two hours: %2$@ the day of the streak; %1$@, the practice id, is left out.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvoje série %1$@ skončí za necelé dvě hodiny · den %2$@"
+            "value" : "Tvoje série skončí za necelé dvě hodiny · den %2$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine Serie %1$@ endet in weniger als zwei Stunden · Tag %2$@"
+            "value" : "Deine Serie endet in weniger als zwei Stunden · Tag %2$@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Your %1$@ streak ends in under two hours · day %2$@"
+            "value" : "Your streak ends in under two hours · day %2$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu racha de %1$@ termina en menos de dos horas · día %2$@"
+            "value" : "Tu racha termina en menos de dos horas · día %2$@"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@: a sorozatod kevesebb mint két óra múlva véget ér · %2$@. nap"
+            "value" : "A sorozatod kevesebb mint két óra múlva véget ér · %2$@. nap"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Twoja seria %1$@ kończy się za mniej niż dwie godziny · dzień %2$@"
+            "value" : "Twoja seria kończy się za mniej niż dwie godziny · dzień %2$@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваша серия %1$@ закончится меньше чем через два часа · день %2$@"
+            "value" : "Ваша серия закончится меньше чем через два часа · день %2$@"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvoja séria %1$@ skončí o necelé dve hodiny · deň %2$@"
+            "value" : "Tvoja séria skončí o necelé dve hodiny · deň %2$@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваша серія %1$@ закінчиться менш ніж за дві години · день %2$@"
+            "value" : "Ваша серія закінчиться менш ніж за дві години · день %2$@"
           }
         }
       }
@@ -12956,6 +12956,66 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Одна з ваших серій закінчиться менш ніж за дві години"
+          }
+        }
+      }
+    },
+    "STREAK_AT_RISK_NAMED" : {
+      "comment" : "The phone's own push key, which the notification extension shows for STREAK_AT_RISK: %1$@ the practice, %2$@ the day of the streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvoje série %1$@ skončí za necelé dvě hodiny · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Serie %1$@ endet in weniger als zwei Stunden · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your %1$@ streak ends in under two hours · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu racha de %1$@ termina en menos de dos horas · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: a sorozatod kevesebb mint két óra múlva véget ér · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoja seria %1$@ kończy się za mniej niż dwie godziny · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваша серия %1$@ закончится меньше чем через два часа · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvoja séria %1$@ skončí o necelé dve hodiny · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваша серія %1$@ закінчиться менш ніж за дві години · день %2$@"
           }
         }
       }

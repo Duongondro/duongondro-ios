@@ -3,10 +3,12 @@ import Foundation
 /// The server's push loc-keys (duongondro-api internal/service/nudges.go), and the
 /// phone's own variants of them (design: Social › Nudges, Localisation › Localised
 /// pushes). Every key is a string in Localizable.xcstrings in all nine languages: the
-/// system renders it from there when the notification service extension does not run.
+/// system renders the server's keys from there when the notification service
+/// extension does not run, so their strings never name the practice (the server sends
+/// its id, and Discreet notifications may be on): they leave that argument unused.
 public enum PushKey: String, CaseIterable, Sendable {
     // Sent by the server, in the variant for the sender's grammatical gender.
-    /// Args: name, practice id, day count.
+    /// Args: name, practice id (unused in the string), day count.
     case friendDone = "FRIEND_DONE"
     case friendDoneMale = "FRIEND_DONE_MALE"
     case friendDoneFemale = "FRIEND_DONE_FEMALE"
@@ -14,15 +16,16 @@ public enum PushKey: String, CaseIterable, Sendable {
     case poke = "POKE"
     case pokeMale = "POKE_MALE"
     case pokeFemale = "POKE_FEMALE"
-    /// Args: practice id, day count.
+    /// Args: practice id (unused in the string), day count.
     case streakAtRisk = "STREAK_AT_RISK"
 
-    // The phone's own: shown in place of the server's key.
-    /// FRIEND_DONE for a practice this phone has no name for (a friend's own):
-    /// args name, day count.
-    case friendDoneOwn = "FRIEND_DONE_OWN"
-    case friendDoneOwnMale = "FRIEND_DONE_OWN_MALE"
-    case friendDoneOwnFemale = "FRIEND_DONE_OWN_FEMALE"
+    // The phone's own, which the extension shows in place of the server's key.
+    /// FRIEND_DONE naming the practice: args name, practice name, day count.
+    case friendDoneNamed = "FRIEND_DONE_NAMED"
+    case friendDoneNamedMale = "FRIEND_DONE_NAMED_MALE"
+    case friendDoneNamedFemale = "FRIEND_DONE_NAMED_FEMALE"
+    /// STREAK_AT_RISK naming the practice: args practice name, day count.
+    case streakAtRiskNamed = "STREAK_AT_RISK_NAMED"
     /// Discreet notifications: no practice names on the lock screen. No args.
     case friendDoneDiscreet = "FRIEND_DONE_DISCREET"
     case streakAtRiskDiscreet = "STREAK_AT_RISK_DISCREET"
@@ -31,24 +34,44 @@ public enum PushKey: String, CaseIterable, Sendable {
     public static let server: [PushKey] = [.friendDone, .friendDoneMale, .friendDoneFemale,
                                            .poke, .pokeMale, .pokeFemale, .streakAtRisk]
 
-    /// How many arguments the key's format string takes (%1$@ … %n$@).
+    /// How many arguments the key is formatted with (loc-args, or the extension's).
     public var argumentCount: Int {
         switch self {
-        case .friendDone, .friendDoneMale, .friendDoneFemale: 3
+        case .friendDone, .friendDoneMale, .friendDoneFemale,
+             .friendDoneNamed, .friendDoneNamedMale, .friendDoneNamedFemale: 3
         case .poke, .pokeMale, .pokeFemale: 1
-        case .streakAtRisk, .friendDoneOwn, .friendDoneOwnMale, .friendDoneOwnFemale: 2
+        case .streakAtRisk, .streakAtRiskNamed: 2
         case .friendDoneDiscreet, .streakAtRiskDiscreet: 0
         }
     }
 
-    var isFriendDone: Bool { [.friendDone, .friendDoneMale, .friendDoneFemale].contains(self) }
-
-    /// The variant without the practice, keeping the sender's gender.
-    var own: PushKey? {
+    /// The arguments its strings use, %1$@ … %n$@: all but the practice id for the
+    /// server's keys. Foundation formats around an unused positional object argument.
+    public var usedArguments: Set<Int> {
         switch self {
-        case .friendDone: .friendDoneOwn
-        case .friendDoneMale: .friendDoneOwnMale
-        case .friendDoneFemale: .friendDoneOwnFemale
+        case .friendDone, .friendDoneMale, .friendDoneFemale: [1, 3]
+        case .streakAtRisk: [2]
+        default: Set((0..<argumentCount).map { $0 + 1 })
+        }
+    }
+
+    /// The variant naming the practice, keeping the sender's gender.
+    var named: PushKey? {
+        switch self {
+        case .friendDone: .friendDoneNamed
+        case .friendDoneMale: .friendDoneNamedMale
+        case .friendDoneFemale: .friendDoneNamedFemale
+        case .streakAtRisk: .streakAtRiskNamed
+        default: nil
+        }
+    }
+
+    /// What the extension shows when it cannot render a server key that may name a
+    /// practice: the discreet text, so a failure never shows more than Discreet would.
+    public var failSafe: PushKey? {
+        switch self {
+        case .friendDone, .friendDoneMale, .friendDoneFemale: .friendDoneDiscreet
+        case .streakAtRisk: .streakAtRiskDiscreet
         default: nil
         }
     }
@@ -74,15 +97,18 @@ public struct PushText: Equatable, Sendable {
             // Lock screens are seen by others: no practice and no name (design:
             // Social › Nudges).
             if discreet { return PushText(key: .friendDoneDiscreet, arguments: []) }
+            // A practice this phone has no name for (a friend's own): the server's
+            // key, whose string leaves it out.
             guard let name = practiceName(args[1]) else {
-                return PushText(key: key.own!, arguments: [args[0], day(args[2])])
+                return PushText(key: key, arguments: [args[0], args[1], day(args[2])])
             }
-            return PushText(key: key, arguments: [args[0], name, day(args[2])])
+            return PushText(key: key.named!, arguments: [args[0], name, day(args[2])])
         case .streakAtRisk:
-            guard !discreet, let name = practiceName(args[0]) else {
-                return PushText(key: .streakAtRiskDiscreet, arguments: [])
+            if discreet { return PushText(key: .streakAtRiskDiscreet, arguments: []) }
+            guard let name = practiceName(args[0]) else {
+                return PushText(key: key, arguments: [args[0], day(args[1])])
             }
-            return PushText(key: key, arguments: [name, day(args[1])])
+            return PushText(key: key.named!, arguments: [name, day(args[1])])
         default:
             return PushText(key: key, arguments: args)
         }

@@ -46,16 +46,27 @@ final class PushTests: XCTestCase {
 
     func testFriendDoneNamesThePracticeAndFormatsTheDay() {
         XCTAssertEqual(render("FRIEND_DONE_MALE", ["Tomasz", "dorje-sempa", "42"]),
-                       PushText(key: .friendDoneMale, arguments: ["Tomasz", "Dorje Sempa", "#42"]))
+                       PushText(key: .friendDoneNamedMale, arguments: ["Tomasz", "Dorje Sempa", "#42"]))
         let text = render("FRIEND_DONE_FEMALE", ["Anna", "chenrezig", "1043"])!
         XCTAssertEqual(text.string(format: "%1$@ just did her %2$@ · day %3$@", locale: Locale(identifier: "en")),
                        "Anna just did her Chenrezig · day #1043")
     }
 
     func testFriendDoneOfAnUnknownPracticeLeavesItOut() {
-        XCTAssertEqual(render("FRIEND_DONE", ["Ana", "a1b2c3", "7"]), PushText(key: .friendDoneOwn, arguments: ["Ana", "#7"]))
-        XCTAssertEqual(render("FRIEND_DONE_FEMALE", ["Ana", "a1b2c3", "7"])?.key, .friendDoneOwnFemale)
-        XCTAssertEqual(render("FRIEND_DONE_MALE", ["Jan", "a1b2c3", "7"])?.key, .friendDoneOwnMale)
+        // The server's key, whose strings leave the practice id unused.
+        let text = render("FRIEND_DONE", ["Ana", "a1b2c3", "7"])
+        XCTAssertEqual(text, PushText(key: .friendDone, arguments: ["Ana", "a1b2c3", "#7"]))
+        XCTAssertEqual(text?.string(format: "%1$@ just practised · day %3$@", locale: Locale(identifier: "en")), "Ana just practised · day #7")
+        XCTAssertEqual(render("FRIEND_DONE_FEMALE", ["Ana", "a1b2c3", "7"])?.key, .friendDoneFemale)
+        XCTAssertEqual(render("FRIEND_DONE_MALE", ["Jan", "a1b2c3", "7"])?.key, .friendDoneMale)
+    }
+
+    func testFailuresFallBackToTheDiscreetText() {
+        for key in ["FRIEND_DONE", "FRIEND_DONE_MALE", "FRIEND_DONE_FEMALE"] {
+            XCTAssertEqual(PushKey(rawValue: key)?.failSafe, .friendDoneDiscreet)
+        }
+        XCTAssertEqual(PushKey.streakAtRisk.failSafe, .streakAtRiskDiscreet)
+        XCTAssertNil(PushKey.poke.failSafe)
     }
 
     func testDiscreetHidesPracticesAndNames() {
@@ -71,8 +82,10 @@ final class PushTests: XCTestCase {
 
     func testStreakAtRisk() {
         XCTAssertEqual(render("STREAK_AT_RISK", ["dorje-sempa", "42"]),
-                       PushText(key: .streakAtRisk, arguments: ["Dorje Sempa", "#42"]))
-        XCTAssertEqual(render("STREAK_AT_RISK", ["custom", "42"])?.key, .streakAtRiskDiscreet)
+                       PushText(key: .streakAtRiskNamed, arguments: ["Dorje Sempa", "#42"]))
+        XCTAssertEqual(render("STREAK_AT_RISK", ["custom", "42"]), PushText(key: .streakAtRisk, arguments: ["custom", "#42"]))
+        XCTAssertEqual(PushText(key: .streakAtRisk, arguments: ["custom", "42"]).string(format: "Your streak ends · day %2$@", locale: Locale(identifier: "en")),
+                       "Your streak ends · day 42")
     }
 
     func testUnknownKeysAndShapesAreLeftToTheSystem() {
@@ -114,7 +127,8 @@ final class PushTests: XCTestCase {
     static let languages = ["en", "de", "ru", "uk", "pl", "cs", "sk", "hu", "es"]
 
     /// Every key, the server's and the phone's own, has a string in every language
-    /// with exactly its arguments, positional (%1$@ …), as the system formats loc-args.
+    /// with exactly the arguments it uses, positional (%1$@ …), as the system formats
+    /// loc-args; the server's keys never name the practice.
     func testEveryKeyIsInTheCatalogInEveryLanguage() throws {
         let url = repository.appendingPathComponent("App/Resources/Localizable.xcstrings")
         let catalog = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as! [String: Any]
@@ -127,7 +141,7 @@ final class PushTests: XCTestCase {
                 let unit = (localizations[language] as? [String: Any])?["stringUnit"] as? [String: Any]
                 let value = try XCTUnwrap(unit?["value"] as? String, "\(key.rawValue) has no \(language)")
                 let specifiers = value.matches(of: #/%(\d)\$@/#).map { Int($0.1)! }
-                XCTAssertEqual(Set(specifiers), Set((0..<key.argumentCount).map { $0 + 1 }), "\(key.rawValue) \(language): \(value)")
+                XCTAssertEqual(Set(specifiers), key.usedArguments, "\(key.rawValue) \(language): \(value)")
                 // No other conversions: the system passes every loc-arg as a string.
                 XCTAssertEqual(value.matches(of: #/%/#).count, specifiers.count, "\(key.rawValue) \(language): \(value)")
             }

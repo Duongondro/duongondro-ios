@@ -6,20 +6,47 @@ import UserNotifications
 /// Localisation › Localised pushes; Social › Nudges): the practice id becomes its name
 /// as the person's practice books have it, the day count is formatted for the locale,
 /// and with Discreet notifications on nothing names a practice. The server marks every
-/// push mutable-content for this. If it fails or runs out of time, the system's own
-/// rendering of the loc-key from the app's Localizable stands.
+/// push mutable-content for this. If it cannot render a push that may name a
+/// practice, or runs out of time, it shows the discreet text rather than the system's
+/// rendering; other pushes keep the system's rendering of the loc-key.
 final class NotificationService: UNNotificationServiceExtension {
     private var handler: ((UNNotificationContent) -> Void)?
-    private var original: UNNotificationContent?
+    private var fallback: UNNotificationContent?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler handler: @escaping (UNNotificationContent) -> Void) {
         self.handler = handler
-        original = request.content
-        handler(Self.render(request.content) ?? request.content)
+        let fallback = Self.failSafe(request.content)
+        self.fallback = fallback
+        handler(Self.render(request.content) ?? fallback)
     }
 
     override func serviceExtensionTimeWillExpire() {
-        if let handler, let original { handler(original) }
+        if let handler, let fallback { handler(fallback) }
+    }
+
+    /// The discreet text for FRIEND_DONE and STREAK_AT_RISK, in the app's language if
+    /// its strings can be read, in English otherwise; anything else as it came.
+    static func failSafe(_ content: UNNotificationContent) -> UNNotificationContent {
+        guard let alert = (content.userInfo["aps"] as? [String: Any])?["alert"] as? [String: Any],
+              let safe = (alert["loc-key"] as? String).flatMap(PushKey.init(rawValue:))?.failSafe,
+              let copy = content.mutableCopy() as? UNMutableNotificationContent
+        else { return content }
+        let missing = "\u{1}"
+        let localized = strings(for: localization(UserDefaults(suiteName: PushShared.appGroup)))?
+            .localizedString(forKey: safe.rawValue, value: missing, table: nil)
+        copy.body = localized.flatMap { $0 == missing ? nil : $0 }
+            ?? (safe == .friendDoneDiscreet ? "A friend practised" : "One of your streaks ends in under two hours")
+        return copy
+    }
+
+    /// The language the app shows; the phone's when it follows the phone.
+    private static func localization(_ shared: UserDefaults?) -> String {
+        shared?.string(forKey: PushShared.localization)
+            ?? Bundle.preferredLocalizations(from: app.localizations).first ?? "en"
+    }
+
+    private static func strings(for localization: String) -> Bundle? {
+        app.path(forResource: localization, ofType: "lproj").flatMap(Bundle.init(path:))
     }
 
     /// The app this extension is embedded in: its bundle holds the strings.
@@ -32,9 +59,8 @@ final class NotificationService: UNNotificationServiceExtension {
         else { return nil }
         let args = alert["loc-args"] as? [String] ?? []
         let shared = UserDefaults(suiteName: PushShared.appGroup)
-        let localization = shared?.string(forKey: PushShared.localization)
-            ?? Bundle.preferredLocalizations(from: app.localizations).first ?? "en"
-        guard let path = app.path(forResource: localization, ofType: "lproj"), let strings = Bundle(path: path) else { return nil }
+        let localization = Self.localization(shared)
+        guard let strings = Self.strings(for: localization) else { return nil }
         let locale = Self.locale(for: localization)
         let own = shared?.dictionary(forKey: PushShared.practiceNames) as? [String: String] ?? [:]
         let numbers = NumberFormatter()
