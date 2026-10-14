@@ -663,7 +663,7 @@ struct RecoveryStep: View {
     var body: some View {
         AccountPage(title: "Write down your recovery code",
                     detail: Text("If you lose this phone, this code is the only way back to your counts. Nobody else has it, not even us.")) {
-            if let code = flow.recoveryCode {
+            if let code = flow.recoveryCode ?? account.shownCode {
                 CodeGrid(groups: code.split(separator: "-").map(String.init))
             } else {
                 ProgressView().frame(maxWidth: .infinity, minHeight: Theme.Size.passkeyBadge)
@@ -677,7 +677,8 @@ struct RecoveryStep: View {
             if setUp.failed {
                 StepButton(title: "Try again", busy: setUp.busy) { makeKeys() }
             } else {
-                StepButton(title: LocalizedStringKey(Gendered.mine("I wrote it down")), enabled: flow.recoveryCode != nil) {
+                StepButton(title: LocalizedStringKey(Gendered.mine("I wrote it down")),
+                           enabled: (flow.recoveryCode ?? account.shownCode) != nil) {
                     flow.go(.recoveryCheck)
                 }
             }
@@ -685,6 +686,8 @@ struct RecoveryStep: View {
         .onAppear { if flow.recoveryCode == nil { makeKeys() } }
     }
 
+    /// AccountModel runs the work one at a time and keeps the code, so showing
+    /// this step again waits for the same set-up and shows the same code.
     private func makeKeys() {
         setUp.run { if flow.recoveryCode == nil { flow.recoveryCode = try await account.setUpKeys() } }
     }

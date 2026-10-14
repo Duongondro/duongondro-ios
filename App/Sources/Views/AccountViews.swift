@@ -17,6 +17,7 @@ struct AccountSection: View {
     @State private var name = ""
     @State private var usernameText = ""
     @State private var note: String?
+    @State private var finishing = false
 
     var body: some View {
         Group { rows }
@@ -52,6 +53,7 @@ struct AccountSection: View {
             // No sign-out here: the keys could not come back without a recovery code.
             CardSection(header: "Account", footer: "Your counts are encrypted on this phone before they leave it. Set up keys on your first phone; on a new one, restore them with your recovery code.") {
                 Button { finishSetUp() } label: { AccentRow(title: "Finish setting up") }
+                    .disabled(finishing)
             }
         case .ready:
             CardSection(header: "Account", footer: account.offline ? "The last sync did not finish. Your counts are safe on this phone and sync when the server can be reached." : nil) {
@@ -156,7 +158,12 @@ struct AccountSection: View {
 
     /// An unfinished account: set up here, or restore keys made on another phone.
     private func finishSetUp() {
+        // A second tap while the first runs does nothing; the key work itself is
+        // serialised in AccountModel too.
+        guard !finishing else { return }
+        finishing = true
         Task {
+            defer { finishing = false }
             do {
                 switch try await account.standing() {
                 case .restore: restoring = true

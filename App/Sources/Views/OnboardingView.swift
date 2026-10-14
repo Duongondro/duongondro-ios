@@ -234,10 +234,14 @@ extension OnboardingStep {
 /// them (the mockups' top bar). `leave` closes the account steps opened from Settings.
 private struct StepTopBar: View {
     @EnvironmentObject private var flow: OnboardingFlow
+    @EnvironmentObject private var account: AccountModel
     var leave: (() -> Void)?
 
     var body: some View {
         let progress = flow.step.progress(signingIn: flow.signingIn)
+        // No way back while keys are being made: the work goes on regardless, and
+        // the steps behind it would ask for a passkey or profile it already has.
+        let canLeave = (flow.canGoBack || leave != nil) && !account.keyWorkRunning
         HStack(spacing: 0) {
             Button { if let leave { leave() } else { flow.back() } } label: {
                 Image(systemName: "chevron.backward")
@@ -249,7 +253,7 @@ private struct StepTopBar: View {
             .buttonStyle(.plain)
             .accessibilityLabel("Back")
             .opacity(flow.canGoBack || leave != nil ? 1 : 0)
-            .disabled(!flow.canGoBack && leave == nil)
+            .disabled(!canLeave)
             Spacer(minLength: 0)
             if let progress {
                 HStack(spacing: Theme.Space.dash) {

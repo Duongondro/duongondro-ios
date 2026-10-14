@@ -39,7 +39,35 @@ final class AccountModel: ObservableObject {
     /// The code was written down and checked.
     func confirmRecoveryCode() {
         recoveryCode = nil
+        shownCode = nil
         recoveryUnconfirmed = false
+    }
+
+    /// The recovery code the onboarding is showing, until it is confirmed: a
+    /// step shown again (Back, then forward) gets this one rather than a second.
+    @Published private(set) var shownCode: String?
+
+    /// A set-up, restore or new code is running: the onboarding's Back waits.
+    @Published private(set) var keyWorkRunning = false
+    /// The key operation last started; the next one waits for it, so two never
+    /// run at once (a second set-up would replace the first one's recovery code).
+    private var keyWork: Task<Void, Never>?
+    private var keyWorkCount = 0 {
+        didSet { keyWorkRunning = keyWorkCount > 0 }
+    }
+
+    /// Runs key work after any already under way, one at a time, in this model
+    /// rather than the screen that asked: a screen that goes away cancels only its wait.
+    private func keyed<T>(_ work: @escaping @MainActor () async throws -> T) async throws -> T {
+        let previous = keyWork
+        keyWorkCount += 1
+        let task = Task { @MainActor () -> Result<T, Error> in
+            await previous?.value
+            defer { self.keyWorkCount -= 1 }
+            do { return .success(try await work()) } catch { return .failure(error) }
+        }
+        keyWork = Task { _ = await task.value }
+        return try await task.value.get()
     }
 
     /// Friends as last fetched, each streak verified against the pinned key.
@@ -210,6 +238,7 @@ final class AccountModel: ObservableObject {
         displayName = ""
         email = kept
         recoveryCode = nil
+        shownCode = nil
         recoveryUnconfirmed = false
         friends = []
         invites = [:]
@@ -445,13 +474,18 @@ final class AccountModel: ObservableObject {
 
     /// Sets up keys during onboarding (or finishes an interrupted set-up, with the
     /// same code) and returns the recovery code, which the onboarding shows itself.
+    /// Asked again while it runs or after, it returns the same code.
     func setUpKeys() async throws -> String {
-        guard let account else { throw Account.Failure.missingSecret }
-        let code = account.hasKeys ? try await account.newRecoveryCode() : try await account.setUpFirstDevice()
-        recoveryUnconfirmed = true
-        status = .ready
-        await afterKeys(account)
-        return code
+        try await keyed {
+            if let code = self.shownCode { return code }
+            guard let account = self.account else { throw Account.Failure.missingSecret }
+            let code = account.hasKeys ? try await account.newRecoveryCode() : try await account.setUpFirstDevice()
+            self.shownCode = code
+            self.recoveryUnconfirmed = true
+            self.status = .ready
+            await self.afterKeys(account)
+            return code
+        }
     }
 
     /// The fallback report, then the invitation's friendship, once keys exist.
@@ -472,22 +506,22 @@ final class AccountModel: ObservableObject {
     // MARK: Keys
 
     func setUp() async {
-        guard let account else { return }
         await run {
-            self.recoveryCode = try await account.setUpFirstDevice()
-            self.status = .ready
-            await self.afterKeys(account)
+            try await self.keyed {
+                // A second tap, or one after the first finished: nothing more to do.
+                guard self.recoveryCode == nil, let account = self.account, !account.hasKeys else { return }
+                self.recoveryCode = try await account.setUpFirstDevice()
+                self.status = .ready
+                await self.afterKeys(account)
+            }
         }
     }
 
     func restore(code: String) async -> Bool {
-        guard let account else { return false }
         var ok = false
-        await run {
-            if !account.hasKeys { try await account.restore(recoveryCode: code) }
-            self.status = .ready
-            ok = true
-            await self.afterKeys(account)
+        await run { ok = try await self.restoreKeys(code: code) }
+        if !ok, error == nil {
+            error = String(localized: "That recovery code does not open this account.", bundle: .appLanguage, locale: .appLanguage)
         }
         return ok
     }
@@ -495,22 +529,28 @@ final class AccountModel: ObservableObject {
     /// The onboarding's restore: false when the code does not open this
     /// account's recovery boxes; other failures throw.
     func restoreKeys(code: String) async throws -> Bool {
-        guard let account else { throw Account.Failure.missingSecret }
-        if !account.hasKeys {
-            do {
-                try await account.restore(recoveryCode: code)
-            } catch Account.Failure.badRecoveryCode {
-                return false
+        try await keyed {
+            guard let account = self.account else { throw Account.Failure.missingSecret }
+            if !account.hasKeys {
+                do {
+                    try await account.restore(recoveryCode: code)
+                } catch Account.Failure.badRecoveryCode {
+                    return false
+                }
             }
+            self.status = .ready
+            await self.afterKeys(account)
+            return true
         }
-        status = .ready
-        await afterKeys(account)
-        return true
     }
 
     func newRecoveryCode() async {
-        guard let account else { return }
-        await run { self.recoveryCode = try await account.newRecoveryCode() }
+        await run {
+            try await self.keyed {
+                guard self.recoveryCode == nil, let account = self.account else { return }
+                self.recoveryCode = try await account.newRecoveryCode()
+            }
+        }
     }
 
     // MARK: Sync
@@ -749,6 +789,7 @@ final class AccountModel: ObservableObject {
         status = .none
         lastSync = nil
         recoveryCode = nil
+        shownCode = nil
         recoveryUnconfirmed = false
         error = nil
     }
