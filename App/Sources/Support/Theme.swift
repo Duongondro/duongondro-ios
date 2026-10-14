@@ -91,6 +91,11 @@ enum Theme {
         static let heroFlame: CGFloat = 34
         /// The entry part of a number field.
         static let numberField: CGFloat = 120
+        /// The round badge on Save a passkey, and its icon.
+        static let passkeyBadge: CGFloat = 96
+        static let passkeyIcon: CGFloat = 40
+        /// The checkbox on Consent, and the check marks on "Keep it on this phone, or online?".
+        static let checkbox: CGFloat = 24
     }
 
     /// Small, platform-specific corner radii (design: Look).

@@ -15,6 +15,9 @@ final class AccountModel: ObservableObject {
         /// Signed in, but this phone holds no keys yet: set up, or restore.
         case needsKeys
         case ready
+        /// The server ended the session (signed out elsewhere, or expired): keys and
+        /// data stay, and signing in again picks up where it left off.
+        case signedOut
     }
 
     @Published private(set) var status: Status = .none
@@ -58,7 +61,28 @@ final class AccountModel: ObservableObject {
     /// so opening the Invite screen does not mint a new one each time.
     private var invites: [InviteLink.Kind: (link: InviteLink, expiresAt: Date)] = [:]
     /// The name friends see, as the server has it.
-    @Published private(set) var displayName = ""
+    @Published private(set) var displayName = UserDefaults.standard.string(forKey: Keys.displayName) ?? "" {
+        didSet { UserDefaults.standard.set(displayName, forKey: Keys.displayName) }
+    }
+    /// The address magic links go to, when the account has one.
+    @Published private(set) var email = UserDefaults.standard.string(forKey: Keys.email) {
+        didSet { UserDefaults.standard.set(email, forKey: Keys.email) }
+    }
+    /// Names the account's passkeys; never shown to friends.
+    @Published private(set) var username = UserDefaults.standard.string(forKey: Keys.username) {
+        didSet { UserDefaults.standard.set(username, forKey: Keys.username) }
+    }
+    /// The last sync did not finish: offline, or the server away.
+    @Published private(set) var offline = false
+    /// A sign-up holds a checked invitation not yet redeemed: an opened link
+    /// belongs to it, not to accepting.
+    @Published private(set) var signingUpWithInvite = false
+    /// A magic link's token, opened while this phone expects one (it asked in the
+    /// last 15 minutes); only Check your email redeems it.
+    @Published var magicToken: String?
+    /// Where the account steps open over the app (Settings, Friends): a new
+    /// account, or signing in.
+    @Published var accountFlow: AccountFlow?
     /// The account's registered devices, for Settings' "Your devices".
     @Published private(set) var deviceCount: Int?
     /// The server's build, for Settings' About.
@@ -76,7 +100,9 @@ final class AccountModel: ObservableObject {
     /// (`make serve` in duongondro-api), the real one otherwise.
     static var serverURL: URL {
         #if DEBUG
-        URL(string: "http://127.0.0.1:8080")!
+        // Another development server, for a second one on this Mac:
+        // `-DebugAPI http://127.0.0.1:8081` as a launch argument.
+        UserDefaults.standard.string(forKey: "DebugAPI").flatMap(URL.init(string:)) ?? URL(string: "http://127.0.0.1:8080")!
         #else
         URL(string: "https://api.duongondro.app")!
         #endif
@@ -84,10 +110,25 @@ final class AccountModel: ObservableObject {
 
     private static let tokenName = "session-token"
 
+    /// UserDefaults keys for the account's profile, cleared when it leaves this phone.
+    enum Keys {
+        static let email = "account.email"
+        static let username = "account.username"
+        static let displayName = "account.displayName"
+        static let lastSync = "account.lastSync"
+        /// The last account signed out here: signing in to another asks before
+        /// mixing this phone's practice into it.
+        static let lastUser = "account.lastUser"
+        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn"]
+    }
+
     init(database: AppDatabase) {
         self.database = database
+        lastSync = UserDefaults.standard.object(forKey: Keys.lastSync) as? Date
         if let token = try? secrets.read(Self.tokenName).map({ String(decoding: $0, as: UTF8.self) }) {
             open(token: token)
+        } else if (try? database.syncState()) != nil {
+            status = .signedOut
         }
     }
 
@@ -101,6 +142,15 @@ final class AccountModel: ObservableObject {
     var userID: UUID? { (try? database.syncState())?.userID }
 
     var deviceTier: Tier? { (try? DeviceKeys(store: secrets).current())?.tier }
+
+    /// A recovery code was made but its boxes are not all on the server yet.
+    var recoveryPending: Bool { ((try? secrets.read("recovery-pending")) ?? nil) != nil }
+
+    /// Signing out here forgets the keys, so it is allowed only when they can come
+    /// back: keys set up, the recovery code stored on the server and confirmed.
+    var canSignOut: Bool { status == .ready && !recoveryUnconfirmed && !recoveryPending }
+
+    private var anonymous: APIClient { APIClient(baseURL: Self.serverURL) }
 
     // MARK: Signing in
 
@@ -118,6 +168,307 @@ final class AccountModel: ObservableObject {
     }
     #endif
 
+    /// A sign-in held back because this phone holds another account's practice.
+    private var heldSignIn: SignInResult?
+
+    /// Keeps the session, unless this phone holds practice from another account
+    /// (the one it syncs with, or the last one signed out here): then nothing is
+    /// kept or uploaded until the person chooses, and this returns false.
+    private func signedIn(_ result: SignInResult) -> Bool {
+        let owner = (try? database.syncState())?.userID ?? account?.setUpUser ?? Account(
+            api: anonymous, secrets: secrets, database: database).setUpUser
+        let other = owner ?? UserDefaults.standard.string(forKey: Keys.lastUser).flatMap(UUID.init(uuidString:))
+        let snapshot = try? database.snapshot()
+        let holdsPractice = !(snapshot?.sessions.isEmpty ?? true) || !(snapshot?.practices.isEmpty ?? true)
+        if let other, other != result.userId, holdsPractice {
+            heldSignIn = result
+            return false
+        }
+        // Another account's keys, sync state and device key never carry over; with
+        // no practice here there is nothing to ask about.
+        if let owner, owner != result.userId {
+            try? database.clearSyncState()
+            forgetOtherAccount()
+        }
+        keep(result)
+        return true
+    }
+
+    private func keep(_ result: SignInResult) {
+        try? secrets.write(Self.tokenName, Data(result.token.utf8))
+        open(token: result.token)
+    }
+
+    /// Forgets what this phone kept for the account it is switching away from:
+    /// its keys and device key, its profile (all but the email this sign-in was
+    /// asked for), and a recovery code on show.
+    private func forgetOtherAccount() {
+        Purge.deleteKeychainItems()
+        let kept = email
+        for key in Keys.all { UserDefaults.standard.removeObject(forKey: key) }
+        username = nil
+        displayName = ""
+        email = kept
+        recoveryCode = nil
+        recoveryUnconfirmed = false
+        friends = []
+        invites = [:]
+    }
+
+    /// "Erase and continue": the other account's practice and keys leave this
+    /// phone (its server copy stays), then the held sign-in goes on. Returns
+    /// whether the held sign-in made its account.
+    func eraseOtherAccountAndContinue() throws -> Bool {
+        guard let result = heldSignIn else { return false }
+        heldSignIn = nil
+        try database.erasePractice()
+        forgetOtherAccount()
+        keep(result)
+        return result.created
+    }
+
+    /// "Cancel": the held session ends on the server, and nothing was uploaded.
+    func abandonHeldSignIn() async {
+        guard let result = heldSignIn else { return }
+        heldSignIn = nil
+        try? await APIClient(baseURL: Self.serverURL, token: result.token).signOut()
+    }
+
+    // MARK: Invitation
+
+    enum InviteCheck { case valid, unknown, notAuthentic }
+
+    /// The invitation a sign-up started from, checked; kept until the account
+    /// exists and has keys, then redeemed.
+    private var invitation: Invitation?
+    private var checkedInvite: Social.CheckedInvite? {
+        didSet { signingUpWithInvite = checkedInvite != nil }
+    }
+
+    /// Checks a typed or opened code: an invite against the server (signature,
+    /// then the link's MAC), an admission code by its shape only.
+    func checkInvite(_ code: String) async throws -> InviteCheck {
+        clearInvitation()
+        switch Invitation.parse(code) {
+        case nil:
+            return .unknown
+        case .admission(let c):
+            invitation = .admission(c)
+            return .valid
+        case .invite(let link):
+            do {
+                let checked = try await check(link)
+                invitation = .invite(link)
+                checkedInvite = checked
+                return .valid
+            } catch APIError.notFound {
+                return .unknown
+            } catch Social.Failure.expired {
+                return .unknown
+            } catch Social.Failure.notAuthentic {
+                return .notAuthentic
+            }
+        }
+    }
+
+    /// Forgets an invitation from an abandoned sign-up, so a later sign-in does not carry it.
+    func clearInvitation() {
+        invitation = nil
+        checkedInvite = nil
+    }
+
+    // MARK: Email
+
+    enum LinkRequest { case sent, unknownInvite, tooMany }
+
+    enum Redeem: Equatable {
+        /// Signed in; `created` when the link or passkey made the account.
+        case signedIn(created: Bool)
+        /// A wrong, expired, used or replaced code: the server does not say which.
+        case wrong
+        /// No account uses this address, and the link carried no invitation.
+        case noAccount
+        /// The invitation stopped being valid since the link was sent.
+        case inviteGone
+        case tooMany
+        /// Signed in, but this phone holds another account's practice: erase it, or cancel.
+        case otherAccountData
+    }
+
+    private var linkWindow = LinkWindow()
+
+    /// Whether an opened magic link may be redeemed now.
+    func expectsLink(now: Date = Date()) -> Bool { linkWindow.expects(at: now) }
+
+    func requestMagicLink(email address: String, signUp: Bool) async throws -> LinkRequest {
+        do {
+            try await anonymous.requestMagicLink(email: address, proof: signUp ? invitation?.proof : nil)
+            linkWindow.requested()
+            email = address
+            return .sent
+        } catch APIError.notFound {
+            return .unknownInvite
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
+    }
+
+    func redeemCode(email address: String, code: String) async throws -> Redeem {
+        try await redeem { try await self.anonymous.redeemMagicLink(email: address, code: code) }
+    }
+
+    /// Redeems an opened link's token, only while this phone expects one; nil otherwise.
+    func redeemLink(token: String) async throws -> Redeem? {
+        guard expectsLink() else { return nil }
+        let result = try await redeem { try await self.anonymous.redeemMagicLink(token: token) }
+        if case .signedIn = result { linkWindow.close() }
+        return result
+    }
+
+    /// An opened magic link: kept for Check your email only while expected.
+    func opened(magicToken token: String) {
+        magicToken = expectsLink() ? token : nil
+    }
+
+    private func redeem(_ call: () async throws -> SignInResult) async throws -> Redeem {
+        do {
+            let result = try await call()
+            return signedIn(result) ? .signedIn(created: result.created) : .otherAccountData
+        } catch APIError.badRequest {
+            return .wrong
+        } catch APIError.forbidden {
+            return .noAccount
+        } catch APIError.notFound {
+            return .inviteGone
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
+    }
+
+    // MARK: Profile
+
+    enum ProfileResult { case saved, usernameTaken }
+
+    /// After a sign-up by email: the name is required, username and gender optional.
+    func setProfile(name: String, username newUsername: String?, gender: Gender?) async throws -> ProfileResult {
+        guard let account else { throw Account.Failure.missingSecret }
+        let name = Self.trimmedName(name)
+        do {
+            try await account.api.updateMe(displayName: name, username: newUsername.map { .set($0.lowercased()) } ?? .keep,
+                                           gender: gender.map { .set($0.rawValue) } ?? .keep)
+        } catch APIError.conflict {
+            return .usernameTaken
+        }
+        displayName = name
+        if let newUsername { username = newUsername.lowercased() }
+        if let gender { UserDefaults.standard.set(gender.rawValue, forKey: Gender.storageKey) }
+        return .saved
+    }
+
+    /// Sets or clears the username; false when another account has it.
+    func setUsername(_ value: String?) async -> Bool {
+        guard let account else { return false }
+        var taken = false
+        await run {
+            do {
+                try await account.api.updateMe(username: Patch(value?.lowercased()))
+                self.username = value?.lowercased()
+            } catch APIError.conflict {
+                taken = true
+            }
+        }
+        return !taken
+    }
+
+    /// The server counts code points (runes), not characters: at most 64.
+    static func trimmedName(_ name: String) -> String {
+        var scalars = String.UnicodeScalarView()
+        scalars.append(contentsOf: name.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.prefix(64))
+        return String(scalars)
+    }
+
+    // MARK: Passkeys
+
+    enum PasskeyResult { case saved, cancelled, usernameTaken, inviteGone, otherAccountData }
+
+    /// Without a session, makes the account with a passkey and the profile (the
+    /// no-email path); signed in, adds a passkey to the account.
+    func createPasskey(profile: Profile?) async throws -> PasskeyResult {
+        if let account {
+            let ceremony = try await account.api.beginPasskeyAdd()
+            guard let credential = try await Passkeys.create(ceremony) else { return .cancelled }
+            try await account.api.finishPasskeyAdd(ceremony: ceremony.sessionId, credential: credential)
+            return .saved
+        }
+        guard let proof = invitation?.proof else { throw Account.Failure.accountHasNoKeys }
+        let result: SignInResult
+        do {
+            let ceremony = try await anonymous.beginPasskeySignUp(proof: proof, profile: profile ?? Profile())
+            guard let credential = try await Passkeys.create(ceremony) else { return .cancelled }
+            result = try await anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: credential)
+        } catch APIError.conflict {
+            return .usernameTaken
+        } catch APIError.notFound {
+            return .inviteGone
+        }
+        guard signedIn(result) else { return .otherAccountData }
+        if let profile {
+            if let n = profile.displayName { displayName = n }
+            username = profile.username
+            if let g = profile.gender { UserDefaults.standard.set(g, forKey: Gender.storageKey) }
+        }
+        return .saved
+    }
+
+    /// Offers this app's passkeys; nil when there is none or the person backed out.
+    func signInWithPasskey() async throws -> Redeem? {
+        let ceremony = try await anonymous.beginPasskeySignIn()
+        guard let credential = try await Passkeys.assert(ceremony) else { return nil }
+        return try await redeem { try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: credential) }
+    }
+
+    // MARK: Keys
+
+    /// Whether the signed-in account needs setting up here, restoring, or nothing;
+    /// also takes the profile as the server has it, for a sign-in on a new phone.
+    func standing() async throws -> Account.Standing {
+        guard let account else { throw Account.Failure.missingSecret }
+        let standing = try await account.standing()
+        if standing == .ready { status = .ready }
+        if let me = try? await account.api.me() {
+            if !me.displayName.isEmpty { displayName = me.displayName }
+            username = me.username
+            if let g = me.gender { UserDefaults.standard.set(g, forKey: Gender.storageKey) }
+        }
+        return standing
+    }
+
+    /// Sets up keys during onboarding (or finishes an interrupted set-up, with the
+    /// same code) and returns the recovery code, which the onboarding shows itself.
+    func setUpKeys() async throws -> String {
+        guard let account else { throw Account.Failure.missingSecret }
+        let code = account.hasKeys ? try await account.newRecoveryCode() : try await account.setUpFirstDevice()
+        recoveryUnconfirmed = true
+        status = .ready
+        await afterKeys(account)
+        return code
+    }
+
+    /// The fallback report, then the invitation's friendship, once keys exist.
+    /// Failures here never fail the set-up.
+    private func afterKeys(_ account: Account) async {
+        await reportFallback(account)
+        if let checked = checkedInvite, let social {
+            if let me = userID, checked.inviter != me {
+                try? await social.redeem(checked)
+            }
+            // The link that started this sign-up is used: never offer it for accepting.
+            if pendingInvite?.id == checked.link.id { pendingInvite = nil }
+        }
+        clearInvitation()
+        await syncNow()
+    }
+
     // MARK: Keys
 
     func setUp() async {
@@ -125,8 +476,7 @@ final class AccountModel: ObservableObject {
         await run {
             self.recoveryCode = try await account.setUpFirstDevice()
             self.status = .ready
-            await self.reportFallback(account)
-            await self.syncNow()
+            await self.afterKeys(account)
         }
     }
 
@@ -134,13 +484,28 @@ final class AccountModel: ObservableObject {
         guard let account else { return false }
         var ok = false
         await run {
-            try await account.restore(recoveryCode: code)
+            if !account.hasKeys { try await account.restore(recoveryCode: code) }
             self.status = .ready
-            await self.reportFallback(account)
             ok = true
-            await self.syncNow()
+            await self.afterKeys(account)
         }
         return ok
+    }
+
+    /// The onboarding's restore: false when the code does not open this
+    /// account's recovery boxes; other failures throw.
+    func restoreKeys(code: String) async throws -> Bool {
+        guard let account else { throw Account.Failure.missingSecret }
+        if !account.hasKeys {
+            do {
+                try await account.restore(recoveryCode: code)
+            } catch Account.Failure.badRecoveryCode {
+                return false
+            }
+        }
+        status = .ready
+        await afterKeys(account)
+        return true
     }
 
     func newRecoveryCode() async {
@@ -171,6 +536,8 @@ final class AccountModel: ObservableObject {
             // leaves the counts synced and tries again next time.
             _ = try? await social?.publishStreaks()
             lastSync = Date()
+            UserDefaults.standard.set(lastSync, forKey: Keys.lastSync)
+            offline = false
             if result.refused > 0 {
                 error = String(localized: "\(result.refused) changes could not be synced. Check that the phone's clock is right.", bundle: .appLanguage, locale: .appLanguage)
             } else if result.unreadable > 0 {
@@ -182,11 +549,13 @@ final class AccountModel: ObservableObject {
             // The session ended (removed elsewhere): keys stay, sign in again.
             try? secrets.delete(Self.tokenName)
             self.account = nil
-            status = .none
-            error = String(localized: "Signed out. Sign in again to keep syncing.", bundle: .appLanguage, locale: .appLanguage)
+            social = nil
+            status = .signedOut
+            error = nil
         } catch {
             // Offline or the server is away: the data is safe here and syncs later.
-            self.error = error.localizedDescription
+            offline = true
+            self.error = nil
         }
     }
 
@@ -214,6 +583,7 @@ final class AccountModel: ObservableObject {
             friendsLoaded = true
             if let me = try? await social.account.api.me() {
                 displayName = me.displayName
+                username = me.username
                 deviceCount = me.devices.count
                 await reconcileGender(server: me.gender.flatMap(Gender.init(rawValue:)), social: social)
             }
@@ -292,10 +662,7 @@ final class AccountModel: ObservableObject {
 
     func setDisplayName(_ name: String) async {
         guard let social else { return }
-        // The server counts code points (runes), not characters.
-        var scalars = String.UnicodeScalarView()
-        scalars.append(contentsOf: name.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.prefix(64))
-        let trimmed = String(scalars)
+        let trimmed = Self.trimmedName(name)
         await run {
             try await social.account.api.setDisplayName(trimmed)
             self.displayName = trimmed
@@ -317,6 +684,25 @@ final class AccountModel: ObservableObject {
             if server != Gender.stored() { UserDefaults.standard.set(server.rawValue, forKey: Gender.storageKey) }
         } else if let mine = Gender.stored() {
             try? await social.account.api.setGender(mine.rawValue)
+        }
+    }
+
+    // MARK: Signing out
+
+    /// Ends the session here and forgets the account on this phone: the token,
+    /// the account's keys, the device key and the sync state. The practice stays,
+    /// as in local mode. Allowed only once the recovery code is safe.
+    func signOut() async {
+        guard canSignOut, let account else { return }
+        pendingSync?.cancel()
+        let user = userID
+        await run {
+            try? await account.api.signOut()
+            try self.database.clearSyncState()
+            Purge.deleteKeychainItems()
+            for key in Keys.all { UserDefaults.standard.removeObject(forKey: key) }
+            if let user { UserDefaults.standard.set(user.uuidString, forKey: Keys.lastUser) }
+            self.forget()
         }
     }
 
@@ -353,6 +739,13 @@ final class AccountModel: ObservableObject {
         pendingInvite = nil
         friendsLoaded = false
         displayName = ""
+        username = nil
+        email = nil
+        offline = false
+        clearInvitation()
+        heldSignIn = nil
+        magicToken = nil
+        linkWindow.close()
         status = .none
         lastSync = nil
         recoveryCode = nil
@@ -375,4 +768,14 @@ final class AccountModel: ObservableObject {
             self.error = error.localizedDescription
         }
     }
+}
+
+/// The account steps opened over the app, outside onboarding.
+enum AccountFlow: String, Identifiable {
+    /// "Make an online account": from the invitation on.
+    case newAccount
+    /// "I already have an account", "Sign in again".
+    case signIn
+
+    var id: String { rawValue }
 }

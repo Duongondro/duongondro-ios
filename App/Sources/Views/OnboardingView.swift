@@ -4,15 +4,20 @@ import DuongondroStore
 
 /// The practice comes before the account: one question per screen, each with
 /// a back button that returns one step and keeps the answers given so far.
-/// Yes/no questions advance on tap.
+/// Yes/no questions advance on tap. From Settings, with `done`, only the account
+/// steps from `start` (sign in again, or make an account later), leaving the
+/// practices and preferences as they are.
 struct OnboardingView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var account: AccountModel
     @StateObject private var flow = OnboardingFlow()
+    var start: OnboardingStep = .welcome
+    var done: (() -> Void)?
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                if flow.step != .welcome { StepTopBar() }
+                if flow.step != .welcome { StepTopBar(leave: done != nil && !flow.canGoBack ? done : nil) }
                 Group {
                     switch flow.step {
                     case .welcome: WelcomeStep()
@@ -21,7 +26,19 @@ struct OnboardingView: View {
                     case .practices: PracticesStep()
                     case .counts(let index): CountsStep(index: index).id(index)
                     case .reminder: ReminderStep()
-                    case .door: DoorStep()
+                    case .where: WhereStep()
+                    case .invite: InviteStep()
+                    case .consent: ConsentStep()
+                    case .email: EmailStep()
+                    case .checkEmail: CheckEmailStep()
+                    case .username: UsernameStep()
+                    case .name: NameStep()
+                    case .gender: GenderStep()
+                    case .passkey: PasskeyStep()
+                    case .recovery: RecoveryStep()
+                    case .recoveryCheck: RecoveryCheckStep()
+                    case .signIn: SignInStep()
+                    case .restore: RestoreStep()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -32,17 +49,37 @@ struct OnboardingView: View {
             .animation(.default, value: flow.step)
         }
         .environmentObject(flow)
+        .onAppear {
+            flow.begin(start)
+            flow.finishLocal = { [weak flow, model] in
+                if let done { done() } else { flow?.finish(into: model) }
+            }
+            flow.finishOnline = { [weak flow, model, account] in
+                if let done {
+                    Task { await account.syncNow() }
+                    done()
+                } else {
+                    flow?.finish(into: model)
+                    Task { await account.syncNow() }
+                }
+            }
+        }
     }
 }
 
 // MARK: - State
 
-// MARK: - State
-
-enum OnboardingDoor: Equatable { case invite, justMe, existingAccount }
-
 enum OnboardingStep: Hashable {
-    case welcome, finishedNgondro, finishedShortRefuge, practices, counts(Int), reminder, door
+    case welcome, finishedNgondro, finishedShortRefuge, practices, counts(Int), reminder
+    /// "Keep it on this phone, or online?"
+    case `where`
+    case invite, consent, email, checkEmail, username, name, gender, passkey, recovery
+    /// Two groups of the recovery code typed back.
+    case recoveryCheck
+    /// "Welcome back": sign in with a passkey or an emailed link.
+    case signIn
+    /// Signed in to an account with keys on a new phone: the recovery code brings them back.
+    case restore
 }
 
 /// What the user said about one chosen practice.
@@ -64,7 +101,30 @@ final class OnboardingFlow: ObservableObject {
     @Published private(set) var step: OnboardingStep = .welcome
     private var history: [OnboardingStep] = []
 
-    @Published var door: OnboardingDoor = .justMe
+    /// True after "I already have an account": the email steps sign in rather than up.
+    @Published var signingIn = false
+    /// The invitation code, from a link opened earlier or typed in.
+    @Published var inviteCode = ""
+    /// Why the invitation was not accepted, shown under its field.
+    @Published var inviteProblem: String?
+    /// The invite link opened earlier has been tried, so it is not checked again.
+    var linkTried = false
+    /// A sign-in waits for "erase the other account's practice here, or cancel".
+    @Published var otherAccount = false
+    /// The server said the username is taken; shown on the Username step.
+    @Published var usernameTaken = false
+    @Published var consented = false
+    @Published var email = ""
+    @Published var username = ""
+    @Published var displayName = ""
+    @Published var gender: Gender?
+    /// Made once, so going back and forward shows the same code.
+    @Published var recoveryCode: String?
+    /// Set by the view: local mode keeps the onboarding's answers; from Settings
+    /// nothing about the practices changes.
+    var finishLocal: () -> Void = {}
+    var finishOnline: () -> Void = {}
+    private var begun = false
     @Published var finishedNgondro = false
     @Published var finishedShortRefuge = false
     /// Chosen practices, in the order picked. Kept when the user goes back.
@@ -72,6 +132,16 @@ final class OnboardingFlow: ObservableObject {
     @Published var reminder: Date? = Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: Date())
 
     var canGoBack: Bool { !history.isEmpty }
+
+    /// Where a flow from Settings starts, once.
+    func begin(_ start: OnboardingStep) {
+        guard !begun else { return }
+        begun = true
+        if start != .welcome {
+            step = start
+            signingIn = start == .signIn
+        }
+    }
 
     func go(_ next: OnboardingStep) {
         history.append(step)
@@ -81,6 +151,13 @@ final class OnboardingFlow: ObservableObject {
     func back() {
         guard let previous = history.popLast() else { return }
         step = previous
+    }
+
+    /// Back to an earlier step (a taken username, a spent invitation), keeping the answers.
+    func backTo(_ target: OnboardingStep) {
+        guard let i = history.lastIndex(of: target) else { return go(target) }
+        history.removeSubrange(i...)
+        step = target
     }
 
     var available: [Practice] {
@@ -120,7 +197,8 @@ final class OnboardingFlow: ObservableObject {
         prefs.onboarded = true
         prefs.finishedNgondro = finishedNgondro
         prefs.finishedShortRefuge = finishedShortRefuge || finishedNgondro
-        prefs.reminderMinutes = reminder.map { r in
+        // Signing in skips the practice questions, the reminder's among them.
+        prefs.reminderMinutes = signingIn ? nil : reminder.map { r in
             let c = Calendar.current.dateComponents([.hour, .minute], from: r)
             return (c.hour ?? 20) * 60 + (c.minute ?? 0)
         }
@@ -130,28 +208,38 @@ final class OnboardingFlow: ObservableObject {
 }
 
 extension OnboardingStep {
-    /// Which of the five progress dashes this step reaches.
-    var dashes: Int {
+    static let practiceSteps = 5
+    static let accountSteps = 3
+
+    /// How far along the dashes a step is, and out of how many: five practice
+    /// questions, then three account steps; nil for steps without dashes.
+    func progress(signingIn: Bool) -> (reached: Int, total: Int)? {
         switch self {
-        case .welcome, .finishedNgondro: return 1
-        case .finishedShortRefuge: return 2
-        case .practices: return 3
-        case .counts: return 4
-        case .reminder, .door: return 5
+        case .finishedNgondro: return (1, Self.practiceSteps)
+        case .finishedShortRefuge: return (2, Self.practiceSteps)
+        case .practices: return (3, Self.practiceSteps)
+        case .counts: return (4, Self.practiceSteps)
+        case .reminder: return (5, Self.practiceSteps)
+        case .email, .checkEmail, .username: return signingIn ? nil : (1, Self.accountSteps)
+        case .name: return signingIn ? nil : (2, Self.accountSteps)
+        case .gender: return signingIn ? nil : (3, Self.accountSteps)
+        default: return nil
         }
     }
 }
 
 // MARK: - Building blocks
 
-/// Back chevron on the left, five progress dashes centred (the mockups' top bar).
+/// Back chevron on the left, the progress dashes centred where the step has
+/// them (the mockups' top bar). `leave` closes the account steps opened from Settings.
 private struct StepTopBar: View {
     @EnvironmentObject private var flow: OnboardingFlow
-    private let total = 5
+    var leave: (() -> Void)?
 
     var body: some View {
+        let progress = flow.step.progress(signingIn: flow.signingIn)
         HStack(spacing: 0) {
-            Button { flow.back() } label: {
+            Button { if let leave { leave() } else { flow.back() } } label: {
                 Image(systemName: "chevron.backward")
                     .font(.title3.weight(.bold))
                     .foregroundStyle(Theme.ink)
@@ -160,18 +248,22 @@ private struct StepTopBar: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Back")
-            .opacity(flow.canGoBack ? 1 : 0)
-            .disabled(!flow.canGoBack)
+            .opacity(flow.canGoBack || leave != nil ? 1 : 0)
+            .disabled(!flow.canGoBack && leave == nil)
             Spacer(minLength: 0)
-            HStack(spacing: Theme.Space.dash) {
-                ForEach(1...total, id: \.self) { n in
-                    RoundedRectangle(cornerRadius: Theme.Radius.dash, style: .continuous)
-                        .fill(n <= flow.step.dashes ? Theme.accent : Theme.inputBorder)
-                        .frame(width: Theme.Size.stepDash.width, height: Theme.Size.stepDash.height)
+            if let progress {
+                HStack(spacing: Theme.Space.dash) {
+                    ForEach(1...progress.total, id: \.self) { n in
+                        RoundedRectangle(cornerRadius: Theme.Radius.dash, style: .continuous)
+                            .fill(n <= progress.reached ? Theme.accent : Theme.inputBorder)
+                            .frame(width: Theme.Size.stepDash.width, height: Theme.Size.stepDash.height)
+                    }
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(progress.total == OnboardingStep.accountSteps
+                                    ? Text("Account, step \(progress.reached) of \(progress.total)")
+                                    : Text("Step \(progress.reached) of \(progress.total)"))
             }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Step \(flow.step.dashes) of \(total)")
             Spacer(minLength: 0)
             Color.clear.frame(width: Theme.Size.minTap, height: Theme.Size.minTap)
         }
@@ -179,7 +271,7 @@ private struct StepTopBar: View {
     }
 }
 
-private struct StepHeader: View {
+struct StepHeader: View {
     let title: LocalizedStringKey
     var detail: LocalizedStringKey?
     var titleSize: CGFloat = 32
@@ -216,7 +308,7 @@ struct PrimaryButton: View {
     }
 }
 
-private struct ChoiceButton: View {
+struct ChoiceButton: View {
     let title: LocalizedStringKey
     var filled = false
     let action: () -> Void
@@ -251,14 +343,11 @@ private struct QuestionLayout<Answers: View>: View {
 
 // MARK: - Steps
 
-// MARK: - Steps
-
 private struct WelcomeStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
 
-    // The Welcome mockup (design canvas "Welcome, light" / "Welcome, dark"): centred,
-    // the emblem, the name, the tagline with its encryption line in gold, then the
-    // three doors: a filled button, an outlined one, and a text link.
+    // Onboarding v2's Welcome: centred, the emblem, the name, the motto, the
+    // tagline with its encryption line in gold, then two equal doors.
     var body: some View {
         VStack(spacing: Theme.Space.xxl) {
             Spacer(minLength: Theme.Space.xxl)
@@ -292,27 +381,26 @@ private struct WelcomeStep: View {
             .fixedSize(horizontal: false, vertical: true)
             Spacer()
             VStack(spacing: Theme.Space.m) {
-                Button { pick(.invite) } label: {
-                    Text("I have an invite")
+                Button {
+                    flow.signingIn = false
+                    flow.go(.finishedNgondro)
+                } label: {
+                    Text("Get started")
                         .font(.headline)
                         .foregroundStyle(Theme.welcomePrimaryInk)
                         .frame(maxWidth: .infinity, minHeight: Theme.Size.welcomeButton)
                         .background(Theme.welcomePrimary, in: RoundedRectangle(cornerRadius: Theme.Radius.card))
                 }
-                Button { pick(.justMe) } label: {
-                    Text("Just me, on this phone")
+                Button {
+                    flow.signingIn = true
+                    flow.go(.signIn)
+                } label: {
+                    Text("I already have an account")
                         .font(.headline)
                         .foregroundStyle(Theme.welcomeOutlineInk)
                         .frame(maxWidth: .infinity, minHeight: Theme.Size.welcomeButton)
                         .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card)
                             .strokeBorder(Theme.welcomeOutline, lineWidth: 2))
-                }
-                Button { pick(.existingAccount) } label: {
-                    Text("I already have an account")
-                        .font(.subheadline.weight(.semibold))
-                        .underline()
-                        .foregroundStyle(Theme.welcomeSoft)
-                        .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap)
                 }
             }
             .buttonStyle(.plain)
@@ -320,13 +408,7 @@ private struct WelcomeStep: View {
         .padding(.bottom, Theme.Space.xl)
         .background(Theme.welcomeGround.padding(.horizontal, -Theme.Space.xl).ignoresSafeArea())
     }
-
-    private func pick(_ door: OnboardingDoor) {
-        flow.door = door
-        flow.go(.finishedNgondro)
-    }
 }
-
 
 private struct FinishedNgondroStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
@@ -639,11 +721,11 @@ private struct ReminderStep: View {
             Spacer(minLength: 0)
             ChoiceButton(title: "Remind me at this time", filled: true) {
                 flow.reminder = time
-                flow.go(.door)
+                flow.go(.where)
             }
             ChoiceButton(title: "No reminders") {
                 flow.reminder = nil
-                flow.go(.door)
+                flow.go(.where)
             }
         }
         .padding(.bottom, Theme.Space.xl)
@@ -651,32 +733,7 @@ private struct ReminderStep: View {
     }
 }
 
-/// Where the doors part. Accounts and friends need the server (phase 3); until
-/// then every door ends in local mode, said plainly rather than faked.
-private struct DoorStep: View {
-    @EnvironmentObject private var model: AppModel
-    @EnvironmentObject private var flow: OnboardingFlow
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.l) {
-            Group {
-                switch flow.door {
-                case .justMe:
-                    StepHeader(title: "Everything stays on this phone",
-                           detail: "No account and no network. You can sign up later and keep everything.")
-                case .invite, .existingAccount:
-                    StepHeader(title: "Accounts are not ready yet",
-                               detail: "This build has no server. Your practice is kept on this phone, and joining friends will pick it up later.")
-                }
-            }
-            .padding(.top, Theme.Space.s)
-            Spacer(minLength: 0)
-            PrimaryButton(title: "Start practising") { flow.finish(into: model) }
-        }
-        .padding(.bottom, Theme.Space.xl)
-    }
-}
-
 #Preview {
     OnboardingView().environmentObject(AppModel.preview())
+        .environmentObject(AccountModel(database: AppModel.preview().database))
 }

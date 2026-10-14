@@ -22,6 +22,8 @@ struct AccountSection: View {
 
     @ViewBuilder private var rows: some View {
         switch account.status {
+        case .signedOut:
+            EmptyView()
         case .none:
             #if DEBUG
             CardSection(header: "Account", footer: "Development builds only: a new account on this Mac's development server.") {
@@ -146,7 +148,7 @@ struct RecoveryCodeView: View {
 }
 
 /// Numbered groups in two columns, read down the first column, then the second.
-private struct CodeGrid: View {
+struct CodeGrid: View {
     let groups: [String]
 
     var body: some View {
@@ -176,8 +178,10 @@ private struct CodeGrid: View {
 }
 
 /// Asks for two groups of the code, picked at random, before letting it go.
-private struct RecoveryCheckView: View {
+/// `framed` for a screen of its own; inside the onboarding the steps' frame is used.
+struct RecoveryCheckView: View {
     let groups: [String]
+    var framed = true
     let done: () -> Void
     let back: () -> Void
     @State private var asked: [Int] = []
@@ -222,9 +226,9 @@ private struct RecoveryCheckView: View {
                 .foregroundStyle(Theme.accent)
                 .frame(maxWidth: .infinity, minHeight: Theme.Size.aboutButton)
         }
-        .padding(.horizontal, Theme.Space.xl + Theme.Space.xs)
+        .padding(.horizontal, framed ? Theme.Space.xl + Theme.Space.xs : 0)
         .padding(.top, Theme.Space.xl)
-        .padding(.bottom, Theme.Space.xxl)
+        .padding(.bottom, framed ? Theme.Space.xxl : Theme.Space.xl)
         .background(Theme.ground.ignoresSafeArea())
         .interactiveDismissDisabled()
         .onAppear {
