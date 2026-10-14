@@ -60,6 +60,11 @@ public final class Account: @unchecked Sendable {
         return key
     }
 
+    /// This phone's device id on the server, once it has enrolled.
+    public var deviceID: UUID? {
+        ((try? secrets.read(SecretName.deviceID)) ?? nil).flatMap { UUID(uuidString: String(decoding: $0, as: UTF8.self)) }
+    }
+
     public var hasKeys: Bool {
         ((try? secrets.read(SecretName.identitySeed)) ?? nil) != nil && ((try? database.syncState()) ?? nil) != nil
     }
