@@ -18,6 +18,7 @@ struct AccountSection: View {
     @State private var usernameText = ""
     @State private var note: String?
     @State private var finishing = false
+    @State private var savingPasskey = false
 
     var body: some View {
         Group { rows }
@@ -92,7 +93,7 @@ struct AccountSection: View {
                     SettingsRow("Sync", detail: syncDetail)
                 }
                 Button { savePasskey() } label: { SettingsRow("Save a passkey", chevron: true) }
-                    .disabled(account.busy)
+                    .disabled(account.busy || savingPasskey)
                 if account.canSignOut {
                     Button { signingOut = true } label: {
                         Text("Sign out on this phone")
@@ -177,8 +178,13 @@ struct AccountSection: View {
     }
 
     private func savePasskey() {
+        // One ceremony at a time: a second tap would start another the server
+        // and the system sheet know nothing of.
+        guard !savingPasskey else { return }
+        savingPasskey = true
         note = nil
         Task {
+            defer { savingPasskey = false }
             do {
                 switch try await account.createPasskey(profile: nil) {
                 case .saved: note = localized("Passkey saved.")
