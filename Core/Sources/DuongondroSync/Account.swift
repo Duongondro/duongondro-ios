@@ -108,6 +108,11 @@ public final class Account: @unchecked Sendable {
     /// again resumes an interrupted set-up with it (`standing`), and another one
     /// signing in clears it. A set-up interrupted after the identity was published
     /// but before the recovery boxes were stored has its only copy of the keys here.
+    ///
+    /// The dropped session is not revoked on the server: this runs at launch,
+    /// before anyone signs in, and makes no network call. Sessions never expire;
+    /// this one ends when the account signs its other sessions out, removes the
+    /// device the session registered, or is deleted.
     public static func forgetEarlierInstall(_ secrets: SecretStore) throws {
         try secrets.delete(SecretName.sessionToken)
     }
