@@ -102,6 +102,37 @@ struct FriendDetailView: View {
             } message: {
                 Text("Reports go to the people who run Duongöndro.")
             }
+        } else {
+            // Opened from a push before the list knew this friend, or after they left.
+            MissingFriend()
+        }
+    }
+}
+
+/// A friend not in the list: the list is fetched again, then either the page
+/// appears or this says why it cannot.
+private struct MissingFriend: View {
+    @EnvironmentObject private var account: AccountModel
+    @State private var checked = false
+
+    var body: some View {
+        VStack(spacing: Theme.Space.m) {
+            if checked {
+                Text("You are not friends any more.")
+                    .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(.center)
+            } else {
+                ProgressView()
+            }
+        }
+        .padding(Theme.Space.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.ground.ignoresSafeArea())
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.visible, for: .navigationBar)
+        .task {
+            await account.refreshFriends()
+            checked = true
         }
     }
 }

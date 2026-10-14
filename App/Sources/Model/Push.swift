@@ -152,7 +152,8 @@ final class PushModel: NSObject, ObservableObject {
         switch route {
         case .friend(let id):
             model.tab = .friends
-            openFriend = id
+            // Friends' pages exist only with an account (a push after signing out).
+            if account?.status == .ready { openFriend = id }
         case .today:
             model.tab = .today
         }
