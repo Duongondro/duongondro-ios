@@ -3,6 +3,7 @@ import DuongondroCore
 import DuongondroStore
 import DuongondroSync
 import Foundation
+import UIKit
 
 /// The account side of the app: signing in, setting up keys or restoring them
 /// from the recovery code, and syncing. Practice data never waits for it: the app
@@ -766,9 +767,13 @@ final class AccountModel: ObservableObject {
         try await account.api.putPushToken(device: device, platform: platform, token: token)
     }
 
-    /// No more pushes to this phone for the account it is leaving.
+    /// No more pushes to this phone for the account it is leaving, even when the
+    /// server cannot be reached: the token is deleted there if it can be, this app
+    /// stops receiving remote notifications, and the extension's settings go.
     private func dropPushToken(_ account: Account) async {
         if let device = account.deviceID { try? await account.api.deletePushToken(device: device) }
+        UIApplication.shared.unregisterForRemoteNotifications()
+        UserDefaults(suiteName: PushShared.appGroup)?.removePersistentDomain(forName: PushShared.appGroup)
         UserDefaults.standard.removeObject(forKey: Keys.pushSent)
     }
 

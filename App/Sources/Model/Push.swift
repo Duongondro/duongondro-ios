@@ -53,8 +53,12 @@ final class PushModel: NSObject, ObservableObject {
         self.model = model
         self.account = account
         statusWatch = account.$status.removeDuplicates().sink { [weak self] status in
-            guard status == .ready else { return }
-            Task { await self?.refresh() }
+            // Sent before the change is stored: the new status travels along.
+            Task { @MainActor in
+                guard let self else { return }
+                if let model = self.model { self.share(model.snapshot, ready: status == .ready) }
+                if status == .ready { await self.refresh() }
+            }
         }
         share(model.snapshot)
         if let pendingRoute { open(pendingRoute) }
@@ -119,8 +123,13 @@ final class PushModel: NSObject, ObservableObject {
 
     /// What the extension needs to render a push, in the app group: Discreet
     /// notifications, the app's language and the names of the person's own practices.
-    func share(_ snapshot: Snapshot) {
+    /// Only for an account with keys, the only kind that gets pushes; otherwise the
+    /// group holds nothing.
+    func share(_ snapshot: Snapshot, ready: Bool? = nil) {
         guard let shared = UserDefaults(suiteName: PushShared.appGroup) else { return }
+        guard ready ?? (account?.status == .ready) else {
+            return shared.removePersistentDomain(forName: PushShared.appGroup)
+        }
         let localization = AppLanguage.stored().localization()
         let names = Dictionary(snapshot.practices.filter(\.practice.isCustom).map { ($0.id, $0.practice.name) },
                                uniquingKeysWith: { a, _ in a })
