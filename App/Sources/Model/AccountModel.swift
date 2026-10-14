@@ -228,20 +228,26 @@ final class AccountModel: ObservableObject {
     }
 
     /// Forgets what this phone kept for the account it is switching away from:
-    /// its keys and device key, its profile (all but the email this sign-in was
-    /// asked for), and a recovery code on show.
+    /// its keys and device key, its profile and gender (all but the email this
+    /// sign-in was asked for), the last user, what was last synced, friends and
+    /// pokes, and a recovery code on show.
     private func forgetOtherAccount() {
         Purge.deleteKeychainItems()
         let kept = email
-        for key in Keys.all { UserDefaults.standard.removeObject(forKey: key) }
         username = nil
         displayName = ""
-        email = kept
         recoveryCode = nil
         shownCode = nil
         recoveryUnconfirmed = false
         friends = []
+        friendsLoaded = false
+        pokedOn = [:]
         invites = [:]
+        lastSync = nil
+        deviceCount = nil
+        // The other account's gender would otherwise go up to this one.
+        for key in Keys.all + [Keys.lastUser, Gender.storageKey] { UserDefaults.standard.removeObject(forKey: key) }
+        email = kept
     }
 
     /// "Erase and continue": the other account's practice and keys leave this
