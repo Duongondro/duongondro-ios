@@ -27,6 +27,11 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     /// The folder holding the database and its WAL files. Excluded from device
     /// backups: without Advanced Data Protection those are not end-to-end
     /// encrypted, and the file holds plaintext counts (design: Offline mode).
+    ///
+    /// The file's place is part of how a fresh install is recognised (`createdFile`):
+    /// moving the folder or renaming the file would make every install look new
+    /// and drop its session token. A future move must migrate the old file to the
+    /// new place before opening it.
     public static func folderURL(fileManager: FileManager = .default) throws -> URL {
         var folder = try fileManager
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
