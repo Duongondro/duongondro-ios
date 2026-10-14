@@ -57,6 +57,29 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(p.isDue(at: t0.addingTimeInterval(9)))
     }
 
+    func testPendingLogKeepsItsSessionAndEstimatesTheStart() {
+        let t0 = Date(timeIntervalSince1970: 1_790_000_000)
+        var p = PendingLog(practiceID: "dorje-sempa", amount: 108, at: t0)
+        let id = p.sessionID
+        p.add(108, at: t0.addingTimeInterval(3))
+        XCTAssertEqual(p.sessionID, id, "one row, extended in place")
+        XCTAssertTrue(id.isV7)
+        let s = p.session(timeZone: TimeZone(identifier: "Europe/Warsaw")!, timedSessionLengths: [1200])
+        XCTAssertEqual(s.id, id)
+        XCTAssertEqual(s.amount, 216)
+        XCTAssertEqual(s.loggedAt, t0)
+        XCTAssertEqual(s.startedAt, t0.addingTimeInterval(-1200))
+        XCTAssertFalse(s.startExact)
+    }
+
+    func testAPendingRowFoundOnLaunchIsOverOnceItsWindowPassed() {
+        let now = Date(timeIntervalSince1970: 1_790_000_000)
+        XCTAssertTrue(PendingLog.isOver(deadline: now, at: now))
+        XCTAssertTrue(PendingLog.isOver(deadline: now.addingTimeInterval(-60), at: now))
+        XCTAssertFalse(PendingLog.isOver(deadline: now.addingTimeInterval(2), at: now))
+        XCTAssertTrue(PendingLog.isOver(deadline: now.addingTimeInterval(60), at: now), "a clock moved back cannot keep it pending")
+    }
+
     func testStartEstimate() {
         let logged = Date(timeIntervalSince1970: 10_000)
         XCTAssertEqual(SessionStart.estimate(loggedAt: logged, tappedStart: nil, timedSessionLengths: []),

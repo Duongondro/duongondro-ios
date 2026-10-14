@@ -283,7 +283,8 @@ public actor Social {
             if let st = Statements.parseStreak(s.payload) { published[s.practice] = st.seq }
         }
         try database.mergePublished(published, generation: generation)
-        let snapshot = try database.snapshot()
+        // Final sessions only: a tap still in its undo window is never published.
+        let snapshot = try database.snapshot().withoutPending
         var sent = 0
         for (practice, lastSeq) in try database.publicStreakSeqs() {
             let seq = max(lastSeq + 1, Statements.millis(now()))

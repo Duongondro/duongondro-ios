@@ -62,9 +62,9 @@ struct YourDataView: View {
         exporting = true
         defer { exporting = false }
         serverMissing = false
-        // Anything still in the undo window belongs in the export. The published
-        // snapshot updates asynchronously, so read the database directly.
-        model.commitPending()
+        // The export holds final sessions only: the open undo window closes first.
+        // The published snapshot updates asynchronously, so read the database directly.
+        model.finalisePending()
         // With a ready account the server's rows and sealed sessions come first;
         // offline or failed, the phone's part is exported and the screen says so.
         var server: DataExport.Server?

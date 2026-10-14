@@ -162,6 +162,12 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
                 );
                 """)
         }
+        migrator.registerMigration("v5") { db in
+            // Duongondro/duongondro-android#5: a session in its undo window is written
+            // at once, pending until the window closes; NULL is final, as every row
+            // from before. Pending rows are never pushed, and Undo deletes them.
+            try db.execute(sql: "ALTER TABLE sessions ADD COLUMN pending_until DATETIME")
+        }
         return migrator
     }
 
@@ -185,8 +191,12 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         // again would overwrite their opening counts and streak seeds.
         if !practices.isEmpty { preferences.onboarded = true }
         let publicPractices = Set(try String.fetchAll(db, sql: "SELECT practice_id FROM public_streaks"))
+        var pending: [UUID: Date] = [:]
+        for row in try Row.fetchAll(db, sql: "SELECT id, pending_until FROM sessions WHERE pending_until IS NOT NULL AND deleted_at IS NULL") {
+            if let id = UUID(uuidString: row["id"]) { pending[id] = row["pending_until"] }
+        }
         return Snapshot(practices: practices, sessions: sessions, seeds: seeds, preferences: preferences,
-                        publicPractices: publicPractices)
+                        publicPractices: publicPractices, pending: pending)
     }
 
     /// Calls `onChange` with a fresh snapshot now and after every write, on the
@@ -219,7 +229,7 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         }
     }
 
-    /// Writes a session. Called only when the undo window has closed.
+    /// Writes a final session.
     public func insert(_ s: Session) throws {
         try writer.write { db in
             try db.execute(sql: """
@@ -228,6 +238,58 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
                 """, arguments: [s.id.uuidString.lowercased(), s.practiceID, s.amount, s.startedAt, s.startExact,
                                  s.timeZoneID, s.chosenDay?.description, s.loggedAt, s.loggedAt])
         }
+    }
+
+    /// A session in its undo window: written at once with `pending_until`, so the
+    /// screen counts it and a crash keeps it; `dirtySessions` skips it until
+    /// `finalise`. Extending the window updates the same row, while it is pending.
+    public func savePending(_ s: Session, until deadline: Date, now: Date = Date()) throws {
+        try writer.write { db in
+            try db.execute(sql: """
+                INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day, logged_at,
+                                      updated_at, pending_until)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT (id) DO UPDATE SET
+                    amount = excluded.amount, started_at = excluded.started_at, time_zone = excluded.time_zone,
+                    updated_at = excluded.updated_at, pending_until = excluded.pending_until
+                WHERE sessions.pending_until IS NOT NULL
+                """, arguments: [s.id.uuidString.lowercased(), s.practiceID, s.amount, s.startedAt, s.startExact,
+                                 s.timeZoneID, s.chosenDay?.description, s.loggedAt, now, deadline])
+        }
+    }
+
+    /// Undo: the pending row goes outright. It was never synced, so it needs no tombstone.
+    public func discardPending(_ id: UUID) throws {
+        try writer.write { db in
+            try db.execute(sql: "DELETE FROM sessions WHERE id = ? AND pending_until IS NOT NULL",
+                           arguments: [id.uuidString.lowercased()])
+        }
+    }
+
+    /// The window closed: the session becomes final and dirty, stamped now, so the
+    /// next push sends it. Nil if it is gone (undone, erased) or already final.
+    @discardableResult
+    public func finalise(_ id: UUID, now: Date = Date()) throws -> Session? {
+        try writer.write { db in try Self.finalise(id.uuidString.lowercased(), db, now: now) }
+    }
+
+    /// On launch: pending sessions whose window is over (`PendingLog.isOver`)
+    /// become final, so a crash never loses a tap nor syncs one early. Returns them.
+    @discardableResult
+    public func finaliseDue(at now: Date = Date()) throws -> [Session] {
+        try writer.write { db in
+            try Row.fetchAll(db, sql: "SELECT id, pending_until FROM sessions WHERE pending_until IS NOT NULL")
+                .filter { PendingLog.isOver(deadline: $0["pending_until"], at: now) }
+                .compactMap { try Self.finalise($0["id"], db, now: now) }
+        }
+    }
+
+    static func finalise(_ id: String, _ db: Database, now: Date) throws -> Session? {
+        let stamp = try nextStamp(for: UUID(uuidString: id) ?? UUID(), db, now: now)
+        try db.execute(sql: "UPDATE sessions SET pending_until = NULL, dirty = 1, updated_at = ? WHERE id = ? AND pending_until IS NOT NULL",
+                       arguments: [stamp, id])
+        guard db.changesCount > 0 else { return nil }
+        return try Row.fetchOne(db, sql: "SELECT * FROM sessions WHERE id = ?", arguments: [id]).map(Session.init(row:))
     }
 
     /// The after-midnight switch: count `id` for `day` instead (nil: its start's own date).
@@ -443,10 +505,12 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         }
     }
 
-    /// Sessions changed here since the server last acknowledged them, deletions included.
+    /// Sessions changed here since the server last acknowledged them, deletions
+    /// included; a session in its undo window never goes up.
     public func dirtySessions() throws -> [SyncRecord] {
         try writer.read { db in
-            try Row.fetchAll(db, sql: "SELECT * FROM sessions WHERE dirty = 1 ORDER BY updated_at, id").map(SyncRecord.init(row:))
+            try Row.fetchAll(db, sql: "SELECT * FROM sessions WHERE dirty = 1 AND pending_until IS NULL ORDER BY updated_at, id")
+                .map(SyncRecord.init(row:))
         }
     }
 
@@ -623,14 +687,28 @@ public struct Snapshot: Equatable, Sendable {
     public var preferences: Preferences
     /// Practices whose streak friends see.
     public var publicPractices: Set<String>
+    /// Sessions still in their undo window, with when it closes. They are in
+    /// `sessions`, so every number on screen includes them; nothing that leaves
+    /// the phone (sync, public streaks, the export) does.
+    public var pending: [UUID: Date]
 
     public init(practices: [TrackedPractice] = [], sessions: [Session] = [], seeds: [StreakSeed] = [],
-                preferences: Preferences = Preferences(), publicPractices: Set<String> = []) {
+                preferences: Preferences = Preferences(), publicPractices: Set<String> = [], pending: [UUID: Date] = [:]) {
         self.practices = practices
         self.sessions = sessions
         self.seeds = seeds
         self.preferences = preferences
         self.publicPractices = publicPractices
+        self.pending = pending
+    }
+
+    /// Final sessions only: what may leave the phone.
+    public var withoutPending: Snapshot {
+        guard !pending.isEmpty else { return self }
+        var s = self
+        s.sessions = sessions.filter { pending[$0.id] == nil }
+        s.pending = [:]
+        return s
     }
 
     public var activePractices: [TrackedPractice] { practices.filter { !$0.archived } }

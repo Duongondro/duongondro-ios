@@ -29,9 +29,9 @@ struct DuongondroApp: App {
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
-            // A session in its undo window is written before the app can be
-            // killed; .inactive (Control Center, a call banner) keeps the window.
-            case .background: model.commitPending()
+            // Leaving closes the undo window: its pending session becomes final
+            // and syncs; .inactive (Control Center, a call banner) keeps the window.
+            case .background: model.finalisePending()
             case .active:
                 model.tick()
                 Task {

@@ -2,14 +2,15 @@ import Foundation
 import DuongondroCore
 import DuongondroStore
 
-/// What the UI shows, published from the database, plus the in-memory state
-/// that must never reach it early: the undo window.
+/// What the UI shows, published from the database, plus the undo window. A
+/// session in its window is already in the database, pending (counted on
+/// screen, never synced); the window itself, its deadline and Undo, lives here.
 @MainActor
 final class AppModel: ObservableObject {
     @Published private(set) var snapshot = Snapshot()
-    /// The open undo window, at most one at a time.
+    /// The open undo window, at most one at a time; its session is in the database, pending.
     @Published private(set) var pending: PendingLog?
-    /// A session just written whose estimated start fell before midnight.
+    /// A session just made final whose estimated start fell before midnight.
     @Published var afterMidnight: AfterMidnightPrompt?
     /// Set when a read or write failed; shown in a banner.
     @Published private(set) var storageError: String?
@@ -33,6 +34,7 @@ final class AppModel: ObservableObject {
         observation = database.observe(
             onError: { [weak self] error in self?.storageError = error.localizedDescription },
             onChange: { [weak self] snapshot in self?.snapshot = snapshot })
+        resumeWindows()
     }
 
     /// The app's database, or an in-memory one (and an error shown) if the file cannot be opened.
@@ -83,44 +85,71 @@ final class AppModel: ObservableObject {
 
     // MARK: - Logging
 
-    /// +mala, +custom amount or "done today" (0). Opens or extends the undo window;
-    /// nothing is written until it closes.
+    /// +mala, +custom amount or "done today" (0). Opens or extends the undo window.
+    /// The session is written at once, pending, so every number includes it and a
+    /// crash cannot lose it; it is not synced until the window closes.
     func add(_ amount: Int, to practiceID: String, at now: Date = Date()) {
         guard persistent else { return }
-        if var p = pending, p.practiceID == practiceID {
-            p.add(amount, at: now)
-            pending = p
+        var next: PendingLog
+        if let p = pending, p.practiceID == practiceID {
+            next = p
+            next.add(amount, at: now)
         } else {
-            commitPending()
-            pending = PendingLog(practiceID: practiceID, amount: amount, at: now)
+            finalisePending(now: now)
+            next = PendingLog(practiceID: practiceID, amount: amount, at: now)
         }
+        pending = next
+        // Always estimated; the after-midnight sheet corrects a wrong day in one tap.
+        let session = next.session(timeZone: .current, timedSessionLengths: SessionStart.timedLengths(snapshot.sessions))
+        perform { try $0.savePending(session, until: next.deadline, now: now) }
         scheduleClose()
     }
 
-    /// Undo: the pending session vanishes without a trace.
+    /// Undo: the pending row is deleted outright; it never left the phone.
     func undo() {
-        closeTask?.cancel()
-        pending = nil
-    }
-
-    /// Writes the pending session now: the window closed, another practice was
-    /// logged, or the app is leaving the foreground.
-    func commitPending(now: Date = Date()) {
         closeTask?.cancel()
         guard let p = pending else { return }
         pending = nil
-        // Always estimated; the after-midnight sheet corrects a wrong day in one tap.
-        let startedAt = SessionStart.estimate(loggedAt: p.startedAt, tappedStart: nil,
-                                              timedSessionLengths: SessionStart.timedLengths(snapshot.sessions))
-        let session = Session(practiceID: p.practiceID, amount: p.amount, startedAt: startedAt,
-                              startExact: false, timeZoneID: TimeZone.current.identifier, loggedAt: p.startedAt)
+        perform { try $0.discardPending(p.sessionID) }
+    }
+
+    /// Ends the undo window now: it closed, another practice was logged, or the
+    /// app is leaving the foreground. The session becomes final and syncs.
+    func finalisePending(now: Date = Date()) {
+        closeTask?.cancel()
+        guard let p = pending else { return }
+        pending = nil
         do {
-            try database.insert(session)
-            if let sheet = AfterMidnight.check(session) {
-                afterMidnight = AfterMidnightPrompt(session: session, sheet: sheet)
+            if let session = try database.finalise(p.sessionID, now: now) { offerAfterMidnight(session) }
+        } catch {
+            storageError = error.localizedDescription
+        }
+    }
+
+    /// On launch: a pending row whose window passed while the app was gone (a
+    /// crash, or the system ending the process) becomes final now; one still
+    /// inside its window gets its Undo back for the seconds left.
+    private func resumeWindows(now: Date = Date()) {
+        guard persistent else { return }
+        do {
+            if let last = try database.finaliseDue(at: now).max(by: { $0.loggedAt < $1.loggedAt }) { offerAfterMidnight(last) }
+            let snap = try database.snapshot()
+            let open = snap.sessions.filter { snap.pending[$0.id] != nil }.sorted { $0.loggedAt < $1.loggedAt }
+            // At most one window: any older one closes now.
+            for s in open.dropLast() { try database.finalise(s.id, now: now) }
+            if let s = open.last, let deadline = snap.pending[s.id] {
+                pending = PendingLog(practiceID: s.practiceID, amount: s.amount, startedAt: s.loggedAt,
+                                     deadline: deadline, sessionID: s.id)
+                scheduleClose()
             }
         } catch {
             storageError = error.localizedDescription
+        }
+    }
+
+    private func offerAfterMidnight(_ session: Session) {
+        if let sheet = AfterMidnight.check(session) {
+            afterMidnight = AfterMidnightPrompt(session: session, sheet: sheet)
         }
     }
 
@@ -137,11 +166,11 @@ final class AppModel: ObservableObject {
             let wait = deadline.timeIntervalSinceNow
             if wait > 0 { try? await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000)) }
             guard !Task.isCancelled else { return }
-            self?.commitPending()
+            self?.finalisePending()
         }
     }
 
-    /// Drops the undo window without writing anything.
+    /// Drops the undo window without finalising it (the purge erases its row with everything else).
     func discardInFlight() {
         closeTask?.cancel()
         pending = nil

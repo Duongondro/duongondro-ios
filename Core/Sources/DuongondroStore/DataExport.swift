@@ -137,7 +137,10 @@ public enum DataExport {
         let timeZone: String
     }
 
-    static func practiceJSON(_ s: Snapshot, appVersion: String, now: Date) throws -> Data {
+    /// Final sessions only: one still in its undo window has not happened yet, as
+    /// far as anything off the phone knows.
+    static func practiceJSON(_ snapshot: Snapshot, appVersion: String, now: Date) throws -> Data {
+        let s = snapshot.withoutPending
         let p = s.preferences
         let file = PracticeFile(
             exportedAt: now, appVersion: appVersion,

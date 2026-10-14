@@ -1,8 +1,10 @@
 import Foundation
 
-/// The undo window after +mala: a session is only written when the window
-/// closes, so an undone tap leaves no record anywhere. Sessions carry no
-/// source (button, watch or custom amount).
+/// The undo window after +mala, +custom or "done today". The session is written
+/// to the phone's database at once, marked pending, so every number includes it
+/// and a crash cannot lose it; Undo deletes that row outright. A pending row is
+/// never synced: it becomes final, and syncs, when the window closes. Sessions
+/// carry no source (button, watch or custom amount).
 public struct PendingLog: Equatable, Sendable {
     public static let window: TimeInterval = 5
 
@@ -10,12 +12,21 @@ public struct PendingLog: Equatable, Sendable {
     public private(set) var amount: Int
     public let startedAt: Date
     public private(set) var deadline: Date
+    /// The pending row's id, kept when the window is extended.
+    public let sessionID: UUID
 
     public init(practiceID: String, amount: Int, at now: Date) {
+        self.init(practiceID: practiceID, amount: amount, startedAt: now,
+                  deadline: now.addingTimeInterval(Self.window), sessionID: UUID.v7(at: now))
+    }
+
+    /// A window read back from its pending row (a launch inside the window).
+    public init(practiceID: String, amount: Int, startedAt: Date, deadline: Date, sessionID: UUID) {
         self.practiceID = practiceID
         self.amount = amount
-        self.startedAt = now
-        self.deadline = now.addingTimeInterval(Self.window)
+        self.startedAt = startedAt
+        self.deadline = deadline
+        self.sessionID = sessionID
     }
 
     /// Another +mala on the same practice inside the window extends it.
@@ -25,6 +36,20 @@ public struct PendingLog: Equatable, Sendable {
     }
 
     public func isDue(at now: Date) -> Bool { now >= deadline }
+
+    /// The session this window writes; its start is estimated from when the window opened.
+    public func session(timeZone: TimeZone, timedSessionLengths: [TimeInterval]) -> Session {
+        Session(id: sessionID, practiceID: practiceID, amount: amount,
+                startedAt: SessionStart.estimate(loggedAt: startedAt, tappedStart: nil, timedSessionLengths: timedSessionLengths),
+                startExact: false, timeZoneID: timeZone.identifier, loggedAt: startedAt)
+    }
+
+    /// Whether a pending row found on launch is final by now: its window has
+    /// passed, or it ends further ahead than a window can (the clock moved back),
+    /// so a row can never stay pending for good.
+    public static func isOver(deadline: Date, at now: Date) -> Bool {
+        now >= deadline || deadline > now.addingTimeInterval(window)
+    }
 }
 
 /// Estimated start of a session logged at the end: exact when the user

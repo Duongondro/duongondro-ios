@@ -10,7 +10,7 @@ SwiftUI app for Duongöndro. The design lives in `Duongondro/duongondro-design` 
 - **Session ids are UUIDv7** (the server refuses others). Sessions from builds before sync had version-4 ids; they are re-keyed before their first push.
 - **Theme tokens only** (`Theme.swift`): colours, small radii (4/6/8/12 pt), no literals in views. Light and dark designed together.
 - **Fonts:** IBM Plex Sans SemiBold/Bold (`App/Resources/Fonts/`, OFL) for headings and big numbers, via `Typography` in `Theme.swift` (Dynamic Type through `relativeTo:`); the system font for prose, lists, buttons and labels; `.monospaced` only for invite codes and recovery words. No other bundled fonts. Note the SemiBold PostScript name is `IBMPlexSans-SmBld`.
-- **Never log from Today.** Counts are logged only on a practice's screen, through `PendingLog` (5-second undo window, written only when it closes, no source recorded).
+- **Never log from Today.** Counts are logged only on a practice's screen, through `PendingLog` (5-second undo window; the session is written at once, pending, counted on screen but never synced until the window closes; Undo deletes it; no source recorded).
 - **Day keys** come from `CivilDate` (Gregorian, explicit time zone), never `DateFormatter` with `YYYY`.
 - **Release builds refuse a dirty tree** (`Scripts/build-info.sh`); Debug builds show `<hash>-dirty` in Settings.
 - **Practice names:** Tibetan/Sanskrit first (Dorje Sempa, Chenrezig, Amitabha), English as the second line.
