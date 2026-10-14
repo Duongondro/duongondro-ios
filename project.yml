@@ -61,19 +61,13 @@ targets:
         # shared with the notification extension. Signing needs the App ID's Associated
         # Domains, Push Notifications and App Groups capabilities in the profile.
         CODE_SIGN_ENTITLEMENTS: App/Duongondro.entitlements
-      # aps-environment in the entitlements, a build setting rather than two files so
-      # the rest of the entitlements cannot drift apart. It must match the signing
-      # profile: a development profile (any build signed for a phone with the team's
-      # Apple Development certificate, Release included: `make device`, and the
-      # `make testflight` archive, whose export re-signs it with production) refuses
-      # production, so the Makefile passes development for those. Which APNs the
-      # token belongs to is read at run time from the profile the app was signed with
-      # (PushPlatform), never from this setting.
-      configs:
-        Debug:
-          APS_ENVIRONMENT: development
-        Release:
-          APS_ENVIRONMENT: production
+        # aps-environment in the entitlements: development in every configuration.
+        # Every build here is signed with a development profile, which refuses
+        # production (`make device` and the `make testflight` archive included); the
+        # App Store export re-signs with the distribution profile and writes
+        # production. Which APNs a token belongs to is read at run time from the
+        # profile the app was signed with (PushPlatform), never from this setting.
+        APS_ENVIRONMENT: development
     preBuildScripts:
       - name: Build identity
         script: "\"$SRCROOT/Scripts/build-info.sh\""

@@ -10,10 +10,6 @@ SIGNING = DEVELOPMENT_TEAM=$(TEAM_ID) -allowProvisioningUpdates \
   -authenticationKeyPath $(ASC_KEY_PATH) -authenticationKeyID $(ASC_KEY_ID) -authenticationKeyIssuerID $(ASC_ISSUER_ID)
 # Build numbers must rise with every upload: the commit count does.
 BUILD_NUMBER = $(shell git rev-list --count HEAD)
-# Release builds signed with the team's development profile (a phone install, the
-# archive before its export re-signs it) carry the development aps-environment the
-# profile allows: see APS_ENVIRONMENT in project.yml.
-DEV_PUSH = APS_ENVIRONMENT=development
 DEVICE ?=
 
 core-test:            ## DuongondroCore unit and conformance tests (no simulator)
@@ -42,14 +38,14 @@ device: project signing-check  ## Release build installed on a paired iPhone: ma
 	@test -n "$(DEVICE)" || (echo "usage: make device DEVICE=<udid from 'xcrun devicectl device info details --device <name>'>"; exit 1)
 	xcodebuild -project Duongondro.xcodeproj -scheme Duongondro -configuration Release \
 	  -destination 'platform=iOS,id=$(DEVICE)' -derivedDataPath build/device build \
-	  CURRENT_PROJECT_VERSION=$(BUILD_NUMBER) $(DEV_PUSH) $(SIGNING)
+	  CURRENT_PROJECT_VERSION=$(BUILD_NUMBER) $(SIGNING)
 	xcrun devicectl device install app --device "$(DEVICE)" build/device/Build/Products/Release-iphoneos/Duongondro.app
 
 testflight: project signing-check  ## Archive from a clean tree and upload to App Store Connect
 	rm -rf build/testflight
 	xcodebuild -project Duongondro.xcodeproj -scheme Duongondro -configuration Release \
 	  -destination 'generic/platform=iOS' -archivePath build/testflight/Duongondro.xcarchive archive \
-	  CURRENT_PROJECT_VERSION=$(BUILD_NUMBER) $(DEV_PUSH) $(SIGNING)
+	  CURRENT_PROJECT_VERSION=$(BUILD_NUMBER) $(SIGNING)
 	sed 's/TEAM_ID/$(TEAM_ID)/' Scripts/ExportOptions.plist > build/testflight/ExportOptions.plist
 	xcodebuild -exportArchive -archivePath build/testflight/Duongondro.xcarchive \
 	  -exportOptionsPlist build/testflight/ExportOptions.plist -exportPath build/testflight $(SIGNING)
