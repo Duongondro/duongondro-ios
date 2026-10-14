@@ -7,6 +7,7 @@ import DuongondroSync
 struct DuongondroApp: App {
     @StateObject private var model: AppModel
     @StateObject private var account: AccountModel
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @Environment(\.scenePhase) private var scenePhase
     /// Settings › Language. System (the default) follows the phone.
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
@@ -22,10 +23,13 @@ struct DuongondroApp: App {
             RootView()
                 .environmentObject(model)
                 .environmentObject(account)
+                .environmentObject(delegate.push)
+                .onAppear { delegate.push.attach(model: model, account: account) }
                 // The interface language for every view below: string lookups and
                 // formatting. Always set (System = the phone's own locale).
                 .environment(\.locale, language.locale())
                 .tint(Theme.accent)
+                .onChange(of: language) { _ in delegate.push.share(model.snapshot) }
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
@@ -38,6 +42,7 @@ struct DuongondroApp: App {
                     await account.syncNow()
                     await account.refreshFriends()
                 }
+                Task { await delegate.push.refresh() }
             default: break
             }
         }
@@ -47,6 +52,7 @@ struct DuongondroApp: App {
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var account: AccountModel
+    @EnvironmentObject private var push: PushModel
 
     var body: some View {
         Group {
@@ -73,6 +79,7 @@ struct RootView: View {
         .onChange(of: model.snapshot) { _ in
             Reminders.reschedule(model)
             account.scheduleSync()
+            push.share(model.snapshot)
         }
         // Invite, add-friend and magic links (Universal Links on duongondro.app).
         .onOpenURL { open($0) }

@@ -147,7 +147,9 @@ final class AccountModel: ObservableObject {
         /// The last account signed out here: signing in to another asks before
         /// mixing this phone's practice into it.
         static let lastUser = "account.lastUser"
-        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn"]
+        /// The push token last sent, with its device and APNs environment (PushModel).
+        static let pushSent = "account.pushSent"
+        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent]
     }
 
     init(database: AppDatabase) {
@@ -609,8 +611,10 @@ final class AccountModel: ObservableObject {
                 error = nil
             }
         } catch APIError.unauthorized {
-            // The session ended (removed elsewhere): keys stay, sign in again.
+            // The session ended (removed elsewhere): keys stay, sign in again. The
+            // server dropped the push token with the session.
             try? secrets.delete(Self.tokenName)
+            UserDefaults.standard.removeObject(forKey: Keys.pushSent)
             self.account = nil
             social = nil
             status = .signedOut
@@ -752,6 +756,22 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    // MARK: Push
+
+    /// This phone's device id, for its push token: only an account with keys here.
+    var pushDevice: UUID? { status == .ready ? account?.deviceID : nil }
+
+    func putPushToken(_ token: String, platform: String) async throws {
+        guard let account, let device = pushDevice else { return }
+        try await account.api.putPushToken(device: device, platform: platform, token: token)
+    }
+
+    /// No more pushes to this phone for the account it is leaving.
+    private func dropPushToken(_ account: Account) async {
+        if let device = account.deviceID { try? await account.api.deletePushToken(device: device) }
+        UserDefaults.standard.removeObject(forKey: Keys.pushSent)
+    }
+
     // MARK: Signing out
 
     /// Ends the session here and forgets the account on this phone: the token,
@@ -762,6 +782,7 @@ final class AccountModel: ObservableObject {
         pendingSync?.cancel()
         let user = userID
         await run {
+            await self.dropPushToken(account)
             try? await account.api.signOut()
             try self.database.clearSyncState()
             Purge.deleteKeychainItems()
@@ -798,6 +819,9 @@ final class AccountModel: ObservableObject {
             return
         }
         pendingSync?.cancel()
+        // The server drops it with the account anyway; first, so this phone gets no
+        // push between the deletion and the purge.
+        await dropPushToken(account)
         try await account.api.deleteMe()
     }
 

@@ -24,6 +24,8 @@ enum Purge {
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
         center.removeAllDeliveredNotifications()
+        // What the notification extension was given: settings and practice names.
+        UserDefaults(suiteName: PushShared.appGroup)?.removePersistentDomain(forName: PushShared.appGroup)
         UserDefaults.standard.removeObject(forKey: Gender.storageKey)
         if let failure { throw failure }
     }

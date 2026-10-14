@@ -7,6 +7,7 @@ import DuongondroSync
 struct FriendsView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var account: AccountModel
+    @EnvironmentObject private var push: PushModel
     @State private var inviting = false
     @State private var pasting = false
     @State private var pasted: InviteLink?
@@ -28,6 +29,11 @@ struct FriendsView: View {
                         AccountDoorRows()
                     }
                 } else {
+                    // Asked here, on the first visit with a friend to be nagged by
+                    // (design: Onboarding › the notification permission), not at sign-up.
+                    if let friend = account.friends.first, push.authorization == .notDetermined, !push.askDismissed {
+                        NotificationAsk(friend: friend.displayName)
+                    }
                     if !news.isEmpty {
                         CardSection(header: "Today") {
                             ForEach(news, id: \.friend.userID) { item in NewsRow(item: item) }
@@ -100,6 +106,10 @@ struct FriendsView: View {
         .refreshable { await account.refreshFriends() }
         .task { await account.refreshFriends() }
         .navigationDestination(isPresented: $inviting) { InviteView() }
+        // A tapped push from a friend.
+        .navigationDestination(isPresented: Binding(get: { push.openFriend != nil }, set: { if !$0 { push.openFriend = nil } })) {
+            if let id = push.openFriend { FriendDetailView(friendID: id) }
+        }
         // The accept sheet opens only once this one has gone: UIKit refuses to
         // present while another sheet is still dismissing.
         .sheet(isPresented: $pasting, onDismiss: {
@@ -150,8 +160,44 @@ struct FriendsView: View {
     }
 }
 
+/// The notification permission, with its reason, before the system asks.
+private struct NotificationAsk: View {
+    @EnvironmentObject private var push: PushModel
+    let friend: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.m) {
+            HStack(alignment: .top, spacing: Theme.Space.m) {
+                Image(systemName: "bell.badge.fill")
+                    .font(.title3)
+                    .foregroundStyle(Theme.accent)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                    Text("Let friends nag you").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
+                    Text("So \(name) can nag you, and you hear when friends practise.")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            Button("Turn on notifications") { Task { await push.ask() } }
+                .buttonStyle(FilledButtonStyle(height: Theme.Size.secondary))
+            Button("Not now") { push.dismissAsk() }
+                .font(.subheadline.weight(.bold))
+                .foregroundStyle(Theme.accent)
+                .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap)
+        }
+        .cardStyle()
+    }
+
+    private var name: String {
+        friend.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : friend
+    }
+}
+
 struct NewsRow: View {
     @EnvironmentObject private var account: AccountModel
+    @EnvironmentObject private var push: PushModel
     let item: FriendsView.NewsItem
 
     var body: some View {
@@ -170,7 +216,13 @@ struct NewsRow: View {
             Spacer(minLength: Theme.Space.s)
             if !item.doneToday {
                 let poked = account.isPoked(item.friend.userID)
-                Button(poked ? "Poked" : "Poke") { Task { await account.poke(item.friend.userID) } }
+                Button(poked ? "Poked" : "Poke") {
+                    Task {
+                        await account.poke(item.friend.userID)
+                        // So they can poke back.
+                        await push.ask()
+                    }
+                }
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(poked ? Theme.muted : Theme.onAccent)
                     .padding(.horizontal, Theme.Space.l)

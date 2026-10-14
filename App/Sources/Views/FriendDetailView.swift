@@ -6,6 +6,8 @@ import DuongondroSync
 /// checklist requires report and block).
 struct FriendDetailView: View {
     @EnvironmentObject private var account: AccountModel
+    @EnvironmentObject private var push: PushModel
+    @Environment(\.openURL) private var openURL
     @Environment(\.dismiss) private var dismiss
     let friendID: UUID
     @State private var confirmingUnfriend = false
@@ -35,13 +37,26 @@ struct FriendDetailView: View {
                             }
                         }
                     }
-                    CardSection(header: "Notifications") {
+                    CardSection(header: "Notifications",
+                                footer: f.notifyDone && push.authorization == .denied
+                                    ? "Notifications are off for Duongöndro. Turn them on in Settings." : nil) {
                         Toggle(isOn: Binding(get: { f.notifyDone },
-                                             set: { on in Task { await account.setNotifyDone(on, for: f.userID) } })) {
+                                             set: { on in
+                                                 Task {
+                                                     await account.setNotifyDone(on, for: f.userID)
+                                                     // The reason to ask is this switch.
+                                                     if on { await push.ask() }
+                                                 }
+                                             })) {
                             Text("Tell me when they practise").foregroundStyle(Theme.ink)
                         }
                         .tint(Theme.accent)
                         .frame(minHeight: Theme.Size.minTap)
+                        if f.notifyDone && push.authorization == .denied {
+                            Button {
+                                if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                            } label: { AccentRow(title: "Open Settings", chevron: true) }
+                        }
                     }
                     CardSection(footer: reported ? "Reported. Thank you." : nil) {
                         Button { confirmingUnfriend = true } label: { SettingsRow("Unfriend") }

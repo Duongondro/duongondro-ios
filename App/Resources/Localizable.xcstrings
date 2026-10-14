@@ -8678,6 +8678,65 @@
         }
       }
     },
+    "Let friends nag you" : {
+      "comment" : "Friends: the card asking for the notification permission, on the first visit with a friend.",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nech se od přátel popohánět"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lass dich von Freunden anstupsen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Let friends nag you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deja que tus amigos te animen"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hadd noszogassanak a barátaid"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pozwól przyjaciołom cię popędzać"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Пусть друзья вас подгоняют"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nechaj sa priateľmi postrčiť"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Нехай друзі вас підганяють"
+          }
+        }
+      }
+    },
     "Letters, digits, dots and underscores. Friends don't see it." : {
       "localizations" : {
         "cs" : {
@@ -10656,6 +10715,65 @@
         }
       }
     },
+    "Notifications are off for Duongöndro. Turn them on in Settings." : {
+      "comment" : "A friend's page: the notification permission was refused; only the system Settings can turn it on.",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Oznámení Duongöndro jsou vypnutá. Zapni je v Nastavení."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mitteilungen für Duongöndro sind aus. Du kannst sie in den Einstellungen aktivieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notifications are off for Duongöndro. Turn them on in Settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las notificaciones de Duongöndro están desactivadas. Actívalas en Ajustes."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A Duongöndro értesítései ki vannak kapcsolva. A Beállításokban bekapcsolhatod."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Powiadomienia Duongöndro są wyłączone. Włącz je w Ustawieniach."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Уведомления Duongöndro выключены. Их можно включить в Настройках."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Oznámenia Duongöndro sú vypnuté. Zapni ich v Nastaveniach."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Сповіщення Duongöndro вимкнено. Їх можна увімкнути в Параметрах."
+          }
+        }
+      }
+    },
     "Nudge at my usual time" : {
       "localizations" : {
         "cs" : {
@@ -11016,6 +11134,65 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Solo el número de días practicados en la app, nunca conteos ni totales."
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "comment" : "Opens the system Settings at this app's page.",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otevřít Nastavení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einstellungen öffnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Open Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abrir Ajustes"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Beállítások megnyitása"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otwórz Ustawienia"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Открыть Настройки"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otvoriť Nastavenia"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Відкрити Параметри"
           }
         }
       }
@@ -14083,6 +14260,65 @@
         }
       }
     },
+    "So %@ can nag you, and you hear when friends practise." : {
+      "comment" : "Friends: why to allow notifications; %@ is a friend's name.",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pak tě %@ může popohnat a dozvíš se, když přátelé praktikují."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Damit %@ dich anstupsen kann und du erfährst, wenn Freunde üben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "So %@ can nag you, and you hear when friends practise."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Así %@ podrá animarte y sabrás cuándo practican tus amigos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Így %@ noszogathat, és megtudod, mikor gyakorolnak a barátaid."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wtedy %@ może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тогда %@ сможет вас подгонять, а вы узнаете, когда друзья практикуют."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Potom ťa %@ môže postrčiť a dozvieš sa, keď priatelia cvičia."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тоді %@ зможе вас підганяти, а ви дізнаєтеся, коли друзі практикують."
+          }
+        }
+      }
+    },
     "So far" : {
       "localizations" : {
         "cs" : {
@@ -17072,6 +17308,65 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Спробувати ще раз"
+          }
+        }
+      }
+    },
+    "Turn on notifications" : {
+      "comment" : "Friends: asks for the notification permission.",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zapnout oznámení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mitteilungen aktivieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Turn on notifications"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activar notificaciones"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Értesítések bekapcsolása"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Włącz powiadomienia"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Включить уведомления"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zapnúť oznámenia"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Увімкнути сповіщення"
           }
         }
       }
