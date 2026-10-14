@@ -326,6 +326,9 @@ final class AccountModel: ObservableObject {
         /// The invitation stopped being valid since the link was sent.
         case inviteGone
         case tooMany
+        /// A passkey sign-in the server no longer knows (the ceremony expired, or
+        /// the passkey's account is gone): try again, or use the email.
+        case passkeyFailed
         /// Signed in, but this phone holds another account's practice: erase it, or cancel.
         case otherAccountData
     }
@@ -365,16 +368,17 @@ final class AccountModel: ObservableObject {
         magicToken = expectsLink() ? token : nil
     }
 
-    private func redeem(_ call: () async throws -> SignInResult) async throws -> Redeem {
+    /// `signIn`: a passkey sign-in, whose 404 is no invitation's but the ceremony's.
+    private func redeem(signIn: Bool = false, _ call: () async throws -> SignInResult) async throws -> Redeem {
         do {
             let result = try await call()
             return signedIn(result) ? .signedIn(created: result.created) : .otherAccountData
         } catch APIError.badRequest {
-            return .wrong
+            return signIn ? .passkeyFailed : .wrong
         } catch APIError.forbidden {
             return .noAccount
         } catch APIError.notFound {
-            return .inviteGone
+            return signIn ? .passkeyFailed : .inviteGone
         } catch APIError.tooManyRequests {
             return .tooMany
         }
@@ -457,9 +461,16 @@ final class AccountModel: ObservableObject {
 
     /// Offers this app's passkeys; nil when there is none or the person backed out.
     func signInWithPasskey() async throws -> Redeem? {
-        let ceremony = try await anonymous.beginPasskeySignIn()
+        let ceremony: Ceremony
+        do {
+            ceremony = try await anonymous.beginPasskeySignIn()
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
         guard let credential = try await Passkeys.assert(ceremony) else { return nil }
-        return try await redeem { try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: credential) }
+        return try await redeem(signIn: true) {
+            try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: credential)
+        }
     }
 
     // MARK: Keys

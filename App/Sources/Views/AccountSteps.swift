@@ -234,6 +234,7 @@ private enum Route {
         case .noAccount: return localized("No account uses this email. Go back and start with an invitation.")
         case .inviteGone: return localized("We don't know this invitation. Check the code, or ask whoever sent it.")
         case .tooMany: return localized("Too many tries. Wait a few minutes and try again.")
+        case .passkeyFailed: return localized("That passkey did not work. Try again, or use your email instead.")
         case .otherAccountData:
             flow.otherAccount = true
             return nil

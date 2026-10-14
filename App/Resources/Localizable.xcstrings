@@ -14359,6 +14359,59 @@
         }
       }
     },
+    "That passkey did not work. Try again, or use your email instead." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento přístupový klíč nefungoval. Zkus to znovu, nebo použij e-mail."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieser Passkey hat nicht funktioniert. Versuche es noch einmal oder nutze stattdessen deine E-Mail-Adresse."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esa clave de acceso no funcionó. Inténtalo de nuevo o usa tu correo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez a hozzáférési kulcs nem működött. Próbáld újra, vagy használd inkább az e-mail-címedet."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ten klucz dostępu nie zadziałał. Spróbuj ponownie albo użyj adresu e-mail."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Этот ключ доступа не сработал. Попробуйте ещё раз или войдите по почте."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento prístupový kľúč nefungoval. Skús to znova alebo použi e-mail."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Цей ключ доступу не спрацював. Спробуйте ще раз або увійдіть через пошту."
+          }
+        }
+      }
+    },
     "That recovery code does not open this account." : {
       "localizations" : {
         "cs" : {
