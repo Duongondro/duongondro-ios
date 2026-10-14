@@ -49,10 +49,6 @@ targets:
         CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu, es]
         # Resources in groups are copied flat into the bundle root, so bare names.
         UIAppFonts: [IBMPlexSans-SemiBold.ttf, IBMPlexSans-Bold.ttf]
-        # Plain HTTP only to this Mac's development server (debug builds' default);
-        # everything else stays HTTPS.
-        NSAppTransportSecurity:
-          NSAllowsLocalNetworking: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.duongondro.ios
@@ -75,6 +71,22 @@ targets:
         script: |
           cp "$DERIVED_FILE_DIR/BuildInfo.plist" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/BuildInfo.plist"
           cp "$DERIVED_FILE_DIR/Contributors.json" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Contributors.json"
+        basedOnDependencyAnalysis: false
+      # Plain HTTP only to this Mac's development server, and only in Debug builds
+      # (their default server); Release has no exception, so everything is HTTPS.
+      - name: Allow local networking in Debug
+        script: |
+          if [ "$CONFIGURATION" = "Debug" ]; then
+            plist="$TARGET_BUILD_DIR/$INFOPLIST_PATH"
+            /usr/libexec/PlistBuddy -c "Delete :NSAppTransportSecurity" "$plist" 2>/dev/null || true
+            /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity dict" -c "Add :NSAppTransportSecurity:NSAllowsLocalNetworking bool true" "$plist"
+          fi
+          touch "$DERIVED_FILE_DIR/local-networking.stamp"
+        # The processed Info.plist as input, so this runs after it is written.
+        inputFiles:
+          - $(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)
+        outputFiles:
+          - $(DERIVED_FILE_DIR)/local-networking.stamp
         basedOnDependencyAnalysis: false
 schemes:
   Duongondro:
