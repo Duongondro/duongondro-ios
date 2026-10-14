@@ -570,7 +570,8 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     public func delete(session id: UUID, at now: Date = Date()) throws {
         try writer.write { db in
             let stamp = try Self.nextStamp(for: id, db, now: now)
-            try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 1 WHERE id = ?",
+            // A pending row is Undo's to delete (discardPending), never as a mark that would sync.
+            try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 1 WHERE id = ? AND pending_until IS NULL",
                            arguments: [stamp, stamp, id.uuidString.lowercased()])
         }
     }

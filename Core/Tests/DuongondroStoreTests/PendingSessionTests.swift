@@ -134,6 +134,16 @@ final class PendingSessionTests: XCTestCase {
         XCTAssertEqual(Set(snap.pending.keys), [w.sessionID])
     }
 
+    func testDeletingAPendingSessionLeavesNoMarkToSync() throws {
+        let db = try database()
+        let w = window()
+        try save(w, db)
+        try db.delete(session: w.sessionID, at: t0.addingTimeInterval(1))
+        XCTAssertEqual(try db.snapshot().sessions.map(\.id), [w.sessionID], "still pending, not marked deleted")
+        try db.finalise(w.sessionID)
+        XCTAssertEqual(try db.dirtySessions().map(\.deletedAt), [nil])
+    }
+
     /// Migration v5 on a database as v4 left it: every session from before is
     /// final, still pushed when dirty, and untouched by the launch's finalisation.
     func testAV4DatabaseKeepsEverySessionFinal() throws {
