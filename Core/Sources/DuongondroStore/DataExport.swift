@@ -7,29 +7,42 @@ import DuongondroCore
 /// `account.json` and `server-raw.json`, and the phone decrypts the sealed
 /// sessions itself, so the export holds counts the server never saw.
 public enum DataExport {
-    /// What the server returned from `GET /api/me/export`, passed through as is.
+    /// What the server returned from `GET /api/me/export`: `raw` as is, `account` the account's part of it.
     public struct Server: Sendable {
         public var account: Data
         public var raw: Data
         /// The sealed practice sessions, opened on this phone; merged into
         /// practice.json unless the phone already holds them.
         public var sessions: [Session]
+        /// Names of custom practices, as sealed with their sessions, for practices this phone does not track.
+        public var practiceNames: [String: String]
         /// Sealed logs this phone holds no key for (written by a newer key).
         public var unreadable: Int
+        /// Sealed logs that opened but are unusable or whose sealed time disagrees with the server's.
+        public var refused: Int
 
-        public init(account: Data, raw: Data, sessions: [Session] = [], unreadable: Int = 0) {
+        public init(account: Data, raw: Data, sessions: [Session] = [], practiceNames: [String: String] = [:],
+                    unreadable: Int = 0, refused: Int = 0) {
             self.account = account
             self.raw = raw
             self.sessions = sessions
+            self.practiceNames = practiceNames
             self.unreadable = unreadable
+            self.refused = refused
         }
     }
 
+    /// `knownSessionIDs` are all of this phone's session ids, deleted ones too (the
+    /// snapshot lacks those). `accountWithoutServer` is a signed-in account whose
+    /// server part is missing, which the README says rather than "local mode".
     public static func zip(snapshot: Snapshot, server: Server?, covers: [String: Data] = [:],
+                           knownSessionIDs: Set<UUID> = [], accountWithoutServer: Bool = false,
                            appVersion: String, now: Date = Date()) throws -> Data {
         var zip = ZipWriter()
-        zip.add("README.txt", Data(readme(hasServer: server != nil, unreadable: server?.unreadable ?? 0, hasCovers: !covers.isEmpty).utf8), modified: now)
-        zip.add("practice.json", try practiceJSON(merged(snapshot, server), appVersion: appVersion, now: now), modified: now)
+        let state: ReadmeState = server != nil ? .included : (accountWithoutServer ? .missing : .local)
+        zip.add("README.txt", Data(readme(state, unreadable: server?.unreadable ?? 0, refused: server?.refused ?? 0,
+                                          hasCovers: !covers.isEmpty).utf8), modified: now)
+        zip.add("practice.json", try practiceJSON(merged(snapshot, server, known: knownSessionIDs), appVersion: appVersion, now: now), modified: now)
         if let server {
             zip.add("account.json", server.account, modified: now)
             zip.add("server-raw.json", server.raw, modified: now)
@@ -41,14 +54,24 @@ public enum DataExport {
     }
 
     /// The phone's snapshot plus the server's sessions it does not hold yet, so a
-    /// session synced from another phone appears once.
-    public static func merged(_ snapshot: Snapshot, _ server: Server?) -> Snapshot {
+    /// session synced from another phone appears once. A session deleted here but
+    /// not yet pushed is in `known` and stays gone. A practice only the server's
+    /// sessions mention gets a minimal entry, as sync adds one.
+    public static func merged(_ snapshot: Snapshot, _ server: Server?, known extra: Set<UUID> = []) -> Snapshot {
         guard let server, !server.sessions.isEmpty else { return snapshot }
-        var known = Set(snapshot.sessions.map(\.id))
+        var known = extra.union(snapshot.sessions.map(\.id))
         var out = snapshot
-        for session in server.sessions.sorted(by: { ($0.startedAt, $0.id.uuidString) < ($1.startedAt, $1.id.uuidString) })
-        where known.insert(session.id).inserted {
+        for session in server.sessions where known.insert(session.id).inserted {
             out.sessions.append(session)
+        }
+        out.sessions.sort { ($0.startedAt, $0.id.uuidString) < ($1.startedAt, $1.id.uuidString) }
+        var tracked = Set(out.practices.map(\.id))
+        for id in out.sessions.map(\.practiceID) where tracked.insert(id).inserted {
+            let practice = Catalogue.builtIn.first { $0.id == id }
+                ?? Practice(id: id, name: server.practiceNames[id] ?? id, group: .anyTime,
+                            target: nil, streakOnlyAllowed: true, isCustom: true)
+            out.practices.append(TrackedPractice(practice: practice, streakOnly: practice.streakOnlyByDefault,
+                                                 sortOrder: (out.practices.map(\.sortOrder).max() ?? -1) + 1))
         }
         return out
     }
@@ -143,7 +166,10 @@ public enum DataExport {
         return try encoder.encode(file)
     }
 
-    static func readme(hasServer: Bool, unreadable: Int = 0, hasCovers: Bool) -> String {
+    enum ReadmeState { case local, included, missing }
+
+    static func readme(_ state: ReadmeState, unreadable: Int = 0, refused: Int = 0, hasCovers: Bool) -> String {
+        let hasServer = state == .included
         var lines = [
             "Duongöndro: all of your data",
             "",
@@ -163,7 +189,8 @@ public enum DataExport {
                 "",
                 "account.json",
                 "  Your account, linked sign-ins, devices, friendships, invites, blocks,",
-                "  reports and public streak statements, as the server holds them. Friends",
+                "  reports and public streak statements, as the server holds them (the",
+                "  sealed logs and keys are only in server-raw.json). Friends",
                 "  appear with the display name and gender the app shows you.",
                 "",
                 "server-raw.json",
@@ -177,6 +204,22 @@ public enum DataExport {
                     "with a key it does not hold yet), so they are only in server-raw.json.",
                 ]
             }
+            if refused > 0 {
+                lines += [
+                    "",
+                    "\(refused) sealed sessions were opened but left out of practice.json: their content",
+                    "was unusable, or its sealed time did not match the server's. They are in",
+                    "server-raw.json.",
+                ]
+            }
+        } else if state == .missing {
+            lines += [
+                "",
+                "This phone has an account, but the server's part of the export could not be",
+                "fetched (offline, signed out or the server was away), so there is no",
+                "account.json or server-raw.json, and practice.json holds only what is on this",
+                "phone. Export again when you are connected to include them.",
+            ]
         } else {
             lines += [
                 "",

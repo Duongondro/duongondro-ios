@@ -804,6 +804,8 @@ final class AccountModel: ObservableObject {
     /// After the local purge (which removed every Keychain item): back to local mode.
     func forget() {
         pendingSync?.cancel()
+        // A finished export holds the account's data: it goes with the account.
+        try? FileManager.default.removeItem(at: ExportFile.folderURL())
         account = nil
         social = nil
         friends = []

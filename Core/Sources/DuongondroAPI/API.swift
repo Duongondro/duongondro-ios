@@ -188,14 +188,14 @@ public enum APIError: Error, Equatable {
 }
 
 /// RFC 3339 with milliseconds out; in, any fractional precision (Go writes nanoseconds).
-enum RFC3339 {
+public enum RFC3339 {
     static func string(_ date: Date) -> String {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return f.string(from: date)
     }
 
-    static func date(_ s: String) -> Date? {
+    public static func date(_ s: String) -> Date? {
         // ISO8601DateFormatter takes at most millisecond fractions: trim the rest.
         var s = s
         if let dot = s.firstIndex(of: "."), let end = s[dot...].firstIndex(where: { !$0.isNumber && $0 != "." }) {

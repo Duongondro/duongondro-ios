@@ -7,27 +7,50 @@ import Foundation
 /// the sealed practice logs opened on this phone under the practice keys.
 extension Account {
     public func serverExport() async throws -> DataExport.Server {
-        try Self.serverExport(raw: try await api.exportMe()) { log, user in
+        let raw = try await api.exportMe()
+        // A key another phone rotated to may be waiting in this device's wraps;
+        // failing to fetch it only leaves those logs unreadable.
+        if let user = try? JSONDecoder().decode(ExportBody.self, from: raw).users.id {
+            _ = try? await receiveNewerKeys(user: user)
+        }
+        return try Self.serverExport(raw: raw) { log, user in
             try SyncEngine(account: self).open(log.sealed ?? Data(), id: log.id, keyVersion: log.keyVersion, user: user)
         }
     }
 
+    /// The tables of the export that are the account's own (design: Data export
+    /// and deletion): everything but the sealed logs, key wraps and recovery boxes.
+    static let accountKeys: Set<String> = [
+        "exportedAt", "users", "auth_identities", "credentials", "devices", "device_lists", "sessions",
+        "friendships", "invites", "invite_redemptions", "invite_tree", "admission_codes", "blocks",
+        "reports", "streaks", "push_tokens",
+    ]
+
     /// Opens the export's `practice_logs`. A log that does not open (a key this
-    /// phone lacks) is counted, not fatal; tombstones add no session.
+    /// phone lacks) is counted unreadable; one that opens but is unusable, or whose
+    /// sealed time disagrees with the server's (a replay), is counted refused.
+    /// Tombstones add no session.
     static func serverExport(raw: Data, open: (ExportedLog, UUID) throws -> SealedSession) throws -> DataExport.Server {
         let export = try JSONDecoder().decode(ExportBody.self, from: raw)
         var sessions: [Session] = []
-        var unreadable = 0
+        var names: [String: String] = [:]
+        var unreadable = 0, refused = 0
         for log in export.practiceLogs ?? [] {
             guard log.sealed != nil, log.deletedAt == nil else { continue }
-            do {
-                let sealed = try open(log, export.users.id)
-                if sealed.deletedAt == nil, let record = sealed.record(id: log.id) { sessions.append(record.session) }
-            } catch {
-                unreadable += 1
-            }
+            let sealed: SealedSession
+            do { sealed = try open(log, export.users.id) } catch { unreadable += 1; continue }
+            guard let outer = log.clientUpdatedAt.flatMap(RFC3339.date),
+                  Statements.millis(outer) == sealed.updatedAt else { refused += 1; continue }
+            if sealed.deletedAt != nil { continue }
+            guard let record = sealed.record(id: log.id) else { refused += 1; continue }
+            sessions.append(record.session)
+            if let name = sealed.practiceName { names[record.session.practiceID] = name }
         }
-        return DataExport.Server(account: raw, raw: raw, sessions: sessions, unreadable: unreadable)
+        guard var object = try JSONSerialization.jsonObject(with: raw) as? [String: Any] else { throw CocoaError(.coderReadCorrupt) }
+        object = object.filter { accountKeys.contains($0.key) }
+        let account = try JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
+        return DataExport.Server(account: account, raw: raw, sessions: sessions, practiceNames: names,
+                                 unreadable: unreadable, refused: refused)
     }
 
     struct ExportBody: Decodable {
@@ -43,6 +66,7 @@ extension Account {
         let id: UUID
         let sealed: Data?
         let keyVersion: Int
+        let clientUpdatedAt: String?
         let deletedAt: String?
     }
 }

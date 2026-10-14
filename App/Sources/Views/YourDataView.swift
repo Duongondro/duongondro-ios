@@ -16,7 +16,7 @@ struct YourDataView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
                 CardSection(footer: serverMissing
-                            ? LocalizedStringKey("The server part of this export could not be fetched, so it holds only what is on this phone.")
+                            ? LocalizedStringKey("Your account data could not be fetched from the server, so the export holds only what is on this phone.")
                             : LocalizedStringKey("One ZIP with every practice, session and streak, readable without this app.")) {
                     Button { Task { await export() } } label: {
                         Label("Export all my data", systemImage: "square.and.arrow.up")
@@ -73,8 +73,13 @@ struct YourDataView: View {
         } catch {
             serverMissing = true
         }
+        // An account that is signed out or still without keys cannot be asked either.
+        let accountWithoutServer = server == nil && account.status != .none
+        if accountWithoutServer { serverMissing = true }
         do {
             let zip = try DataExport.zip(snapshot: try model.database.snapshot(), server: server, covers: Covers.all(),
+                                         knownSessionIDs: try model.database.allSessionIDs(),
+                                         accountWithoutServer: accountWithoutServer,
                                          appVersion: BuildIdentity.current.version)
             exported = ExportedFile(url: try ExportFile.write(zip, name: DataExport.fileName()))
         } catch {

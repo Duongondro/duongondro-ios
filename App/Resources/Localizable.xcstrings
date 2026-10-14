@@ -19287,58 +19287,6 @@
         }
       }
     },
-    "The server part of this export could not be fetched, so it holds only what is on this phone." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Část exportu uložená na serveru se nepodařila stáhnout, takže obsahuje jen to, co je v tomto telefonu."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Der Teil dieses Exports vom Server konnte nicht abgerufen werden; er enthält nur, was auf diesem Telefon liegt."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Az exportnak a szerveren tárolt részét nem sikerült lekérni, ezért csak a telefonon lévő adatokat tartalmazza."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie udało się pobrać z serwera części tego eksportu, więc zawiera on tylko to, co jest na tym telefonie."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не удалось получить с сервера часть этого экспорта, поэтому в нём только то, что хранится на этом телефоне."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Časť exportu uloženú na serveri sa nepodarilo stiahnuť, takže obsahuje iba to, čo je v tomto telefóne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не вдалося отримати з сервера частину цього експорту, тому в ньому лише те, що зберігається на цьому телефоні."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se pudo obtener del servidor la parte de esta exportación, así que solo contiene lo que hay en este teléfono."
-          }
-        }
-      }
-    },
     "their own practice" : {
       "localizations" : {
         "cs" : {
@@ -19387,6 +19335,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "su propia práctica"
+          }
+        }
+      }
+    },
+    "Your account data could not be fetched from the server, so the export holds only what is on this phone." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Data účtu se ze serveru nepodařilo stáhnout, takže export obsahuje jen to, co je v tomto telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Die Kontodaten konnten nicht vom Server abgerufen werden; der Export enthält nur, was auf diesem Telefon liegt."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A fiók adatait nem sikerült lekérni a szerverről, ezért az export csak a telefonon lévő adatokat tartalmazza."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie udało się pobrać danych konta z serwera, więc eksport zawiera tylko to, co jest na tym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не удалось получить данные учётной записи с сервера, поэтому в экспорте только то, что хранится на этом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Údaje účtu sa nepodarilo stiahnuť zo servera, takže export obsahuje iba to, čo je v tomto telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не вдалося отримати дані облікового запису з сервера, тому в експорті лише те, що зберігається на цьому телефоні."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudieron obtener del servidor los datos de la cuenta, así que la exportación solo contiene lo que hay en este teléfono."
           }
         }
       }

@@ -11,7 +11,8 @@ import XCTest
 final class ServerExportTests: XCTestCase {
     let user = UUID()
     let practiceKey = SymmetricKey(size: .bits256).data
-    let t: Int64 = 1_791_180_000_000
+    /// The rows' clientUpdatedAt, which the sealed time must equal.
+    let t: Int64 = 1_791_120_000_000
     var db: AppDatabase!
     var engine: SyncEngine!
 
@@ -39,7 +40,7 @@ final class ServerExportTests: XCTestCase {
                     try row(session(21, at: t + 1000), id: b),
                     try row(session(7, at: t + 2000), id: c, version: 2),
                     try row(#"{"deletedAt":\#(t),"updatedAt":\#(t)}"#, id: d, deleted: true)]
-        let body = #"{"exportedAt":"2026-10-14T20:00:00Z","users":{"id":"\#(user.uuidString.lowercased())","displayName":"Test"},"practice_logs":[\#(rows.joined(separator: ","))],"friendships":[{"displayName":"Friend","gender":"f"}],"database_generation":"g"}"#
+        let body = #"{"exportedAt":"2026-10-14T20:00:00Z","users":{"id":"\#(user.uuidString.lowercased())","displayName":"Test"},"key_wraps":[{"x":1}],"recovery_boxes":[{"x":1}],"practice_logs":[\#(rows.joined(separator: ","))],"friendships":[{"displayName":"Friend","gender":"f"}],"devices":[],"database_generation":"g"}"#
         return Data(body.utf8)
     }
 
@@ -49,9 +50,25 @@ final class ServerExportTests: XCTestCase {
             try self.engine.open(log.sealed ?? Data(), id: log.id, keyVersion: log.keyVersion, user: user)
         }
         XCTAssertEqual(server.raw, raw)
-        XCTAssertEqual(server.account, raw)
+        let account = try XCTUnwrap(JSONSerialization.jsonObject(with: server.account) as? [String: Any])
+        XCTAssertEqual(Set(account.keys), ["exportedAt", "users", "friendships", "devices"])
+        XCTAssertNil(account["practice_logs"])
+        XCTAssertNil(account["key_wraps"])
+        XCTAssertNil(account["recovery_boxes"])
         XCTAssertEqual(server.sessions.map(\.amount).sorted(), [21, 108])
+        XCTAssertEqual(server.refused, 0)
         XCTAssertEqual(server.unreadable, 1, "the log sealed under key version 2")
+    }
+
+    func testASealedTimeThatDisagreesIsRefused() throws {
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let wrong = #"{"count":1,"practice":"dorje-sempa","start":1,"tz":"Europe/Amsterdam","updatedAt":5}"#
+        let raw = Data(#"{"users":{"id":"\#(user.uuidString.lowercased())"},"practice_logs":[\#(try row(wrong, id: id))]}"#.utf8)
+        let server = try Account.serverExport(raw: raw) { log, user in
+            try self.engine.open(log.sealed ?? Data(), id: log.id, keyVersion: log.keyVersion, user: user)
+        }
+        XCTAssertEqual(server.refused, 1)
+        XCTAssertTrue(server.sessions.isEmpty)
     }
 
     func testMergeSkipsSessionsThePhoneHolds() throws {
@@ -64,5 +81,25 @@ final class ServerExportTests: XCTestCase {
         XCTAssertEqual(merged.sessions.count, 2)
         XCTAssertEqual(Set(merged.sessions.map(\.id)), Set(server.sessions.map(\.id)))
         XCTAssertEqual(DataExport.merged(merged, server).sessions.count, 2)
+    }
+
+    func testALocalDeletionNotYetPushedStaysDeleted() throws {
+        let server = try Account.serverExport(raw: try canned()) { log, user in
+            try self.engine.open(log.sealed ?? Data(), id: log.id, keyVersion: log.keyVersion, user: user)
+        }
+        let deletedHere = server.sessions[0].id
+        let merged = DataExport.merged(Snapshot(), server, known: [deletedHere])
+        XCTAssertEqual(merged.sessions.count, 1)
+        XCTAssertFalse(merged.sessions.contains { $0.id == deletedHere })
+    }
+
+    func testAnUnknownPracticeGetsACustomEntry() {
+        let s = Session(practiceID: "my-practice", amount: 3, startedAt: Date(timeIntervalSince1970: 1_790_000_000),
+                        startExact: true, timeZoneID: "Europe/Amsterdam", loggedAt: Date(timeIntervalSince1970: 1_790_000_000))
+        let server = DataExport.Server(account: Data(), raw: Data(), sessions: [s], practiceNames: ["my-practice": "My practice"])
+        let practice = DataExport.merged(Snapshot(), server).practices.first
+        XCTAssertEqual(practice?.id, "my-practice")
+        XCTAssertEqual(practice?.practice.name, "My practice")
+        XCTAssertEqual(practice?.practice.isCustom, true)
     }
 }

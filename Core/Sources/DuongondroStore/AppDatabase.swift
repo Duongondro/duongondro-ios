@@ -435,6 +435,14 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         }
     }
 
+    /// Every session id this phone has, deleted ones included: a deletion not yet
+    /// pushed must not come back from the server's older copy.
+    public func allSessionIDs() throws -> Set<UUID> {
+        try writer.read { db in
+            Set(try String.fetchAll(db, sql: "SELECT id FROM sessions").compactMap(UUID.init(uuidString:)))
+        }
+    }
+
     /// Sessions changed here since the server last acknowledged them, deletions included.
     public func dirtySessions() throws -> [SyncRecord] {
         try writer.read { db in

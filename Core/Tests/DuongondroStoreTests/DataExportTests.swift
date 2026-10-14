@@ -99,3 +99,13 @@ final class DataExportMergeTests: XCTestCase {
         XCTAssertTrue(readme.contains("2 sealed sessions could not be opened"))
     }
 }
+
+final class DataExportReadmeTests: XCTestCase {
+    func testAnAccountWithoutItsServerPartIsNotLocalMode() throws {
+        let zip = try DataExport.zip(snapshot: Snapshot(), server: nil, accountWithoutServer: true, appVersion: "0.1")
+        let out = try DataExportTests().unzip(zip)
+        let readme = try String(contentsOf: out.appendingPathComponent("README.txt"), encoding: .utf8)
+        XCTAssertTrue(readme.contains("has an account"))
+        XCTAssertFalse(readme.contains("local mode"))
+    }
+}
