@@ -358,9 +358,7 @@ final class AccountModel: ObservableObject {
     /// Redeems an opened link's token, only while this phone expects one; nil otherwise.
     func redeemLink(token: String) async throws -> Redeem? {
         guard expectsLink() else { return nil }
-        let result = try await redeem { try await self.anonymous.redeemMagicLink(token: token) }
-        if case .signedIn = result { linkWindow.close() }
-        return result
+        return try await redeem { try await self.anonymous.redeemMagicLink(token: token) }
     }
 
     /// An opened magic link: kept for Check your email only while expected.
@@ -372,6 +370,8 @@ final class AccountModel: ObservableObject {
     private func redeem(signIn: Bool = false, _ call: () async throws -> SignInResult) async throws -> Redeem {
         do {
             let result = try await call()
+            // Signed in, by code, link or passkey: a link opened after this is not redeemed.
+            linkWindow.close()
             return signedIn(result) ? .signedIn(created: result.created) : .otherAccountData
         } catch APIError.badRequest {
             return signIn ? .passkeyFailed : .wrong

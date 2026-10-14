@@ -491,6 +491,7 @@ struct CheckEmailStep: View {
         .modifier(OtherAccountDialog(call: call))
         .onAppear { redeemLink(account.magicToken) }
         .onChange(of: account.magicToken) { redeemLink($0) }
+        .onChange(of: call.busy) { busy in if !busy { redeemLink(account.magicToken) } }
         // A link that arrives after leaving this step is never redeemed.
         .onDisappear { account.magicToken = nil }
     }
@@ -502,8 +503,10 @@ struct CheckEmailStep: View {
         }
     }
 
+    /// While a code is being redeemed the token waits in AccountModel, and is
+    /// taken once that call ends; it is cleared only when its redemption starts.
     private func redeemLink(_ token: String?) {
-        guard let token else { return }
+        guard let token, !call.busy else { return }
         account.magicToken = nil
         call.run {
             if let result = try await account.redeemLink(token: token) {
