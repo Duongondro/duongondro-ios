@@ -746,9 +746,10 @@ final class AccountModel: ObservableObject {
             try? await account.api.signOut()
             try self.database.clearSyncState()
             Purge.deleteKeychainItems()
-            for key in Keys.all { UserDefaults.standard.removeObject(forKey: key) }
-            if let user { UserDefaults.standard.set(user.uuidString, forKey: Keys.lastUser) }
             self.forget()
+            // After forget(), which clears it: signing in to another account later
+            // asks before mixing this phone's practice into it.
+            if let user { UserDefaults.standard.set(user.uuidString, forKey: Keys.lastUser) }
         }
     }
 
@@ -797,7 +798,12 @@ final class AccountModel: ObservableObject {
         recoveryCode = nil
         shownCode = nil
         recoveryUnconfirmed = false
+        deviceCount = nil
         error = nil
+        // Last, as the properties above write some of these back: nothing of the
+        // account stays, the last user included, so a later sign-up on this phone
+        // is not taken for another account's.
+        for key in Keys.all + [Keys.lastUser] { UserDefaults.standard.removeObject(forKey: key) }
     }
 
     private func run(_ work: () async throws -> Void) async {
