@@ -2,16 +2,21 @@ import SwiftUI
 import DuongondroAPI
 import DuongondroSync
 
-/// Settings' account rows (the mockup's "Recovery code" and "This device").
-/// Release builds have no way to sign in yet (passkeys, Sign in with Apple and
-/// magic links come with the account screens), so outside DEBUG the section
-/// shows only once an account exists.
+/// Settings' account rows, as Android's AccountSection: who is signed in, the
+/// name friends see, the username, the recovery code's state, sync, a passkey,
+/// and signing out on this phone. Without an account, the two ways to get one;
+/// signed out by the server, the way back. Inviting is for accounts with keys
+/// only: an invitation is signed by the account's identity key.
 struct AccountSection: View {
     @EnvironmentObject private var account: AccountModel
     @State private var restoring = false
     @State private var naming = false
     @State private var replacingCode = false
+    @State private var signingOut = false
+    @State private var editingUsername = false
     @State private var name = ""
+    @State private var usernameText = ""
+    @State private var note: String?
 
     var body: some View {
         Group { rows }
@@ -22,18 +27,19 @@ struct AccountSection: View {
 
     @ViewBuilder private var rows: some View {
         switch account.status {
-        case .signedOut:
-            EmptyView()
         case .none:
-            #if DEBUG
-            CardSection(header: "Account", footer: "Development builds only: a new account on this Mac's development server.") {
+            CardSection(header: "Account", footer: "Only on this phone. An account adds friends, public streaks and sync between phones; your counts stay end-to-end encrypted.") {
+                AccountDoorRows()
+                #if DEBUG
                 Button { Task { await account.signInForDevelopment() } } label: {
                     SettingsRow("Sign in for development", chevron: true)
                 }
+                #endif
             }
-            #else
-            EmptyView()
-            #endif
+        case .signedOut:
+            CardSection(header: "Account", footer: "Signed out. Sign in again to keep syncing.") {
+                AccountDoorRows()
+            }
         case .needsKeys where account.busy:
             CardSection(header: "Account") {
                 HStack(spacing: Theme.Space.s) {
@@ -43,28 +49,74 @@ struct AccountSection: View {
                 .frame(minHeight: Theme.Size.minTap)
             }
         case .needsKeys:
+            // No sign-out here: the keys could not come back without a recovery code.
             CardSection(header: "Account", footer: "Your counts are encrypted on this phone before they leave it. Set up keys on your first phone; on a new one, restore them with your recovery code.") {
-                Button { Task { await account.setUp() } } label: { SettingsRow("Set up encryption", chevron: true) }
-                Button { restoring = true } label: { SettingsRow("Restore with a recovery code", chevron: true) }
+                Button { finishSetUp() } label: { AccentRow(title: "Finish setting up") }
             }
         case .ready:
-            CardSection(header: "Account") {
+            CardSection(header: "Account", footer: account.offline ? "The last sync did not finish. Your counts are safe on this phone and sync when the server can be reached." : nil) {
+                if let who = account.email ?? account.username {
+                    SettingsRow("Signed in as", detail: Text(verbatim: who))
+                }
+                NavigationLink { InviteView() } label: { AccentRow(title: "Invite someone", chevron: true) }
                 Button { naming = true } label: {
                     SettingsRow("Your name", detail: Text(verbatim: account.displayName), chevron: true)
                 }
+                Button { editingUsername = true } label: {
+                    SettingsRow("Username", detail: account.username.map { Text(verbatim: $0) } ?? Text("None"), chevron: true)
+                }
                 Button { replacingCode = true } label: {
-                    SettingsRow("Recovery code", detail: account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"),
-                                chevron: true)
+                    HStack(spacing: Theme.Space.s) {
+                        Text("Recovery code").foregroundStyle(Theme.ink)
+                        Spacer(minLength: Theme.Space.s)
+                        (account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"))
+                            .foregroundStyle(account.recoveryUnconfirmed ? Theme.destructive : Theme.muted)
+                        Image(systemName: "chevron.right")
+                            .font(.footnote.weight(.bold))
+                            .foregroundStyle(Theme.muted)
+                            .accessibilityHidden(true)
+                    }
+                    .frame(minHeight: Theme.Size.minTap)
+                    .contentShape(Rectangle())
                 }
                 .disabled(account.busy)
-                .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
-                    Button("Make a new code") { Task { await account.newRecoveryCode() } }
-                } message: {
-                    Text(verbatim: Gendered.mine("The code you wrote down stops working."))
-                }
                 Button { Task { await account.syncNow() } } label: {
                     SettingsRow("Sync", detail: syncDetail)
                 }
+                Button { savePasskey() } label: { SettingsRow("Save a passkey", chevron: true) }
+                    .disabled(account.busy)
+                if account.canSignOut {
+                    Button { signingOut = true } label: {
+                        Text("Sign out on this phone")
+                            .foregroundStyle(Theme.destructive)
+                            .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                } else {
+                    // Signing out forgets the keys: first the recovery code must be stored and confirmed.
+                    Button { replacingCode = true } label: {
+                        VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                            Text("Sign out on this phone").foregroundStyle(Theme.muted)
+                            Text("Before signing out here, finish your recovery code: without it, your counts could not come back.")
+                                .font(.footnote)
+                                .foregroundStyle(Theme.accent)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(.vertical, Theme.Space.s)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                    }
+                }
+            }
+            .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
+                Button("Make a new code") { Task { await account.newRecoveryCode() } }
+            } message: {
+                Text(verbatim: Gendered.mine("The code you wrote down stops working."))
+            }
+            .confirmationDialog("Sign out on this phone?", isPresented: $signingOut, titleVisibility: .visible) {
+                Button("Sign out on this phone", role: .destructive) { Task { await account.signOut() } }
+            } message: {
+                Text("Your counts stay on this phone but stop syncing. To sync them again, sign in and enter your recovery code.")
             }
             CardSection(header: "This device") {
                 SettingsRow("Device key", detail: Text(tierName))
@@ -79,15 +131,72 @@ struct AccountSection: View {
             } message: {
                 Text("Friends see this name next to your streaks.")
             }
+            .alert("Username", isPresented: $editingUsername) {
+                TextField("Username", text: $usernameText)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                Button("Save") { saveUsername() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Letters, digits, dots and underscores. Friends don't see it.")
+            }
             .onChange(of: naming) { open in if open { name = account.displayName } }
+            .onChange(of: editingUsername) { open in if open { usernameText = account.username ?? "" } }
             .task { await account.refreshFriends() }
         }
-        if let error = account.error {
-            Text(verbatim: error)
+        if let message = note ?? account.error {
+            Text(verbatim: message)
                 .font(.footnote)
-                .foregroundStyle(Theme.destructive)
+                .foregroundStyle(note != nil && account.error == nil ? Theme.muted : Theme.destructive)
                 .padding(.horizontal, Theme.Space.l)
                 .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    /// An unfinished account: set up here, or restore keys made on another phone.
+    private func finishSetUp() {
+        Task {
+            do {
+                switch try await account.standing() {
+                case .restore: restoring = true
+                case .setUp: await account.setUp()
+                case .ready: break
+                }
+            } catch {
+                note = accountError
+            }
+        }
+    }
+
+    private func savePasskey() {
+        note = nil
+        Task {
+            do {
+                switch try await account.createPasskey(profile: nil) {
+                case .saved: note = localized("Passkey saved.")
+                default: break
+                }
+            } catch Passkeys.Failure.refused {
+                note = localized("This phone could not save a passkey for Duongöndro.")
+            } catch {
+                note = accountError
+            }
+        }
+    }
+
+    private func saveUsername() {
+        let cleaned = String(usernameText.lowercased().filter { c in
+            (c.isASCII && (c.isLetter || c.isNumber)) || c == "." || c == "_"
+        }.prefix(UsernameStep.maxLength))
+        note = nil
+        guard cleaned.isEmpty || cleaned.count >= UsernameStep.minLength else {
+            note = localized("A username has 3 to 32 letters, digits, dots and underscores.")
+            return
+        }
+        Task {
+            if !(await account.setUsername(cleaned.isEmpty ? nil : cleaned)) {
+                note = localized("That username is taken. Try another.")
+            }
         }
     }
 
@@ -103,6 +212,42 @@ struct AccountSection: View {
         case .tee: "Trusted environment"
         case .software: "Keychain"
         case nil: "None"
+        }
+    }
+}
+
+/// A row whose title is the section's main action, in the accent colour.
+struct AccentRow: View {
+    let title: LocalizedStringKey
+    var chevron = false
+
+    var body: some View {
+        HStack(spacing: Theme.Space.s) {
+            Text(title).font(.body.weight(.semibold)).foregroundStyle(Theme.accent)
+            Spacer(minLength: Theme.Space.s)
+            if chevron {
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(Theme.muted)
+                    .accessibilityHidden(true)
+            }
+        }
+        .frame(minHeight: Theme.Size.minTap)
+        .contentShape(Rectangle())
+    }
+}
+
+/// The ways to an account from local mode, or back after the server signed this
+/// phone out; they open the account steps over the app.
+struct AccountDoorRows: View {
+    @EnvironmentObject private var account: AccountModel
+
+    var body: some View {
+        if account.status == .signedOut {
+            Button { account.accountFlow = .signIn } label: { AccentRow(title: "Sign in again") }
+        } else {
+            Button { account.accountFlow = .newAccount } label: { AccentRow(title: "Make an online account") }
+            Button { account.accountFlow = .signIn } label: { SettingsRow("I already have an account", chevron: true) }
         }
     }
 }

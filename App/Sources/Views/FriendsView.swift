@@ -5,6 +5,7 @@ import DuongondroSync
 /// The mockup's Friends tab: today's news from friends' public streaks, the
 /// leaderboard of tracked days, and the invite card.
 struct FriendsView: View {
+    @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var account: AccountModel
     @State private var inviting = false
     @State private var pasting = false
@@ -18,9 +19,13 @@ struct FriendsView: View {
                     .foregroundStyle(Theme.ink)
                     .padding(.horizontal, Theme.Space.xs)
                     .accessibilityAddTraits(.isHeader)
-                if account.status != .ready {
-                    CardSection(footer: "Friends see your public streaks and nothing else. Set up your account under You to invite them.") {
-                        SettingsRow("No account on this phone yet")
+                if account.status == .needsKeys {
+                    CardSection(footer: "Friends see your public streaks and nothing else. Finish setting up your account to invite them.") {
+                        Button { model.tab = .you } label: { AccentRow(title: "Finish setting up", chevron: true) }
+                    }
+                } else if account.status != .ready {
+                    CardSection(footer: "Friends see your public streaks and nothing else. An online account lets you invite them.") {
+                        AccountDoorRows()
                     }
                 } else {
                     if !news.isEmpty {

@@ -2631,6 +2631,59 @@
         }
       }
     },
+    "A username has 3 to 32 letters, digits, dots and underscores." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uživatelské jméno má 3 až 32 písmen, číslic, teček a podtržítek."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Benutzername hat 3 bis 32 Buchstaben, Ziffern, Punkte und Unterstriche."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un nombre de usuario tiene de 3 a 32 letras, dígitos, puntos y guiones bajos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A felhasználónév 3–32 betűből, számjegyből, pontból és aláhúzásjelből áll."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nazwa użytkownika ma od 3 do 32 liter, cyfr, kropek i podkreślników."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Имя пользователя — от 3 до 32 букв, цифр, точек и подчёркиваний."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Používateľské meno má 3 až 32 písmen, číslic, bodiek a podčiarkovníkov."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ім’я користувача — від 3 до 32 літер, цифр, крапок і підкреслень."
+          }
+        }
+      }
+    },
     "About" : {
       "localizations" : {
         "cs" : {
@@ -4083,6 +4136,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Atrás"
+          }
+        }
+      }
+    },
+    "Before signing out here, finish your recovery code: without it, your counts could not come back." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Než se tu odhlásíš, dokonči obnovovací kód: bez něj by se tvé počty nedaly vrátit."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bevor du dich hier abmeldest, schließe deinen Wiederherstellungscode ab: Ohne ihn könnten deine Zählungen nicht zurückkommen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Antes de cerrar sesión aquí, termina tu código de recuperación: sin él, tus cuentas no podrían volver."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mielőtt itt kijelentkezel, fejezd be a helyreállítási kódot: nélküle a számaid nem jöhetnének vissza."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zanim się tu wylogujesz, dokończ kod odzyskiwania: bez niego Twoje liczby nie mogłyby wrócić."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Прежде чем выйти здесь, завершите код восстановления: без него ваши счёты не вернуть."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kým sa tu odhlásiš, dokonči obnovovací kód: bez neho by sa tvoje počty nedali vrátiť."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Перш ніж вийти тут, завершіть код відновлення: без нього ваші підрахунки не повернути."
           }
         }
       }
@@ -6480,6 +6585,58 @@
         }
       }
     },
+    "Finish setting up" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dokončit nastavení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einrichtung abschließen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Terminar la configuración"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Beállítás befejezése"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dokończ konfigurację"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Завершить настройку"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dokončiť nastavenie"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Завершити налаштування"
+          }
+        }
+      }
+    },
     "Follow the phone's language" : {
       "localizations" : {
         "de" : {
@@ -6688,54 +6845,106 @@
         }
       }
     },
-    "Friends see your public streaks and nothing else. Set up your account under You to invite them." : {
+    "Friends see your public streaks and nothing else. An online account lets you invite them." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Pro pozvání přátel si nastav účet v části Profil."
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. S online účtem je můžeš pozvat."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Richte unter „Du“ dein Konto ein, um sie einzuladen."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. A meghívásukhoz állítsd be a fiókodat a Te fülön."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Aby ich zaprosić, skonfiguruj konto w zakładce Profil."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Друзья видят только ваши публичные серии и ничего больше. Чтобы пригласить их, настройте аккаунт на вкладке «Профиль»."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Priatelia vidia tvoje verejné série a nič iné. Ak ich chceš pozvať, najprv si na karte Profil nastav účet."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Налаштуйте обліковий запис у розділі «Профіль», щоб запрошувати друзів."
+            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Mit einem Online-Konto kannst du sie einladen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus amigos ven tus rachas públicas y nada más. Configura tu cuenta en Tú para invitarlos."
+            "value" : "Tus amigos ven tus rachas públicas y nada más. Con una cuenta en línea puedes invitarlos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. Online fiókkal meghívhatod őket."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Z kontem online możesz ich zaprosić."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друзья видят только ваши публичные серии и ничего больше. С онлайн-аккаунтом вы сможете их пригласить."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priatelia vidia tvoje verejné série a nič iné. S online účtom ich môžeš pozvať."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. З онлайн-обліковим записом ви зможете їх запросити."
+          }
+        }
+      }
+    },
+    "Friends see your public streaks and nothing else. Finish setting up your account to invite them." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Dokonči nastavení účtu, abys je mohl(a) pozvat."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Richte dein Konto fertig ein, um sie einzuladen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus amigos ven tus rachas públicas y nada más. Termina de configurar tu cuenta para invitarlos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. Fejezd be a fiókod beállítását, hogy meghívhasd őket."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Dokończ konfigurację konta, aby ich zaprosić."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друзья видят только ваши публичные серии и ничего больше. Завершите настройку аккаунта, чтобы пригласить их."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priatelia vidia tvoje verejné série a nič iné. Dokonči nastavenie účtu, aby si ich mohol(a) pozvať."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Завершіть налаштування облікового запису, щоб запросити їх."
           }
         }
       }
@@ -7681,6 +7890,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Invitar a un amigo"
+          }
+        }
+      }
+    },
+    "Invite someone" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pozvat někoho"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jemanden einladen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Invitar a alguien"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Valaki meghívása"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaproś kogoś"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Пригласить кого-нибудь"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pozvať niekoho"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Запросити когось"
           }
         }
       }
@@ -9089,58 +9350,6 @@
         }
       }
     },
-    "No account on this phone yet" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "V tomto telefonu zatím není žádný účet"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Auf diesem Handy gibt es noch kein Konto"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ezen a telefonon még nincs fiók"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Na tym telefonie nie ma jeszcze konta"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "На этом телефоне пока нет аккаунта"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "V tomto telefóne zatiaľ nie je žiadny účet"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "На цьому телефоні ще немає облікового запису"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aún no hay una cuenta en este teléfono"
-          }
-        }
-      }
-    },
     "No account uses this email. Go back and start with an invitation." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -10287,6 +10496,58 @@
         }
       }
     },
+    "Only on this phone. An account adds friends, public streaks and sync between phones; your counts stay end-to-end encrypted." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jen v tomto telefonu. Účet přidá přátele, veřejné série a synchronizaci mezi telefony; tvé počty zůstanou šifrované end-to-end."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nur auf diesem Handy. Ein Konto bringt Freunde, öffentliche Serien und Synchronisierung zwischen Handys; deine Zählungen bleiben Ende-zu-Ende-verschlüsselt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo en este teléfono. Una cuenta añade amigos, rachas públicas y sincronización entre teléfonos; tus cuentas siguen cifradas de extremo a extremo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Csak ezen a telefonon. Egy fiókkal barátok, nyilvános sorozatok és telefonok közötti szinkronizálás jár; a számaid végig titkosítva maradnak."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tylko na tym telefonie. Konto daje przyjaciół, publiczne serie i synchronizację między telefonami; Twoje liczby pozostają zaszyfrowane end-to-end."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Только на этом телефоне. Аккаунт добавляет друзей, публичные серии и синхронизацию между телефонами; ваши счёты остаются со сквозным шифрованием."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Len v tomto telefóne. Účet pridá priateľov, verejné série a synchronizáciu medzi telefónmi; tvoje počty zostanú šifrované end-to-end."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Лише на цьому телефоні. Обліковий запис додає друзів, публічні серії та синхронізацію між телефонами; ваші підрахунки лишаються наскрізно зашифрованими."
+          }
+        }
+      }
+    },
     "Only the number of days practised in the app, never counts or totals." : {
       "localizations" : {
         "cs" : {
@@ -10439,6 +10700,59 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Необов’язково. Без пошти ви входите за ключем доступу, з Face ID або Touch ID; ім’я користувача називає цей ключ у ваших паролях."
+          }
+        }
+      }
+    },
+    "Passkey saved." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přístupový klíč uložen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passkey gesichert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clave de acceso guardada."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáférési kulcs elmentve."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klucz dostępu zapisany."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ доступа сохранён."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prístupový kľúč uložený."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ доступу збережено."
           }
         }
       }
@@ -11587,58 +11901,6 @@
         }
       }
     },
-    "Restore with a recovery code" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Obnovit pomocí obnovovacího kódu"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mit einem Wiederherstellungscode wiederherstellen"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Visszaállítás helyreállítási kóddal"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Przywróć za pomocą kodu odzyskiwania"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Восстановить по коду"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Obnoviť pomocou obnovovacieho kódu"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Відновити за кодом відновлення"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Restaurar con un código de recuperación"
-          }
-        }
-      }
-    },
     "Restore with your recovery code" : {
       "localizations" : {
         "cs" : {
@@ -12217,58 +12479,6 @@
         }
       }
     },
-    "Set up encryption" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nastavit šifrování"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Verschlüsselung einrichten"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Titkosítás beállítása"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Skonfiguruj szyfrowanie"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Настроить шифрование"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nastaviť šifrovanie"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Налаштувати шифрування"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Configurar el cifrado"
-          }
-        }
-      }
-    },
     "Settings" : {
       "localizations" : {
         "cs" : {
@@ -12685,6 +12895,58 @@
         }
       }
     },
+    "Sign in again" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přihlásit se znovu"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wieder anmelden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iniciar sesión de nuevo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bejelentkezés újra"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaloguj się ponownie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Войти снова"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prihlásiť sa znova"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Увійти знову"
+          }
+        }
+      }
+    },
     "Sign in for development" : {
       "localizations" : {
         "cs" : {
@@ -12785,6 +13047,162 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Увійти за ключем доступу"
+          }
+        }
+      }
+    },
+    "Sign out on this phone" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odhlásit se v tomto telefonu"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Auf diesem Handy abmelden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cerrar sesión en este teléfono"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kijelentkezés ezen a telefonon"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wyloguj na tym telefonie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Выйти на этом телефоне"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odhlásiť sa v tomto telefóne"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Вийти на цьому телефоні"
+          }
+        }
+      }
+    },
+    "Sign out on this phone?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odhlásit se v tomto telefonu?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Auf diesem Handy abmelden?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Cerrar sesión en este teléfono?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kijelentkezel ezen a telefonon?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wylogować na tym telefonie?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Выйти на этом телефоне?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odhlásiť sa v tomto telefóne?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Вийти на цьому телефоні?"
+          }
+        }
+      }
+    },
+    "Signed in as" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přihlášen(a) jako"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Angemeldet als"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sesión iniciada como"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bejelentkezve mint"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zalogowano jako"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Вы вошли как"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prihlásený/á ako"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ви увійшли як"
           }
         }
       }
@@ -14204,6 +14622,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "No se pudo abrir la base de datos. Nada de lo que registres ahora se conservaría, así que el registro está desactivado hasta que reinicies la app."
+          }
+        }
+      }
+    },
+    "The last sync did not finish. Your counts are safe on this phone and sync when the server can be reached." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Poslední synchronizace se nedokončila. Tvé počty jsou v tomto telefonu v bezpečí a synchronizují se, až bude server dostupný."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Die letzte Synchronisierung wurde nicht fertig. Deine Zählungen sind auf diesem Handy sicher und werden synchronisiert, sobald der Server erreichbar ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La última sincronización no terminó. Tus cuentas están a salvo en este teléfono y se sincronizarán cuando el servidor esté disponible."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Az utolsó szinkronizálás nem fejeződött be. A számaid biztonságban vannak ezen a telefonon, és szinkronizálódnak, amint a szerver elérhető."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ostatnia synchronizacja się nie zakończyła. Twoje liczby są bezpieczne na tym telefonie i zsynchronizują się, gdy serwer będzie dostępny."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Последняя синхронизация не завершилась. Ваши счёты в безопасности на этом телефоне и синхронизируются, когда сервер станет доступен."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Posledná synchronizácia sa nedokončila. Tvoje počty sú v tomto telefóne v bezpečí a zosynchronizujú sa, keď bude server dostupný."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Остання синхронізація не завершилася. Ваші підрахунки в безпеці на цьому телефоні й синхронізуються, щойно сервер стане доступним."
           }
         }
       }
@@ -17287,6 +17757,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Tus conteos se cifran en este teléfono antes de salir de él. Configura las claves en tu primer teléfono; en uno nuevo, restáuralas con tu código de recuperación."
+          }
+        }
+      }
+    },
+    "Your counts stay on this phone but stop syncing. To sync them again, sign in and enter your recovery code." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvé počty zůstanou v tomto telefonu, ale přestanou se synchronizovat. Pro další synchronizaci se přihlas a zadej obnovovací kód."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Zählungen bleiben auf diesem Handy, werden aber nicht mehr synchronisiert. Um wieder zu synchronisieren, melde dich an und gib deinen Wiederherstellungscode ein."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus cuentas se quedan en este teléfono, pero dejan de sincronizarse. Para volver a sincronizarlas, inicia sesión e introduce tu código de recuperación."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A számaid ezen a telefonon maradnak, de nem szinkronizálódnak tovább. Az újbóli szinkronizáláshoz jelentkezz be, és add meg a helyreállítási kódot."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoje liczby zostaną na tym telefonie, ale przestaną się synchronizować. Aby znowu je synchronizować, zaloguj się i wpisz kod odzyskiwania."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваши счёты останутся на этом телефоне, но перестанут синхронизироваться. Чтобы снова синхронизировать их, войдите и введите код восстановления."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvoje počty zostanú v tomto telefóne, ale prestanú sa synchronizovať. Ak ich chceš znova synchronizovať, prihlás sa a zadaj obnovovací kód."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваші підрахунки залишаться на цьому телефоні, але перестануть синхронізуватися. Щоб знову синхронізувати їх, увійдіть і введіть код відновлення."
           }
         }
       }
