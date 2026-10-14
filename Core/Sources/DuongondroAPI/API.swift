@@ -118,8 +118,11 @@ public struct APIClient: Sendable {
         case 200..<300:
             if T.self == Empty.self || data.isEmpty { return try Self.decoder.decode(T.self, from: Data("{}".utf8)) }
             return try Self.decoder.decode(T.self, from: data)
+        case 400: throw APIError.badRequest(Self.message(data))
         case 401: throw APIError.unauthorized
+        case 403: throw APIError.forbidden(Self.message(data))
         case 404: throw APIError.notFound
+        case 429: throw APIError.tooManyRequests(Self.message(data))
         case 422:
             if let old = try? Self.decoder.decode(OldKeyError.self, from: data) {
                 throw APIError.oldKey(currentKeyVersion: old.currentKeyVersion)
@@ -158,9 +161,16 @@ public struct APIClient: Sendable {
 }
 
 public enum APIError: Error, Equatable {
+    /// 400: the request was malformed, or (redeeming a magic link) the code or
+    /// token is wrong, expired, used or replaced; the server does not say which.
+    case badRequest(String)
     case unauthorized
+    /// 403: redeeming a magic link for an address no account uses, without an invitation.
+    case forbidden(String)
     case notFound
     case conflict(String)
+    /// 429: rate limited; try again in a few minutes.
+    case tooManyRequests(String)
     /// Another phone rotated the practice key; wraps of the new one are waiting.
     case oldKey(currentKeyVersion: Int)
     case status(Int, String)
@@ -203,6 +213,8 @@ public struct Me: Codable, Equatable, Sendable {
     public let identityPublicKey: Data?
     public let keyVersion: Int
     public let displayName: String
+    /// Names the account's passkeys; never shown to friends. nil when not set.
+    public let username: String?
     /// "male", "female" or "nonbinary"; nil when not given.
     public let gender: String?
     public let devices: [Device]

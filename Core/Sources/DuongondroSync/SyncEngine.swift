@@ -106,9 +106,9 @@ public struct SyncEngine: Sendable {
 
     static func isPerRecord(_ error: APIError) -> Bool {
         switch error {
-        case .conflict, .notFound: return true
+        case .conflict, .notFound, .badRequest, .forbidden: return true
         case .status(let code, _): return (400..<500).contains(code) && code != 429
-        case .unauthorized, .oldKey: return false
+        case .unauthorized, .oldKey, .tooManyRequests: return false
         }
     }
 

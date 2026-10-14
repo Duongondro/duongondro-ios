@@ -45,6 +45,10 @@ let package = Package(
             resources: [.copy("Resources")]
         ),
         .testTarget(
+            name: "DuongondroAPITests",
+            dependencies: ["DuongondroAPI"]
+        ),
+        .testTarget(
             name: "DuongondroQRTests",
             dependencies: ["DuongondroQR"]
         ),
