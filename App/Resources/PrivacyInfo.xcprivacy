@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- Duongöndro collects nothing and tracks nobody. Practice data stays on the phone
-     (and, once accounts exist, reaches the server only end-to-end encrypted). GRDB
-     ships its own manifest for the file APIs it uses. -->
+<!-- Duongöndro tracks nobody. Practice data reaches the server only end-to-end
+     encrypted. The data an account collects (NSPrivacyCollectedDataTypes) is still to
+     be declared, together with the App Store privacy labels. UserDefaults holds the
+     app's own settings (CA92.1). GRDB ships its own manifest for the file APIs it uses. -->
 <plist version="1.0">
 <dict>
 	<key>NSPrivacyTracking</key>
@@ -12,6 +13,15 @@
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array/>
 	<key>NSPrivacyAccessedAPITypes</key>
-	<array/>
+	<array>
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
