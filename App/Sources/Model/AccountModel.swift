@@ -483,13 +483,19 @@ final class AccountModel: ObservableObject {
             self.shownCode = code
             self.recoveryUnconfirmed = true
             self.status = .ready
-            await self.afterKeys(account)
+            self.afterKeysInBackground(account)
             return code
         }
     }
 
-    /// The fallback report, then the invitation's friendship, once keys exist.
-    /// Failures here never fail the set-up.
+    /// What follows new keys, without holding up the code or the restore that
+    /// made them: the person sees the recovery code at once.
+    private func afterKeysInBackground(_ account: Account) {
+        Task { await self.afterKeys(account) }
+    }
+
+    /// The fallback report, then the invitation's friendship, once keys exist,
+    /// then the first sync. Failures here never fail the set-up.
     private func afterKeys(_ account: Account) async {
         await reportFallback(account)
         if let checked = checkedInvite, let social {
@@ -512,7 +518,7 @@ final class AccountModel: ObservableObject {
                 guard self.recoveryCode == nil, let account = self.account, !account.hasKeys else { return }
                 self.recoveryCode = try await account.setUpFirstDevice()
                 self.status = .ready
-                await self.afterKeys(account)
+                self.afterKeysInBackground(account)
             }
         }
     }
@@ -539,7 +545,7 @@ final class AccountModel: ObservableObject {
                 }
             }
             self.status = .ready
-            await self.afterKeys(account)
+            self.afterKeysInBackground(account)
             return true
         }
     }
