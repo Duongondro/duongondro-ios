@@ -103,6 +103,7 @@ struct LabelledField: View {
     var capitalization: TextInputAutocapitalization = .sentences
     var contentType: UITextContentType?
     var submit: (() -> Void)?
+    @FocusState private var focused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.xs) {
@@ -122,11 +123,15 @@ struct LabelledField: View {
                 .textContentType(contentType)
                 .submitLabel(.done)
                 .onSubmit { submit?() }
+                .focused($focused)
                 .padding(.horizontal, Theme.Space.m)
                 .frame(minHeight: Theme.Size.button)
                 .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
                 .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
                     .strokeBorder(error != nil ? Theme.destructive : Theme.inputBorder, lineWidth: 1))
+                // The whole box takes the tap, not only the line of text in it.
+                .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .onTapGesture { focused = true }
                 .accessibilityLabel(Text(label))
             if let error {
                 Text(verbatim: error).font(.footnote).foregroundStyle(Theme.destructive)
@@ -702,7 +707,8 @@ struct RecoveryCheckStep: View {
     @EnvironmentObject private var account: AccountModel
 
     var body: some View {
-        RecoveryCheckView(groups: (flow.recoveryCode ?? "").split(separator: "-").map(String.init), framed: false) {
+        // The code the step before showed, wherever it came from.
+        RecoveryCheckView(groups: RecoveryCode.groups(flow.recoveryCode ?? account.shownCode ?? ""), framed: false) {
             account.confirmRecoveryCode()
             flow.finishOnline()
         } back: {

@@ -274,7 +274,7 @@ struct RecoveryCodeView: View {
     let code: String
     @State private var checking = false
 
-    private var groups: [String] { code.split(separator: "-").map(String.init) }
+    private var groups: [String] { RecoveryCode.groups(code) }
 
     var body: some View {
         if checking {
@@ -346,6 +346,7 @@ struct RecoveryCheckView: View {
     @State private var asked: [Int] = []
     @State private var answers = ["", ""]
     @State private var wrong = false
+    @FocusState private var focus: Int?
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {
@@ -360,11 +361,19 @@ struct RecoveryCheckView: View {
                         .font(.body.monospaced())
                         .textInputAutocapitalization(.characters)
                         .autocorrectionDisabled()
+                        .focused($focus, equals: n)
+                        .submitLabel(n + 1 < asked.count ? .next : .done)
+                        .onSubmit { focus = n + 1 < asked.count ? n + 1 : nil }
                         .padding(.horizontal, Theme.Space.m)
                         .frame(height: Theme.Size.field)
                         .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
                         .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
                             .strokeBorder(Theme.inputBorder))
+                        // The whole box takes the tap, not only the line of text in
+                        // it: a tap above or below that line used to leave the
+                        // previous field focused, so the second group went there.
+                        .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                        .onTapGesture { focus = n }
                 }
             }
             if wrong {
@@ -374,10 +383,7 @@ struct RecoveryCheckView: View {
             }
             Spacer(minLength: 0)
             Button("Done") {
-                let ok = zip(asked, answers).allSatisfy { i, a in
-                    RecoveryCode.normalise(a) == RecoveryCode.normalise(groups[i])
-                }
-                if ok { done() } else { wrong = true }
+                if RecoveryCode.answersMatch(answers, groups: groups, asked: asked) { done() } else { wrong = true }
             }
             .buttonStyle(FilledButtonStyle())
             Button("Show the code again", action: back)

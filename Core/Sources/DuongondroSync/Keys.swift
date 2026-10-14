@@ -132,6 +132,20 @@ public enum RecoveryCode {
         })
     }
 
+    /// The groups the code is shown in, numbered from 1 on screen.
+    public static func groups(_ code: String) -> [String] {
+        code.split(separator: "-").map(String.init)
+    }
+
+    /// The check after "I wrote it down": what was typed for the groups asked,
+    /// read together and as leniently as a restore reads it, so groups typed
+    /// into one field (a tap that missed the next field) still count. Nothing
+    /// asked is never a match.
+    public static func answersMatch(_ answers: [String], groups: [String], asked: [Int]) -> Bool {
+        guard !asked.isEmpty, asked.allSatisfy(groups.indices.contains) else { return false }
+        return normalise(answers.joined()) == normalise(asked.map { groups[$0] }.joined())
+    }
+
     public static func decode(_ code: String) -> Data? {
         let cleaned = normalise(code)
         guard cleaned.count == 26 else { return nil }

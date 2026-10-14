@@ -41,6 +41,22 @@ final class StatementTests: XCTestCase {
         XCTAssertNil(RecoveryCode.decode("UUUU-UUUU-UUUU-UUUU-UUUU-UUUU-UU"), "U is not in the alphabet")
     }
 
+    func testTheCheckAcceptsTheGroupsAskedHoweverTheyWereTyped() {
+        let groups = RecoveryCode.groups("GDJX-R0KH-0A6F-B1E2-GFHH-ME6M-A8")
+        XCTAssertEqual(groups.count, 7)
+        XCTAssertTrue(RecoveryCode.answersMatch(["0A6F", "GFHH"], groups: groups, asked: [2, 4]))
+        XCTAssertTrue(RecoveryCode.answersMatch([" oa6f", "gfhh "], groups: groups, asked: [2, 4]), "case, spaces, O for 0")
+        XCTAssertTrue(RecoveryCode.answersMatch(["B1E2", "a8"], groups: groups, asked: [3, 6]), "the short last group")
+        XCTAssertTrue(RecoveryCode.answersMatch(["BIE2", "A8"], groups: groups, asked: [3, 6]), "I for 1")
+        // A tap that missed the second field sends both groups to the first.
+        XCTAssertTrue(RecoveryCode.answersMatch(["0A6FGFHH", ""], groups: groups, asked: [2, 4]))
+        XCTAssertFalse(RecoveryCode.answersMatch(["GFHH", "0A6F"], groups: groups, asked: [2, 4]), "the wrong way round")
+        XCTAssertFalse(RecoveryCode.answersMatch(["0A6F", ""], groups: groups, asked: [2, 4]))
+        XCTAssertFalse(RecoveryCode.answersMatch(["R0KH", "GFHH"], groups: groups, asked: [2, 4]), "a neighbouring group")
+        XCTAssertFalse(RecoveryCode.answersMatch([], groups: [], asked: []), "nothing asked is not a check")
+        XCTAssertFalse(RecoveryCode.answersMatch(["A8"], groups: groups, asked: [7]))
+    }
+
     func testSealedSessionRoundTrips() throws {
         let s = Session(practiceID: "dorje-sempa", amount: 108, startedAt: Date(timeIntervalSince1970: 1_791_176_400),
                         startExact: false, timeZoneID: "Europe/Amsterdam", chosenDay: CivilDate("2026-10-04"),
