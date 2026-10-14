@@ -33,7 +33,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 /// makes no network call.
 @MainActor
 final class PushModel: NSObject, ObservableObject {
-    @Published private(set) var authorization: UNAuthorizationStatus = .notDetermined
+    /// Nil until the system has answered: the Friends card waits for a known
+    /// .notDetermined rather than flashing for someone who already decided.
+    @Published private(set) var authorization: UNAuthorizationStatus?
     /// Friends › "Not now" on the permission card.
     @Published private(set) var askDismissed = UserDefaults.standard.bool(forKey: PushModel.dismissedKey)
     /// A friend's page to open, from a tapped push.
@@ -61,6 +63,7 @@ final class PushModel: NSObject, ObservableObject {
             }
         }
         share(model.snapshot)
+        Task { await refresh() }
         if let pendingRoute { open(pendingRoute) }
         pendingRoute = nil
     }
@@ -70,7 +73,7 @@ final class PushModel: NSObject, ObservableObject {
     /// every launch (the token can change).
     func refresh() async {
         authorization = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
-        guard account?.status == .ready, [.authorized, .provisional, .ephemeral].contains(authorization) else { return }
+        guard account?.status == .ready, let authorization, [.authorized, .provisional, .ephemeral].contains(authorization) else { return }
         UIApplication.shared.registerForRemoteNotifications()
     }
 
