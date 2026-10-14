@@ -121,6 +121,19 @@ final class PendingSessionTests: XCTestCase {
         XCTAssertFalse(json.contains(open.sessionID.uuidString.lowercased()))
     }
 
+    func testARemoteCopyNeverOverwritesAPendingRow() throws {
+        let db = try database()
+        let w = window()
+        try save(w, db)
+        var remote = w.session(timeZone: zone, timedSessionLengths: [])
+        remote.amount = 999
+        XCTAssertFalse(try db.applyRemote(SyncRecord(session: remote, updatedAt: t0.addingTimeInterval(3600))))
+        XCTAssertFalse(try db.applyRemoteDeletion(w.sessionID, updatedAt: t0.addingTimeInterval(3600), deletedAt: t0.addingTimeInterval(3600)))
+        let snap = try db.snapshot()
+        XCTAssertEqual(snap.sessions.map(\.amount), [108])
+        XCTAssertEqual(Set(snap.pending.keys), [w.sessionID])
+    }
+
     /// Migration v5 on a database as v4 left it: every session from before is
     /// final, still pushed when dirty, and untouched by the launch's finalisation.
     func testAV4DatabaseKeepsEverySessionFinal() throws {

@@ -612,7 +612,8 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     public func applyRemoteDeletion(_ id: UUID, updatedAt: Date, deletedAt: Date, generation: Int? = nil) throws -> Bool {
         try write(generation) { db in
             let key = id.uuidString.lowercased()
-            guard let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [key]),
+            // A pending row is left alone, as in applyRemote.
+            guard let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ? AND pending_until IS NULL", arguments: [key]),
                   Self.millis(local) < Self.millis(updatedAt) else { return false }
             try db.execute(sql: "UPDATE sessions SET deleted_at = ?, updated_at = ?, dirty = 0 WHERE id = ?",
                            arguments: [deletedAt, updatedAt, key])
@@ -628,6 +629,10 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
     public func applyRemote(_ r: SyncRecord, practiceName: String? = nil, generation: Int? = nil) throws -> Bool {
         try write(generation) { db in
             let id = r.session.id.uuidString.lowercased()
+            // A session in its undo window is this phone's alone: nothing from the server touches it.
+            if try Int.fetchOne(db, sql: "SELECT 1 FROM sessions WHERE id = ? AND pending_until IS NOT NULL", arguments: [id]) != nil {
+                return false
+            }
             let local = try Date.fetchOne(db, sql: "SELECT updated_at FROM sessions WHERE id = ?", arguments: [id])
             if let local, Self.millis(local) >= Self.millis(r.updatedAt) { return false }
             // A deletion of a session this phone never had changes nothing here.
