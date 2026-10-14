@@ -84,4 +84,18 @@ final class AppDatabaseTests: XCTestCase {
             XCTAssertNil(bytes.range(of: Data("mandala".utf8)), "no trace in \(suffix.isEmpty ? "file" : suffix)")
         }
     }
+
+    /// Review found it (Android bf480292): the server's public set wins both ways,
+    /// except a practice never published yet (seq 0).
+    func testMergingPublishedFollowsTheServer() throws {
+        let db = try AppDatabase.inMemory()
+        for (i, id) in ["chenrezig", "mandala", "amitabha"].enumerated() {
+            try db.save(TrackedPractice(practice: practice(id), sortOrder: i))
+        }
+        try db.mergePublished(["chenrezig": 7, "unknown-practice": 3])
+        XCTAssertEqual(try db.publicStreakSeqs(), ["chenrezig": 7])
+        try db.setPublic("amitabha", true)
+        try db.mergePublished(["mandala": 2])
+        XCTAssertEqual(try db.publicStreakSeqs(), ["mandala": 2, "amitabha": 0], "chenrezig went private elsewhere")
+    }
 }

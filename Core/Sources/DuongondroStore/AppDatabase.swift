@@ -392,10 +392,18 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         }
     }
 
-    /// Adds practices the server publishes for this account to the public set
-    /// (another phone, or a restore, made them public), with the server's seq.
+    /// Makes the public set follow the server's: practices it publishes for this
+    /// account become public here (another phone, or a restore, made them public),
+    /// with the server's seq; ones published before (seq above 0) that it no
+    /// longer lists were made private elsewhere and become private here.
     public func mergePublished(_ seqs: [String: Int64], generation: Int? = nil) throws {
         try write(generation) { db in
+            // Published before (seq above 0) but no longer listed: made private on
+            // another phone, so private here too. Seq 0 was never published yet.
+            for practice in try String.fetchAll(db, sql: "SELECT practice_id FROM public_streaks WHERE seq > 0")
+            where seqs[practice] == nil {
+                try db.execute(sql: "DELETE FROM public_streaks WHERE practice_id = ?", arguments: [practice])
+            }
             for (practice, seq) in seqs where try Int.fetchOne(db, sql: "SELECT 1 FROM practices WHERE id = ?", arguments: [practice]) != nil {
                 try db.execute(sql: """
                     INSERT INTO public_streaks (practice_id, seq) VALUES (?, ?)

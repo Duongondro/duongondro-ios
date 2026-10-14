@@ -108,6 +108,18 @@ final class PublicStreakTests: XCTestCase {
         XCTAssertFalse(try db.isPublic("chenrezig"))
         XCTAssertTrue(StreakServer.practices.isEmpty)
     }
+
+    /// Review found it (Android bf480292): made private on another phone (the
+    /// server dropped it) is private here; one never published yet stays public.
+    func testPrivateOnAnotherPhoneIsPrivateHere() async throws {
+        try await social.setPublic("chenrezig", true)
+        StreakServer.drop("chenrezig")
+        try db.setPublic("mandala", true)
+        try await social.publishStreaks()
+        XCTAssertFalse(try db.isPublic("chenrezig"))
+        XCTAssertTrue(StreakServer.practices.isEmpty)
+        XCTAssertTrue(try db.isPublic("mandala"), "never published, so kept")
+    }
 }
 
 final class ToggleBox: @unchecked Sendable {
