@@ -90,6 +90,7 @@ final class AuthTests: XCTestCase {
             (404, "not found", .unknownInvitation),
             (429, "too many new accounts from this network; try again later, or use an invitation", .tooManyAccounts),
             (429, "too many sign-in links to this address; try again in a few minutes", .tooManyRequests),
+            (429, "too many sign-up mails requested from this network; try again later, or use an invitation", .tooManyAccounts),
         ]
         for (status, message, expected) in cases {
             StubProtocol.responses = [(status, #"{"error":"\#(message)"}"#)]

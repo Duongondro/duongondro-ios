@@ -17112,55 +17112,55 @@
         }
       }
     },
-    "Too many accounts were made from this network in the last hour. Try again later, or enter an invitation code: it works regardless." : {
+    "Too many sign-ups from this network in the last hour. Try again later, or enter an invitation code: it works regardless." : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z této sítě vzniklo za poslední hodinu příliš mnoho účtů. Zkus to později, nebo zadej kód pozvánky: s ním to projde i tak."
+            "value" : "Z této sítě bylo za poslední hodinu příliš mnoho registrací. Zkus to později, nebo zadej kód pozvánky: s ním to projde i tak."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "In der letzten Stunde wurden aus diesem Netz zu viele Konten angelegt. Versuche es später noch einmal oder gib einen Einladungscode ein: Damit klappt es trotzdem."
+            "value" : "Zu viele Anmeldungen aus diesem Netz in der letzten Stunde. Versuche es später noch einmal oder gib einen Einladungscode ein: Damit klappt es trotzdem."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "En la última hora se crearon demasiadas cuentas desde esta red. Inténtalo más tarde o escribe un código de invitación: con él funciona igualmente."
+            "value" : "Demasiados registros desde esta red en la última hora. Inténtalo más tarde o escribe un código de invitación: con él funciona igualmente."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Az elmúlt órában túl sok fiók készült erről a hálózatról. Próbáld újra később, vagy írj be egy meghívókódot: azzal így is működik."
+            "value" : "Túl sok regisztráció érkezett erről a hálózatról az elmúlt órában. Próbáld újra később, vagy írj be egy meghívókódot: azzal így is működik."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "W ciągu ostatniej godziny z tej sieci założono za dużo kont. Spróbuj później albo wpisz kod zaproszenia: z nim limit nie obowiązuje."
+            "value" : "Za dużo rejestracji z tej sieci w ciągu ostatniej godziny. Spróbuj później albo wpisz kod zaproszenia: z nim limit nie obowiązuje."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "За последний час из этой сети создано слишком много аккаунтов. Попробуйте позже или введите код приглашения: с ним ограничение не действует."
+            "value" : "Слишком много регистраций из этой сети за последний час. Попробуйте позже или введите код приглашения: с ним ограничение не действует."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z tejto siete vzniklo za poslednú hodinu príliš veľa účtov. Skús to neskôr, alebo zadaj kód pozvánky: s ním to prejde aj tak."
+            "value" : "Z tejto siete bolo za poslednú hodinu príliš veľa registrácií. Skús to neskôr, alebo zadaj kód pozvánky: s ním to prejde aj tak."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "За останню годину з цієї мережі створено забагато облікових записів. Спробуйте пізніше або введіть код запрошення: з ним обмеження не діє."
+            "value" : "Забагато реєстрацій з цієї мережі за останню годину. Спробуйте пізніше або введіть код запрошення: з ним обмеження не діє."
           }
         }
       }

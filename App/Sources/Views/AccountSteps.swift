@@ -22,9 +22,10 @@ var accountError: String { localized("Something went wrong. Check your connectio
 /// (open sign-up off, or turned off since the sign-up began).
 var invitationNeeded: String { localized("For now, an account needs an invitation code. Enter one, or keep practising on this phone.") }
 
-/// The 429 of the limit on accounts made without an invitation from one network.
+/// The 429 of the limits on sign-ups without an invitation from one network
+/// (accounts made, and sign-up mails requested).
 var tooManyAccounts: String {
-    localized("Too many accounts were made from this network in the last hour. Try again later, or enter an invitation code: it works regardless.")
+    localized("Too many sign-ups from this network in the last hour. Try again later, or enter an invitation code: it works regardless.")
 }
 
 /// One call in flight: buttons disable while it runs, `failed` says it did not finish.

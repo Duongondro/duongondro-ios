@@ -150,8 +150,9 @@ public enum SignUpFailure: Error, Equatable {
     case invitationNeeded
     /// 404: the invitation or admission code is unknown, spent, revoked or expired.
     case unknownInvitation
-    /// 429 from the limit on accounts made without an invitation from one network
-    /// in an hour. A sign-up with a code is not limited.
+    /// 429 from the limits on sign-ups without an invitation from one network in
+    /// an hour (accounts made; sign-up mails requested). A sign-up with a code is
+    /// not limited.
     case tooManyAccounts
     /// Any other 429: too many requests (or sign-in mails to one address).
     case tooManyRequests
@@ -161,8 +162,8 @@ public enum SignUpFailure: Error, Equatable {
         switch error {
         case .forbidden: self = .invitationNeeded
         case .notFound: self = .unknownInvitation
-        // The two limits share 429 and differ only in their message: the account
-        // limit's names the network.
+        // The limits share 429 and differ only in their message: the per-network
+        // sign-up limits' name the network.
         case .tooManyRequests(let message): self = message.lowercased().contains("network") ? .tooManyAccounts : .tooManyRequests
         default: return nil
         }
