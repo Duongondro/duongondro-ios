@@ -56,6 +56,7 @@ struct OnboardingView: View {
             flow.finishLocal = { [weak flow, model] in
                 if let done { done() } else { flow?.finish(into: model) }
             }
+            flow.holdAnswersOnSignUp = { [weak flow] in if done == nil { flow?.holdAnswers() } }
             flow.finishOnline = { [weak flow, model, account] in
                 if let done {
                     Task { await account.syncNow() }
@@ -123,6 +124,8 @@ final class OnboardingFlow: ObservableObject {
     /// nothing about the practices changes.
     var finishLocal: () -> Void = {}
     var finishOnline: () -> Void = {}
+    /// Set by the view: keeps first-run answers when the account is made.
+    var holdAnswersOnSignUp: () -> Void = {}
     private var begun = false
     @Published var finishedNgondro = false
     @Published var finishedShortRefuge = false
@@ -155,6 +158,7 @@ final class OnboardingFlow: ObservableObject {
     /// The account exists: the steps that made it are behind for good, so Back
     /// cannot ask for another passkey or sign-up.
     func signedUp(next: OnboardingStep) {
+        holdAnswersOnSignUp()
         history.removeAll()
         step = next
     }
@@ -179,7 +183,19 @@ final class OnboardingFlow: ObservableObject {
         chosen.removeAll { !$0.practice.isCustom && !allowed.contains($0.id) }
     }
 
-    func finish(into model: AppModel, now: Date = Date()) {
+    /// What onboarding writes when it finishes: practices, streak seeds, preferences.
+    struct Answers: Codable {
+        var practices: [TrackedPractice]
+        var seeds: [StreakSeed]
+        var preferences: Preferences
+    }
+
+    /// The answers held when the account is made, so a relaunch during Name, Gender
+    /// or the recovery code finishes with them. Not in the practices table: any
+    /// practice there counts as onboarded (AppDatabase.snapshot).
+    static let heldAnswersKey = "onboarding.heldAnswers"
+
+    func answers(now: Date = Date()) -> Answers {
         let tz = TimeZone.current
         let today = CivilDate.of(now, in: tz)
         let practices = chosen.enumerated().map { i, c in
@@ -201,8 +217,24 @@ final class OnboardingFlow: ObservableObject {
             let c = Calendar.current.dateComponents([.hour, .minute], from: r)
             return (c.hour ?? 20) * 60 + (c.minute ?? 0)
         }
-        model.perform { try $0.completeOnboarding(practices: practices, seeds: seeds, preferences: prefs) }
-        if prefs.reminderMinutes != nil { Task { await Reminders.requestAndSchedule(model) } }
+        return Answers(practices: practices, seeds: seeds, preferences: prefs)
+    }
+
+    /// The account was just made in first-run onboarding: its answers are kept
+    /// until it finishes.
+    func holdAnswers(now: Date = Date()) {
+        guard !chosen.isEmpty, let data = try? JSONEncoder().encode(answers(now: now)) else { return }
+        UserDefaults.standard.set(data, forKey: Self.heldAnswersKey)
+    }
+
+    /// Writes the answers once. A run resumed after a relaunch (nothing chosen in
+    /// this run) finishes with the ones held when its account was made.
+    func finish(into model: AppModel, now: Date = Date()) {
+        let held = UserDefaults.standard.data(forKey: Self.heldAnswersKey).flatMap { try? JSONDecoder().decode(Answers.self, from: $0) }
+        UserDefaults.standard.removeObject(forKey: Self.heldAnswersKey)
+        let answers = chosen.isEmpty ? held ?? answers(now: now) : answers(now: now)
+        model.perform { try $0.completeOnboarding(practices: answers.practices, seeds: answers.seeds, preferences: answers.preferences) }
+        if answers.preferences.reminderMinutes != nil { Task { await Reminders.requestAndSchedule(model) } }
     }
 }
 
