@@ -102,7 +102,7 @@ struct RootView: View {
         // The account steps from Settings or Friends: a new account from the
         // invitation on, or signing in (again).
         .fullScreenCover(item: $account.accountFlow) { flow in
-            OnboardingView(start: flow == .signIn ? .signIn : .invite) { account.accountFlow = nil }
+            OnboardingView(start: flow == .signIn ? .signIn : .consent) { account.accountFlow = nil }
                 .environmentObject(model)
                 .environmentObject(account)
                 .environment(\.locale, AppLanguage.stored().locale())

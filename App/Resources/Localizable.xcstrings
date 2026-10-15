@@ -2631,6 +2631,58 @@
         }
       }
     },
+    "A random name, so friends can tell you apart. Keep it or change it." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Náhodné jméno, aby tě přátelé poznali. Nech si ho, nebo ho změň."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein zufälliger Name, damit Freunde dich unterscheiden können. Behalte ihn oder ändere ihn."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un nombre al azar, para que tus amigos te distingan. Quédatelo o cámbialo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy véletlen név, hogy a barátaid megkülönböztessenek. Tartsd meg, vagy változtasd meg."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Losowe imię, żeby przyjaciele mogli cię rozpoznać. Zostaw je albo zmień."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Случайное имя, чтобы друзья могли вас отличить. Оставьте его или измените."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Náhodné meno, aby ťa priatelia rozoznali. Nechaj si ho, alebo ho zmeň."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Випадкове ім’я, щоб друзі могли вас розрізнити. Залиште його або змініть."
+          }
+        }
+      }
+    },
     "A short session still counts." : {
       "localizations" : {
         "cs" : {
@@ -3672,54 +3724,54 @@
         }
       }
     },
-    "An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. With your consent the server keeps your email or username, your name, your gender if you give it, your friends, and your public streaks. Your counts stay encrypted on your phones." : {
+    "An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. With your consent the server keeps your passkey or email, the name friends see, your gender if you give it, your friends, and your public streaks. Your counts stay encrypted on your phones." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Účet v aplikaci pro buddhistickou praxi vypovídá o tvém přesvědčení, které GDPR považuje za zvláštní. S tvým souhlasem server uchovává tvůj e-mail nebo uživatelské jméno, jméno, pohlaví, pokud ho uvedeš, tvé přátele a veřejné série. Tvé počty zůstávají zašifrované v tvých telefonech."
+            "value" : "Účet v aplikaci pro buddhistickou praxi vypovídá o tvém přesvědčení, které GDPR považuje za zvláštní. S tvým souhlasem server uchovává tvůj přístupový klíč nebo e-mail, jméno, které vidí přátelé, pohlaví, pokud ho uvedeš, tvé přátele a veřejné série. Tvé počty zůstávají zašifrované v tvých telefonech."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Konto in einer App für buddhistische Praxis sagt etwas über deine Überzeugungen aus, die die DSGVO als besonders schützenswert behandelt. Mit deiner Einwilligung speichert der Server deine E-Mail-Adresse oder deinen Benutzernamen, deinen Namen, dein Geschlecht, falls du es angibst, deine Freunde und deine öffentlichen Serien. Deine Zähler bleiben auf deinen Handys verschlüsselt."
+            "value" : "Ein Konto in einer App für buddhistische Praxis sagt etwas über deine Überzeugungen aus, die die DSGVO als besonders schützenswert behandelt. Mit deiner Einwilligung speichert der Server deinen Passkey oder deine E-Mail-Adresse, den Namen, den Freunde sehen, dein Geschlecht, falls du es angibst, deine Freunde und deine öffentlichen Serien. Deine Zähler bleiben auf deinen Handys verschlüsselt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. Con tu consentimiento, el servidor guarda tu correo o nombre de usuario, tu nombre, tu género si lo indicas, tus amigos y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
+            "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. Con tu consentimiento, el servidor guarda tu clave de acceso o tu correo, el nombre que ven tus amigos, tu género si lo indicas, tus amigos y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Egy buddhista gyakorlóalkalmazásban lévő fiók mond valamit a meggyőződésedről, amit a GDPR különleges adatként kezel. A hozzájárulásoddal a szerver tárolja az e-mail-címedet vagy felhasználónevedet, a neved, a nemedet, ha megadod, a barátaidat és a nyilvános sorozataidat. A számlálóid titkosítva maradnak a telefonjaidon."
+            "value" : "Egy buddhista gyakorlóalkalmazásban lévő fiók mond valamit a meggyőződésedről, amit a GDPR különleges adatként kezel. A hozzájárulásoddal a szerver tárolja a hozzáférési kulcsodat vagy e-mail-címedet, a nevet, amit a barátaid látnak, a nemedet, ha megadod, a barátaidat és a nyilvános sorozataidat. A számlálóid titkosítva maradnak a telefonjaidon."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Za Twoją zgodą serwer przechowuje Twój e-mail lub nazwę użytkownika, imię, płeć, jeśli ją podasz, przyjaciół i publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
+            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Za Twoją zgodą serwer przechowuje Twój klucz dostępu lub e-mail, imię widoczne dla przyjaciół, płeć, jeśli ją podasz, przyjaciół i publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Аккаунт в приложении для буддийской практики говорит о ваших убеждениях, а GDPR относит их к особой категории. С вашего согласия сервер хранит вашу почту или имя пользователя, ваше имя, пол, если вы его укажете, ваших друзей и публичные серии. Ваши счётчики остаются зашифрованными на ваших телефонах."
+            "value" : "Аккаунт в приложении для буддийской практики говорит о ваших убеждениях, а GDPR относит их к особой категории. С вашего согласия сервер хранит ваш ключ доступа или почту, имя, которое видят друзья, пол, если вы его укажете, ваших друзей и публичные серии. Ваши счётчики остаются зашифрованными на ваших телефонах."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Účet v aplikácii pre budhistickú prax vypovedá o tvojom presvedčení, ktoré GDPR považuje za osobitné. S tvojím súhlasom server uchováva tvoj e-mail alebo používateľské meno, tvoje meno, pohlavie, ak ho uvedieš, tvojich priateľov a verejné série. Tvoje počty zostávajú zašifrované v tvojich telefónoch."
+            "value" : "Účet v aplikácii pre budhistickú prax vypovedá o tvojom presvedčení, ktoré GDPR považuje za osobitné. S tvojím súhlasom server uchováva tvoj prístupový kľúč alebo e-mail, meno, ktoré vidia priatelia, pohlavie, ak ho uvedieš, tvojich priateľov a verejné série. Tvoje počty zostávajú zašifrované v tvojich telefónoch."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Обліковий запис у застосунку для буддійської практики говорить про ваші переконання, а GDPR відносить їх до особливої категорії. За вашою згодою сервер зберігає вашу пошту або ім’я користувача, ваше ім’я, стать, якщо ви її вкажете, ваших друзів і публічні серії. Ваші лічильники залишаються зашифрованими на ваших телефонах."
+            "value" : "Обліковий запис у застосунку для буддійської практики говорить про ваші переконання, а GDPR відносить їх до особливої категорії. За вашою згодою сервер зберігає ваш ключ доступу або пошту, ім’я, яке бачать друзі, стать, якщо ви її вкажете, ваших друзів і публічні серії. Ваші лічильники залишаються зашифрованими на ваших телефонах."
           }
         }
       }
@@ -6169,58 +6221,6 @@
         }
       }
     },
-    "Enter it to become friends with whoever sent it, or skip." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zadej ho a s tím, kdo ho poslal, budete přátelé. Nebo tento krok přeskoč."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gib ihn ein, dann seid ihr befreundet, du und wer ihn geschickt hat. Oder überspring den Schritt."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escríbelo para que tú y quien te lo envió seáis amigos, u omite este paso."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Írd be, és barátok lesztek azzal, aki küldte, vagy hagyd ki ezt a lépést."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wpisz go, aby zaprzyjaźnić się z osobą, która go wysłała, albo pomiń ten krok."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Введите его, чтобы стать друзьями с тем, кто его прислал, или пропустите этот шаг."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zadaj ho a s tým, kto ho poslal, budete priatelia. Alebo tento krok preskoč."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Введіть його, щоб стати друзями з тим, хто його надіслав, або пропустіть цей крок."
-          }
-        }
-      }
-    },
     "Erase and continue" : {
       "localizations" : {
         "cs" : {
@@ -7834,58 +7834,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Grupo %lld"
-          }
-        }
-      }
-    },
-    "Have a friendship code?" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máš kód přátelství?"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hast du einen Freundschaftscode?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Tienes un código de amistad?"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Van barátságkódod?"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Masz kod przyjaźni?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Есть код дружбы?"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máš kód priateľstva?"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Маєте код дружби?"
           }
         }
       }
@@ -10404,58 +10352,6 @@
         }
       }
     },
-    "Not now, email me a link instead" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Teď ne, pošli mi místo toho odkaz e-mailem"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jetzt nicht, schick mir stattdessen einen Link"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ahora no, envíame un enlace"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Most nem, küldj inkább egy linket e-mailben"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie teraz, wyślij mi link e-mailem"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не сейчас, пришлите ссылку на почту"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Teraz nie, pošli mi radšej odkaz e-mailom"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не зараз, надішліть посилання на пошту"
-          }
-        }
-      }
-    },
     "Not yet" : {
       "localizations" : {
         "cs" : {
@@ -10983,58 +10879,6 @@
         }
       }
     },
-    "Only on this phone for now" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatím jen v tomto telefonu"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vorerst nur auf diesem Handy"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Solo en este teléfono, por ahora"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyelőre csak ezen a telefonon"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Na razie tylko na tym telefonie"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пока только на этом телефоне"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatiaľ len v tomto telefóne"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поки що лише на цьому телефоні"
-          }
-        }
-      }
-    },
     "Only on this phone. An account adds friends, public streaks and sync between phones; your counts stay end-to-end encrypted." : {
       "localizations" : {
         "cs" : {
@@ -11246,58 +11090,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Opcional. El polaco, el checo, el eslovaco, el ruso y el ucraniano lo usan para conjugar las palabras sobre ti, en este teléfono y en los de tus amigos. Sin él, usan formas neutras."
-          }
-        }
-      }
-    },
-    "Optional. Without an email you sign in with a passkey, using Face ID or Touch ID; a username names that passkey in your passwords." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nepovinné. Bez e-mailu se přihlašuješ přístupovým klíčem, přes Face ID nebo Touch ID; uživatelské jméno ten klíč pojmenuje ve tvých heslech."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Optional. Ohne E-Mail meldest du dich mit einem Passkey an, per Face ID oder Touch ID; ein Benutzername benennt diesen Passkey in deinen Passwörtern."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Opcional. Sin correo, accedes con una clave de acceso, con Face ID o Touch ID; el nombre de usuario da nombre a esa clave en tus contraseñas."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nem kötelező. E-mail nélkül hozzáférési kulccsal jelentkezel be, Face ID-val vagy Touch ID-val; a felhasználónév a jelszavaid között megnevezi ezt a kulcsot."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Opcjonalnie. Bez e-maila logujesz się kluczem dostępu, przez Face ID lub Touch ID; nazwa użytkownika nazywa ten klucz w Twoich hasłach."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Необязательно. Без почты вы входите по ключу доступа, с Face ID или Touch ID; имя пользователя называет этот ключ в ваших паролях."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nepovinné. Bez e-mailu sa prihlasuješ prístupovým kľúčom, cez Face ID alebo Touch ID; používateľské meno ten kľúč pomenuje v tvojich heslách."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Необов’язково. Без пошти ви входите за ключем доступу, з Face ID або Touch ID; ім’я користувача називає цей ключ у ваших паролях."
           }
         }
       }
@@ -11687,58 +11479,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Pega el enlace que te envió tu amigo."
-          }
-        }
-      }
-    },
-    "Pick a username" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vyber uživatelské jméno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wähle einen Benutzernamen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elige un nombre de usuario"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Válassz felhasználónevet"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wybierz nazwę użytkownika"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Выберите имя пользователя"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vyber používateľské meno"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Оберіть ім’я користувача"
           }
         }
       }
@@ -14317,58 +14057,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Пропустити"
-          }
-        }
-      }
-    },
-    "Skip, use a username instead" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Přeskočit, použít uživatelské jméno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Überspringen, stattdessen Benutzernamen verwenden"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Omitir, usar un nombre de usuario"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kihagyás, inkább felhasználónevet használok"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pomiń, użyj nazwy użytkownika"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пропустить, использовать имя пользователя"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Preskočiť, použiť používateľské meno"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пропустити, використати ім’я користувача"
           }
         }
       }
@@ -17537,58 +17225,6 @@
         }
       }
     },
-    "Type or paste the friendship code, or paste the whole link. Case doesn't matter." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Napiš nebo vlož kód přátelství, případně vlož celý odkaz. Na velikosti písmen nezáleží."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tippe den Freundschaftscode ein oder füge ihn ein, oder füge den ganzen Link ein. Groß- und Kleinschreibung spielt keine Rolle."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe o pega el código de amistad, o pega el enlace completo. Da igual mayúsculas o minúsculas."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Írd be vagy illeszd be a barátságkódot, vagy illeszd be a teljes linket. A kis- és nagybetű mindegy."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wpisz lub wklej kod przyjaźni albo wklej cały link. Wielkość liter nie ma znaczenia."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Введите или вставьте код дружбы либо вставьте всю ссылку. Регистр не важен."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Napíš alebo vlož kód priateľstva, prípadne vlož celý odkaz. Na veľkosti písmen nezáleží."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Введіть або вставте код дружби чи вставте все посилання. Регістр не має значення."
-          }
-        }
-      }
-    },
     "Type “%@” to confirm" : {
       "localizations" : {
         "cs" : {
@@ -17793,6 +17429,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "¿Quitar amistad?"
+          }
+        }
+      }
+    },
+    "Use email instead" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Použít e-mail"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Stattdessen E-Mail nutzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar el correo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-mail használata inkább"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Użyj adresu e-mail"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Использовать почту"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Použiť e-mail"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Використати пошту"
           }
         }
       }

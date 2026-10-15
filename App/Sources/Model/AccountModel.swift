@@ -334,6 +334,17 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    /// The friendship link checked by holdPendingInvite, so it is checked once.
+    private var heldLink: String?
+
+    /// A friendship link opened before sign-up goes with the sign-up as its proof,
+    /// and makes the friendship once keys exist (design: Social › Open sign-up). One
+    /// that no longer checks out is dropped quietly: no code is needed for an account.
+    func holdPendingInvite() async {
+        guard invitation == nil, let link = pendingInvite, heldLink != link.string else { return }
+        if (try? await checkInvite(Invitation.code(of: link))) != nil { heldLink = link.string }
+    }
+
     /// Forgets an invitation from an abandoned sign-up, so a later sign-in does not carry it.
     func clearInvitation() {
         invitation = nil
@@ -427,22 +438,24 @@ final class AccountModel: ObservableObject {
 
     // MARK: Profile
 
-    enum ProfileResult { case saved, usernameTaken }
+    /// The display name the server holds, read after a sign-up: an account made
+    /// without one is given a random "Adjective Animal" there, which the Name step
+    /// offers to keep. Nil when it cannot be read.
+    func serverDisplayName() async -> String? {
+        guard let account, let me = try? await account.api.me() else { return nil }
+        displayName = me.displayName
+        return me.displayName
+    }
 
-    /// After a sign-up by email: the name is required, username and gender optional.
-    func setProfile(name: String, username newUsername: String?, gender: Gender?) async throws -> ProfileResult {
+    /// After a sign-up: the name only when it was edited (nil keeps the server's,
+    /// empty clears it), the gender only when given. Nothing to send, nothing sent.
+    func setProfile(name: String?, gender: Gender?) async throws {
         guard let account else { throw Account.Failure.missingSecret }
-        let name = Self.trimmedName(name)
-        do {
-            try await account.api.updateMe(displayName: name, username: newUsername.map { .set($0.lowercased()) } ?? .keep,
-                                           gender: gender.map { .set($0.rawValue) } ?? .keep)
-        } catch APIError.conflict {
-            return .usernameTaken
-        }
-        displayName = name
-        if let newUsername { username = newUsername.lowercased() }
+        let name = name.map(Self.trimmedName)
+        guard name != nil || gender != nil else { return }
+        try await account.api.updateMe(displayName: name, gender: gender.map { .set($0.rawValue) } ?? .keep)
+        if let name { displayName = name }
         if let gender { UserDefaults.standard.set(gender.rawValue, forKey: Gender.storageKey) }
-        return .saved
     }
 
     /// Sets or clears the username; false when another account has it.
@@ -950,7 +963,7 @@ final class AccountModel: ObservableObject {
 
 /// The account steps opened over the app, outside onboarding.
 enum AccountFlow: String, Identifiable {
-    /// "Make an online account": from the (optional) invitation on.
+    /// "Make an online account": from the consent on.
     case newAccount
     /// "I already have an account", "Sign in again".
     case signIn

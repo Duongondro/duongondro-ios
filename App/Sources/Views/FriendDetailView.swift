@@ -76,7 +76,7 @@ struct FriendDetailView: View {
             }
             .buttonStyle(.plain)
             .background(Theme.ground.ignoresSafeArea())
-            .navigationTitle(Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : f.displayName))
+            .navigationTitle(Text(verbatim: f.shownName))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.visible, for: .navigationBar)
             .confirmationDialog("Unfriend?", isPresented: $confirmingUnfriend, titleVisibility: .visible) {

@@ -70,7 +70,7 @@ struct FriendsView: View {
                             ForEach(account.friends) { f in
                                 NavigationLink { FriendDetailView(friendID: f.userID) } label: {
                                     HStack(spacing: Theme.Space.m) {
-                                        Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : f.displayName)
+                                        Text(verbatim: f.shownName)
                                             .foregroundStyle(Theme.ink)
                                         Spacer(minLength: Theme.Space.s)
                                         if f.keyChanged {
@@ -149,7 +149,7 @@ struct FriendsView: View {
     private var leaders: [(key: String, name: String, practice: String, current: Int)] {
         account.friends.filter { !$0.keyChanged }.flatMap { f in
             f.streaks.filter { $0.current > 0 && $0.deadline > Date() }.map {
-                (key: "\(f.userID)-\($0.practice)", name: f.displayName, practice: $0.practice, current: $0.current)
+                (key: "\(f.userID)-\($0.practice)", name: f.shownName, practice: $0.practice, current: $0.current)
             }
         }
         .sorted { $0.current > $1.current }
@@ -190,9 +190,7 @@ private struct NotificationAsk: View {
         .cardStyle()
     }
 
-    private var name: String {
-        friend.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : friend
-    }
+    private var name: String { Social.FriendView.shownName(friend) }
 }
 
 struct NewsRow: View {
@@ -236,7 +234,7 @@ struct NewsRow: View {
     }
 
     private var practice: String { FriendsView.practiceName(item.streak.practice) }
-    private var name: String { item.friend.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : item.friend.displayName }
+    private var name: String { item.friend.shownName }
 
     private var title: String {
         item.doneToday ? Gendered.string("%@ finished %@", for: item.friend.gender, name, practice)
@@ -338,5 +336,16 @@ private struct PasteInviteView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
         }
+    }
+}
+
+extension Social.FriendView {
+    /// The name to show: "A friend" for one without a display name, which every
+    /// part of a profile may be (a passkey is enough for an account).
+    var shownName: String { Self.shownName(displayName) }
+
+    static func shownName(_ name: String) -> String {
+        name.trimmingCharacters(in: .whitespaces).isEmpty
+            ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : name
     }
 }

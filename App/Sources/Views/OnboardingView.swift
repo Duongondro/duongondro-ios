@@ -27,11 +27,9 @@ struct OnboardingView: View {
                     case .counts(let index): CountsStep(index: index).id(index)
                     case .reminder: ReminderStep()
                     case .where: WhereStep()
-                    case .invite: InviteStep()
                     case .consent: ConsentStep()
                     case .email: EmailStep()
                     case .checkEmail: CheckEmailStep()
-                    case .username: UsernameStep()
                     case .name: NameStep()
                     case .gender: GenderStep()
                     case .passkey: PasskeyStep()
@@ -73,7 +71,9 @@ enum OnboardingStep: Hashable {
     case welcome, finishedNgondro, finishedShortRefuge, practices, counts(Int), reminder
     /// "Keep it on this phone, or online?"
     case `where`
-    case invite, consent, email, checkEmail, username, name, gender, passkey, recovery
+    /// Sign-up: consent, then the passkey (or an emailed link) makes the account;
+    /// name and gender may be skipped.
+    case consent, email, checkEmail, name, gender, passkey, recovery
     /// Two groups of the recovery code typed back.
     case recoveryCheck
     /// "Welcome back": sign in with a passkey or an emailed link.
@@ -103,23 +103,17 @@ final class OnboardingFlow: ObservableObject {
 
     /// True after "I already have an account": the email steps sign in rather than up.
     @Published var signingIn = false
-    /// The invitation code, from a link opened earlier or typed in.
-    @Published var inviteCode = ""
-    /// Why the invitation was not accepted, shown under its field.
-    @Published var inviteProblem: String?
-    /// The invite link opened earlier has been tried, so it is not checked again.
-    var linkTried = false
     /// A sign-in waits for "erase the other account's practice here, or cancel".
     @Published var otherAccount = false
-    /// The server said the username is taken; shown on the Username step.
-    @Published var usernameTaken = false
     @Published var consented = false
     /// What a magic-link request carries: nil signs in; a sign-up sends the
     /// consent given on the Consent step, which every sign-up path passes first.
     var signUpConsent: Bool? { signingIn ? nil : consented }
     @Published var email = ""
-    @Published var username = ""
     @Published var displayName = ""
+    /// The name the server gave the new account (a random one when none was
+    /// given), read once; Skip keeps it.
+    var serverName: String?
     @Published var gender: Gender?
     /// Set by the view: local mode keeps the onboarding's answers; from Settings
     /// nothing about the practices changes.
@@ -154,11 +148,11 @@ final class OnboardingFlow: ObservableObject {
         step = previous
     }
 
-    /// Back to an earlier step (a taken username, a spent invitation), keeping the answers.
-    func backTo(_ target: OnboardingStep) {
-        guard let i = history.lastIndex(of: target) else { return go(target) }
-        history.removeSubrange(i...)
-        step = target
+    /// The account exists: the steps that made it are behind for good, so Back
+    /// cannot ask for another passkey or sign-up.
+    func signedUp(next: OnboardingStep) {
+        history.removeAll()
+        step = next
     }
 
     var available: [Practice] {
@@ -221,7 +215,7 @@ extension OnboardingStep {
         case .practices: return (3, Self.practiceSteps)
         case .counts: return (4, Self.practiceSteps)
         case .reminder: return (5, Self.practiceSteps)
-        case .email, .checkEmail, .username: return signingIn ? nil : (1, Self.accountSteps)
+        case .passkey, .email, .checkEmail: return signingIn ? nil : (1, Self.accountSteps)
         case .name: return signingIn ? nil : (2, Self.accountSteps)
         case .gender: return signingIn ? nil : (3, Self.accountSteps)
         default: return nil
