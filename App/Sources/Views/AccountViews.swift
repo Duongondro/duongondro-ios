@@ -195,7 +195,8 @@ struct AccountSection: View {
         Task {
             defer { savingPasskey = false }
             do {
-                switch try await account.createPasskey(profile: nil) {
+                // Signed in, this only adds a passkey: no sign-up, so no consent goes with it.
+                switch try await account.createPasskey(profile: nil, consent: false) {
                 case .saved: note = localized("Passkey saved.")
                 default: break
                 }

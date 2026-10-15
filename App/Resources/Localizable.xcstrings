@@ -2996,58 +2996,6 @@
         }
       }
     },
-    "Accounts are by invitation for now. Open the link you were sent, or type its code." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Účty jsou zatím jen na pozvánku. Otevři odkaz, který ti přišel, nebo opiš jeho kód."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Konten gibt es vorerst nur auf Einladung. Öffne den Link, den du bekommen hast, oder tippe seinen Code ein."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Por ahora las cuentas son solo por invitación. Abre el enlace que te enviaron o escribe su código."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A fiókok egyelőre csak meghívóval érhetők el. Nyisd meg a kapott linket, vagy írd be a kódját."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Na razie konta są tylko na zaproszenie. Otwórz otrzymany link albo wpisz jego kod."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пока аккаунты создаются только по приглашению. Откройте полученную ссылку или введите её код."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Účty sú zatiaľ len na pozvánku. Otvor odkaz, ktorý ti prišiel, alebo prepíš jeho kód."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поки що облікові записи лише за запрошенням. Відкрийте отримане посилання або введіть його код."
-          }
-        }
-      }
-    },
     "Add" : {
       "localizations" : {
         "cs" : {
@@ -6117,6 +6065,58 @@
         }
       }
     },
+    "Enter it, or skip. A code a friend sent you also makes the two of you friends." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zadej ho, nebo tento krok přeskoč. Kód, který ti někdo poslal, z vás rovnou udělá přátele."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gib ihn ein oder überspring den Schritt. Ein Code, den dir jemand geschickt hat, macht euch auch gleich zu Freunden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escríbelo u omite este paso. Con un código que te envió alguien, esa persona y tú seréis amigos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Írd be, vagy hagyd ki ezt a lépést. Ha valaki küldte neked a kódot, barátok is lesztek."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wpisz go albo pomiń ten krok. Kod, który ktoś ci wysłał, od razu dodaje was do znajomych."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Введите его или пропустите этот шаг. Код, который вам кто-то прислал, сразу сделает вас друзьями."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zadaj ho, alebo tento krok preskoč. Kód, ktorý ti niekto poslal, z vás rovno urobí priateľov."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Введіть його або пропустіть цей крок. Код, який вам хтось надіслав, одразу зробить вас друзями."
+          }
+        }
+      }
+    },
     "Erase and continue" : {
       "localizations" : {
         "cs" : {
@@ -6529,6 +6529,59 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Exporta primero si quieres una copia."
+          }
+        }
+      }
+    },
+    "For now, an account needs an invitation code. Enter one, or keep practising on this phone." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zatím je k účtu potřeba kód pozvánky. Zadej ho, nebo dál cvič v tomto telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vorerst braucht ein Konto einen Einladungscode. Gib einen ein oder übe weiter auf diesem Handy."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Por ahora, para crear una cuenta hace falta un código de invitación. Escribe uno o sigue practicando en este teléfono."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egyelőre a fiókhoz meghívókód kell. Írj be egyet, vagy gyakorolj tovább ezen a telefonon."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Na razie do założenia konta potrzebny jest kod zaproszenia. Wpisz go albo ćwicz dalej na tym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Пока для аккаунта нужен код приглашения. Введите его или продолжайте практиковаться на этом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zatiaľ je k účtu potrebný kód pozvánky. Zadaj ho, alebo ďalej cvič v tomto telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Поки що для облікового запису потрібен код запрошення. Введіть його або практикуйте далі на цьому телефоні."
           }
         }
       }
@@ -7678,6 +7731,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Grupo %lld"
+          }
+        }
+      }
+    },
+    "Have an invitation code?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Máš kód pozvánky?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hast du einen Einladungscode?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Tienes un código de invitación?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Van meghívókódod?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Masz kod zaproszenia?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Есть код приглашения?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Máš kód pozvánky?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Маєте код запрошення?"
           }
         }
       }
@@ -9829,55 +9934,55 @@
         }
       }
     },
-    "No account uses this email. Go back and start with an invitation." : {
+    "No account uses this email. Check the address, or go back and make an account." : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tento e-mail nepoužívá žádný účet. Vrať se a začni s pozvánkou."
+            "value" : "Tento e-mail nepoužívá žádný účet. Zkontroluj adresu, nebo se vrať a vytvoř si účet."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kein Konto nutzt diese E-Mail-Adresse. Geh zurück und beginne mit einer Einladung."
+            "value" : "Kein Konto nutzt diese E-Mail-Adresse. Prüf die Adresse, oder geh zurück und leg ein Konto an."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ninguna cuenta usa este correo. Vuelve atrás y empieza con una invitación."
+            "value" : "Ninguna cuenta usa este correo. Revisa la dirección o vuelve atrás y crea una cuenta."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ehhez az e-mail-címhez nem tartozik fiók. Lépj vissza, és kezdd egy meghívóval."
+            "value" : "Ehhez az e-mail-címhez nem tartozik fiók. Ellenőrizd a címet, vagy lépj vissza, és hozz létre egy fiókot."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Żadne konto nie używa tego adresu. Wróć i zacznij od zaproszenia."
+            "value" : "Żadne konto nie używa tego adresu. Sprawdź adres albo wróć i załóż konto."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Нет аккаунта с этим адресом. Вернитесь и начните с приглашения."
+            "value" : "Нет аккаунта с этим адресом. Проверьте адрес или вернитесь и создайте аккаунт."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tento e-mail nepoužíva žiadny účet. Vráť sa a začni s pozvánkou."
+            "value" : "Tento e-mail nepoužíva žiadny účet. Skontroluj adresu, alebo sa vráť a vytvor si účet."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Немає облікового запису з цією адресою. Поверніться й почніть із запрошення."
+            "value" : "Немає облікового запису з цією адресою. Перевірте адресу або поверніться й створіть обліковий запис."
           }
         }
       }
@@ -9930,58 +10035,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Aún no tienes amigos. Una invitación los hace amigos a los dos; ellos ven tus rachas públicas, nunca tus conteos."
-          }
-        }
-      }
-    },
-    "No invitation? Ask someone who uses Duongöndro, or keep practising on this phone: you can add an account later in Settings." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nemáš pozvánku? Zeptej se někoho, kdo Duongöndro používá, nebo dál cvič v tomto telefonu: účet můžeš přidat později v Nastavení."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Keine Einladung? Frag jemanden, der Duongöndro nutzt, oder übe weiter auf diesem Handy: Ein Konto kannst du später in den Einstellungen anlegen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Sin invitación? Pídesela a alguien que use Duongöndro, o sigue practicando en este teléfono: puedes añadir una cuenta más tarde en Ajustes."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nincs meghívód? Kérdezz meg valakit, aki használja a Duongöndrót, vagy gyakorolj tovább ezen a telefonon: fiókot később is hozzáadhatsz a Beállításokban."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie masz zaproszenia? Zapytaj kogoś, kto używa Duongöndro, albo ćwicz dalej na tym telefonie: konto dodasz później w Ustawieniach."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Нет приглашения? Спросите у того, кто пользуется Duongöndro, или продолжайте практиковаться на этом телефоне: аккаунт можно добавить позже в настройках."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nemáš pozvánku? Opýtaj sa niekoho, kto používa Duongöndro, alebo ďalej cvič v tomto telefóne: účet môžeš pridať neskôr v Nastaveniach."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Немає запрошення? Запитайте в того, хто користується Duongöndro, або практикуйте далі на цьому телефоні: обліковий запис можна додати пізніше в налаштуваннях."
           }
         }
       }
@@ -17059,6 +17112,59 @@
         }
       }
     },
+    "Too many sign-ups from this network in the last hour. Try again later, or enter an invitation code: it works regardless." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Z této sítě bylo za poslední hodinu příliš mnoho registrací. Zkus to později, nebo zadej kód pozvánky: ten funguje i tak."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aus diesem Netz gab es in der letzten Stunde zu viele Registrierungen. Versuch es später, oder gib einen Einladungscode ein: Der funktioniert trotzdem."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desde esta red ha habido demasiados registros en la última hora. Inténtalo más tarde o escribe un código de invitación: ese funciona igualmente."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Erről a hálózatról az elmúlt órában túl sok regisztráció történt. Próbáld újra később, vagy írj be egy meghívókódot: az így is működik."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo wpisz kod zaproszenia: on działa mimo to."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Из этой сети за последний час было слишком много регистраций. Попробуйте позже или введите код приглашения: он работает в любом случае."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Z tejto siete bolo za poslednú hodinu príliš veľa registrácií. Skús to neskôr, alebo zadaj kód pozvánky: ten funguje aj tak."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "З цієї мережі за останню годину було забагато реєстрацій. Спробуйте пізніше або введіть код запрошення: він спрацює в будь-якому разі."
+          }
+        }
+      }
+    },
     "Too many tries. Wait a few minutes and try again." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -19204,58 +19310,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваша стать"
-          }
-        }
-      }
-    },
-    "Your invitation" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tvoje pozvánka"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Deine Einladung"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tu invitación"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A meghívód"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Twoje zaproszenie"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ваше приглашение"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tvoja pozvánka"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ваше запрошення"
           }
         }
       }

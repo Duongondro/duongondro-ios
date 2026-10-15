@@ -176,7 +176,8 @@ public enum APIError: Error, Equatable {
     /// token is wrong, expired, used or replaced; the server does not say which.
     case badRequest(String)
     case unauthorized
-    /// 403: redeeming a magic link for an address no account uses, without an invitation.
+    /// 403: redeeming a magic link for an address no account uses that was no
+    /// sign-up; a sign-up the server refuses without an invitation.
     case forbidden(String)
     case notFound
     case conflict(String)

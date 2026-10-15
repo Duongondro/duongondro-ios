@@ -114,6 +114,9 @@ final class OnboardingFlow: ObservableObject {
     /// The server said the username is taken; shown on the Username step.
     @Published var usernameTaken = false
     @Published var consented = false
+    /// What a magic-link request carries: nil signs in; a sign-up sends the
+    /// consent given on the Consent step, which every sign-up path passes first.
+    var signUpConsent: Bool? { signingIn ? nil : consented }
     @Published var email = ""
     @Published var username = ""
     @Published var displayName = ""

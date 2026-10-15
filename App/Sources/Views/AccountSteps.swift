@@ -18,6 +18,16 @@ func localized(_ key: String.LocalizationValue) -> String {
 /// The message for any failure of a call to the server.
 var accountError: String { localized("Something went wrong. Check your connection and try again.") }
 
+/// A sign-up refused because this server makes accounts only with an invitation
+/// (open sign-up off, or turned off since the sign-up began).
+var invitationNeeded: String { localized("For now, an account needs an invitation code. Enter one, or keep practising on this phone.") }
+
+/// The 429 of the limits on sign-ups without an invitation from one network
+/// (accounts made, and sign-up mails requested).
+var tooManyAccounts: String {
+    localized("Too many sign-ups from this network in the last hour. Try again later, or enter an invitation code: it works regardless.")
+}
+
 /// One call in flight: buttons disable while it runs, `failed` says it did not finish.
 @MainActor
 final class StepCall: ObservableObject {
@@ -229,6 +239,19 @@ private enum Route {
         }
     }
 
+    /// A sign-up the server refused without an invitation: back to the
+    /// Invitation step, which says why.
+    static func needInvitation(flow: OnboardingFlow) {
+        backToInvitation(flow: flow, problem: invitationNeeded)
+    }
+
+    /// Back to the Invitation step with why: a code is the way past the
+    /// refusal (sign-up closed, the per-network limit, an unknown code).
+    static func backToInvitation(flow: OnboardingFlow, problem: String) {
+        flow.inviteProblem = problem
+        flow.backTo(.invite)
+    }
+
     /// A redemption's answer: signed in, or the reason it was not, for under the field.
     static func redeemed(_ result: AccountModel.Redeem, flow: OnboardingFlow, account: AccountModel) async throws -> String? {
         switch result {
@@ -236,7 +259,13 @@ private enum Route {
             try await signedIn(created: created, flow: flow, account: account)
             return nil
         case .wrong: return localized("That code doesn't match. Check the email and try again.")
-        case .noAccount: return localized("No account uses this email. Go back and start with an invitation.")
+        case .noAccount:
+            // A sign-up's link refused at redemption: sign-up closed since it was sent.
+            guard flow.signingIn else {
+                needInvitation(flow: flow)
+                return nil
+            }
+            return localized("No account uses this email. Check the address, or go back and make an account.")
         case .inviteGone: return localized("We don't know this invitation. Check the code, or ask whoever sent it.")
         case .tooMany: return localized("Too many tries. Wait a few minutes and try again.")
         case .passkeyFailed: return localized("That passkey did not work. Try again, or use your email instead.")
@@ -328,8 +357,9 @@ struct WhereStep: View {
     }
 }
 
-/// A friend's invitation (24 characters) or an admission code (16): the length
-/// tells them apart, and either is "an invitation code".
+/// Optional (design: Social › Open sign-up): a friend's invitation (24
+/// characters) or an admission code (16), told apart by length, either "an
+/// invitation code"; or skipped, for an account with no invitation.
 struct InviteStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
     @EnvironmentObject private var account: AccountModel
@@ -339,8 +369,8 @@ struct InviteStep: View {
     private var complete: Bool { length == Invitation.inviteLength || length == Invitation.admissionLength }
 
     var body: some View {
-        AccountPage(title: "Your invitation",
-                    detail: Text("Accounts are by invitation for now. Open the link you were sent, or type its code.")) {
+        AccountPage(title: "Have an invitation code?",
+                    detail: Text("Enter it, or skip. A code a friend sent you also makes the two of you friends.")) {
             LabelledField(label: "Invitation code",
                           text: Binding(get: { flow.inviteCode }, set: { flow.inviteCode = $0; flow.inviteProblem = nil }),
                           hint: "Type or paste the invitation code, or paste the whole invitation link. Case doesn't matter.",
@@ -348,12 +378,15 @@ struct InviteStep: View {
                           submit: { if complete { check() } })
         } actions: {
             ErrorLine(text: call.failed ? accountError : nil)
-            Text("No invitation? Ask someone who uses Duongöndro, or keep practising on this phone: you can add an account later in Settings.")
-                .font(.subheadline)
-                .foregroundStyle(Theme.muted)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .fixedSize(horizontal: false, vertical: true)
             StepButton(title: "Continue", enabled: complete, busy: call.busy) { check() }
+            TextAction(title: "Skip") {
+                guard !call.busy else { return }
+                // No code goes with the sign-up, even one typed or opened here.
+                account.clearInvitation()
+                flow.inviteCode = ""
+                flow.inviteProblem = nil
+                flow.go(.consent)
+            }
             TextAction(title: "Only on this phone for now") {
                 account.clearInvitation()
                 flow.finishLocal()
@@ -450,10 +483,13 @@ struct EmailStep: View {
 
     private func send() {
         call.run {
-            switch try await account.requestMagicLink(email: flow.email.trimmingCharacters(in: .whitespaces), signUp: !flow.signingIn) {
+            switch try await account.requestMagicLink(email: flow.email.trimmingCharacters(in: .whitespaces),
+                                                      signUpWithConsent: flow.signUpConsent) {
             case .sent: flow.go(.checkEmail)
             case .unknownInvite: problem = localized("We don't know this invitation. Check the code, or ask whoever sent it.")
             case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+            case .tooManyAccounts: Route.backToInvitation(flow: flow, problem: tooManyAccounts)
+            case .invitationNeeded: Route.needInvitation(flow: flow)
             }
         }
     }
@@ -485,10 +521,13 @@ struct CheckEmailStep: View {
             TextAction(title: again ? "Sent again" : "Send it again") {
                 guard !call.busy, !again else { return }
                 call.run {
-                    if try await account.requestMagicLink(email: address, signUp: !flow.signingIn) == .tooMany {
-                        problem = localized("Too many tries. Wait a few minutes and try again.")
-                    } else {
-                        again = true
+                    switch try await account.requestMagicLink(email: address, signUpWithConsent: flow.signUpConsent) {
+                    case .sent: again = true
+                    case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+                    case .tooManyAccounts: Route.backToInvitation(flow: flow, problem: tooManyAccounts)
+                    case .unknownInvite:
+                        Route.backToInvitation(flow: flow, problem: localized("We don't know this invitation. Check the code, or ask whoever sent it."))
+                    case .invitationNeeded: Route.needInvitation(flow: flow)
                     }
                 }
             }
@@ -644,7 +683,7 @@ struct PasskeyStep: View {
                           username: flow.username.isEmpty ? nil : flow.username, gender: flow.gender?.rawValue)
                 : nil
             do {
-                switch try await account.createPasskey(profile: profile) {
+                switch try await account.createPasskey(profile: profile, consent: flow.consented) {
                 case .saved: flow.go(.recovery)
                 case .cancelled: break
                 case .usernameTaken:
@@ -653,6 +692,9 @@ struct PasskeyStep: View {
                 case .inviteGone:
                     flow.inviteProblem = localized("We don't know this invitation. Check the code, or ask whoever sent it.")
                     flow.backTo(.invite)
+                case .invitationNeeded: Route.needInvitation(flow: flow)
+                case .tooManyAccounts: Route.backToInvitation(flow: flow, problem: tooManyAccounts)
+                case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
                 case .otherAccountData: flow.otherAccount = true
                 }
             } catch Passkeys.Failure.refused {

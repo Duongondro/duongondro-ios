@@ -342,14 +342,21 @@ final class AccountModel: ObservableObject {
 
     // MARK: Email
 
-    enum LinkRequest { case sent, unknownInvite, tooMany }
+    enum LinkRequest {
+        case sent, unknownInvite, tooMany
+        /// The server makes accounts only with an invitation: back to its step.
+        case invitationNeeded
+        /// Too many accounts made from this network in the last hour; a code still works.
+        case tooManyAccounts
+    }
 
     enum Redeem: Equatable {
         /// Signed in; `created` when the link or passkey made the account.
         case signedIn(created: Bool)
         /// A wrong, expired, used or replaced code: the server does not say which.
         case wrong
-        /// No account uses this address, and the link carried no invitation.
+        /// No account uses this address and the link was no sign-up; or, for a
+        /// sign-up, the server stopped making accounts without an invitation.
         case noAccount
         /// The invitation stopped being valid since the link was sent.
         case inviteGone
@@ -366,15 +373,21 @@ final class AccountModel: ObservableObject {
     /// Whether an opened magic link may be redeemed now.
     func expectsLink(now: Date = Date()) -> Bool { linkWindow.expects(at: now) }
 
-    func requestMagicLink(email address: String, signUp: Bool) async throws -> LinkRequest {
+    /// `consent`: the onboarding's, which every sign-up carries; nil signs in.
+    func requestMagicLink(email address: String, signUpWithConsent consent: Bool?) async throws -> LinkRequest {
         do {
-            try await anonymous.requestMagicLink(email: address, proof: signUp ? invitation?.proof : nil)
+            try await anonymous.requestMagicLink(email: address,
+                                                 signUp: consent.map { SignUp(proof: invitation?.proof, consent: $0) })
             linkWindow.requested()
             email = address
             return .sent
-        } catch APIError.notFound {
+        } catch SignUpFailure.unknownInvitation {
             return .unknownInvite
-        } catch APIError.tooManyRequests {
+        } catch SignUpFailure.invitationNeeded {
+            return .invitationNeeded
+        } catch SignUpFailure.tooManyAccounts {
+            return .tooManyAccounts
+        } catch SignUpFailure.tooManyRequests, APIError.tooManyRequests {
             return .tooMany
         }
     }
@@ -456,27 +469,37 @@ final class AccountModel: ObservableObject {
 
     // MARK: Passkeys
 
-    enum PasskeyResult { case saved, cancelled, usernameTaken, inviteGone, otherAccountData }
+    enum PasskeyResult {
+        case saved, cancelled, usernameTaken, inviteGone, otherAccountData
+        case invitationNeeded, tooManyAccounts, tooMany
+    }
 
     /// Without a session, makes the account with a passkey and the profile (the
-    /// no-email path); signed in, adds a passkey to the account.
-    func createPasskey(profile: Profile?) async throws -> PasskeyResult {
+    /// no-email path), with the onboarding's consent; signed in, adds a passkey
+    /// to the account.
+    func createPasskey(profile: Profile?, consent: Bool) async throws -> PasskeyResult {
         if let account {
             let ceremony = try await account.api.beginPasskeyAdd()
             guard let credential = try await Passkeys.create(ceremony) else { return .cancelled }
             try await account.api.finishPasskeyAdd(ceremony: ceremony.sessionId, credential: credential)
             return .saved
         }
-        guard let proof = invitation?.proof else { throw Account.Failure.accountHasNoKeys }
         let result: SignInResult
         do {
-            let ceremony = try await anonymous.beginPasskeySignUp(proof: proof, profile: profile ?? Profile())
+            let ceremony = try await anonymous.beginPasskeySignUp(SignUp(proof: invitation?.proof, consent: consent),
+                                                                  profile: profile ?? Profile())
             guard let credential = try await Passkeys.create(ceremony) else { return .cancelled }
-            result = try await anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: credential)
+            result = try await anonymous.finishPasskeySignUp(ceremony: ceremony.sessionId, credential: credential)
         } catch APIError.conflict {
             return .usernameTaken
-        } catch APIError.notFound {
+        } catch SignUpFailure.unknownInvitation {
             return .inviteGone
+        } catch SignUpFailure.invitationNeeded {
+            return .invitationNeeded
+        } catch SignUpFailure.tooManyAccounts {
+            return .tooManyAccounts
+        } catch SignUpFailure.tooManyRequests {
+            return .tooMany
         }
         guard signedIn(result) else { return .otherAccountData }
         if let profile {
@@ -927,7 +950,7 @@ final class AccountModel: ObservableObject {
 
 /// The account steps opened over the app, outside onboarding.
 enum AccountFlow: String, Identifiable {
-    /// "Make an online account": from the invitation on.
+    /// "Make an online account": from the (optional) invitation on.
     case newAccount
     /// "I already have an account", "Sign in again".
     case signIn

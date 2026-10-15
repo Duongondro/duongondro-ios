@@ -51,7 +51,7 @@ final class AuthTests: XCTestCase {
     var last: StubProtocol.Sent { StubProtocol.sent.last! }
 
     func testMagicLinkRequestCarriesTheProof() async throws {
-        try await api.requestMagicLink(email: "a@b.c", proof: .invite(id: "abcd1234", auth: Data([1, 2, 3])))
+        try await api.requestMagicLink(email: "a@b.c", signUp: SignUp(proof: .invite(id: "abcd1234", auth: Data([1, 2, 3])), consent: true))
         XCTAssertEqual(last.method, "POST")
         XCTAssertEqual(last.path, "/api/auth/magic-links")
         XCTAssertEqual(last.body?["email"] as? String, "a@b.c")
@@ -59,13 +59,76 @@ final class AuthTests: XCTestCase {
         XCTAssertEqual(invite?["id"] as? String, "ABCD1234")
         XCTAssertEqual(invite?["auth"] as? String, "AQID")
         XCTAssertNil(last.body?["admissionCode"])
+        XCTAssertEqual(last.body?["signUp"] as? Bool, true)
+        XCTAssertEqual(last.body?["consent"] as? Bool, true)
 
-        try await api.requestMagicLink(email: "a@b.c", proof: .admission("0123456789ABCDEF"))
+        try await api.requestMagicLink(email: "a@b.c", signUp: SignUp(proof: .admission("0123456789ABCDEF"), consent: true))
         XCTAssertEqual(last.body?["admissionCode"] as? String, "0123456789ABCDEF")
         XCTAssertNil(last.body?["invite"])
 
+        // A sign-in: no flag, no consent, no code.
         try await api.requestMagicLink(email: "a@b.c")
         XCTAssertEqual(last.body?.keys.sorted(), ["email"])
+    }
+
+    func testOpenSignUpSendsTheFlagAndConsentWithoutACode() async throws {
+        try await api.requestMagicLink(email: "a@b.c", signUp: SignUp(consent: true))
+        XCTAssertEqual(last.body?.keys.sorted(), ["consent", "email", "signUp"])
+        XCTAssertEqual(last.body?["signUp"] as? Bool, true)
+        XCTAssertEqual(last.body?["consent"] as? Bool, true)
+
+        let session = UUID()
+        StubProtocol.responses = [(200, #"{"sessionId":"\#(session.uuidString.lowercased())","options":{}}"#)]
+        _ = try await api.beginPasskeySignUp(SignUp(consent: true), profile: Profile(displayName: "Ana"))
+        XCTAssertEqual(last.path, "/api/auth/passkeys/sign-up")
+        XCTAssertEqual(last.body?.keys.sorted(), ["consent", "displayName", "signUp"])
+    }
+
+    func testSignUpRefusalsAreTyped() async throws {
+        let cases: [(Int, String, SignUpFailure)] = [
+            (403, "an invitation or an admission code is needed to create an account", .invitationNeeded),
+            (404, "not found", .unknownInvitation),
+            (429, "too many new accounts from this network; try again later, or use an invitation", .tooManyAccounts),
+            (429, "too many sign-in links to this address; try again in a few minutes", .tooManyRequests),
+            (429, "too many sign-up mails requested from this network; try again later, or use an invitation", .tooManyAccounts),
+        ]
+        for (status, message, expected) in cases {
+            StubProtocol.responses = [(status, #"{"error":"\#(message)"}"#)]
+            do {
+                try await api.requestMagicLink(email: "a@b.c", signUp: SignUp(consent: true))
+                XCTFail("\(status) did not throw")
+            } catch let failure as SignUpFailure {
+                XCTAssertEqual(failure, expected, message)
+            }
+            StubProtocol.responses = [(status, #"{"error":"\#(message)"}"#)]
+            do {
+                _ = try await api.beginPasskeySignUp(SignUp(consent: true))
+                XCTFail("\(status) did not throw")
+            } catch let failure as SignUpFailure {
+                XCTAssertEqual(failure, expected, message)
+            }
+            StubProtocol.responses = [(status, #"{"error":"\#(message)"}"#)]
+            do {
+                _ = try await api.finishPasskeySignUp(ceremony: UUID(), credential: .object([:]))
+                XCTFail("\(status) did not throw")
+            } catch let failure as SignUpFailure {
+                XCTAssertEqual(failure, expected, message)
+            }
+        }
+        // A sign-in keeps the plain API errors, and a username taken stays a conflict.
+        StubProtocol.responses = [(429, #"{"error":"too many requests"}"#), (409, #"{"error":"taken"}"#)]
+        do {
+            try await api.requestMagicLink(email: "a@b.c")
+            XCTFail("429 did not throw")
+        } catch let error as APIError {
+            XCTAssertEqual(error, .tooManyRequests("too many requests"))
+        }
+        do {
+            _ = try await api.beginPasskeySignUp(SignUp(consent: true))
+            XCTFail("409 did not throw")
+        } catch let error as APIError {
+            XCTAssertEqual(error, .conflict("taken"))
+        }
     }
 
     func testRedeemingByTokenOrCode() async throws {
@@ -100,13 +163,13 @@ final class AuthTests: XCTestCase {
     func testPasskeySignUpSendsProofAndProfile() async throws {
         let session = UUID()
         StubProtocol.responses = [(200, #"{"sessionId":"\#(session.uuidString.lowercased())","options":{"publicKey":{"challenge":"AAEC","timeout":60000}}}"#)]
-        let ceremony = try await api.beginPasskeySignUp(proof: .admission("CODE"),
+        let ceremony = try await api.beginPasskeySignUp(SignUp(proof: .admission("CODE"), consent: true),
                                                         profile: Profile(displayName: "Ana", username: "ana", gender: nil))
         XCTAssertEqual(ceremony.sessionId, session)
         XCTAssertEqual(ceremony.publicKey["challenge"], .string("AAEC"))
         XCTAssertEqual(ceremony.publicKey["timeout"], .number(60000))
         XCTAssertEqual(last.path, "/api/auth/passkeys/sign-up")
-        XCTAssertEqual(last.body?.keys.sorted(), ["admissionCode", "displayName", "username"])
+        XCTAssertEqual(last.body?.keys.sorted(), ["admissionCode", "consent", "displayName", "signUp", "username"])
     }
 
     func testFinishingPasskeysPassesTheCredentialThrough() async throws {
