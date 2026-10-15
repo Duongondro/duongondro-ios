@@ -4,7 +4,7 @@
      one, every type below is linked to the account and used only to run it, matching
      the App Store privacy labels:
      - Email address: optional, for magic links; the server keeps it encrypted.
-     - User ID: the account and its devices.
+     - User ID: the account, its devices and the optional username.
      - Name: the display name friends see.
      - Sensitive info: using the app reveals religious practice (GDPR Art. 9).
      - Other user content: gender, report reasons, public streaks, and the practice log,
