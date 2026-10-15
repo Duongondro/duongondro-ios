@@ -2423,6 +2423,8 @@
     "100" : {},
     "108" : {},
     "A friend" : {
+      "comment" : "A friend without a display name, as a name. Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2470,6 +2472,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Un amigo"
+          }
+        }
+      }
+    },
+    "A friendship code" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kód přátelství"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freundschaftscode"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátságkód"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kod przyjaźni"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Код дружбы"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kód priateľstva"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Код дружби"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un código de amistad"
           }
         }
       }
@@ -2575,6 +2629,110 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Новий телефон продовжить з того місця, де зупинився цей"
+          }
+        }
+      }
+    },
+    "A random name, so friends can tell you apart. Keep it or change it." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Náhodné jméno, aby tě přátelé rozeznali. Nech si ho, nebo ho změň."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein zufälliger Name, damit Freunde dich unterscheiden können. Behalte ihn oder ändere ihn."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un nombre al azar, para que tus amigos te distingan. Déjalo o cámbialo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy véletlenszerű név, hogy a barátaid meg tudjanak különböztetni. Megtarthatod vagy megváltoztathatod."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Losowe imię, żeby przyjaciele mogli cię rozpoznać. Zostaw je albo zmień."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Случайное имя, чтобы друзья могли вас различать. Оставьте его или измените."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Náhodné meno, aby ťa priatelia rozoznali. Nechaj si ho, alebo ho zmeň."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Випадкове ім’я, щоб друзі могли вас розрізняти. Залиште його або змініть."
+          }
+        }
+      }
+    },
+    "A second way to sign in, for example on a new phone." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Druhý způsob přihlášení, třeba na novém telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine zweite Art, dich anzumelden, zum Beispiel auf einem neuen Handy."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una segunda forma de iniciar sesión, por ejemplo en un teléfono nuevo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy második bejelentkezési mód, például egy új telefonon."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Drugi sposób logowania, na przykład na nowym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Второй способ входа, например на новом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Druhý spôsob prihlásenia, napríklad na novom telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Другий спосіб входу, наприклад на новому телефоні."
           }
         }
       }
@@ -3204,6 +3362,58 @@
         }
       }
     },
+    "Add an email?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidat e-mail?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-Mail-Adresse hinzufügen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Añadir un correo?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Megadsz egy e-mail-címet?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodać adres e-mail?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавить почту?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridať e-mail?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додати пошту?"
+          }
+        }
+      }
+    },
     "Add another amount" : {
       "localizations" : {
         "cs" : {
@@ -3252,6 +3462,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Añadir otra cantidad"
+          }
+        }
+      }
+    },
+    "Add friend" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidat přítele"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Freund hinzufügen"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barát hozzáadása"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodaj przyjaciela"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавить друга"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridať priateľa"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додати друга"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir amigo"
           }
         }
       }
@@ -3568,54 +3830,54 @@
         }
       }
     },
-    "An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. With your consent the server keeps your email or username, your name, your gender if you give it, your friends, and your public streaks. Your counts stay encrypted on your phones." : {
+    "An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. The server keeps your account: your passkeys, and your email if you add one; the name friends see; your username and gender if you give them; your friends; and your public streaks. Your counts stay encrypted on your phones." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Účet v aplikaci pro buddhistickou praxi vypovídá o tvém přesvědčení, které GDPR považuje za zvláštní. S tvým souhlasem server uchovává tvůj e-mail nebo uživatelské jméno, jméno, pohlaví, pokud ho uvedeš, tvé přátele a veřejné série. Tvé počty zůstávají zašifrované v tvých telefonech."
+            "value" : "Účet v aplikaci pro buddhistickou praxi vypovídá o tvém přesvědčení, které GDPR považuje za zvláštní. Server uchovává tvůj účet: tvé přístupové klíče a e-mail, pokud ho přidáš; jméno, které vidí přátelé; uživatelské jméno a pohlaví, pokud je uvedeš; tvé přátele; a tvé veřejné série. Tvé počty zůstávají zašifrované v tvých telefonech."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Konto in einer App für buddhistische Praxis sagt etwas über deine Überzeugungen aus, die die DSGVO als besonders schützenswert behandelt. Mit deiner Einwilligung speichert der Server deine E-Mail-Adresse oder deinen Benutzernamen, deinen Namen, dein Geschlecht, falls du es angibst, deine Freunde und deine öffentlichen Serien. Deine Zähler bleiben auf deinen Handys verschlüsselt."
+            "value" : "Ein Konto in einer App für buddhistische Praxis sagt etwas über deine Überzeugungen aus, die die DSGVO als besonders schützenswert behandelt. Der Server speichert dein Konto: deine Passkeys und deine E-Mail-Adresse, falls du eine hinzufügst; den Namen, den Freunde sehen; deinen Benutzernamen und dein Geschlecht, falls du sie angibst; deine Freunde; und deine öffentlichen Serien. Deine Zähler bleiben auf deinen Handys verschlüsselt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. Con tu consentimiento, el servidor guarda tu correo o nombre de usuario, tu nombre, tu género si lo indicas, tus amigos y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
+            "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. El servidor guarda tu cuenta: tus llaves de acceso, y tu correo si lo añades; el nombre que ven tus amigos; tu nombre de usuario y tu género si los indicas; tus amigos; y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Egy buddhista gyakorlóalkalmazásban lévő fiók mond valamit a meggyőződésedről, amit a GDPR különleges adatként kezel. A hozzájárulásoddal a szerver tárolja az e-mail-címedet vagy felhasználónevedet, a neved, a nemedet, ha megadod, a barátaidat és a nyilvános sorozataidat. A számlálóid titkosítva maradnak a telefonjaidon."
+            "value" : "Egy buddhista gyakorlóalkalmazásban lévő fiók mond valamit a meggyőződésedről, amit a GDPR különleges adatként kezel. A szerver tárolja a fiókodat: a hozzáférési kulcsaidat, és az e-mail-címedet, ha megadsz egyet; a nevet, amit a barátaid látnak; a felhasználónevedet és a nemedet, ha megadod őket; a barátaidat; és a nyilvános sorozataidat. A számlálóid titkosítva maradnak a telefonjaidon."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Za Twoją zgodą serwer przechowuje Twój e-mail lub nazwę użytkownika, imię, płeć, jeśli ją podasz, przyjaciół i publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
+            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Serwer przechowuje Twoje konto: Twoje klucze dostępu oraz e-mail, jeśli go dodasz; imię widoczne dla przyjaciół; nazwę użytkownika i płeć, jeśli je podasz; Twoich przyjaciół; oraz publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Аккаунт в приложении для буддийской практики говорит о ваших убеждениях, а GDPR относит их к особой категории. С вашего согласия сервер хранит вашу почту или имя пользователя, ваше имя, пол, если вы его укажете, ваших друзей и публичные серии. Ваши счётчики остаются зашифрованными на ваших телефонах."
+            "value" : "Аккаунт в приложении для буддийской практики говорит о ваших убеждениях, а GDPR относит их к особой категории. Сервер хранит ваш аккаунт: ваши ключи доступа и почту, если вы её добавите; имя, которое видят друзья; имя пользователя и пол, если вы их укажете; ваших друзей; и публичные серии. Ваши счётчики остаются зашифрованными на ваших телефонах."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Účet v aplikácii pre budhistickú prax vypovedá o tvojom presvedčení, ktoré GDPR považuje za osobitné. S tvojím súhlasom server uchováva tvoj e-mail alebo používateľské meno, tvoje meno, pohlavie, ak ho uvedieš, tvojich priateľov a verejné série. Tvoje počty zostávajú zašifrované v tvojich telefónoch."
+            "value" : "Účet v aplikácii pre budhistickú prax vypovedá o tvojom presvedčení, ktoré GDPR považuje za osobitné. Server uchováva tvoj účet: tvoje prístupové kľúče a e-mail, ak ho pridáš; meno, ktoré vidia priatelia; používateľské meno a pohlavie, ak ich uvedieš; tvojich priateľov; a tvoje verejné série. Tvoje počty zostávajú zašifrované v tvojich telefónoch."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Обліковий запис у застосунку для буддійської практики говорить про ваші переконання, а GDPR відносить їх до особливої категорії. За вашою згодою сервер зберігає вашу пошту або ім’я користувача, ваше ім’я, стать, якщо ви її вкажете, ваших друзів і публічні серії. Ваші лічильники залишаються зашифрованими на ваших телефонах."
+            "value" : "Обліковий запис у застосунку для буддійської практики говорить про ваші переконання, а GDPR відносить їх до особливої категорії. Сервер зберігає ваш обліковий запис: ваші ключі доступу та пошту, якщо ви її додасте; ім’я, яке бачать друзі; ім’я користувача і стать, якщо ви їх вкажете; ваших друзів; і публічні серії. Ваші лічильники залишаються зашифрованими на ваших телефонах."
           }
         }
       }
@@ -3776,54 +4038,54 @@
         }
       }
     },
-    "Anyone with this code can join · expires in 7 days" : {
+    "Anyone with this code becomes your friend · expires in 7 days" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kdokoli s tímto kódem se může připojit · vyprší za 7 dní"
+            "value" : "Kdokoli s tímto kódem se stane tvým přítelem · vyprší za 7 dní"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jeder mit diesem Code kann beitreten · läuft in 7 Tagen ab"
+            "value" : "Jeder mit diesem Code wird dein Freund · läuft in 7 Tagen ab"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bárki csatlakozhat ezzel a kóddal · 7 nap múlva lejár"
+            "value" : "Bárki, akinél ez a kód van, a barátod lesz · 7 nap múlva lejár"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Każdy z tym kodem może dołączyć · wygasa za 7 dni"
+            "value" : "Każdy z tym kodem zostanie Twoim przyjacielem · wygasa za 7 dni"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Присоединиться может любой, у кого есть этот код · действует 7 дней"
+            "value" : "Любой, у кого есть этот код, станет вашим другом · действует 7 дней"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pripojiť sa môže každý s týmto kódom · platí 7 dní"
+            "value" : "Každý s týmto kódom sa stane tvojím priateľom · platí 7 dní"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Будь-хто з цим кодом може приєднатися · діє 7 днів"
+            "value" : "Будь-хто з цим кодом стане вашим другом · діє 7 днів"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cualquiera con este código puede unirse · vence en 7 días"
+            "value" : "Quien tenga este código será tu amigo · vence en 7 días"
           }
         }
       }
@@ -6013,106 +6275,54 @@
         }
       }
     },
-    "Ends the friendship both ways and stops invites and nudges between you." : {
+    "Ends the friendship both ways and stops friendship codes and nudges between you." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ukončí přátelství na obou stranách a zastaví pozvánky i šťouchance mezi vámi."
+            "value" : "Ukončí přátelství na obou stranách a zastaví kódy přátelství i šťouchance mezi vámi."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beendet die Freundschaft für beide Seiten und stoppt Einladungen und Anstupser zwischen euch."
+            "value" : "Beendet die Freundschaft für beide Seiten und stoppt Freundschaftscodes und Anstupser zwischen euch."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mindkét irányban megszünteti a barátságot, és leállítja a meghívókat és a figyelmeztetéseket köztetek."
+            "value" : "Mindkét irányban megszünteti a barátságot, és leállítja a barátságkódokat és a figyelmeztetéseket köztetek."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kończy przyjaźń po obu stronach i wstrzymuje zaproszenia oraz szturchnięcia między wami."
+            "value" : "Kończy przyjaźń po obu stronach i wstrzymuje kody przyjaźni oraz szturchnięcia między wami."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Прекращает дружбу с обеих сторон, приглашения и подталкивания между вами."
+            "value" : "Прекращает дружбу с обеих сторон, коды дружбы и подталкивания между вами."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ukončí priateľstvo na oboch stranách a zastaví pozvánky a šťuchnutia medzi vami."
+            "value" : "Ukončí priateľstvo na oboch stranách a zastaví kódy priateľstva a šťuchnutia medzi vami."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Припиняє дружбу з обох боків і зупиняє запрошення та підштовхування між вами."
+            "value" : "Припиняє дружбу з обох боків і зупиняє коди дружби та підштовхування між вами."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Termina la amistad para ambos y detiene las invitaciones y los toques entre los dos."
-          }
-        }
-      }
-    },
-    "Enter it, or skip. A code a friend sent you also makes the two of you friends." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zadej ho, nebo tento krok přeskoč. Kód, který ti někdo poslal, z vás rovnou udělá přátele."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gib ihn ein oder überspring den Schritt. Ein Code, den dir jemand geschickt hat, macht euch auch gleich zu Freunden."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escríbelo u omite este paso. Con un código que te envió alguien, esa persona y tú seréis amigos."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Írd be, vagy hagyd ki ezt a lépést. Ha valaki küldte neked a kódot, barátok is lesztek."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wpisz go albo pomiń ten krok. Kod, który ktoś ci wysłał, od razu dodaje was do znajomych."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Введите его или пропустите этот шаг. Код, который вам кто-то прислал, сразу сделает вас друзьями."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zadaj ho, alebo tento krok preskoč. Kód, ktorý ti niekto poslal, z vás rovno urobí priateľov."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Введіть його або пропустіть цей крок. Код, який вам хтось надіслав, одразу зробить вас друзями."
+            "value" : "Termina la amistad para ambos y detiene los códigos de amistad y los toques entre los dos."
           }
         }
       }
@@ -6529,59 +6739,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Exporta primero si quieres una copia."
-          }
-        }
-      }
-    },
-    "For now, an account needs an invitation code. Enter one, or keep practising on this phone." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatím je k účtu potřeba kód pozvánky. Zadej ho, nebo dál cvič v tomto telefonu."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vorerst braucht ein Konto einen Einladungscode. Gib einen ein oder übe weiter auf diesem Handy."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Por ahora, para crear una cuenta hace falta un código de invitación. Escribe uno o sigue practicando en este teléfono."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyelőre a fiókhoz meghívókód kell. Írj be egyet, vagy gyakorolj tovább ezen a telefonon."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Na razie do założenia konta potrzebny jest kod zaproszenia. Wpisz go albo ćwicz dalej na tym telefonie."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пока для аккаунта нужен код приглашения. Введите его или продолжайте практиковаться на этом телефоне."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatiaľ je k účtu potrebný kód pozvánky. Zadaj ho, alebo ďalej cvič v tomto telefóne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поки що для облікового запису потрібен код запрошення. Введіть його або практикуйте далі на цьому телефоні."
           }
         }
       }
@@ -7006,6 +7163,366 @@
         }
       }
     },
+    "FRIEND_DONE_UNNAMED" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend without a display name logged a practice, neutral form (non-binary or no gender given): %2$@ the day of their streak; %1$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel právě praktikoval · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat gerade geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just practised · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo acaba de practicar · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát épp gyakorolt · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel właśnie praktykował · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг только что позанимался · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ práve cvičil · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг щойно виконав практику · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_FEMALE" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend without a display name logged a practice, the sender is female: %2$@ the day of their streak; %1$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně právě praktikovala · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin hat gerade geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just practised · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga acaba de practicar · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát épp gyakorolt · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka właśnie praktykowała · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга только что позанималась · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka práve cvičila · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга щойно виконала практику · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_MALE" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend without a display name logged a practice, the sender is male: %2$@ the day of their streak; %1$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel právě praktikoval · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat gerade geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just practised · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo acaba de practicar · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát épp gyakorolt · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel właśnie praktykował · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг только что позанимался · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ práve cvičil · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг щойно виконав практику · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_NAMED" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_UNNAMED (neutral form (non-binary or no gender given)): a friend without a display name; %1$@ the practice, %2$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel právě dokončil %1$@ · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat gerade %1$@ geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just did their %1$@ · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát épp befejezte: %1$@ · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel właśnie ukończył %1$@ · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг только что завершил %1$@ · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ práve dokončil %1$@ · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг щойно завершив %1$@ · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_NAMED_FEMALE" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_UNNAMED_FEMALE (the sender is female): a friend without a display name; %1$@ the practice, %2$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně právě dokončila %1$@ · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin hat gerade %1$@ geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just did her %1$@ · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát épp befejezte: %1$@ · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka właśnie ukończyła %1$@ · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга только что завершила %1$@ · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka práve dokončila %1$@ · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга щойно завершила %1$@ · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_NAMED_MALE" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_UNNAMED_MALE (the sender is male): a friend without a display name; %1$@ the practice, %2$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel právě dokončil %1$@ · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat gerade %1$@ geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just did his %1$@ · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát épp befejezte: %1$@ · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel właśnie ukończył %1$@ · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг только что завершил %1$@ · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ práve dokončil %1$@ · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг щойно завершив %1$@ · день %2$@"
+          }
+        }
+      }
+    },
     "Female" : {
       "localizations" : {
         "de" : {
@@ -7318,106 +7835,106 @@
         }
       }
     },
-    "Friends see your public streaks and nothing else. An online account lets you invite them." : {
+    "Friends see your public streaks and nothing else. An online account lets you add them." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. S online účtem je můžeš pozvat."
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. S online účtem si je můžeš přidat."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Mit einem Online-Konto kannst du sie einladen."
+            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Mit einem Online-Konto kannst du sie hinzufügen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus amigos ven tus rachas públicas y nada más. Con una cuenta en línea puedes invitarlos."
+            "value" : "Tus amigos ven tus rachas públicas y nada más. Con una cuenta en línea puedes añadirlos."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. Online fiókkal meghívhatod őket."
+            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. Online fiókkal felveheted őket."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Z kontem online możesz ich zaprosić."
+            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Z kontem online możesz ich dodać."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзья видят только ваши публичные серии и ничего больше. С онлайн-аккаунтом вы сможете их пригласить."
+            "value" : "Друзья видят только ваши публичные серии и ничего больше. С онлайн-аккаунтом вы сможете их добавить."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Priatelia vidia tvoje verejné série a nič iné. S online účtom ich môžeš pozvať."
+            "value" : "Priatelia vidia tvoje verejné série a nič iné. S online účtom si ich môžeš pridať."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. З онлайн-обліковим записом ви зможете їх запросити."
+            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. З онлайн-обліковим записом ви зможете їх додати."
           }
         }
       }
     },
-    "Friends see your public streaks and nothing else. Finish setting up your account to invite them." : {
+    "Friends see your public streaks and nothing else. Finish setting up your account to add them." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Dokonči nastavení účtu, abys je mohl(a) pozvat."
+            "value" : "Přátelé vidí jen tvé veřejné série, nic dalšího. Dokonči nastavení účtu, abys je mohl(a) přidat."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Richte dein Konto fertig ein, um sie einzuladen."
+            "value" : "Freunde sehen deine öffentlichen Serien und sonst nichts. Richte dein Konto fertig ein, um sie hinzuzufügen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus amigos ven tus rachas públicas y nada más. Termina de configurar tu cuenta para invitarlos."
+            "value" : "Tus amigos ven tus rachas públicas y nada más. Termina de configurar tu cuenta para añadirlos."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. Fejezd be a fiókod beállítását, hogy meghívhasd őket."
+            "value" : "A barátok csak a nyilvános sorozataidat látják, mást semmit. Fejezd be a fiókod beállítását, hogy felvehesd őket."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Dokończ konfigurację konta, aby ich zaprosić."
+            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Dokończ konfigurację konta, aby ich dodać."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзья видят только ваши публичные серии и ничего больше. Завершите настройку аккаунта, чтобы пригласить их."
+            "value" : "Друзья видят только ваши публичные серии и ничего больше. Завершите настройку аккаунта, чтобы добавить их."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Priatelia vidia tvoje verejné série a nič iné. Dokonči nastavenie účtu, aby si ich mohol(a) pozvať."
+            "value" : "Priatelia vidia tvoje verejné série a nič iné. Dokonči nastavenie účtu, aby si ich mohol(a) pridať."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Завершіть налаштування облікового запису, щоб запросити їх."
+            "value" : "Друзі бачать лише ваші публічні серії і більше нічого. Завершіть налаштування облікового запису, щоб додати їх."
           }
         }
       }
@@ -7471,6 +7988,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Друзі бачать ваші серії, але не лічильники"
+          }
+        }
+      }
+    },
+    "Friendship code" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kód přátelství"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Freundschaftscode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Código de amistad"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barátságkód"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kod przyjaźni"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Код дружбы"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kód priateľstva"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Код дружби"
           }
         }
       }
@@ -7731,58 +8300,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Grupo %lld"
-          }
-        }
-      }
-    },
-    "Have an invitation code?" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máš kód pozvánky?"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hast du einen Einladungscode?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Tienes un código de invitación?"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Van meghívókódod?"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Masz kod zaproszenia?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Есть код приглашения?"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máš kód pozvánky?"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Маєте код запрошення?"
           }
         }
       }
@@ -8259,214 +8776,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Si pierdes este teléfono, este código es la única manera de recuperar tus conteos. Nadie más lo tiene, ni siquiera nosotros."
-          }
-        }
-      }
-    },
-    "Invitation code" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kód pozvánky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Einladungscode"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Código de invitación"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meghívókód"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kod zaproszenia"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Код приглашения"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kód pozvánky"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Код запрошення"
-          }
-        }
-      }
-    },
-    "Invite" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pozvat"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Einladen"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meghívás"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaproś"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пригласить"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pozvať"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Запросити"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Invitar"
-          }
-        }
-      }
-    },
-    "Invite a friend" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pozvat přítele"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Freunde einladen"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Barát meghívása"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaproś przyjaciela"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пригласить друга"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pozvať priateľa"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Запросити друга"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Invitar a un amigo"
-          }
-        }
-      }
-    },
-    "Invite someone" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pozvat někoho"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jemanden einladen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Invitar a alguien"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Valaki meghívása"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaproś kogoś"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пригласить кого-нибудь"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pozvať niekoho"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Запросити когось"
           }
         }
       }
@@ -9778,6 +10087,59 @@
         }
       }
     },
+    "New accounts can't be made right now. Try again later, or keep practising on this phone." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nové účty teď nelze zakládat. Zkus to později, nebo dál cvič v tomto telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neue Konten können gerade nicht angelegt werden. Versuch es später oder übe weiter auf diesem Handy."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ahora mismo no se pueden crear cuentas nuevas. Inténtalo más tarde o sigue practicando en este teléfono."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Most nem lehet új fiókot létrehozni. Próbáld újra később, vagy gyakorolj tovább ezen a telefonon."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nowych kont nie można teraz zakładać. Spróbuj później albo ćwicz dalej na tym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Сейчас нельзя создать новый аккаунт. Попробуйте позже или продолжайте практиковаться на этом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nové účty sa teraz nedajú zakladať. Skús to neskôr, alebo ďalej cvič v tomto telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Зараз не можна створити новий обліковий запис. Спробуйте пізніше або практикуйте далі на цьому телефоні."
+          }
+        }
+      }
+    },
     "Next time you sign in with Face ID or Touch ID. iCloud Keychain keeps it, so a new iPhone has it too." : {
       "localizations" : {
         "cs" : {
@@ -9987,54 +10349,54 @@
         }
       }
     },
-    "No friends yet. An invite makes the two of you friends; they see your public streaks, never your counts." : {
+    "No friends yet. A friendship code makes the two of you friends; they see your public streaks, never your counts." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zatím žádní přátelé. Pozvánkou se z vás stanou přátelé; uvidí tvé veřejné série, nikdy tvé počty."
+            "value" : "Zatím žádní přátelé. Kódem přátelství se z vás stanou přátelé; uvidí tvé veřejné série, nikdy tvé počty."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch keine Freunde. Mit einer Einladung seid ihr befreundet; sie sehen deine öffentlichen Serien, nie deine Zählungen."
+            "value" : "Noch keine Freunde. Mit einem Freundschaftscode seid ihr befreundet; sie sehen deine öffentlichen Serien, nie deine Zählungen."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Még nincsenek barátaid. Egy meghívóval barátok lesztek; ők a nyilvános sorozataidat látják, a számaidat soha."
+            "value" : "Még nincsenek barátaid. Egy barátságkóddal barátok lesztek; ők a nyilvános sorozataidat látják, a számaidat soha."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Na razie bez przyjaciół. Zaproszenie sprawia, że zostajecie przyjaciółmi; widzą Twoje publiczne serie, nigdy liczby."
+            "value" : "Na razie bez przyjaciół. Kod przyjaźni sprawia, że zostajecie przyjaciółmi; widzą Twoje publiczne serie, nigdy liczby."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзей пока нет. Приглашение делает вас друзьями: они видят ваши публичные серии, но не счётчики."
+            "value" : "Друзей пока нет. Код дружбы делает вас друзьями: они видят ваши публичные серии, но не счётчики."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zatiaľ žiadni priatelia. Pozvánkou sa stanete priateľmi; uvidia tvoje verejné série, nikdy nie tvoje počty."
+            "value" : "Zatiaľ žiadni priatelia. Kódom priateľstva sa stanete priateľmi; uvidia tvoje verejné série, nikdy nie tvoje počty."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Друзів поки немає. Запрошення робить вас друзями: вони бачать ваші публічні серії, але ніколи не кількості."
+            "value" : "Друзів поки немає. Код дружби робить вас друзями: вони бачать ваші публічні серії, але ніколи не кількості."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aún no tienes amigos. Una invitación los hace amigos a los dos; ellos ven tus rachas públicas, nunca tus conteos."
+            "value" : "Aún no tienes amigos. Un código de amistad os hace amigos a los dos; ven tus rachas públicas, nunca tus conteos."
           }
         }
       }
@@ -10452,58 +10814,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ahora no"
-          }
-        }
-      }
-    },
-    "Not now, email me a link instead" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Teď ne, pošli mi místo toho odkaz e-mailem"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jetzt nicht, schick mir stattdessen einen Link"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ahora no, envíame un enlace"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Most nem, küldj inkább egy linket e-mailben"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie teraz, wyślij mi link e-mailem"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не сейчас, пришлите ссылку на почту"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Teraz nie, pošli mi radšej odkaz e-mailom"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не зараз, надішліть посилання на пошту"
           }
         }
       }
@@ -11035,58 +11345,6 @@
         }
       }
     },
-    "Only on this phone for now" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatím jen v tomto telefonu"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vorerst nur auf diesem Handy"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Solo en este teléfono, por ahora"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyelőre csak ezen a telefonon"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Na razie tylko na tym telefonie"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пока только на этом телефоне"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatiaľ len v tomto telefóne"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поки що лише на цьому телефоні"
-          }
-        }
-      }
-    },
     "Only on this phone. An account adds friends, public streaks and sync between phones; your counts stay end-to-end encrypted." : {
       "localizations" : {
         "cs" : {
@@ -11302,58 +11560,6 @@
         }
       }
     },
-    "Optional. Without an email you sign in with a passkey, using Face ID or Touch ID; a username names that passkey in your passwords." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nepovinné. Bez e-mailu se přihlašuješ přístupovým klíčem, přes Face ID nebo Touch ID; uživatelské jméno ten klíč pojmenuje ve tvých heslech."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Optional. Ohne E-Mail meldest du dich mit einem Passkey an, per Face ID oder Touch ID; ein Benutzername benennt diesen Passkey in deinen Passwörtern."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Opcional. Sin correo, accedes con una clave de acceso, con Face ID o Touch ID; el nombre de usuario da nombre a esa clave en tus contraseñas."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nem kötelező. E-mail nélkül hozzáférési kulccsal jelentkezel be, Face ID-val vagy Touch ID-val; a felhasználónév a jelszavaid között megnevezi ezt a kulcsot."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Opcjonalnie. Bez e-maila logujesz się kluczem dostępu, przez Face ID lub Touch ID; nazwa użytkownika nazywa ten klucz w Twoich hasłach."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Необязательно. Без почты вы входите по ключу доступа, с Face ID или Touch ID; имя пользователя называет этот ключ в ваших паролях."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nepovinné. Bez e-mailu sa prihlasuješ prístupovým kľúčom, cez Face ID alebo Touch ID; používateľské meno ten kľúč pomenuje v tvojich heslách."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Необов’язково. Без пошти ви входите за ключем доступу, з Face ID або Touch ID; ім’я користувача називає цей ключ у ваших паролях."
-          }
-        }
-      }
-    },
     "POKE" : {
       "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend poked you (once a day at most), neutral form (non-binary or no gender given): %1$@ their name. In the mascot's voice, written per language.",
       "extractionState" : "manual",
@@ -11534,6 +11740,186 @@
         }
       }
     },
+    "POKE_UNNAMED" : {
+      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend without a display name poked you (once a day at most), neutral form (non-binary or no gender given). Same words as Android's.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel do tebe šťouchl"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat dich angestupst"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend poked you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo te dio un toque"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát megbökött"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel Cię szturchnął"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг подтолкнул вас"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ ťa štuchol"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг підштовхнув вас"
+          }
+        }
+      }
+    },
+    "POKE_UNNAMED_FEMALE" : {
+      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend without a display name poked you (once a day at most), the sender is female. Same words as Android's.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně do tebe šťouchla"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin hat dich angestupst"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend poked you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga te dio un toque"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát megbökött"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka Cię szturchnęła"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга подтолкнула вас"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka ťa štuchla"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга підштовхнула вас"
+          }
+        }
+      }
+    },
+    "POKE_UNNAMED_MALE" : {
+      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend without a display name poked you (once a day at most), the sender is male. Same words as Android's.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel do tebe šťouchl"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat dich angestupst"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend poked you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo te dio un toque"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barát megbökött"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel Cię szturchnął"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг подтолкнул вас"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ ťa štuchol"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг підштовхнув вас"
+          }
+        }
+      }
+    },
     "Passkey saved." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11587,106 +11973,106 @@
         }
       }
     },
-    "Paste an invite link" : {
+    "Paste a friendship link" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vložit odkaz s pozvánkou"
+            "value" : "Vložit odkaz s kódem přátelství"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einladungslink einfügen"
+            "value" : "Freundschaftslink einfügen"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meghívólink beillesztése"
+            "value" : "Barátságlink beillesztése"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wklej link zaproszenia"
+            "value" : "Wklej link z kodem przyjaźni"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вставьте ссылку-приглашение"
+            "value" : "Вставьте ссылку с кодом дружбы"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vložiť odkaz s pozvánkou"
+            "value" : "Vložiť odkaz s kódom priateľstva"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вставити посилання-запрошення"
+            "value" : "Вставити посилання з кодом дружби"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pegar un enlace de invitación"
+            "value" : "Pegar un enlace de amistad"
           }
         }
       }
     },
-    "Paste invite" : {
+    "Paste link" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vložit pozvánku"
+            "value" : "Vložit odkaz"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einladung einfügen"
+            "value" : "Link einfügen"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meghívó beillesztése"
+            "value" : "Link beillesztése"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wklej zaproszenie"
+            "value" : "Wklej link"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вставить приглашение"
+            "value" : "Вставить ссылку"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vložiť pozvánku"
+            "value" : "Vložiť odkaz"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вставити запрошення"
+            "value" : "Вставити посилання"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pegar invitación"
+            "value" : "Pegar enlace"
           }
         }
       }
@@ -11739,58 +12125,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Pega el enlace que te envió tu amigo."
-          }
-        }
-      }
-    },
-    "Pick a username" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vyber uživatelské jméno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wähle einen Benutzernamen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elige un nombre de usuario"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Válassz felhasználónevet"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wybierz nazwę użytkownika"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Выберите имя пользователя"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vyber používateľské meno"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Оберіть ім’я користувача"
           }
         }
       }
@@ -11951,6 +12285,60 @@
         }
       }
     },
+    "Poke a friend" : {
+      "comment" : "Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťouchnout přítele"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einen Freund anstupsen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dar un toque a un amigo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barát megbökése"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szturchnij przyjaciela"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подтолкнуть друга"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťuchnúť priateľa"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Підштовхнути друга"
+          }
+        }
+      }
+    },
     "Poked" : {
       "localizations" : {
         "cs" : {
@@ -12051,6 +12439,60 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Le diste un toque a %@"
+          }
+        }
+      }
+    },
+    "Poked a friend" : {
+      "comment" : "Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťouchnuto: přítel"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einen Freund angestupst"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le diste un toque a un amigo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barát megbökve"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szturchnięto przyjaciela"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подтолкнули: друг"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťuchnutie pre priateľa"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Підштовхнуто: друг"
           }
         }
       }
@@ -12315,54 +12757,54 @@
         }
       }
     },
-    "QR code of the invite link" : {
+    "QR code of the friendship link" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR kód odkazu s pozvánkou"
+            "value" : "QR kód odkazu s kódem přátelství"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR-Code des Einladungslinks"
+            "value" : "QR-Code des Freundschaftslinks"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A meghívólink QR-kódja"
+            "value" : "A barátságlink QR-kódja"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kod QR linku zaproszenia"
+            "value" : "Kod QR linku z kodem przyjaźni"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR-код ссылки-приглашения"
+            "value" : "QR-код ссылки с кодом дружбы"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR kód odkazu s pozvánkou"
+            "value" : "QR kód odkazu s kódom priateľstva"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR-код посилання-запрошення"
+            "value" : "QR-код посилання з кодом дружби"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Código QR del enlace de invitación"
+            "value" : "Código QR del enlace de amistad"
           }
         }
       }
@@ -13541,54 +13983,106 @@
         }
       }
     },
-    "Share invite link" : {
+    "Share a friendship code" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sdílet odkaz s pozvánkou"
+            "value" : "Sdílet kód přátelství"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einladungslink teilen"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meghívólink megosztása"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Udostępnij link zaproszenia"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поделиться ссылкой-приглашением"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zdieľať odkaz s pozvánkou"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Поділитися посиланням-запрошенням"
+            "value" : "Freundschaftscode teilen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compartir enlace de invitación"
+            "value" : "Compartir un código de amistad"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barátságkód megosztása"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Udostępnij kod przyjaźni"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Поделиться кодом дружбы"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zdieľať kód priateľstva"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Поділитися кодом дружби"
+          }
+        }
+      }
+    },
+    "Share the link" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sdílet odkaz"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Link teilen"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Link megosztása"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Udostępnij link"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Поделиться ссылкой"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zdieľať odkaz"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Поділитися посиланням"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compartir el enlace"
           }
         }
       }
@@ -13801,54 +14295,54 @@
         }
       }
     },
-    "Show the invite code" : {
+    "Show the friendship code" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zobrazit kód pozvánky"
+            "value" : "Zobrazit kód přátelství"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einladungscode zeigen"
+            "value" : "Freundschaftscode zeigen"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meghívókód megjelenítése"
+            "value" : "Barátságkód megjelenítése"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pokaż kod zaproszenia"
+            "value" : "Pokaż kod przyjaźni"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Показать код приглашения"
+            "value" : "Показать код дружбы"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ukázať kód pozvánky"
+            "value" : "Ukázať kód priateľstva"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Показати код запрошення"
+            "value" : "Показати код дружби"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mostrar el código de invitación"
+            "value" : "Mostrar el código de amistad"
           }
         }
       }
@@ -14321,58 +14815,6 @@
         }
       }
     },
-    "Skip, use a username instead" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Přeskočit, použít uživatelské jméno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Überspringen, stattdessen Benutzernamen verwenden"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Omitir, usar un nombre de usuario"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kihagyás, inkább felhasználónevet használok"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pomiń, użyj nazwy użytkownika"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пропустить, использовать имя пользователя"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Preskočiť, použiť používateľské meno"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Пропустити, використати ім’я користувача"
-          }
-        }
-      }
-    },
     "So %@ can nag you, and you hear when friends practise." : {
       "comment" : "Friends: why to allow notifications; %@ is a friend's name.",
       "localizations" : {
@@ -14428,6 +14870,60 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Тоді %@ зможе вас підганяти, а ви дізнаєтеся, коли друзі практикують."
+          }
+        }
+      }
+    },
+    "So a friend can nag you, and you hear when friends practise." : {
+      "comment" : "Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pak tě přítel může popohnat a dozvíš se, když přátelé praktikují."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Damit ein Freund dich anstupsen kann und du erfährst, wenn Freunde üben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Así un amigo podrá animarte y sabrás cuándo practican tus amigos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Így egy barátod noszogathat, és megtudod, mikor gyakorolnak a barátaid."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wtedy przyjaciel może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тогда друг сможет вас подгонять, а вы узнаете, когда друзья практикуют."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Potom ťa priateľ môže postrčiť a dozvieš sa, keď priatelia cvičia."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тоді друг зможе вас підганяти, а ви дізнаєтеся, коли друзі практикують."
           }
         }
       }
@@ -15428,6 +15924,58 @@
         }
       }
     },
+    "That doesn't look like an email address." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tohle nevypadá jako e-mailová adresa."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das sieht nicht nach einer E-Mail-Adresse aus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eso no parece una dirección de correo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez nem tűnik e-mail-címnek."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To nie wygląda na adres e-mail."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Это не похоже на адрес почты."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto nevyzerá ako e-mailová adresa."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це не схоже на адресу пошти."
+          }
+        }
+      }
+    },
     "That passkey did not work. Try again, or use your email instead." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -15800,54 +16348,54 @@
         }
       }
     },
-    "The server now names a different key for this friend than the one this phone first saw, so their streaks are hidden. It may be a new phone without a restore, or someone in between. Meet them, or ask for a new invite: accepting it checks their key again." : {
+    "The server now names a different key for this friend than the one this phone first saw, so their streaks are hidden. It may be a new phone without a restore, or someone in between. Meet them, or ask for a new friendship code: accepting it checks their key again." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Server teď uvádí pro tohoto přítele jiný klíč než ten, který tento telefon viděl poprvé, proto jsou jeho série skryté. Může jít o nový telefon bez obnovení, nebo o někoho ve spojení mezi vámi. Sejděte se osobně, nebo požádej o novou pozvánku: její přijetí klíč znovu ověří."
+            "value" : "Server teď uvádí pro tohoto přítele jiný klíč než ten, který tento telefon viděl poprvé, proto jsou jeho série skryté. Může jít o nový telefon bez obnovení, nebo o někoho ve spojení mezi vámi. Sejděte se osobně, nebo požádej o nový kód přátelství: jeho přijetí klíč znovu ověří."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Server nennt für diesen Freund jetzt einen anderen Schlüssel als den, den dieses Handy zuerst gesehen hat, deshalb sind seine Serien ausgeblendet. Vielleicht ist es ein neues Handy ohne Wiederherstellung, oder jemand hängt dazwischen. Triff dich mit ihm oder bitte um eine neue Einladung: Wenn du sie annimmst, wird sein Schlüssel erneut geprüft."
+            "value" : "Der Server nennt für diesen Freund jetzt einen anderen Schlüssel als den, den dieses Handy zuerst gesehen hat, deshalb sind seine Serien ausgeblendet. Vielleicht ist es ein neues Handy ohne Wiederherstellung, oder jemand hängt dazwischen. Triff dich mit ihm oder bitte um einen neuen Freundschaftscode: Wenn du ihn annimmst, wird sein Schlüssel erneut geprüft."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A szerver most más kulcsot jelez ennél a barátnál, mint amit ez a telefon először látott, ezért a sorozataik rejtve vannak. Lehet, hogy új telefont használnak visszaállítás nélkül, vagy valaki közbeékelődött. Találkozzatok, vagy kérj új meghívót: az elfogadása újra ellenőrzi a kulcsukat."
+            "value" : "A szerver most más kulcsot jelez ennél a barátnál, mint amit ez a telefon először látott, ezért a sorozataik rejtve vannak. Lehet, hogy új telefont használnak visszaállítás nélkül, vagy valaki közbeékelődött. Találkozzatok, vagy kérj új barátságkódot: az elfogadása újra ellenőrzi a kulcsukat."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Serwer podaje teraz dla tego przyjaciela inny klucz niż ten, który telefon zobaczył jako pierwszy, dlatego jego serie są ukryte. Może to być nowy telefon bez przywracania albo ktoś pośrodku. Spotkajcie się lub poproś o nowe zaproszenie: jego przyjęcie sprawdzi klucz ponownie."
+            "value" : "Serwer podaje teraz dla tego przyjaciela inny klucz niż ten, który telefon zobaczył jako pierwszy, dlatego jego serie są ukryte. Może to być nowy telefon bez przywracania albo ktoś pośrodku. Spotkajcie się lub poproś o nowy kod przyjaźni: jego przyjęcie sprawdzi klucz ponownie."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Сервер теперь указывает для этого друга другой ключ, не тот, который этот телефон увидел впервые, поэтому его серии скрыты. Возможно, это новый телефон без восстановления, а возможно, кто-то посередине. Встретьтесь или попросите новое приглашение: при его принятии ключ проверяется заново."
+            "value" : "Сервер теперь указывает для этого друга другой ключ, не тот, который этот телефон увидел впервые, поэтому его серии скрыты. Возможно, это новый телефон без восстановления, а возможно, кто-то посередине. Встретьтесь или попросите новый код дружбы: при его принятии ключ проверяется заново."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Server teraz uvádza pre tohto priateľa iný kľúč, než aký tento telefón videl prvýkrát, preto sú jeho série skryté. Môže to byť nový telefón bez obnovenia, alebo niekto uprostred. Stretnite sa, alebo požiadaj o novú pozvánku: jej prijatím sa jeho kľúč overí znova."
+            "value" : "Server teraz uvádza pre tohto priateľa iný kľúč, než aký tento telefón videl prvýkrát, preto sú jeho série skryté. Môže to byť nový telefón bez obnovenia, alebo niekto uprostred. Stretnite sa, alebo požiadaj o nový kód priateľstva: jeho prijatím sa jeho kľúč overí znova."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Тепер сервер указує для цього друга інший ключ, ніж той, який цей телефон бачив уперше, тому його серії приховано. Можливо, це новий телефон без відновлення, або хтось посередині. Зустріньтеся з ним або попросіть нове запрошення: коли ви його приймете, ключ перевіриться знову."
+            "value" : "Тепер сервер указує для цього друга інший ключ, ніж той, який цей телефон бачив уперше, тому його серії приховано. Можливо, це новий телефон без відновлення, або хтось посередині. Зустріньтеся з ним або попросіть новий код дружби: коли ви його приймете, ключ перевіриться знову."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ahora el servidor indica una clave distinta para este amigo que la que vio este teléfono al principio, así que sus rachas están ocultas. Puede ser un teléfono nuevo sin restaurar, o alguien en el medio. Encuéntrate con esa persona o pide una invitación nueva: al aceptarla se verifica su clave otra vez."
+            "value" : "Ahora el servidor indica una clave distinta para este amigo que la que vio este teléfono al principio, así que sus rachas están ocultas. Puede ser un teléfono nuevo sin restaurar, o alguien en el medio. Encuéntrate con esa persona o pide un código de amistad nuevo: al aceptarlo se verifica su clave otra vez."
           }
         }
       }
@@ -16060,54 +16608,54 @@
         }
       }
     },
-    "This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, invitations, passkeys and sign-ins. Your other phones are signed out and keep their own copy until you delete it there. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start." : {
+    "This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, friendship codes, passkeys and sign-ins. Your other phones are signed out and keep their own copy until you delete it there. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tím se smaže tvůj účet a vše, co je s ním uložené na serveru: zašifrovaná sezení, přátelé, veřejné série, pozvánky, přístupové klíče a způsoby přihlášení. Tvé další telefony se odhlásí a svou kopii si ponechají, dokud ji tam nesmažeš. V tomto telefonu se smaže každá praktika, sezení a série, tvá připomenutí i klíče aplikace a vrátíš se na začátek."
+            "value" : "Tím se smaže tvůj účet a vše, co je s ním uložené na serveru: zašifrovaná sezení, přátelé, veřejné série, kódy přátelství, přístupové klíče a způsoby přihlášení. Tvé další telefony se odhlásí a svou kopii si ponechají, dokud ji tam nesmažeš. V tomto telefonu se smaže každá praktika, sezení a série, tvá připomenutí i klíče aplikace a vrátíš se na začátek."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das löscht dein Konto und alles, was mit ihm auf dem Server gespeichert ist: deine verschlüsselten Sitzungen, Freunde, öffentlichen Serien, Einladungen, Passkeys und Anmeldungen. Deine anderen Handys werden abgemeldet und behalten ihre eigene Kopie, bis du sie dort löschst. Auf diesem Handy löscht es jede Übung, Sitzung und Serie, deine Erinnerungen und die Schlüssel der App und kehrt dann zum Anfang zurück."
+            "value" : "Das löscht dein Konto und alles, was mit ihm auf dem Server gespeichert ist: deine verschlüsselten Sitzungen, Freunde, öffentlichen Serien, Freundschaftscodes, Passkeys und Anmeldungen. Deine anderen Handys werden abgemeldet und behalten ihre eigene Kopie, bis du sie dort löschst. Auf diesem Handy löscht es jede Übung, Sitzung und Serie, deine Erinnerungen und die Schlüssel der App und kehrt dann zum Anfang zurück."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esto elimina tu cuenta y todo lo que se guarda con ella en el servidor: tus sesiones cifradas, amigos, rachas públicas, invitaciones, llaves de acceso y formas de iniciar sesión. Tus otros teléfonos cierran sesión y conservan su propia copia hasta que la elimines allí. En este teléfono elimina todas las prácticas, sesiones y rachas, tus recordatorios y las claves de la app, y luego vuelve al inicio."
+            "value" : "Esto elimina tu cuenta y todo lo que se guarda con ella en el servidor: tus sesiones cifradas, amigos, rachas públicas, códigos de amistad, llaves de acceso y formas de iniciar sesión. Tus otros teléfonos cierran sesión y conservan su propia copia hasta que la elimines allí. En este teléfono elimina todas las prácticas, sesiones y rachas, tus recordatorios y las claves de la app, y luego vuelve al inicio."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ez törli a fiókodat és mindent, amit vele együtt a szerver tárol: a titkosított üléseidet, a barátaidat, a nyilvános sorozataidat, a meghívóidat, a jelkulcsaidat és a bejelentkezési módjaidat. A többi telefonodon kijelentkezel, és azok megtartják a saját példányukat, amíg ott nem törlöd. Erről a telefonról töröl minden gyakorlatot, ülést és sorozatot, az emlékeztetőidet és az alkalmazás kulcsait, majd visszatér a kezdéshez."
+            "value" : "Ez törli a fiókodat és mindent, amit vele együtt a szerver tárol: a titkosított üléseidet, a barátaidat, a nyilvános sorozataidat, a barátságkódjaidat, a jelkulcsaidat és a bejelentkezési módjaidat. A többi telefonodon kijelentkezel, és azok megtartják a saját példányukat, amíg ott nem törlöd. Erről a telefonról töröl minden gyakorlatot, ülést és sorozatot, az emlékeztetőidet és az alkalmazás kulcsait, majd visszatér a kezdéshez."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Usunie to Twoje konto i wszystko, co jest z nim zapisane na serwerze: zaszyfrowane sesje, znajomych, publiczne serie, zaproszenia, klucze dostępu i sposoby logowania. Twoje inne telefony zostaną wylogowane i zachowają swoją kopię, dopóki jej tam nie usuniesz. Na tym telefonie usunie każdą praktykę, sesję i serię, Twoje przypomnienia i klucze aplikacji, a potem wróci do początku."
+            "value" : "Usunie to Twoje konto i wszystko, co jest z nim zapisane na serwerze: zaszyfrowane sesje, znajomych, publiczne serie, kody przyjaźni, klucze dostępu i sposoby logowania. Twoje inne telefony zostaną wylogowane i zachowają swoją kopię, dopóki jej tam nie usuniesz. Na tym telefonie usunie każdą praktykę, sesję i serię, Twoje przypomnienia i klucze aplikacji, a potem wróci do początku."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Будут удалены ваш аккаунт и всё, что хранится с ним на сервере: зашифрованные занятия, друзья, публичные серии, приглашения, ключи доступа и способы входа. Другие ваши телефоны выйдут из аккаунта и сохранят свою копию, пока вы не удалите её там. На этом телефоне будут удалены все практики, занятия и серии, ваши напоминания и ключи приложения, после чего приложение вернётся к началу."
+            "value" : "Будут удалены ваш аккаунт и всё, что хранится с ним на сервере: зашифрованные занятия, друзья, публичные серии, коды дружбы, ключи доступа и способы входа. Другие ваши телефоны выйдут из аккаунта и сохранят свою копию, пока вы не удалите её там. На этом телефоне будут удалены все практики, занятия и серии, ваши напоминания и ключи приложения, после чего приложение вернётся к началу."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zmaže tvoj účet a všetko, čo je s ním uložené na serveri: zašifrované sedenia, priateľov, verejné série, pozvánky, prístupové kľúče a spôsoby prihlásenia. Tvoje ďalšie telefóny sa odhlásia a svoju kópiu si ponechajú, kým ju tam nezmažeš. V tomto telefóne zmaže všetky cvičenia, sedenia a série, tvoje pripomienky aj kľúče aplikácie a vráti sa na začiatok."
+            "value" : "Zmaže tvoj účet a všetko, čo je s ním uložené na serveri: zašifrované sedenia, priateľov, verejné série, kódy priateľstva, prístupové kľúče a spôsoby prihlásenia. Tvoje ďalšie telefóny sa odhlásia a svoju kópiu si ponechajú, kým ju tam nezmažeš. V tomto telefóne zmaže všetky cvičenia, sedenia a série, tvoje pripomienky aj kľúče aplikácie a vráti sa na začiatok."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Це видалить ваш обліковий запис і все, що зберігається з ним на сервері: зашифровані сесії, друзів, публічні серії, запрошення, ключі доступу та способи входу. Інші ваші телефони вийдуть з облікового запису й збережуть свою копію, доки ви не видалите її там. На цьому телефоні буде видалено всі практики, сесії та серії, ваші нагадування й ключі застосунку, а потім вас буде повернено на початок."
+            "value" : "Це видалить ваш обліковий запис і все, що зберігається з ним на сервері: зашифровані сесії, друзів, публічні серії, коди дружби, ключі доступу та способи входу. Інші ваші телефони вийдуть з облікового запису й збережуть свою копію, доки ви не видалите її там. На цьому телефоні буде видалено всі практики, сесії та серії, ваші нагадування й ключі застосунку, а потім вас буде повернено на початок."
           }
         }
       }
@@ -16164,263 +16712,366 @@
         }
       }
     },
-    "This invitation doesn't check out: it may have been changed on the way. Ask whoever sent it for a new one." : {
-      "extractionState" : "manual",
+    "This email belongs to another account." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tahle pozvánka neprošla kontrolou: mohla být cestou změněna. Požádej odesílatele o novou."
+            "value" : "Tento e-mail patří jinému účtu."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Einladung hält der Prüfung nicht stand: Sie wurde unterwegs vielleicht verändert. Bitte um eine neue."
+            "value" : "Diese E-Mail-Adresse gehört zu einem anderen Konto."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta invitación no supera la comprobación: puede que la hayan cambiado por el camino. Pide una nueva a quien te la envió."
+            "value" : "Este correo pertenece a otra cuenta."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ez a meghívó nem ellenőrizhető: útközben megváltozhatott. Kérj újat attól, aki küldte."
+            "value" : "Ez az e-mail-cím egy másik fiókhoz tartozik."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "To zaproszenie nie przeszło weryfikacji: mogło zostać zmienione po drodze. Poproś osobę, która je wysłała, o nowe."
+            "value" : "Ten adres e-mail należy do innego konta."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Это приглашение не прошло проверку: возможно, его изменили по дороге. Попросите отправителя прислать новое."
+            "value" : "Эта почта принадлежит другому аккаунту."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Táto pozvánka neprešla kontrolou: mohla byť cestou zmenená. Popros odosielateľa o novú."
+            "value" : "Tento e-mail patrí inému účtu."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Це запрошення не пройшло перевірку: можливо, його змінили дорогою. Попросіть відправника надіслати нове."
+            "value" : "Ця пошта належить іншому обліковому запису."
           }
         }
       }
     },
-    "This invite cannot be used: it may have expired or been withdrawn." : {
+    "This friendship code cannot be used: it may have expired or been withdrawn." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tuto pozvánku nelze použít: možná vypršela nebo byla stažena."
+            "value" : "Tento kód přátelství nelze použít: možná vypršel nebo byl stažen."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Einladung kann nicht verwendet werden: Sie ist vielleicht abgelaufen oder zurückgezogen worden."
+            "value" : "Dieser Freundschaftscode kann nicht verwendet werden: Er ist vielleicht abgelaufen oder zurückgezogen worden."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ez a meghívó nem használható: lehet, hogy lejárt vagy visszavonták."
+            "value" : "Ez a barátságkód nem használható: lehet, hogy lejárt vagy visszavonták."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tego zaproszenia nie można użyć: mogło wygasnąć lub zostać wycofane."
+            "value" : "Tego kodu przyjaźni nie można użyć: mógł wygasnąć lub zostać wycofany."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Это приглашение нельзя использовать: возможно, оно истекло или было отозвано."
+            "value" : "Этот код дружбы нельзя использовать: возможно, он истёк или был отозван."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Túto pozvánku nemožno použiť: mohla vypršať alebo byť odvolaná."
+            "value" : "Tento kód priateľstva nemožno použiť: mohol vypršať alebo byť odvolaný."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Це запрошення неможливо використати: його термін міг закінчитися, або його відкликали."
+            "value" : "Цей код дружби неможливо використати: його термін міг закінчитися, або його відкликали."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta invitación no se puede usar: puede haber vencido o haber sido retirada."
+            "value" : "Este código de amistad no se puede usar: puede haber vencido o haber sido retirado."
           }
         }
       }
     },
-    "This invite does not check out, so it was not accepted. Ask your friend to send it again." : {
+    "This friendship code does not check out, so it was not accepted. Ask your friend to send it again." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tato pozvánka se nepodařila ověřit, proto nebyla přijata. Požádej přítele, ať ji pošle znovu."
+            "value" : "Tento kód přátelství se nepodařilo ověřit, proto nebyl přijat. Požádej přítele, ať ho pošle znovu."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Einladung ist nicht stimmig und wurde deshalb nicht angenommen. Bitte deinen Freund, sie noch einmal zu schicken."
+            "value" : "Dieser Freundschaftscode ist nicht stimmig und wurde deshalb nicht angenommen. Bitte deinen Freund, ihn noch einmal zu schicken."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ez a meghívó nem hiteles, ezért nem lett elfogadva. Kérd meg a barátodat, hogy küldje el újra."
+            "value" : "Ez a barátságkód nem hiteles, ezért nem lett elfogadva. Kérd meg a barátodat, hogy küldje el újra."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "To zaproszenie nie przeszło weryfikacji, więc nie zostało przyjęte. Poproś przyjaciela, aby wysłał je ponownie."
+            "value" : "Ten kod przyjaźni nie przeszedł weryfikacji, więc nie został przyjęty. Poproś przyjaciela, aby wysłał go ponownie."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Это приглашение не прошло проверку, поэтому не принято. Попросите друга прислать его снова."
+            "value" : "Этот код дружбы не прошёл проверку, поэтому не принят. Попросите друга прислать его снова."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Táto pozvánka sa nedá overiť, preto nebola prijatá. Požiadaj priateľa, aby ju poslal znova."
+            "value" : "Tento kód priateľstva sa nedá overiť, preto nebol prijatý. Požiadaj priateľa, aby ho poslal znova."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Це запрошення не пройшло перевірку, тому його не прийнято. Попросіть друга надіслати його ще раз."
+            "value" : "Цей код дружби не пройшов перевірку, тому його не прийнято. Попросіть друга надіслати його ще раз."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta invitación no pasó la verificación, así que no se aceptó. Pídele a tu amigo que la envíe de nuevo."
+            "value" : "Este código de amistad no pasó la verificación, así que no se aceptó. Pídele a tu amigo que lo envíe de nuevo."
           }
         }
       }
     },
-    "This invite has expired. Ask for a new one." : {
+    "This friendship code has expired. Ask for a new one." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tato pozvánka vypršela. Požádej o novou."
+            "value" : "Tento kód přátelství vypršel. Požádej o nový."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Einladung ist abgelaufen. Bitte um eine neue."
+            "value" : "Dieser Freundschaftscode ist abgelaufen. Bitte um einen neuen."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ez a meghívó lejárt. Kérj újat."
+            "value" : "Ez a barátságkód lejárt. Kérj újat."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "To zaproszenie wygasło. Poproś o nowe."
+            "value" : "Ten kod przyjaźni wygasł. Poproś o nowy."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Срок приглашения истёк. Попросите новое."
+            "value" : "Срок кода дружбы истёк. Попросите новый."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Táto pozvánka vypršala. Požiadaj o novú."
+            "value" : "Tento kód priateľstva vypršal. Požiadaj o nový."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Термін дії цього запрошення минув. Попросіть нове."
+            "value" : "Термін дії цього коду дружби минув. Попросіть новий."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta invitación venció. Pide una nueva."
+            "value" : "Este código de amistad venció. Pide uno nuevo."
           }
         }
       }
     },
-    "This is your own invite. Send it to a friend instead." : {
+    "This friendship link no longer works. Continue to make the account without it." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Toto je tvoje vlastní pozvánka. Pošli ji raději příteli."
+            "value" : "Tento odkaz s kódem přátelství už nefunguje. Pokračuj a účet se založí bez něj."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das ist deine eigene Einladung. Schick sie stattdessen einem Freund."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ez a saját meghívód. Küldd el inkább egy barátodnak."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "To Twoje własne zaproszenie. Wyślij je przyjacielowi."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Это ваше собственное приглашение. Отправьте его другу."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toto je tvoja vlastná pozvánka. Pošli ju radšej priateľovi."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Це ваше власне запрошення. Надішліть його другові."
+            "value" : "Dieser Freundschaftslink funktioniert nicht mehr. Mach weiter, um das Konto ohne ihn anzulegen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta es tu propia invitación. Envíasela a un amigo."
+            "value" : "Este enlace de amistad ya no funciona. Continúa para crear la cuenta sin él."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez a barátságlink már nem működik. Folytasd, és a fiók nélküle jön létre."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ten link z kodem przyjaźni już nie działa. Kontynuuj, aby założyć konto bez niego."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Эта ссылка с кодом дружбы больше не работает. Продолжите, чтобы создать аккаунт без неё."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento odkaz s kódom priateľstva už nefunguje. Pokračuj a účet sa založí bez neho."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це посилання з кодом дружби більше не працює. Продовжте, щоб створити обліковий запис без нього."
+          }
+        }
+      }
+    },
+    "This is a new recovery code. Any code you wrote down earlier no longer works." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto je nový obnovovací kód. Dříve zapsaný kód už nefunguje."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das ist ein neuer Wiederherstellungscode. Ein Code, den du früher aufgeschrieben hast, funktioniert nicht mehr."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este es un código de recuperación nuevo. El código que anotaste antes ya no funciona."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez egy új helyreállítási kód. A korábban leírt kód már nem érvényes."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To nowy kod odzyskiwania. Zapisany wcześniej kod już nie działa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Это новый код восстановления. Записанный ранее код больше не работает."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto je nový obnovovací kód. Skôr zapísaný kód už nefunguje."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це новий код відновлення. Записаний раніше код більше не діє."
+          }
+        }
+      }
+    },
+    "This is your own friendship code. Send it to a friend instead." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto je tvůj vlastní kód přátelství. Pošli ho raději příteli."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das ist dein eigener Freundschaftscode. Schick ihn stattdessen einem Freund."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez a saját barátságkódod. Küldd el inkább egy barátodnak."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To Twój własny kod przyjaźni. Wyślij go przyjacielowi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Это ваш собственный код дружбы. Отправьте его другу."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto je tvoj vlastný kód priateľstva. Pošli ho radšej priateľovi."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це ваш власний код дружби. Надішліть його другові."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este es tu propio código de amistad. Envíaselo a un amigo."
           }
         }
       }
@@ -17112,55 +17763,55 @@
         }
       }
     },
-    "Too many sign-ups from this network in the last hour. Try again later, or enter an invitation code: it works regardless." : {
+    "Too many sign-ups from this network in the last hour. Try again later, or open a friend's friendship link." : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z této sítě bylo za poslední hodinu příliš mnoho registrací. Zkus to později, nebo zadej kód pozvánky: ten funguje i tak."
+            "value" : "Z této sítě bylo za poslední hodinu příliš mnoho registrací. Zkus to později, nebo otevři odkaz s kódem přátelství od přítele."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aus diesem Netz gab es in der letzten Stunde zu viele Registrierungen. Versuch es später, oder gib einen Einladungscode ein: Der funktioniert trotzdem."
+            "value" : "Aus diesem Netz gab es in der letzten Stunde zu viele Registrierungen. Versuch es später, oder öffne den Freundschaftslink eines Freundes."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Desde esta red ha habido demasiados registros en la última hora. Inténtalo más tarde o escribe un código de invitación: ese funciona igualmente."
+            "value" : "Desde esta red ha habido demasiados registros en la última hora. Inténtalo más tarde o abre el enlace de amistad de un amigo."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Erről a hálózatról az elmúlt órában túl sok regisztráció történt. Próbáld újra később, vagy írj be egy meghívókódot: az így is működik."
+            "value" : "Erről a hálózatról az elmúlt órában túl sok regisztráció történt. Próbáld újra később, vagy nyisd meg egy barátod barátságlinkjét."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo wpisz kod zaproszenia: on działa mimo to."
+            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo otwórz link z kodem przyjaźni od przyjaciela."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Из этой сети за последний час было слишком много регистраций. Попробуйте позже или введите код приглашения: он работает в любом случае."
+            "value" : "Из этой сети за последний час было слишком много регистраций. Попробуйте позже или откройте ссылку с кодом дружбы от друга."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z tejto siete bolo za poslednú hodinu príliš veľa registrácií. Skús to neskôr, alebo zadaj kód pozvánky: ten funguje aj tak."
+            "value" : "Z tejto siete bolo za poslednú hodinu príliš veľa registrácií. Skús to neskôr, alebo otvor odkaz s kódom priateľstva od priateľa."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "З цієї мережі за останню годину було забагато реєстрацій. Спробуйте пізніше або введіть код запрошення: він спрацює в будь-якому разі."
+            "value" : "З цієї мережі за останню годину було забагато реєстрацій. Спробуйте пізніше або відкрийте посилання з кодом дружби від друга."
           }
         }
       }
@@ -17537,54 +18188,54 @@
         }
       }
     },
-    "Type or paste the invitation code, or paste the whole invitation link. Case doesn't matter." : {
+    "Type the code we sent to %@." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Napiš nebo vlož kód pozvánky, případně vlož celý odkaz s pozvánkou. Na velikosti písmen nezáleží."
+            "value" : "Napiš kód, který jsme poslali na %@."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tippe den Einladungscode ein oder füge ihn ein, oder füge den ganzen Einladungslink ein. Groß- und Kleinschreibung spielt keine Rolle."
+            "value" : "Gib den Code ein, den wir an %@ geschickt haben."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Escribe o pega el código de invitación, o pega el enlace de invitación completo. Da igual mayúsculas o minúsculas."
+            "value" : "Escribe el código que enviamos a %@."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Írd be vagy illeszd be a meghívókódot, vagy illeszd be a teljes meghívólinket. A kis- és nagybetű mindegy."
+            "value" : "Írd be a kódot, amit a(z) %@ címre küldtünk."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wpisz lub wklej kod zaproszenia albo wklej cały link z zaproszeniem. Wielkość liter nie ma znaczenia."
+            "value" : "Wpisz kod wysłany na %@."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Введите или вставьте код приглашения либо вставьте всю ссылку-приглашение. Регистр не важен."
+            "value" : "Введите код, который мы отправили на %@."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Napíš alebo vlož kód pozvánky, prípadne vlož celý odkaz s pozvánkou. Na veľkosti písmen nezáleží."
+            "value" : "Napíš kód, ktorý sme poslali na %@."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Введіть або вставте код запрошення чи вставте все посилання-запрошення. Регістр не має значення."
+            "value" : "Введіть код, який ми надіслали на %@."
           }
         }
       }
@@ -17797,6 +18448,58 @@
         }
       }
     },
+    "Use email instead" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Použít e-mail"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Stattdessen E-Mail verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar mi correo en su lugar"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-mail-cím használata helyette"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Użyj adresu e-mail"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Использовать почту"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Použiť e-mail"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Використати пошту"
+          }
+        }
+      }
+    },
     "Use the default" : {
       "localizations" : {
         "cs" : {
@@ -17949,59 +18652,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Versión"
-          }
-        }
-      }
-    },
-    "We don't know this invitation. Check the code, or ask whoever sent it." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tuto pozvánku neznáme. Zkontroluj kód nebo se zeptej toho, kdo ji poslal."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Diese Einladung kennen wir nicht. Prüfe den Code oder frag, wer sie geschickt hat."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No conocemos esta invitación. Revisa el código o pregunta a quien te la envió."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ezt a meghívót nem ismerjük. Ellenőrizd a kódot, vagy kérdezd meg, aki küldte."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie znamy tego zaproszenia. Sprawdź kod albo zapytaj osobę, która je wysłała."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Такого приглашения мы не знаем. Проверьте код или спросите того, кто его прислал."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Túto pozvánku nepoznáme. Skontroluj kód alebo sa opýtaj toho, kto ju poslal."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Такого запрошення ми не знаємо. Перевірте код або запитайте того, хто його надіслав."
           }
         }
       }
@@ -18794,54 +19444,54 @@
         }
       }
     },
-    "You stop seeing each other's streaks. An invite can make you friends again." : {
+    "You stop seeing each other's streaks. A friendship code can make you friends again." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přestanete vidět své série navzájem. Pozvánkou se můžete znovu spřátelit."
+            "value" : "Přestanete vidět své série navzájem. Kódem přátelství se můžete znovu spřátelit."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr seht die Serien des anderen nicht mehr. Mit einer Einladung könnt ihr wieder Freunde werden."
+            "value" : "Ihr seht die Serien des anderen nicht mehr. Mit einem Freundschaftscode könnt ihr wieder Freunde werden."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Többé nem látjátok egymás sorozatait. Egy meghívóval újra barátok lehettek."
+            "value" : "Többé nem látjátok egymás sorozatait. Egy barátságkóddal újra barátok lehettek."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przestajecie widzieć swoje serie. Zaproszenie może ponownie uczynić was przyjaciółmi."
+            "value" : "Przestajecie widzieć swoje serie. Kod przyjaźni może ponownie uczynić was przyjaciółmi."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Вы перестанете видеть серии друг друга. Приглашение снова сделает вас друзьями."
+            "value" : "Вы перестанете видеть серии друг друга. Код дружбы снова сделает вас друзьями."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prestanete vidieť svoje série. Pozvánkou sa môžete znova stať priateľmi."
+            "value" : "Prestanete vidieť svoje série. Kódom priateľstva sa môžete znova stať priateľmi."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ви перестанете бачити серії одне одного. Запрошення знову зробить вас друзями."
+            "value" : "Ви перестанете бачити серії одне одного. Код дружби знову зробить вас друзями."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ninguno de los dos verá ya las rachas del otro. Una invitación puede volver a hacerlos amigos."
+            "value" : "Ninguno de los dos verá ya las rachas del otro. Un código de amistad puede volver a haceros amigos."
           }
         }
       }
@@ -18946,58 +19596,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sueles sentarte a practicar %@ más o menos a esta hora."
-          }
-        }
-      }
-    },
-    "You're invited" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máš pozvánku"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Du bist eingeladen"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Meghívtak"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Masz zaproszenie"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Вас приглашают"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máš pozvánku"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Вас запрошено"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Estás invitado"
           }
         }
       }

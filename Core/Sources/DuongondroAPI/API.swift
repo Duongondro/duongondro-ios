@@ -229,6 +229,8 @@ public struct Me: Codable, Equatable, Sendable {
     public let username: String?
     /// "male", "female" or "nonbinary"; nil when not given.
     public let gender: String?
+    /// The address that signs in by magic link; nil when the account has none.
+    public let email: String?
     public let devices: [Device]
 }
 

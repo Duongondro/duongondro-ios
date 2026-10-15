@@ -61,6 +61,51 @@ final class PushTests: XCTestCase {
         XCTAssertEqual(render("FRIEND_DONE_MALE", ["Jan", "a1b2c3", "7"])?.key, .friendDoneMale)
     }
 
+    func testUnnamedSenders() {
+        // The server's keys for a sender without a display name carry no name.
+        XCTAssertEqual(render("FRIEND_DONE_UNNAMED_FEMALE", ["chenrezig", "12"]),
+                       PushText(key: .friendDoneUnnamedNamedFemale, arguments: ["Chenrezig", "#12"]))
+        let unknown = render("FRIEND_DONE_UNNAMED", ["a1b2c3", "7"])
+        XCTAssertEqual(unknown, PushText(key: .friendDoneUnnamed, arguments: ["a1b2c3", "#7"]))
+        XCTAssertEqual(unknown?.string(format: "A friend just practised · day %2$@", locale: Locale(identifier: "en")),
+                       "A friend just practised · day #7")
+        XCTAssertEqual(render("FRIEND_DONE_UNNAMED_MALE", ["dorje-sempa", "3"], discreet: true),
+                       PushText(key: .friendDoneDiscreet, arguments: []))
+        XCTAssertEqual(PushKey.friendDoneUnnamedMale.failSafe, .friendDoneDiscreet)
+        XCTAssertEqual(render("POKE_UNNAMED_MALE", []), PushText(key: .pokeUnnamedMale, arguments: []))
+        // A named key whose name came empty reads as the unnamed one.
+        XCTAssertEqual(render("FRIEND_DONE_FEMALE", ["", "chenrezig", "12"]),
+                       PushText(key: .friendDoneUnnamedNamedFemale, arguments: ["Chenrezig", "#12"]))
+        XCTAssertEqual(render("POKE", [" "]), PushText(key: .pokeUnnamed, arguments: []))
+    }
+
+    func testUnnamedShapesAndFallbacks() {
+        // Wrong argument counts are left to the system, as for the named keys.
+        XCTAssertNil(render("FRIEND_DONE_UNNAMED", ["chenrezig"]))
+        XCTAssertNil(render("FRIEND_DONE_UNNAMED_FEMALE", ["Ana", "chenrezig", "3"]))
+        XCTAssertNil(render("POKE_UNNAMED", ["Ana"]))
+        XCTAssertEqual(PushKey.pokeUnnamed.argumentCount, 0)
+        XCTAssertEqual(PushKey.friendDoneUnnamedMale.argumentCount, 2)
+        // A poke names no practice: the system's rendering of its key stands.
+        XCTAssertNil(PushKey.pokeUnnamedFemale.failSafe)
+        XCTAssertEqual(render("POKE_UNNAMED_FEMALE", [], discreet: true), PushText(key: .pokeUnnamedFemale, arguments: []))
+        // The server's own keys only; the phone's NAMED variants never come from it.
+        XCTAssertNil(render("FRIEND_DONE_UNNAMED_NAMED", ["chenrezig", "3"]))
+    }
+
+    func testNamesAreCleanedAsTheServerDoes() {
+        // White space, zero-width spaces and direction marks only: no name.
+        for blank in ["", "  ", "\u{00A0}\u{2003}", "\u{200B}", "\u{200E}\u{FEFF}", "\u{2060} \u{200D}"] {
+            XCTAssertEqual(DisplayName.clean(blank), "", blank.unicodeScalars.map { String($0.value, radix: 16) }.joined(separator: " "))
+            XCTAssertEqual(render("POKE_MALE", [blank]), PushText(key: .pokeUnnamedMale, arguments: []))
+        }
+        XCTAssertEqual(DisplayName.clean("\u{200B} Tidy Otter\u{00A0}"), "Tidy Otter")
+        XCTAssertEqual(DisplayName.clean("★"), "★")
+        XCTAssertEqual(DisplayName.clean("7"), "7")
+        XCTAssertEqual(DisplayName.clean("..."), "")
+        XCTAssertEqual(render("POKE", ["Tidy Otter"]), PushText(key: .poke, arguments: ["Tidy Otter"]))
+    }
+
     func testFailuresFallBackToTheDiscreetText() {
         for key in ["FRIEND_DONE", "FRIEND_DONE_MALE", "FRIEND_DONE_FEMALE"] {
             XCTAssertEqual(PushKey(rawValue: key)?.failSafe, .friendDoneDiscreet)
@@ -110,6 +155,8 @@ final class PushTests: XCTestCase {
         }
         XCTAssertEqual(PushRoute(userInfo: info("POKE_MALE", thread: id.uuidString.lowercased())), .friend(id))
         XCTAssertEqual(PushRoute(userInfo: info("FRIEND_DONE", thread: id.uuidString)), .friend(id))
+        XCTAssertEqual(PushRoute(userInfo: info("POKE_UNNAMED", thread: id.uuidString)), .friend(id))
+        XCTAssertEqual(PushRoute(userInfo: info("FRIEND_DONE_UNNAMED_FEMALE", thread: id.uuidString)), .friend(id))
         XCTAssertEqual(PushRoute(userInfo: info("STREAK_AT_RISK", thread: "streak-dorje-sempa")), .today)
         XCTAssertNil(PushRoute(userInfo: info("POKE", thread: nil)))
         XCTAssertNil(PushRoute(userInfo: info("UNKNOWN", thread: id.uuidString)))
@@ -150,7 +197,7 @@ final class PushTests: XCTestCase {
 
     /// The server's keys, read from duongondro-api's source when it is checked out
     /// beside this repository: its loc-key constants (with their argument comments),
-    /// and the gendered variants of the ones passed through genderedKey.
+    /// and the gendered variants of the ones passed through genderedKey or fromSender.
     func testServerKeysMatchTheAPISource() throws {
         var dir = repository
         var source: URL?
@@ -163,13 +210,17 @@ final class PushTests: XCTestCase {
         let go = try String(contentsOf: source, encoding: .utf8)
         var keys: [String: Int] = [:]
         var constants: [String: String] = [:]
-        for m in go.matches(of: #/(Loc\w+)\s*=\s*"([A-Z_]+)"\s*//\s*args:\s*([^\n]+)/#) {
+        for m in go.matches(of: #/(Loc\w+)\s*=\s*"([A-Z_]+)"\s*//\s*(?:args:\s*([^\n]+)|no args)/#) {
             constants[String(m.1)] = String(m.2)
-            keys[String(m.2)] = m.3.split(separator: ",").count
+            keys[String(m.2)] = m.3?.split(separator: ",").count ?? 0
         }
         XCTAssertFalse(keys.isEmpty, "no loc-key constants found in \(source.path)")
-        for m in go.matches(of: #/genderedKey\((Loc\w+)/#) {
-            let base = try XCTUnwrap(constants[String(m.1)])
+        // Gendered: passed to genderedKey directly, or to fromSender as the named
+        // and unnamed keys of a push from a friend.
+        var gendered = go.matches(of: #/genderedKey\((Loc\w+)/#).map { String($0.1) }
+        for m in go.matches(of: #/fromSender\(\w+,\s*(Loc\w+),\s*(Loc\w+)/#) { gendered += [String(m.1), String(m.2)] }
+        for constant in gendered {
+            let base = try XCTUnwrap(constants[constant])
             for suffix in ["_MALE", "_FEMALE"] { keys[base + suffix] = keys[base] }
         }
         XCTAssertEqual(Set(keys.keys), Set(PushKey.server.map(\.rawValue)))

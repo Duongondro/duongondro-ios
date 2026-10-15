@@ -21,7 +21,7 @@ struct InviteView: View {
                 Text("Scan with any phone camera")
                     .font(Typography.title)
                     .foregroundStyle(Theme.ink)
-                Text(kind == .invite ? "Anyone with this code can join · expires in 7 days"
+                Text(kind == .invite ? "Anyone with this code becomes your friend · expires in 7 days"
                                      : "Show this in person · expires in 10 minutes")
                     .font(.subheadline)
                     .foregroundStyle(Theme.muted)
@@ -37,13 +37,13 @@ struct InviteView: View {
                 if let invite {
                     ShareLink(item: invite.link.url,
                               message: Text("Practise with me on Duongöndro: \(invite.link.string)")) {
-                        Text("Share invite link")
+                        Text("Share the link")
                     }
                     .buttonStyle(FilledButtonStyle())
                 } else {
-                    Button("Share invite link") {}.buttonStyle(FilledButtonStyle()).disabled(true).opacity(0.4)
+                    Button("Share the link") {}.buttonStyle(FilledButtonStyle()).disabled(true).opacity(0.4)
                 }
-                Button(kind == .invite ? "Show my add-friend code" : "Show the invite code") {
+                Button(kind == .invite ? "Show my add-friend code" : "Show the friendship code") {
                     kind = kind == .invite ? .friend : .invite
                 }
                 .font(.subheadline.weight(.bold))
@@ -54,7 +54,7 @@ struct InviteView: View {
         .padding(.horizontal, Theme.Space.xl + Theme.Space.xs)
         .padding(.bottom, Theme.Space.xl)
         .background(Theme.ground.ignoresSafeArea())
-        .navigationTitle("Invite a friend")
+        .navigationTitle("Friendship code")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
@@ -91,7 +91,7 @@ struct QRBadge: View {
                 QRModules(code: code)
                     .frame(width: 196 * CGFloat(code.size) / CGFloat(code.size + 8),
                            height: 196 * CGFloat(code.size) / CGFloat(code.size + 8))
-                    .accessibilityLabel(Text("QR code of the invite link"))
+                    .accessibilityLabel(Text("QR code of the friendship link"))
             } else {
                 ProgressView()
             }
@@ -145,7 +145,7 @@ struct AcceptInviteView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {
-            Text(link.kind == .invite ? "You're invited" : "Add a friend")
+            Text(link.kind == .invite ? "A friendship code" : "Add a friend")
                 .font(Typography.headingBold(30, relativeTo: .largeTitle))
                 .foregroundStyle(Theme.ink)
                 .accessibilityAddTraits(.isHeader)
@@ -166,9 +166,9 @@ struct AcceptInviteView: View {
                         try await account.accept(checked)
                         dismiss()
                     } catch Social.Failure.ownInvite {
-                        problem = String(localized: "This is your own invite. Send it to a friend instead.", bundle: .appLanguage, locale: .appLanguage)
+                        problem = String(localized: "This is your own friendship code. Send it to a friend instead.", bundle: .appLanguage, locale: .appLanguage)
                     } catch APIError.notFound {
-                        problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.", bundle: .appLanguage, locale: .appLanguage)
+                        problem = String(localized: "This friendship code cannot be used: it may have expired or been withdrawn.", bundle: .appLanguage, locale: .appLanguage)
                     } catch {
                         problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.", bundle: .appLanguage, locale: .appLanguage)
                     }
@@ -196,11 +196,11 @@ struct AcceptInviteView: View {
             do {
                 checked = try await account.check(link)
             } catch Social.Failure.expired {
-                problem = String(localized: "This invite has expired. Ask for a new one.", bundle: .appLanguage, locale: .appLanguage)
+                problem = String(localized: "This friendship code has expired. Ask for a new one.", bundle: .appLanguage, locale: .appLanguage)
             } catch Social.Failure.notAuthentic {
-                problem = String(localized: "This invite does not check out, so it was not accepted. Ask your friend to send it again.", bundle: .appLanguage, locale: .appLanguage)
+                problem = String(localized: "This friendship code does not check out, so it was not accepted. Ask your friend to send it again.", bundle: .appLanguage, locale: .appLanguage)
             } catch APIError.notFound {
-                problem = String(localized: "This invite cannot be used: it may have expired or been withdrawn.", bundle: .appLanguage, locale: .appLanguage)
+                problem = String(localized: "This friendship code cannot be used: it may have expired or been withdrawn.", bundle: .appLanguage, locale: .appLanguage)
             } catch {
                 problem = String(localized: "Could not reach Duongöndro. Check the connection and try again.", bundle: .appLanguage, locale: .appLanguage)
             }

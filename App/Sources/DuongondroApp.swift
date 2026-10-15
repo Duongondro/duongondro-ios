@@ -73,6 +73,14 @@ struct RootView: View {
                 OnboardingView()
             }
         }
+        // An account made from Settings whose Name, Gender and recovery code steps
+        // were left when the app closed: resumed there.
+        .task(id: account.status) {
+            if model.preferences.onboarded, account.stepsPending, [AccountModel.Status.ready, .needsKeys].contains(account.status),
+               account.accountFlow == nil {
+                account.accountFlow = .finishAccount
+            }
+        }
         .sheet(item: $model.afterMidnight) { prompt in
             AfterMidnightSheet(prompt: prompt)
         }
@@ -102,7 +110,7 @@ struct RootView: View {
         // The account steps from Settings or Friends: a new account from the
         // invitation on, or signing in (again).
         .fullScreenCover(item: $account.accountFlow) { flow in
-            OnboardingView(start: flow == .signIn ? .signIn : .invite) { account.accountFlow = nil }
+            OnboardingView(start: flow == .signIn ? .signIn : flow == .finishAccount ? .name : .consent) { account.accountFlow = nil }
                 .environmentObject(model)
                 .environmentObject(account)
                 .environment(\.locale, AppLanguage.stored().locale())

@@ -173,7 +173,9 @@ final class AccountModel: ObservableObject {
         /// The push token last sent, with its device and APNs environment (PushModel).
         static let pushSent = "account.pushSent"
         static let pushSentAt = "account.pushSentAt"
-        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt]
+        /// An account made here whose Name, Gender and recovery code steps are not done yet.
+        static let stepsPending = "account.stepsPending"
+        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt, stepsPending]
     }
 
     init(database: AppDatabase) {
@@ -251,6 +253,8 @@ final class AccountModel: ObservableObject {
     }
 
     private func keep(_ result: SignInResult) {
+        email = sessionAddress
+        sessionAddress = nil
         try? secrets.write(Self.tokenName, Data(result.token.utf8))
         open(token: result.token)
     }
@@ -264,6 +268,7 @@ final class AccountModel: ObservableObject {
         let kept = email
         username = nil
         displayName = ""
+        stepsPending = false
         recoveryCode = nil
         onShow.forget()
         recoveryUnconfirmed = false
@@ -294,6 +299,7 @@ final class AccountModel: ObservableObject {
     func abandonHeldSignIn() async {
         guard let result = heldSignIn else { return }
         heldSignIn = nil
+        sessionAddress = nil
         try? await APIClient(baseURL: Self.serverURL, token: result.token).signOut()
     }
 
@@ -334,6 +340,32 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    /// The friendship link checked by holdPendingInvite, so it is checked once.
+    private var heldLink: String?
+
+    /// A friendship link opened before sign-up goes with the sign-up as its proof,
+    /// and makes the friendship once keys exist (design: Social › Open sign-up). One
+    /// that no longer checks out is dropped quietly: no code is needed for an account.
+    /// A link opened after the last check (on Consent, say) replaces the one held.
+    func holdPendingInvite() async {
+        guard let link = pendingInvite, heldLink != link.string else { return }
+        if (try? await checkInvite(Invitation.code(of: link))) != nil { heldLink = link.string }
+    }
+
+    /// The held link's code is gone (expired, withdrawn): the sign-up goes on
+    /// without it, and it is not offered for accepting later.
+    func dropHeldInvite() {
+        clearInvitation()
+        if pendingInvite?.string == heldLink { pendingInvite = nil }
+    }
+
+    /// Leaving the sign-up ("Only on this phone", closing it, or signing in
+    /// instead): nothing held goes with a later sign-up or sign-in.
+    func forgetHeldInvite() {
+        clearInvitation()
+        heldLink = nil
+    }
+
     /// Forgets an invitation from an abandoned sign-up, so a later sign-in does not carry it.
     func clearInvitation() {
         invitation = nil
@@ -369,6 +401,11 @@ final class AccountModel: ObservableObject {
     }
 
     private var linkWindow = LinkWindow()
+    /// The address the last magic link went to, and the one the session being
+    /// kept signed in with (nil for a passkey): `email` is only ever an address
+    /// that signs in to this account.
+    private var requestedAddress: String?
+    private var sessionAddress: String?
 
     /// Whether an opened magic link may be redeemed now.
     func expectsLink(now: Date = Date()) -> Bool { linkWindow.expects(at: now) }
@@ -379,7 +416,8 @@ final class AccountModel: ObservableObject {
             try await anonymous.requestMagicLink(email: address,
                                                  signUp: consent.map { SignUp(proof: invitation?.proof, consent: $0) })
             linkWindow.requested()
-            email = address
+            // Kept as the account's address only once a link or code signs in.
+            requestedAddress = address
             return .sent
         } catch SignUpFailure.unknownInvitation {
             return .unknownInvite
@@ -411,6 +449,7 @@ final class AccountModel: ObservableObject {
     private func redeem(signIn: Bool = false, _ call: () async throws -> SignInResult) async throws -> Redeem {
         do {
             let result = try await call()
+            sessionAddress = signIn ? nil : requestedAddress
             // Signed in, by code, link or passkey: a link opened after this is not redeemed.
             linkWindow.close()
             return signedIn(result) ? .signedIn(created: result.created) : .otherAccountData
@@ -427,22 +466,82 @@ final class AccountModel: ObservableObject {
 
     // MARK: Profile
 
-    enum ProfileResult { case saved, usernameTaken }
+    /// An account made by this phone's sign-up whose Name, Gender and recovery code
+    /// steps are not done: a relaunch resumes there, never at Consent or Passkey.
+    @Published private(set) var stepsPending = UserDefaults.standard.bool(forKey: Keys.stepsPending) {
+        didSet { UserDefaults.standard.set(stepsPending, forKey: Keys.stepsPending) }
+    }
 
-    /// After a sign-up by email: the name is required, username and gender optional.
-    func setProfile(name: String, username newUsername: String?, gender: Gender?) async throws -> ProfileResult {
+    /// The account was just made: keys are made at once, silently (design:
+    /// onboarding), so the held friendship link is redeemed and the recovery code
+    /// is ready by the time its step shows; that step waits for the same work.
+    func accountCreated() {
+        stepsPending = true
+        Task { _ = try? await setUpKeys() }
+    }
+
+    /// The account steps are done: Not now, or the recovery code confirmed.
+    func accountStepsDone() { stepsPending = false }
+
+    /// Into the app without a recovery code (a new one could not be made): Settings
+    /// keeps asking for one, and signing out waits for it.
+    func leaveWithoutCode() { recoveryUnconfirmed = true }
+
+
+    /// The display name the server holds, read after a sign-up: an account made
+    /// without one is given a random "Adjective Animal" there, which the Name step
+    /// offers to keep. Nil when it cannot be read.
+    func serverDisplayName() async -> String? {
+        guard let account, let me = try? await account.api.me() else { return nil }
+        displayName = me.displayName
+        email = me.email
+        return me.displayName
+    }
+
+    /// After a sign-up: the name only when it was edited (nil keeps the server's,
+    /// empty clears it), the gender only when given. Nothing to send, nothing sent.
+    func setProfile(name: String?, gender: Gender?) async throws {
         guard let account else { throw Account.Failure.missingSecret }
-        let name = Self.trimmedName(name)
-        do {
-            try await account.api.updateMe(displayName: name, username: newUsername.map { .set($0.lowercased()) } ?? .keep,
-                                           gender: gender.map { .set($0.rawValue) } ?? .keep)
-        } catch APIError.conflict {
-            return .usernameTaken
-        }
-        displayName = name
-        if let newUsername { username = newUsername.lowercased() }
+        let name = name.map(Self.trimmedName)
+        guard name != nil || gender != nil else { return }
+        try await account.api.updateMe(displayName: name, gender: gender.map { .set($0.rawValue) } ?? .keep)
+        if let name { displayName = name }
         if let gender { UserDefaults.standard.set(gender.rawValue, forKey: Gender.storageKey) }
-        return .saved
+    }
+
+    // MARK: Email after sign-up
+
+    enum EmailRequest { case sent, invalid, tooMany }
+
+    /// Mails a code that adds `address` to the account as a second way to sign in.
+    func requestEmail(_ address: String) async throws -> EmailRequest {
+        guard let account else { throw Account.Failure.missingSecret }
+        do {
+            try await account.api.requestEmailConfirmation(email: address)
+            return .sent
+        } catch APIError.badRequest {
+            return .invalid
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
+    }
+
+    enum EmailConfirm { case added, wrong, taken, tooMany }
+
+    /// The typed code from that mail; `address` is kept once it signs in here.
+    func confirmEmail(_ address: String, code: String) async throws -> EmailConfirm {
+        guard let account else { throw Account.Failure.missingSecret }
+        do {
+            try await account.api.confirmEmail(code: code)
+            email = address
+            return .added
+        } catch APIError.badRequest {
+            return .wrong
+        } catch APIError.conflict {
+            return .taken
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
     }
 
     /// Sets or clears the username; false when another account has it.
@@ -463,7 +562,7 @@ final class AccountModel: ObservableObject {
     /// The server counts code points (runes), not characters: at most 64.
     static func trimmedName(_ name: String) -> String {
         var scalars = String.UnicodeScalarView()
-        scalars.append(contentsOf: name.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.prefix(64))
+        scalars.append(contentsOf: DisplayName.clean(name).unicodeScalars.prefix(64))
         return String(scalars)
     }
 
@@ -535,6 +634,7 @@ final class AccountModel: ObservableObject {
         if let me = try? await account.api.me() {
             if !me.displayName.isEmpty { displayName = me.displayName }
             username = me.username
+            email = me.email
             if let g = me.gender { UserDefaults.standard.set(g, forKey: Gender.storageKey) }
         }
         return standing
@@ -566,11 +666,12 @@ final class AccountModel: ObservableObject {
         Task { await self.afterKeys(account) }
     }
 
-    /// The fallback report, then the invitation's friendship, once keys exist,
-    /// then the first sync. Failures here never fail the set-up.
+    /// The held friendship link's friendship, once keys exist, then the fallback
+    /// report and the first sync. Failures here never fail the set-up.
     private func afterKeys(_ account: Account) async {
-        await reportFallback(account)
-        if let checked = checkedInvite, let social {
+        // Taken now: the flow may be closed (forgetting what it held) while this runs.
+        let held = checkedInvite
+        if let checked = held, let social {
             if let me = userID, checked.inviter != me {
                 try? await social.redeem(checked)
             }
@@ -578,6 +679,7 @@ final class AccountModel: ObservableObject {
             if pendingInvite?.id == checked.link.id { pendingInvite = nil }
         }
         clearInvitation()
+        await reportFallback(account)
         await syncNow()
     }
 
@@ -685,6 +787,8 @@ final class AccountModel: ObservableObject {
             self.account = nil
             social = nil
             status = .signedOut
+            // No session to finish the account steps with: sign in again instead.
+            stepsPending = false
             error = nil
         } catch {
             // Offline or the server is away: the data is safe here and syncs later.
@@ -720,6 +824,7 @@ final class AccountModel: ObservableObject {
             if let me = try? await social.account.api.me() {
                 displayName = me.displayName
                 username = me.username
+                email = me.email
                 deviceCount = me.devices.count
                 await reconcileGender(server: me.gender.flatMap(Gender.init(rawValue:)), social: social)
             }
@@ -913,7 +1018,8 @@ final class AccountModel: ObservableObject {
         username = nil
         email = nil
         offline = false
-        clearInvitation()
+        forgetHeldInvite()
+        stepsPending = false
         heldSignIn = nil
         magicToken = nil
         linkWindow.close()
@@ -950,8 +1056,11 @@ final class AccountModel: ObservableObject {
 
 /// The account steps opened over the app, outside onboarding.
 enum AccountFlow: String, Identifiable {
-    /// "Make an online account": from the (optional) invitation on.
+    /// "Make an online account": from the consent on.
     case newAccount
+    /// An account made here whose Name, Gender and recovery code steps were left
+    /// unfinished (the app closed): resumed at Name.
+    case finishAccount
     /// "I already have an account", "Sign in again".
     case signIn
 

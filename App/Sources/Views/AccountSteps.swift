@@ -4,9 +4,10 @@ import DuongondroCore
 import DuongondroSync
 
 // Onboarding v2's account steps (design: 07-onboarding-offline), after the
-// practice questions or from Settings: where the practice lives, the
-// invitation, consent, email or a username, name, gender, a passkey, and the
-// recovery code; or, for an existing account, signing in and restoring.
+// practice questions or from Settings: where the practice lives, consent, a
+// passkey that makes the account (or an emailed link instead), then a name and
+// gender, both skippable, and the recovery code; or, for an existing account,
+// signing in and restoring. Nothing personal is required: a passkey is enough.
 
 // MARK: - Building blocks
 
@@ -18,14 +19,20 @@ func localized(_ key: String.LocalizationValue) -> String {
 /// The message for any failure of a call to the server.
 var accountError: String { localized("Something went wrong. Check your connection and try again.") }
 
-/// A sign-up refused because this server makes accounts only with an invitation
-/// (open sign-up off, or turned off since the sign-up began).
-var invitationNeeded: String { localized("For now, an account needs an invitation code. Enter one, or keep practising on this phone.") }
+/// A sign-up refused because the server makes no accounts without an invitation
+/// now (open sign-up off, or turned off since the sign-up began).
+var invitationNeeded: String { localized("New accounts can't be made right now. Try again later, or keep practising on this phone.") }
 
 /// The 429 of the limits on sign-ups without an invitation from one network
 /// (accounts made, and sign-up mails requested).
 var tooManyAccounts: String {
-    localized("Too many sign-ups from this network in the last hour. Try again later, or enter an invitation code: it works regardless.")
+    localized("Too many sign-ups from this network in the last hour. Try again later, or open a friend's friendship link.")
+}
+
+/// The friendship link held for a sign-up no longer works: the next tap makes the
+/// account without it.
+var heldLinkGone: String {
+    localized("This friendship link no longer works. Continue to make the account without it.")
 }
 
 /// One call in flight: buttons disable while it runs, `failed` says it did not finish.
@@ -224,12 +231,13 @@ struct ErrorLine: View {
 
 @MainActor
 private enum Route {
-    /// After any sign-in or sign-up: a new account gives its profile next; an
+    /// After any sign-in or sign-up: a new account gives its name next; an
     /// existing one sets up, restores, or is done.
     static func signedIn(created: Bool, flow: OnboardingFlow, account: AccountModel) async throws {
         if created {
             flow.signingIn = false
-            flow.go(.name)
+            account.accountCreated()
+            flow.signedUp(next: .name)
             return
         }
         switch try await account.standing() {
@@ -237,19 +245,6 @@ private enum Route {
         case .setUp: flow.go(.recovery)
         case .restore: flow.go(.restore)
         }
-    }
-
-    /// A sign-up the server refused without an invitation: back to the
-    /// Invitation step, which says why.
-    static func needInvitation(flow: OnboardingFlow) {
-        backToInvitation(flow: flow, problem: invitationNeeded)
-    }
-
-    /// Back to the Invitation step with why: a code is the way past the
-    /// refusal (sign-up closed, the per-network limit, an unknown code).
-    static func backToInvitation(flow: OnboardingFlow, problem: String) {
-        flow.inviteProblem = problem
-        flow.backTo(.invite)
     }
 
     /// A redemption's answer: signed in, or the reason it was not, for under the field.
@@ -261,12 +256,13 @@ private enum Route {
         case .wrong: return localized("That code doesn't match. Check the email and try again.")
         case .noAccount:
             // A sign-up's link refused at redemption: sign-up closed since it was sent.
-            guard flow.signingIn else {
-                needInvitation(flow: flow)
-                return nil
-            }
+            guard flow.signingIn else { return invitationNeeded }
             return localized("No account uses this email. Check the address, or go back and make an account.")
-        case .inviteGone: return localized("We don't know this invitation. Check the code, or ask whoever sent it.")
+        case .inviteGone:
+            // The friendship link that went with the sign-up is gone: the next
+            // request goes without it.
+            account.dropHeldInvite()
+            return heldLinkGone
         case .tooMany: return localized("Too many tries. Wait a few minutes and try again.")
         case .passkeyFailed: return localized("That passkey did not work. Try again, or use your email instead.")
         case .otherAccountData:
@@ -309,7 +305,6 @@ private struct OtherAccountDialog: ViewModifier {
 struct WhereStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
     @EnvironmentObject private var account: AccountModel
-    @StateObject private var call = StepCall()
 
     var body: some View {
         AccountPage(title: "Keep it on this phone, or online?",
@@ -336,78 +331,13 @@ struct WhereStep: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
         } actions: {
-            ErrorLine(text: call.failed ? accountError : nil)
-            StepButton(title: "Make an online account", busy: call.busy) {
+            StepButton(title: "Make an online account") {
                 flow.signingIn = false
-                guard let link = account.pendingInvite else { return flow.go(.invite) }
-                // A link opened earlier brought the invitation: checked here, the step skipped.
-                flow.inviteCode = Invitation.code(of: link)
-                flow.linkTried = true
-                call.run {
-                    if try await account.checkInvite(flow.inviteCode) == .valid {
-                        flow.go(.consent)
-                    } else {
-                        flow.inviteProblem = localized("We don't know this invitation. Check the code, or ask whoever sent it.")
-                        flow.go(.invite)
-                    }
-                }
-            }
-            OutlinedStepButton(title: "Only on this phone") { flow.finishLocal() }
-        }
-    }
-}
-
-/// Optional (design: Social › Open sign-up): a friend's invitation (24
-/// characters) or an admission code (16), told apart by length, either "an
-/// invitation code"; or skipped, for an account with no invitation.
-struct InviteStep: View {
-    @EnvironmentObject private var flow: OnboardingFlow
-    @EnvironmentObject private var account: AccountModel
-    @StateObject private var call = StepCall()
-
-    private var length: Int { codeCharacters(flow.inviteCode).count }
-    private var complete: Bool { length == Invitation.inviteLength || length == Invitation.admissionLength }
-
-    var body: some View {
-        AccountPage(title: "Have an invitation code?",
-                    detail: Text("Enter it, or skip. A code a friend sent you also makes the two of you friends.")) {
-            LabelledField(label: "Invitation code",
-                          text: Binding(get: { flow.inviteCode }, set: { flow.inviteCode = $0; flow.inviteProblem = nil }),
-                          hint: "Type or paste the invitation code, or paste the whole invitation link. Case doesn't matter.",
-                          error: flow.inviteProblem, code: true, keyboard: .asciiCapable,
-                          submit: { if complete { check() } })
-        } actions: {
-            ErrorLine(text: call.failed ? accountError : nil)
-            StepButton(title: "Continue", enabled: complete, busy: call.busy) { check() }
-            TextAction(title: "Skip") {
-                guard !call.busy else { return }
-                // No code goes with the sign-up, even one typed or opened here.
-                account.clearInvitation()
-                flow.inviteCode = ""
-                flow.inviteProblem = nil
                 flow.go(.consent)
             }
-            TextAction(title: "Only on this phone for now") {
-                account.clearInvitation()
+            OutlinedStepButton(title: "Only on this phone") {
+                account.forgetHeldInvite()
                 flow.finishLocal()
-            }
-        }
-        .task {
-            // An invite link opened earlier (Settings' "Make an online account" starts
-            // here): filled in and checked once, so a valid one skips the step.
-            guard let link = account.pendingInvite, !flow.linkTried, flow.inviteCode.isEmpty else { return }
-            flow.linkTried = true
-            flow.inviteCode = Invitation.code(of: link)
-            check()
-        }
-    }
-
-    private func check() {
-        call.run {
-            switch try await account.checkInvite(flow.inviteCode) {
-            case .valid: flow.go(.consent)
-            case .unknown: flow.inviteProblem = localized("We don't know this invitation. Check the code, or ask whoever sent it.")
-            case .notAuthentic: flow.inviteProblem = localized("This invitation doesn't check out: it may have been changed on the way. Ask whoever sent it for a new one.")
             }
         }
     }
@@ -420,7 +350,7 @@ struct ConsentStep: View {
 
     var body: some View {
         AccountPage(title: "Before we store anything",
-                    detail: Text("An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. With your consent the server keeps your email or username, your name, your gender if you give it, your friends, and your public streaks. Your counts stay encrypted on your phones."),
+                    detail: Text("An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. The server keeps your account: your passkeys, and your email if you add one; the name friends see; your username and gender if you give them; your friends; and your public streaks. Your counts stay encrypted on your phones."),
                     centered: true) {
             Button { flow.consented.toggle() } label: {
                 HStack(alignment: .top, spacing: Theme.Space.m) {
@@ -449,7 +379,7 @@ struct ConsentStep: View {
                     .padding(.horizontal, Theme.Space.xs)
             }
         } actions: {
-            StepButton(title: "Continue", enabled: flow.consented) { flow.go(.email) }
+            StepButton(title: "Continue", enabled: flow.consented) { flow.go(.passkey) }
         }
     }
 }
@@ -472,24 +402,22 @@ struct EmailStep: View {
         } actions: {
             ErrorLine(text: call.failed ? accountError : nil)
             StepButton(title: "Continue", enabled: valid, busy: call.busy) { send() }
-            if !flow.signingIn {
-                TextAction(title: "Skip, use a username instead") {
-                    flow.email = ""
-                    flow.go(.username)
-                }
-            }
         }
     }
 
+    /// Signing in, or the sign-up for a phone that cannot make a passkey.
     private func send() {
         call.run {
+            if !flow.signingIn { await account.holdPendingInvite() }
             switch try await account.requestMagicLink(email: flow.email.trimmingCharacters(in: .whitespaces),
                                                       signUpWithConsent: flow.signUpConsent) {
             case .sent: flow.go(.checkEmail)
-            case .unknownInvite: problem = localized("We don't know this invitation. Check the code, or ask whoever sent it.")
+            case .unknownInvite:
+                account.dropHeldInvite()
+                problem = heldLinkGone
             case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
-            case .tooManyAccounts: Route.backToInvitation(flow: flow, problem: tooManyAccounts)
-            case .invitationNeeded: Route.needInvitation(flow: flow)
+            case .tooManyAccounts: problem = tooManyAccounts
+            case .invitationNeeded: problem = invitationNeeded
             }
         }
     }
@@ -524,10 +452,11 @@ struct CheckEmailStep: View {
                     switch try await account.requestMagicLink(email: address, signUpWithConsent: flow.signUpConsent) {
                     case .sent: again = true
                     case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
-                    case .tooManyAccounts: Route.backToInvitation(flow: flow, problem: tooManyAccounts)
+                    case .tooManyAccounts: problem = tooManyAccounts
                     case .unknownInvite:
-                        Route.backToInvitation(flow: flow, problem: localized("We don't know this invitation. Check the code, or ask whoever sent it."))
-                    case .invitationNeeded: Route.needInvitation(flow: flow)
+                        account.dropHeldInvite()
+                        problem = heldLinkGone
+                    case .invitationNeeded: problem = invitationNeeded
                     }
                 }
             }
@@ -560,48 +489,52 @@ struct CheckEmailStep: View {
     }
 }
 
-struct UsernameStep: View {
-    @EnvironmentObject private var flow: OnboardingFlow
-    static let minLength = 3
-    static let maxLength = 32
-
-    var body: some View {
-        AccountPage(title: "Pick a username",
-                    detail: Text("Optional. Without an email you sign in with a passkey, using Face ID or Touch ID; a username names that passkey in your passwords.")) {
-            LabelledField(label: "Username",
-                          text: Binding(get: { flow.username }, set: { v in
-                              flow.username = String(v.lowercased().filter { c in
-                                  (c.isASCII && (c.isLetter || c.isNumber)) || c == "." || c == "_"
-                              }.prefix(Self.maxLength))
-                              flow.usernameTaken = false
-                          }),
-                          hint: "Letters, digits, dots and underscores. Friends don't see it.",
-                          error: flow.usernameTaken ? localized("That username is taken. Try another.") : nil,
-                          keyboard: .asciiCapable, capitalization: .never, contentType: .username)
-        } actions: {
-            StepButton(title: "Continue", enabled: flow.username.count >= Self.minLength && !flow.usernameTaken) { flow.go(.name) }
-            TextAction(title: "Skip") {
-                flow.username = ""
-                flow.usernameTaken = false
-                flow.go(.name)
-            }
-        }
-    }
-}
-
+/// The name friends see. The server gives an account made without one a random
+/// "Adjective Animal", shown here to keep, change or clear (an empty name shows
+/// as "A friend").
 struct NameStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
+    @EnvironmentObject private var account: AccountModel
+    @State private var loading = false
+    @State private var failed = false
 
-    private var valid: Bool { !flow.displayName.trimmingCharacters(in: .whitespaces).isEmpty }
+    /// Continue saves an edit of the name the server holds, so it waits for it.
+    private var loaded: Bool { flow.serverName != nil }
 
     var body: some View {
-        AccountPage(title: "What should we call you?", detail: Text("Friends see this name next to your streaks.")) {
+        AccountPage(title: "What should we call you?",
+                    detail: flow.serverName?.isEmpty == false
+                        ? Text("A random name, so friends can tell you apart. Keep it or change it.")
+                        : Text("Friends see this name next to your streaks.")) {
             LabelledField(label: "Name", text: Binding(get: { flow.displayName }, set: { flow.displayName = String($0.prefix(64)) }),
                           capitalization: .words, contentType: .givenName,
-                          submit: { if valid { flow.go(.gender) } })
+                          submit: { if loaded { flow.go(.gender) } })
         } actions: {
-            StepButton(title: "Continue", enabled: valid) { flow.go(.gender) }
+            ErrorLine(text: failed ? accountError : nil)
+            if failed {
+                StepButton(title: "Try again", busy: loading) { Task { await load() } }
+            } else {
+                StepButton(title: "Continue", enabled: loaded, busy: loading) { flow.go(.gender) }
+            }
+            // Skip keeps whatever the server holds, loaded or not.
+            TextAction(title: "Skip") {
+                flow.displayName = flow.serverName ?? ""
+                flow.go(.gender)
+            }
         }
+        .task { if !loaded { await load() } }
+    }
+
+    private func load() async {
+        loading = true
+        failed = false
+        if let name = await account.serverDisplayName() {
+            flow.serverName = name
+            if flow.displayName.isEmpty { flow.displayName = name }
+        } else {
+            failed = true
+        }
+        loading = false
     }
 }
 
@@ -627,23 +560,114 @@ struct GenderStep: View {
         flow.gender = gender
         // Kept on the phone either way, so the app conjugates without the server.
         UserDefaults.standard.set(gender?.rawValue ?? "", forKey: Gender.storageKey)
-        // With an email the account exists already and takes its profile now;
-        // without one, the passkey sign-up carries it.
-        guard !flow.email.isEmpty else { return flow.go(.passkey) }
+        // The account exists (passkey or emailed link): it takes the name, if
+        // changed, and the gender now.
+        let edited = flow.serverName.map { flow.displayName != $0 } ?? !flow.displayName.isEmpty
+        // An account made by email has one already; a passkey account is offered one.
+        // `email` is set only by an address that signs in (a magic-link sign-up,
+        // or GET /api/me), never by one merely asked for.
+        let next: OnboardingStep = account.email == nil ? .addEmail : .recovery
+        // Nothing to send: on without a call.
+        guard edited || gender != nil else { return flow.go(next) }
         call.run {
-            switch try await account.setProfile(name: flow.displayName, username: flow.username.isEmpty ? nil : flow.username,
-                                                gender: gender) {
-            case .saved: flow.go(.passkey)
-            case .usernameTaken:
-                flow.usernameTaken = true
-                flow.backTo(.username)
+            try await account.setProfile(name: edited ? flow.displayName : nil, gender: gender)
+            // Saved: the server holds this name now, so going back and on again
+            // sends nothing more.
+            if edited {
+                flow.displayName = AccountModel.trimmedName(flow.displayName)
+                flow.serverName = flow.displayName
+            }
+            flow.go(next)
+        }
+    }
+}
+
+/// After a passkey sign-up: an email as a second way to sign in (a new phone
+/// without the passkey, say), confirmed by a mailed code. Skippable.
+struct AddEmailStep: View {
+    @EnvironmentObject private var flow: OnboardingFlow
+    @EnvironmentObject private var account: AccountModel
+    @StateObject private var call = StepCall()
+
+    private var address: String { flow.newEmail.trimmingCharacters(in: .whitespaces) }
+    private var valid: Bool { address.range(of: #"^[^@\s]+@[^@\s]+\.[^@\s]+$"#, options: .regularExpression) != nil }
+
+    var body: some View {
+        AccountPage(title: "Add an email?", detail: Text("A second way to sign in, for example on a new phone.")) {
+            LabelledField(label: "Email", text: Binding(get: { flow.newEmail }, set: { flow.newEmail = $0; flow.newEmailProblem = nil }),
+                          error: flow.newEmailProblem, keyboard: .emailAddress, capitalization: .never, contentType: .emailAddress,
+                          submit: { if valid { send() } })
+        } actions: {
+            ErrorLine(text: call.failed ? accountError : nil)
+            StepButton(title: "Continue", enabled: valid, busy: call.busy) { send() }
+            TextAction(title: "Skip") { if !call.busy { flow.go(.recovery) } }
+        }
+    }
+
+    private func send() {
+        call.run {
+            switch try await account.requestEmail(address) {
+            case .sent: flow.go(.confirmEmail)
+            case .invalid: flow.newEmailProblem = localized("That doesn't look like an email address.")
+            case .tooMany: flow.newEmailProblem = localized("Too many tries. Wait a few minutes and try again.")
             }
         }
     }
 }
 
-/// Optional with an email (a link brings the person back in); without one the
-/// passkey is the account.
+/// The 8-character code mailed for the address, typed as a sign-in code is.
+struct ConfirmEmailStep: View {
+    @EnvironmentObject private var flow: OnboardingFlow
+    @EnvironmentObject private var account: AccountModel
+    @StateObject private var call = StepCall()
+    @State private var code = ""
+    @State private var problem: String?
+    @State private var again = false
+
+    private var address: String { flow.newEmail.trimmingCharacters(in: .whitespaces) }
+    private var complete: Bool { codeCharacters(code).count == CodeEntry.signInLength }
+
+    var body: some View {
+        AccountPage(title: "Check your email", detail: Text("Type the code we sent to \(address).")) {
+            LabelledField(label: "Code", text: Binding(get: { code }, set: { code = $0; problem = nil }),
+                          hint: "Eight letters and digits, as in the email. Case doesn't matter; O and 0, I and 1 count as the same. Works for 15 minutes.",
+                          error: problem, code: true, keyboard: .asciiCapable, contentType: .oneTimeCode,
+                          submit: { if complete { submit() } })
+        } actions: {
+            ErrorLine(text: call.failed ? accountError : nil)
+            StepButton(title: "Continue", enabled: complete, busy: call.busy) { submit() }
+            TextAction(title: again ? "Sent again" : "Send it again") {
+                guard !call.busy, !again else { return }
+                call.run {
+                    switch try await account.requestEmail(address) {
+                    case .sent: again = true
+                    case .invalid: problem = localized("That doesn't look like an email address.")
+                    case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+                    }
+                }
+            }
+            TextAction(title: "Skip") { if !call.busy { flow.go(.recovery) } }
+        }
+    }
+
+    private func submit() {
+        call.run {
+            switch try await account.confirmEmail(address, code: codeCharacters(code)) {
+            case .added: flow.go(.recovery)
+            case .wrong: problem = localized("That code doesn't match. Check the email and try again.")
+            case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+            case .taken:
+                // Back to the address, to change it or skip.
+                flow.newEmailProblem = localized("This email belongs to another account.")
+                flow.back()
+            }
+        }
+    }
+}
+
+/// Makes the account (design: onboarding, passkey first): consent given, nothing
+/// else needed. A phone or password manager that cannot make a passkey uses an
+/// emailed link instead.
 struct PasskeyStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
     @EnvironmentObject private var account: AccountModel
@@ -667,34 +691,33 @@ struct PasskeyStep: View {
         } actions: {
             ErrorLine(text: problem ?? (call.failed ? accountError : nil))
             StepButton(title: "Save a passkey", busy: call.busy) { save() }
-            if !flow.email.isEmpty {
-                TextAction(title: "Not now, email me a link instead") { if !call.busy { flow.go(.recovery) } }
-            }
+            TextAction(title: "Use email instead") { if !call.busy { flow.go(.email) } }
         }
-        .modifier(OtherAccountDialog(call: call) { _ in flow.go(.recovery) })
+        .modifier(OtherAccountDialog(call: call) { created in
+            if created { account.accountCreated() }
+            flow.signedUp(next: .name)
+        })
     }
 
     private func save() {
         problem = nil
         call.run {
-            // Without an email the passkey makes the account, with the profile given so far.
-            let profile = flow.email.isEmpty
-                ? Profile(displayName: AccountModel.trimmedName(flow.displayName),
-                          username: flow.username.isEmpty ? nil : flow.username, gender: flow.gender?.rawValue)
-                : nil
+            // A friendship link opened earlier goes with the sign-up as its proof.
+            await account.holdPendingInvite()
             do {
-                switch try await account.createPasskey(profile: profile, consent: flow.consented) {
-                case .saved: flow.go(.recovery)
+                switch try await account.createPasskey(profile: nil, consent: flow.consented) {
+                case .saved:
+                    account.accountCreated()
+                    flow.signedUp(next: .name)
                 case .cancelled: break
-                case .usernameTaken:
-                    flow.usernameTaken = true
-                    flow.backTo(.username)
                 case .inviteGone:
-                    flow.inviteProblem = localized("We don't know this invitation. Check the code, or ask whoever sent it.")
-                    flow.backTo(.invite)
-                case .invitationNeeded: Route.needInvitation(flow: flow)
-                case .tooManyAccounts: Route.backToInvitation(flow: flow, problem: tooManyAccounts)
+                    // The link's code is gone: the next try goes without it.
+                    account.dropHeldInvite()
+                    problem = heldLinkGone
+                case .invitationNeeded: problem = invitationNeeded
+                case .tooManyAccounts: problem = tooManyAccounts
                 case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+                case .usernameTaken: problem = accountError
                 case .otherAccountData: flow.otherAccount = true
                 }
             } catch Passkeys.Failure.refused {
@@ -719,6 +742,13 @@ struct RecoveryStep: View {
             } else {
                 ProgressView().frame(maxWidth: .infinity, minHeight: Theme.Size.passkeyBadge)
             }
+            // A resumed run whose keys exist makes a new code: the old one is gone.
+            if flow.newCodeOnResume, account.shownCode != nil {
+                Text("This is a new recovery code. Any code you wrote down earlier no longer works.")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             Text("Next we'll ask for two of these groups, to make sure. O and 0, I and 1 count as the same.")
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
@@ -737,9 +767,19 @@ struct RecoveryStep: View {
             // Settings shows the same code again, and signing out waits for it.
             if account.shownCode != nil {
                 TextAction(title: "Not now") { flow.finishOnline() }
+            } else if flow.newCodeOnResume, setUp.failed {
+                // Keys exist, so the app works without a code: in now, and
+                // Settings asks for a new one.
+                TextAction(title: "Not now") {
+                    account.leaveWithoutCode()
+                    flow.finishOnline()
+                }
             }
         }
-        .onAppear { if account.shownCode == nil { makeKeys() } }
+        .onAppear {
+            // Made at sign-up already, normally: this waits for the same work.
+            if account.shownCode == nil { makeKeys() }
+        }
     }
 
     /// AccountModel runs the work one at a time and keeps the code, so showing
@@ -821,5 +861,7 @@ struct SignInStep: View {
             OutlinedStepButton(title: "Email me a link", enabled: !call.busy) { flow.go(.email) }
         }
         .modifier(OtherAccountDialog(call: call))
+        // Signing in instead of up: a friendship link held for the sign-up is dropped.
+        .onAppear { account.forgetHeldInvite() }
     }
 }

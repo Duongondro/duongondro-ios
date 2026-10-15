@@ -211,6 +211,22 @@ final class AuthTests: XCTestCase {
         XCTAssertEqual(last.body?["gender"] as? String, "female")
     }
 
+    func testAddingAnEmail() async throws {
+        try await api.requestEmailConfirmation(email: "ana@example.com")
+        XCTAssertEqual(last.method, "POST")
+        XCTAssertEqual(last.path, "/api/me/email")
+        XCTAssertEqual(last.body?.keys.sorted(), ["email"])
+        try await api.confirmEmail(code: "ABCD1234")
+        XCTAssertEqual(last.path, "/api/me/email/verify")
+        XCTAssertEqual(last.body?.keys.sorted(), ["code"])
+        XCTAssertEqual(last.body?["code"] as? String, "ABCD1234")
+        StubProtocol.responses = [(409, #"{"error":"another account uses this address"}"#)]
+        do {
+            try await api.confirmEmail(code: "ABCD1234")
+            XCTFail("a 409 must throw")
+        } catch APIError.conflict {}
+    }
+
     func testSignOutAndInvites() async throws {
         try await api.signOut()
         XCTAssertEqual(last.method, "DELETE")

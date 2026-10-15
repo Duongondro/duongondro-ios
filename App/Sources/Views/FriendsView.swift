@@ -21,18 +21,18 @@ struct FriendsView: View {
                     .padding(.horizontal, Theme.Space.xs)
                     .accessibilityAddTraits(.isHeader)
                 if account.status == .needsKeys {
-                    CardSection(footer: "Friends see your public streaks and nothing else. Finish setting up your account to invite them.") {
+                    CardSection(footer: "Friends see your public streaks and nothing else. Finish setting up your account to add them.") {
                         Button { model.tab = .you } label: { AccentRow(title: "Finish setting up", chevron: true) }
                     }
                 } else if account.status != .ready {
-                    CardSection(footer: "Friends see your public streaks and nothing else. An online account lets you invite them.") {
+                    CardSection(footer: "Friends see your public streaks and nothing else. An online account lets you add them.") {
                         AccountDoorRows()
                     }
                 } else {
                     // Asked here, on the first visit with a friend to be nagged by
                     // (design: Onboarding › the notification permission), not at sign-up.
                     if let friend = account.friends.first, push.authorization == .notDetermined, !push.askDismissed {
-                        NotificationAsk(friend: friend.displayName)
+                        NotificationAsk(friend: friend)
                     }
                     if !news.isEmpty {
                         CardSection(header: "Today") {
@@ -59,7 +59,7 @@ struct FriendsView: View {
                         }
                     }
                     if account.friendsLoaded && account.friends.isEmpty {
-                        Text("No friends yet. An invite makes the two of you friends; they see your public streaks, never your counts.")
+                        Text("No friends yet. A friendship code makes the two of you friends; they see your public streaks, never your counts.")
                             .font(.subheadline)
                             .foregroundStyle(Theme.muted)
                             .padding(.horizontal, Theme.Space.l)
@@ -70,7 +70,7 @@ struct FriendsView: View {
                             ForEach(account.friends) { f in
                                 NavigationLink { FriendDetailView(friendID: f.userID) } label: {
                                     HStack(spacing: Theme.Space.m) {
-                                        Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : f.displayName)
+                                        Text(verbatim: f.shownName)
                                             .foregroundStyle(Theme.ink)
                                         Spacer(minLength: Theme.Space.s)
                                         if f.keyChanged {
@@ -90,7 +90,7 @@ struct FriendsView: View {
                         }
                     }
                     InviteCard { inviting = true }
-                    Button("Paste an invite link") { pasting = true }
+                    Button("Paste a friendship link") { pasting = true }
                         .font(.subheadline.weight(.bold))
                         .foregroundStyle(Theme.accent)
                         .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap)
@@ -149,7 +149,7 @@ struct FriendsView: View {
     private var leaders: [(key: String, name: String, practice: String, current: Int)] {
         account.friends.filter { !$0.keyChanged }.flatMap { f in
             f.streaks.filter { $0.current > 0 && $0.deadline > Date() }.map {
-                (key: "\(f.userID)-\($0.practice)", name: f.displayName, practice: $0.practice, current: $0.current)
+                (key: "\(f.userID)-\($0.practice)", name: f.shownName, practice: $0.practice, current: $0.current)
             }
         }
         .sorted { $0.current > $1.current }
@@ -163,7 +163,7 @@ struct FriendsView: View {
 /// The notification permission, with its reason, before the system asks.
 private struct NotificationAsk: View {
     @EnvironmentObject private var push: PushModel
-    let friend: String
+    let friend: Social.FriendView
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.m) {
@@ -174,7 +174,7 @@ private struct NotificationAsk: View {
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                     Text("Let friends nag you").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
-                    Text("So \(name) can nag you, and you hear when friends practise.")
+                    reason
                         .font(.subheadline)
                         .foregroundStyle(Theme.muted)
                         .fixedSize(horizontal: false, vertical: true)
@@ -190,8 +190,10 @@ private struct NotificationAsk: View {
         .cardStyle()
     }
 
-    private var name: String {
-        friend.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : friend
+    /// Named, or "a friend" in the friend's gender, mid-sentence.
+    private var reason: Text {
+        friend.hasName ? Text("So \(friend.shownName) can nag you, and you hear when friends practise.")
+            : Text(verbatim: Gendered.string("So a friend can nag you, and you hear when friends practise.", for: friend.gender))
     }
 }
 
@@ -227,7 +229,7 @@ struct NewsRow: View {
                     .foregroundStyle(poked ? Theme.muted : Theme.onAccent)
                     .padding(.horizontal, Theme.Space.l)
                     .frame(minHeight: Theme.Size.minTap)
-                    .accessibilityLabel(poked ? Text("Poked \(name)") : Text("Poke \(name)"))
+                    .accessibilityLabel(pokeLabel(poked))
                     .background(poked ? Theme.softFill : Theme.accent, in: Capsule())
                     .disabled(poked)
             }
@@ -236,11 +238,21 @@ struct NewsRow: View {
     }
 
     private var practice: String { FriendsView.practiceName(item.streak.practice) }
-    private var name: String { item.friend.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : item.friend.displayName }
+    private var name: String { item.friend.shownName }
+
+    /// "A friend" takes the masculine forms unless she is a woman, as in pushes.
+    private var verbGender: Gender? {
+        item.friend.hasName || item.friend.gender == .female ? item.friend.gender : .male
+    }
 
     private var title: String {
-        item.doneToday ? Gendered.string("%@ finished %@", for: item.friend.gender, name, practice)
-            : Gendered.string("%@ hasn't practised yet", for: item.friend.gender, name)
+        item.doneToday ? Gendered.string("%@ finished %@", for: verbGender, name, practice)
+            : Gendered.string("%@ hasn't practised yet", for: verbGender, name)
+    }
+
+    private func pokeLabel(_ poked: Bool) -> Text {
+        if item.friend.hasName { return poked ? Text("Poked \(name)") : Text("Poke \(name)") }
+        return Text(verbatim: Gendered.string(poked ? "Poked a friend" : "Poke a friend", for: item.friend.gender))
     }
 
     private var detail: String {
@@ -282,11 +294,11 @@ private struct InviteCard: View {
     var body: some View {
         HStack(spacing: Theme.Space.m) {
             VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                Text("Invite a friend").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
+                Text("Share a friendship code").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
                 Text("Link or QR code, valid 7 days").font(.footnote).foregroundStyle(Theme.muted)
             }
             Spacer(minLength: Theme.Space.s)
-            Button("Invite", action: invite)
+            Button("Add friend", action: invite)
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(Theme.accent)
                 .padding(.horizontal, Theme.Space.l + Theme.Space.xs)
@@ -300,7 +312,7 @@ private struct InviteCard: View {
     }
 }
 
-/// "Paste invite": the first-install path, when the App Store ate the link.
+/// "Paste link": the first-install path, when the App Store ate the link.
 private struct PasteInviteView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var pasted: InviteLink?
@@ -334,9 +346,20 @@ private struct PasteInviteView: View {
             }
             .padding(Theme.Space.xl)
             .background(Theme.ground.ignoresSafeArea())
-            .navigationTitle("Paste invite")
+            .navigationTitle("Paste link")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
         }
+    }
+}
+
+extension Social.FriendView {
+    /// Whether the friend has a display name that shows (names.Clean on the server).
+    var hasName: Bool { !DisplayName.clean(displayName).isEmpty }
+
+    /// The name to show: "A friend", in the friend's gender, for one without a
+    /// display name, which every part of a profile may be (a passkey is enough).
+    var shownName: String {
+        hasName ? DisplayName.clean(displayName) : Gendered.string("A friend", for: gender)
     }
 }

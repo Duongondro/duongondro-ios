@@ -27,13 +27,13 @@ struct OnboardingView: View {
                     case .counts(let index): CountsStep(index: index).id(index)
                     case .reminder: ReminderStep()
                     case .where: WhereStep()
-                    case .invite: InviteStep()
                     case .consent: ConsentStep()
                     case .email: EmailStep()
                     case .checkEmail: CheckEmailStep()
-                    case .username: UsernameStep()
                     case .name: NameStep()
                     case .gender: GenderStep()
+                    case .addEmail: AddEmailStep()
+                    case .confirmEmail: ConfirmEmailStep()
                     case .passkey: PasskeyStep()
                     case .recovery: RecoveryStep()
                     case .recoveryCheck: RecoveryCheckStep()
@@ -49,12 +49,28 @@ struct OnboardingView: View {
             .animation(.default, value: flow.step)
         }
         .environmentObject(flow)
+        // Closed, or finished: a friendship link held for this sign-up goes no further.
+        .onDisappear { account.forgetHeldInvite() }
         .onAppear {
-            flow.begin(start)
+            // An account this phone made whose remaining steps were left (the app
+            // closed): back at Name, never through Consent or Passkey again.
+            let resumable = account.stepsPending && [AccountModel.Status.ready, .needsKeys].contains(account.status)
+            if start == .welcome && resumable {
+                flow.resumed = true
+                flow.begin(.name)
+            } else {
+                flow.begin(start)
+            }
+            // Resumed with keys already made: the recovery step makes a new code.
+            if flow.step == .name { flow.newCodeOnResume = account.status == .ready }
             flow.finishLocal = { [weak flow, model] in
                 if let done { done() } else { flow?.finish(into: model) }
             }
+            flow.holdAnswersOnSignUp = { [weak flow] in if done == nil { flow?.holdAnswers() } }
             flow.finishOnline = { [weak flow, model, account] in
+                // Not now, or the code confirmed: only now are the account steps done,
+                // so a relaunch before this resumes at Name.
+                account.accountStepsDone()
                 if let done {
                     Task { await account.syncNow() }
                     done()
@@ -73,7 +89,11 @@ enum OnboardingStep: Hashable {
     case welcome, finishedNgondro, finishedShortRefuge, practices, counts(Int), reminder
     /// "Keep it on this phone, or online?"
     case `where`
-    case invite, consent, email, checkEmail, username, name, gender, passkey, recovery
+    /// Sign-up: consent, then the passkey (or an emailed link) makes the account;
+    /// name and gender may be skipped.
+    case consent, email, checkEmail, name, gender, passkey, recovery
+    /// After a passkey sign-up: an email as a second way to sign in, and its code.
+    case addEmail, confirmEmail
     /// Two groups of the recovery code typed back.
     case recoveryCheck
     /// "Welcome back": sign in with a passkey or an emailed link.
@@ -103,28 +123,31 @@ final class OnboardingFlow: ObservableObject {
 
     /// True after "I already have an account": the email steps sign in rather than up.
     @Published var signingIn = false
-    /// The invitation code, from a link opened earlier or typed in.
-    @Published var inviteCode = ""
-    /// Why the invitation was not accepted, shown under its field.
-    @Published var inviteProblem: String?
-    /// The invite link opened earlier has been tried, so it is not checked again.
-    var linkTried = false
     /// A sign-in waits for "erase the other account's practice here, or cancel".
     @Published var otherAccount = false
-    /// The server said the username is taken; shown on the Username step.
-    @Published var usernameTaken = false
     @Published var consented = false
     /// What a magic-link request carries: nil signs in; a sign-up sends the
     /// consent given on the Consent step, which every sign-up path passes first.
     var signUpConsent: Bool? { signingIn ? nil : consented }
     @Published var email = ""
-    @Published var username = ""
+    /// The address being added after a passkey sign-up, and why it was refused.
+    @Published var newEmail = ""
+    @Published var newEmailProblem: String?
+    /// Began at Name after a relaunch: finishes with the answers held at sign-up.
+    var resumed = false
+    /// Resumed at Name with keys already made, so the recovery code is a new one.
+    var newCodeOnResume = false
     @Published var displayName = ""
+    /// The name the server gave the new account (a random one when none was
+    /// given), read once; Skip keeps it.
+    var serverName: String?
     @Published var gender: Gender?
     /// Set by the view: local mode keeps the onboarding's answers; from Settings
     /// nothing about the practices changes.
     var finishLocal: () -> Void = {}
     var finishOnline: () -> Void = {}
+    /// Set by the view: keeps first-run answers when the account is made.
+    var holdAnswersOnSignUp: () -> Void = {}
     private var begun = false
     @Published var finishedNgondro = false
     @Published var finishedShortRefuge = false
@@ -154,11 +177,12 @@ final class OnboardingFlow: ObservableObject {
         step = previous
     }
 
-    /// Back to an earlier step (a taken username, a spent invitation), keeping the answers.
-    func backTo(_ target: OnboardingStep) {
-        guard let i = history.lastIndex(of: target) else { return go(target) }
-        history.removeSubrange(i...)
-        step = target
+    /// The account exists: the steps that made it are behind for good, so Back
+    /// cannot ask for another passkey or sign-up.
+    func signedUp(next: OnboardingStep) {
+        holdAnswersOnSignUp()
+        history.removeAll()
+        step = next
     }
 
     var available: [Practice] {
@@ -181,7 +205,19 @@ final class OnboardingFlow: ObservableObject {
         chosen.removeAll { !$0.practice.isCustom && !allowed.contains($0.id) }
     }
 
-    func finish(into model: AppModel, now: Date = Date()) {
+    /// What onboarding writes when it finishes: practices, streak seeds, preferences.
+    struct Answers: Codable {
+        var practices: [TrackedPractice]
+        var seeds: [StreakSeed]
+        var preferences: Preferences
+    }
+
+    /// The answers held when the account is made, so a relaunch during Name, Gender
+    /// or the recovery code finishes with them. Not in the practices table: any
+    /// practice there counts as onboarded (AppDatabase.snapshot).
+    static let heldAnswersKey = "onboarding.heldAnswers"
+
+    func answers(now: Date = Date()) -> Answers {
         let tz = TimeZone.current
         let today = CivilDate.of(now, in: tz)
         let practices = chosen.enumerated().map { i, c in
@@ -203,17 +239,33 @@ final class OnboardingFlow: ObservableObject {
             let c = Calendar.current.dateComponents([.hour, .minute], from: r)
             return (c.hour ?? 20) * 60 + (c.minute ?? 0)
         }
-        model.perform { try $0.completeOnboarding(practices: practices, seeds: seeds, preferences: prefs) }
-        if prefs.reminderMinutes != nil { Task { await Reminders.requestAndSchedule(model) } }
+        return Answers(practices: practices, seeds: seeds, preferences: prefs)
+    }
+
+    /// The account was just made in first-run onboarding: its answers are kept
+    /// until it finishes.
+    func holdAnswers(now: Date = Date()) {
+        guard !chosen.isEmpty, let data = try? JSONEncoder().encode(answers(now: now)) else { return }
+        UserDefaults.standard.set(data, forKey: Self.heldAnswersKey)
+    }
+
+    /// Writes the answers once. A run resumed after a relaunch finishes with the
+    /// ones held when its account was made; any other run drops them.
+    func finish(into model: AppModel, now: Date = Date()) {
+        let held = UserDefaults.standard.data(forKey: Self.heldAnswersKey).flatMap { try? JSONDecoder().decode(Answers.self, from: $0) }
+        UserDefaults.standard.removeObject(forKey: Self.heldAnswersKey)
+        let answers = resumed ? held ?? answers(now: now) : answers(now: now)
+        model.perform { try $0.completeOnboarding(practices: answers.practices, seeds: answers.seeds, preferences: answers.preferences) }
+        if answers.preferences.reminderMinutes != nil { Task { await Reminders.requestAndSchedule(model) } }
     }
 }
 
 extension OnboardingStep {
     static let practiceSteps = 5
-    static let accountSteps = 3
+    static let accountSteps = 4
 
     /// How far along the dashes a step is, and out of how many: five practice
-    /// questions, then three account steps; nil for steps without dashes.
+    /// questions, then four account steps; nil for steps without dashes.
     func progress(signingIn: Bool) -> (reached: Int, total: Int)? {
         switch self {
         case .finishedNgondro: return (1, Self.practiceSteps)
@@ -221,9 +273,10 @@ extension OnboardingStep {
         case .practices: return (3, Self.practiceSteps)
         case .counts: return (4, Self.practiceSteps)
         case .reminder: return (5, Self.practiceSteps)
-        case .email, .checkEmail, .username: return signingIn ? nil : (1, Self.accountSteps)
+        case .passkey, .email, .checkEmail: return signingIn ? nil : (1, Self.accountSteps)
         case .name: return signingIn ? nil : (2, Self.accountSteps)
         case .gender: return signingIn ? nil : (3, Self.accountSteps)
+        case .addEmail, .confirmEmail: return (4, Self.accountSteps)
         default: return nil
         }
     }
@@ -242,6 +295,9 @@ private struct StepTopBar: View {
         let progress = flow.step.progress(signingIn: flow.signingIn)
         // No way back while keys are being made: the work goes on regardless, and
         // the steps behind it would ask for a passkey or profile it already has.
+        // Once the account exists, Name and Gender are left only forwards (Skip):
+        // closing there would leave the account half set up.
+        let leave = [OnboardingStep.name, .gender, .addEmail, .confirmEmail].contains(flow.step) ? nil : leave
         let canLeave = (flow.canGoBack || leave != nil) && !account.keyWorkRunning
         HStack(spacing: 0) {
             Button { if let leave { leave() } else { flow.back() } } label: {
@@ -516,8 +572,14 @@ private struct PracticeChoiceRow: View {
             .buttonStyle(.plain)
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(chosen ? .isSelected : [])
-            if chosen, practice.streakOnlyAllowed, let i = flow.chosen.firstIndex(where: { $0.id == practice.id }) {
-                Toggle("Streak only, no count", isOn: $flow.chosen[i].streakOnly)
+            if chosen, practice.streakOnlyAllowed {
+                // Bound by id, not index: unticking the practice removes it while
+                // this toggle may still be read once.
+                Toggle("Streak only, no count", isOn: Binding(
+                    get: { flow.chosen.first { $0.id == practice.id }?.streakOnly ?? false },
+                    set: { on in
+                        if let i = flow.chosen.firstIndex(where: { $0.id == practice.id }) { flow.chosen[i].streakOnly = on }
+                    }))
                     .font(.footnote)
                     .foregroundStyle(Theme.soft)
                     .padding(.bottom, Theme.Space.s)

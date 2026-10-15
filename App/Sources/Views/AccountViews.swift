@@ -61,9 +61,9 @@ struct AccountSection: View {
                 if let who = account.email ?? account.username {
                     SettingsRow("Signed in as", detail: Text(verbatim: who))
                 }
-                NavigationLink { InviteView() } label: { AccentRow(title: "Invite someone", chevron: true) }
+                NavigationLink { InviteView() } label: { AccentRow(title: "Share a friendship code", chevron: true) }
                 Button { naming = true } label: {
-                    SettingsRow("Your name", detail: Text(verbatim: account.displayName), chevron: true)
+                    SettingsRow("Your name", detail: account.displayName.isEmpty ? Text("None") : Text(verbatim: account.displayName), chevron: true)
                 }
                 Button { editingUsername = true } label: {
                     SettingsRow("Username", detail: account.username.map { Text(verbatim: $0) } ?? Text("None"), chevron: true)
@@ -211,9 +211,9 @@ struct AccountSection: View {
     private func saveUsername() {
         let cleaned = String(usernameText.lowercased().filter { c in
             (c.isASCII && (c.isLetter || c.isNumber)) || c == "." || c == "_"
-        }.prefix(UsernameStep.maxLength))
+        }.prefix(UsernameRule.maxLength))
         note = nil
-        guard cleaned.isEmpty || cleaned.count >= UsernameStep.minLength else {
+        guard cleaned.isEmpty || cleaned.count >= UsernameRule.minLength else {
             note = localized("A username has 3 to 32 letters, digits, dots and underscores.")
             return
         }
@@ -493,4 +493,10 @@ struct FieldBox: View {
             .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
             .onTapGesture(perform: focus)
     }
+}
+
+/// A username names the account's passkeys; optional, set only in Settings.
+enum UsernameRule {
+    static let minLength = 3
+    static let maxLength = 32
 }

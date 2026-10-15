@@ -73,6 +73,54 @@
         }
       }
     },
+    "A friend" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга"
+          }
+        }
+      }
+    },
     "Have you finished ngöndro?" : {
       "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
       "extractionState" : "manual",
@@ -177,6 +225,150 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Я записала"
+          }
+        }
+      }
+    },
+    "Poke a friend" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťouchnout přítelkyni"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin anstupsen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dar un toque a una amiga"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szturchnij przyjaciółkę"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подтолкнуть подругу"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťuchnúť priateľku"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Підштовхнути подругу"
+          }
+        }
+      }
+    },
+    "Poked a friend" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťouchnuto: přítelkyně"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin angestupst"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le diste un toque a una amiga"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szturchnięto przyjaciółkę"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подтолкнули: подруга"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťuchnutie pre priateľku"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Підштовхнуто: подруга"
+          }
+        }
+      }
+    },
+    "So a friend can nag you, and you hear when friends practise." : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pak tě přítelkyně může popohnat a dozvíš se, když přátelé praktikují."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Damit eine Freundin dich anstupsen kann und du erfährst, wenn Freunde üben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Así una amiga podrá animarte y sabrás cuándo practican tus amigos."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wtedy przyjaciółka może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тогда подруга сможет вас подгонять, а вы узнаете, когда друзья практикуют."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Potom ťa priateľka môže postrčiť a dozvieš sa, keď priatelia cvičia."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тоді подруга зможе вас підганяти, а ви дізнаєтеся, коли друзі практикують."
           }
         }
       }

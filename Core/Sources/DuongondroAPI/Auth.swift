@@ -29,6 +29,21 @@ extension APIClient {
         try await send("POST", "api/auth/magic-links/redeem", body: MagicLinkRedemption(token: nil, email: email, code: code))
     }
 
+    // MARK: An email for a signed-in account
+
+    /// Mails an 8-character code that adds `email` to this account as a second way
+    /// to sign in (15 minutes). 204 also when the account has the address already.
+    /// 400: not an address; 429: too many mails.
+    public func requestEmailConfirmation(email: String) async throws {
+        try await send("POST", "api/me/email", body: EmailRequest(email: email))
+    }
+
+    /// Confirms the address with the typed code. 400: wrong, expired or replaced;
+    /// 409: another account signs in with it; 429: too many tries.
+    public func confirmEmail(code: String) async throws {
+        try await send("POST", "api/me/email/verify", body: EmailConfirmation(code: code))
+    }
+
     // MARK: Passkeys
 
     /// Starts making an account with a passkey; the profile names the passkey and
@@ -313,4 +328,12 @@ public enum JSONValue: Codable, Equatable, Sendable {
         if case .array(let a) = self { return a }
         return nil
     }
+}
+
+struct EmailRequest: Encodable {
+    let email: String
+}
+
+struct EmailConfirmation: Encodable {
+    let code: String
 }

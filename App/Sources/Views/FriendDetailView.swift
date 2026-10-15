@@ -21,7 +21,7 @@ struct FriendDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Space.l) {
                     if f.keyChanged {
-                        CardSection(footer: "The server now names a different key for this friend than the one this phone first saw, so their streaks are hidden. It may be a new phone without a restore, or someone in between. Meet them, or ask for a new invite: accepting it checks their key again.") {
+                        CardSection(footer: "The server now names a different key for this friend than the one this phone first saw, so their streaks are hidden. It may be a new phone without a restore, or someone in between. Meet them, or ask for a new friendship code: accepting it checks their key again.") {
                             Label("Their key changed", systemImage: "exclamationmark.triangle.fill")
                                 .foregroundStyle(Theme.destructive)
                                 .frame(minHeight: Theme.Size.minTap)
@@ -76,18 +76,18 @@ struct FriendDetailView: View {
             }
             .buttonStyle(.plain)
             .background(Theme.ground.ignoresSafeArea())
-            .navigationTitle(Text(verbatim: f.displayName.isEmpty ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : f.displayName))
+            .navigationTitle(Text(verbatim: f.shownName))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.visible, for: .navigationBar)
             .confirmationDialog("Unfriend?", isPresented: $confirmingUnfriend, titleVisibility: .visible) {
                 Button("Unfriend", role: .destructive) { Task { await account.unfriend(f.userID); dismiss() } }
             } message: {
-                Text("You stop seeing each other's streaks. An invite can make you friends again.")
+                Text("You stop seeing each other's streaks. A friendship code can make you friends again.")
             }
             .confirmationDialog("Block?", isPresented: $confirmingBlock, titleVisibility: .visible) {
                 Button("Block", role: .destructive) { Task { await account.block(f.userID); dismiss() } }
             } message: {
-                Text("Ends the friendship both ways and stops invites and nudges between you.")
+                Text("Ends the friendship both ways and stops friendship codes and nudges between you.")
             }
             .alert("Report", isPresented: $reporting) {
                 TextField("What happened?", text: $reason)
