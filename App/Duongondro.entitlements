@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Native passkeys on duongondro.app (design: Entitlements). The site's
+	     apple-app-site-association lists this app through the server's APPLE_APP_IDS. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>webcredentials:duongondro.app</string>
+	</array>
+</dict>
+</plist>

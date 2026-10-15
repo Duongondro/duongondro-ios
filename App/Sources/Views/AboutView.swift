@@ -4,10 +4,13 @@ import SwiftUI
 struct AboutSection: View {
     @EnvironmentObject private var account: AccountModel
     private let build = BuildIdentity.current
+    @State private var prfCheck = false
 
     var body: some View {
         CardSection(header: "About", footer: "Tap Source to open this exact commit on GitHub.") {
+            // A long press opens the passkey PRF check (PrfCheckView), a diagnostic.
             SettingsRow("Version", detail: Text(verbatim: build.version))
+                .onLongPressGesture { prfCheck = true }
             SourceRow(build: build)
             if let server = account.serverVersion {
                 // The server's commit, linked like the app's.
@@ -25,6 +28,7 @@ struct AboutSection: View {
             }
         }
         .task { await account.loadServerVersion() }
+        .navigationDestination(isPresented: $prfCheck) { PrfCheckView() }
     }
 }
 
