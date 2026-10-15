@@ -561,9 +561,12 @@ struct GenderStep: View {
         // Kept on the phone either way, so the app conjugates without the server.
         UserDefaults.standard.set(gender?.rawValue ?? "", forKey: Gender.storageKey)
         // The account exists (passkey or emailed link): it takes the name, if
-        // changed, and the gender now. An email as a second way to sign in waits
-        // for the server to accept one for a signed-in account.
+        // changed, and the gender now.
         let edited = flow.serverName.map { flow.displayName != $0 } ?? !flow.displayName.isEmpty
+        // An account made by email has one already; a passkey account is offered one.
+        let next: OnboardingStep = flow.email.isEmpty && account.email == nil ? .addEmail : .recovery
+        // Nothing to send: on without a call.
+        guard edited || gender != nil else { return flow.go(next) }
         call.run {
             try await account.setProfile(name: edited ? flow.displayName : nil, gender: gender)
             // Saved: the server holds this name now, so going back and on again
@@ -572,7 +575,90 @@ struct GenderStep: View {
                 flow.displayName = AccountModel.trimmedName(flow.displayName)
                 flow.serverName = flow.displayName
             }
-            flow.go(.recovery)
+            flow.go(next)
+        }
+    }
+}
+
+/// After a passkey sign-up: an email as a second way to sign in (a new phone
+/// without the passkey, say), confirmed by a mailed code. Skippable.
+struct AddEmailStep: View {
+    @EnvironmentObject private var flow: OnboardingFlow
+    @EnvironmentObject private var account: AccountModel
+    @StateObject private var call = StepCall()
+
+    private var address: String { flow.newEmail.trimmingCharacters(in: .whitespaces) }
+    private var valid: Bool { address.range(of: #"^[^@\s]+@[^@\s]+\.[^@\s]+$"#, options: .regularExpression) != nil }
+
+    var body: some View {
+        AccountPage(title: "Add an email?", detail: Text("A second way to sign in, for example on a new phone.")) {
+            LabelledField(label: "Email", text: Binding(get: { flow.newEmail }, set: { flow.newEmail = $0; flow.newEmailProblem = nil }),
+                          error: flow.newEmailProblem, keyboard: .emailAddress, capitalization: .never, contentType: .emailAddress,
+                          submit: { if valid { send() } })
+        } actions: {
+            ErrorLine(text: call.failed ? accountError : nil)
+            StepButton(title: "Continue", enabled: valid, busy: call.busy) { send() }
+            TextAction(title: "Skip") { if !call.busy { flow.go(.recovery) } }
+        }
+    }
+
+    private func send() {
+        call.run {
+            switch try await account.requestEmail(address) {
+            case .sent: flow.go(.confirmEmail)
+            case .invalid: flow.newEmailProblem = accountError
+            case .tooMany: flow.newEmailProblem = localized("Too many tries. Wait a few minutes and try again.")
+            }
+        }
+    }
+}
+
+/// The 8-character code mailed for the address, typed as a sign-in code is.
+struct ConfirmEmailStep: View {
+    @EnvironmentObject private var flow: OnboardingFlow
+    @EnvironmentObject private var account: AccountModel
+    @StateObject private var call = StepCall()
+    @State private var code = ""
+    @State private var problem: String?
+    @State private var again = false
+
+    private var address: String { flow.newEmail.trimmingCharacters(in: .whitespaces) }
+    private var complete: Bool { codeCharacters(code).count == CodeEntry.signInLength }
+
+    var body: some View {
+        AccountPage(title: "Check your email", detail: Text("Type the code we sent to \(address).")) {
+            LabelledField(label: "Code", text: Binding(get: { code }, set: { code = $0; problem = nil }),
+                          hint: "Eight letters and digits, as in the email. Case doesn't matter; O and 0, I and 1 count as the same. Works for 15 minutes.",
+                          error: problem, code: true, keyboard: .asciiCapable, contentType: .oneTimeCode,
+                          submit: { if complete { submit() } })
+        } actions: {
+            ErrorLine(text: call.failed ? accountError : nil)
+            StepButton(title: "Continue", enabled: complete, busy: call.busy) { submit() }
+            TextAction(title: again ? "Sent again" : "Send it again") {
+                guard !call.busy, !again else { return }
+                call.run {
+                    switch try await account.requestEmail(address) {
+                    case .sent: again = true
+                    case .invalid: problem = accountError
+                    case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+                    }
+                }
+            }
+            TextAction(title: "Skip") { if !call.busy { flow.go(.recovery) } }
+        }
+    }
+
+    private func submit() {
+        call.run {
+            switch try await account.confirmEmail(address, code: codeCharacters(code)) {
+            case .added: flow.go(.recovery)
+            case .wrong: problem = localized("That code doesn't match. Check the email and try again.")
+            case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
+            case .taken:
+                // Back to the address, to change it or skip.
+                flow.newEmailProblem = localized("This email belongs to another account.")
+                flow.back()
+            }
         }
     }
 }
@@ -677,7 +763,6 @@ struct RecoveryStep: View {
         .onAppear {
             // Made at sign-up already, normally: this waits for the same work.
             if account.shownCode == nil { makeKeys() }
-            account.accountStepsDone()
         }
     }
 

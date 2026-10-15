@@ -266,6 +266,7 @@ final class AccountModel: ObservableObject {
         let kept = email
         username = nil
         displayName = ""
+        stepsPending = false
         recoveryCode = nil
         onShow.forget()
         recoveryUnconfirmed = false
@@ -479,6 +480,7 @@ final class AccountModel: ObservableObject {
     func serverDisplayName() async -> String? {
         guard let account, let me = try? await account.api.me() else { return nil }
         displayName = me.displayName
+        if let address = me.email { email = address }
         return me.displayName
     }
 
@@ -491,6 +493,41 @@ final class AccountModel: ObservableObject {
         try await account.api.updateMe(displayName: name, gender: gender.map { .set($0.rawValue) } ?? .keep)
         if let name { displayName = name }
         if let gender { UserDefaults.standard.set(gender.rawValue, forKey: Gender.storageKey) }
+    }
+
+    // MARK: Email after sign-up
+
+    enum EmailRequest { case sent, invalid, tooMany }
+
+    /// Mails a code that adds `address` to the account as a second way to sign in.
+    func requestEmail(_ address: String) async throws -> EmailRequest {
+        guard let account else { throw Account.Failure.missingSecret }
+        do {
+            try await account.api.requestEmailConfirmation(email: address)
+            return .sent
+        } catch APIError.badRequest {
+            return .invalid
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
+    }
+
+    enum EmailConfirm { case added, wrong, taken, tooMany }
+
+    /// The typed code from that mail; `address` is kept once it signs in here.
+    func confirmEmail(_ address: String, code: String) async throws -> EmailConfirm {
+        guard let account else { throw Account.Failure.missingSecret }
+        do {
+            try await account.api.confirmEmail(code: code)
+            email = address
+            return .added
+        } catch APIError.badRequest {
+            return .wrong
+        } catch APIError.conflict {
+            return .taken
+        } catch APIError.tooManyRequests {
+            return .tooMany
+        }
     }
 
     /// Sets or clears the username; false when another account has it.
@@ -511,7 +548,7 @@ final class AccountModel: ObservableObject {
     /// The server counts code points (runes), not characters: at most 64.
     static func trimmedName(_ name: String) -> String {
         var scalars = String.UnicodeScalarView()
-        scalars.append(contentsOf: name.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.prefix(64))
+        scalars.append(contentsOf: DisplayName.clean(name).unicodeScalars.prefix(64))
         return String(scalars)
     }
 
@@ -583,6 +620,7 @@ final class AccountModel: ObservableObject {
         if let me = try? await account.api.me() {
             if !me.displayName.isEmpty { displayName = me.displayName }
             username = me.username
+            if let address = me.email { email = address }
             if let g = me.gender { UserDefaults.standard.set(g, forKey: Gender.storageKey) }
         }
         return standing
@@ -735,6 +773,8 @@ final class AccountModel: ObservableObject {
             self.account = nil
             social = nil
             status = .signedOut
+            // No session to finish the account steps with: sign in again instead.
+            stepsPending = false
             error = nil
         } catch {
             // Offline or the server is away: the data is safe here and syncs later.

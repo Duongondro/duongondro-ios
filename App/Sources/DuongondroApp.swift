@@ -76,7 +76,8 @@ struct RootView: View {
         // An account made from Settings whose Name, Gender and recovery code steps
         // were left when the app closed: resumed there.
         .task(id: account.status) {
-            if model.preferences.onboarded, account.stepsPending, account.status != .none, account.accountFlow == nil {
+            if model.preferences.onboarded, account.stepsPending, [AccountModel.Status.ready, .needsKeys].contains(account.status),
+               account.accountFlow == nil {
                 account.accountFlow = .finishAccount
             }
         }

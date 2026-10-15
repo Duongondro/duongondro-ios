@@ -2685,6 +2685,58 @@
         }
       }
     },
+    "A second way to sign in, for example on a new phone." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Druhý způsob přihlášení, třeba na novém telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine zweite Art, dich anzumelden, zum Beispiel auf einem neuen Handy."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una segunda forma de iniciar sesión, por ejemplo en un teléfono nuevo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy második bejelentkezési mód, például egy új telefonon."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Drugi sposób logowania, na przykład na nowym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Второй способ входа, например на новом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Druhý spôsob prihlásenia, napríklad na novom telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Другий спосіб входу, наприклад на новому телефоні."
+          }
+        }
+      }
+    },
     "A short session still counts." : {
       "localizations" : {
         "cs" : {
@@ -3306,6 +3358,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Añadir una práctica"
+          }
+        }
+      }
+    },
+    "Add an email?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidat e-mail?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-Mail-Adresse hinzufügen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Añadir un correo?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Megadsz egy e-mail-címet?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodać adres e-mail?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавить почту?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridať e-mail?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додати пошту?"
           }
         }
       }
@@ -16556,6 +16660,58 @@
         }
       }
     },
+    "This email belongs to another account." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento e-mail patří jinému účtu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diese E-Mail-Adresse gehört zu einem anderen Konto."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este correo pertenece a otra cuenta."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez az e-mail-cím egy másik fiókhoz tartozik."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ten adres e-mail należy do innego konta."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Эта почта принадлежит другому аккаунту."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento e-mail patrí inému účtu."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ця пошта належить іншому обліковому запису."
+          }
+        }
+      }
+    },
     "This friendship code cannot be used: it may have expired or been withdrawn." : {
       "localizations" : {
         "cs" : {
@@ -17924,6 +18080,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Увімкнути сповіщення"
+          }
+        }
+      }
+    },
+    "Type the code we sent to %@." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Napiš kód, který jsme poslali na %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gib den Code ein, den wir an %@ geschickt haben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escribe el código que enviamos a %@."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Írd be a kódot, amit a(z) %@ címre küldtünk."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wpisz kod wysłany na %@."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Введите код, который мы отправили на %@."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Napíš kód, ktorý sme poslali na %@."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Введіть код, який ми надіслали на %@."
           }
         }
       }
