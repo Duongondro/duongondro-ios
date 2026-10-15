@@ -55,7 +55,12 @@ final class AccountModel: ObservableObject {
     /// The code made this launch and left unconfirmed, on screen again. The
     /// server's boxes are sealed under it, so it is the same code, not a new one.
     func showRecoveryCodeAgain() {
-        if let code = shownCode { recoveryCode = code }
+        if let code = codeToShowAgain { recoveryCode = code }
+    }
+
+    /// The code left with "Not now" this launch, while Settings may still offer it.
+    var codeToShowAgain: String? {
+        onShow.codeToShowAgain(for: userID, unconfirmed: recoveryUnconfirmed, pending: recoveryPending)
     }
 
     /// The recovery code made this launch, until it is confirmed: a step shown
@@ -601,7 +606,10 @@ final class AccountModel: ObservableObject {
         await run {
             try await self.keyed {
                 guard self.recoveryCode == nil, let account = self.account else { return }
-                // Replaces the kept code only once the new one's boxes are stored.
+                // The kept code stops being offered before any box is resealed: an
+                // upload that fails half-way leaves boxes under the new code, which
+                // stays pending in the Keychain and is finished by the next attempt.
+                self.onShow.forget()
                 self.keepShown(try await account.newRecoveryCode())
             }
         }

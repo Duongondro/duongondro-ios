@@ -92,7 +92,8 @@ struct AccountSection: View {
                     }
                     Button("Make a new code") { Task { await account.newRecoveryCode() } }
                 } message: {
-                    Text(verbatim: Gendered.mine("The code you wrote down stops working."))
+                    // A code left with "Not now" was never written down.
+                    if !keptCode { Text(verbatim: Gendered.mine("The code you wrote down stops working.")) }
                 }
                 Button { Task { await account.syncNow() } } label: {
                     SettingsRow("Sync", detail: syncDetail)
@@ -163,7 +164,7 @@ struct AccountSection: View {
     }
 
     /// The code made this launch and not confirmed yet, which Settings can show again.
-    private var keptCode: Bool { account.recoveryUnconfirmed && account.shownCode != nil }
+    private var keptCode: Bool { account.codeToShowAgain != nil }
 
     /// An unfinished account: set up here, or restore keys made on another phone.
     private func finishSetUp() {
@@ -288,35 +289,45 @@ struct RecoveryCodeView: View {
         if checking {
             RecoveryCheckView(groups: groups) { account.confirmRecoveryCode() } back: { checking = false }
         } else {
-            VStack(alignment: .leading, spacing: Theme.Space.l) {
-                Text("Write down your recovery code")
-                    .font(Typography.headingBold(30, relativeTo: .largeTitle))
-                    .foregroundStyle(Theme.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityAddTraits(.isHeader)
-                Text("If you lose this phone, this code is the only way back to your counts. Nobody else has it, not even us.")
-                    .foregroundStyle(Theme.soft)
-                    .fixedSize(horizontal: false, vertical: true)
-                CodeGrid(groups: groups)
-                Text("Next we'll ask for two of these groups, to make sure.")
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.muted)
-                Spacer(minLength: 0)
-                Button(Gendered.mine("I wrote it down")) { checking = true }
-                    .buttonStyle(FilledButtonStyle())
-                // Leaves it unconfirmed: Settings shows the same code again, and
-                // signing out waits for it. Never by a swipe, only on purpose.
-                Button("Not now") { account.leaveRecoveryCode() }
-                    .font(.subheadline.weight(.bold))
-                    .foregroundStyle(Theme.accent)
-                    .frame(maxWidth: .infinity, minHeight: Theme.Size.aboutButton)
+            // Scrolls only when it does not fit (large Dynamic Type), so "Not now"
+            // stays reachable with the swipe-down disabled; otherwise the buttons
+            // sit at the bottom as before.
+            ViewThatFits(in: .vertical) {
+                page
+                ScrollView { page }
             }
-            .padding(.horizontal, Theme.Space.xl + Theme.Space.xs)
-            .padding(.top, Theme.Space.xl)
-            .padding(.bottom, Theme.Space.xxl)
             .background(Theme.ground.ignoresSafeArea())
             .interactiveDismissDisabled()
         }
+    }
+
+    private var page: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.l) {
+            Text("Write down your recovery code")
+                .font(Typography.headingBold(30, relativeTo: .largeTitle))
+                .foregroundStyle(Theme.ink)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            Text("If you lose this phone, this code is the only way back to your counts. Nobody else has it, not even us.")
+                .foregroundStyle(Theme.soft)
+                .fixedSize(horizontal: false, vertical: true)
+            CodeGrid(groups: groups)
+            Text("Next we'll ask for two of these groups, to make sure.")
+                .font(.subheadline)
+                .foregroundStyle(Theme.muted)
+            Spacer(minLength: 0)
+            Button(Gendered.mine("I wrote it down")) { checking = true }
+                .buttonStyle(FilledButtonStyle())
+            // Leaves it unconfirmed: Settings shows the same code again, and
+            // signing out waits for it. Never by a swipe, only on purpose.
+            Button("Not now") { account.leaveRecoveryCode() }
+                .font(.subheadline.weight(.bold))
+                .foregroundStyle(Theme.accent)
+                .frame(maxWidth: .infinity, minHeight: Theme.Size.aboutButton)
+        }
+        .padding(.horizontal, Theme.Space.xl + Theme.Space.xs)
+        .padding(.top, Theme.Space.xl)
+        .padding(.bottom, Theme.Space.xxl)
     }
 }
 

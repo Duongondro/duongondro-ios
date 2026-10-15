@@ -79,15 +79,17 @@ final class StatementTests: XCTestCase {
     /// "Not now" on the code (issue #10): the code stays on show for its account,
     /// so Settings shows the one the boxes are sealed under; only a new code
     /// asked for replaces it, and confirming forgets it.
-    func testACodeLeftUnconfirmedIsShownAgainUntilReplaced() {
-        let a = UUID()
+    func testACodeLeftUnconfirmedIsOfferedAgainOnlyWhileItStillOpensTheBoxes() {
+        let a = UUID(), b = UUID()
         var onShow = RecoveryCodeOnShow()
         onShow.show("AAAA-AAAA", for: a)
-        XCTAssertEqual(onShow.code(for: a), "AAAA-AAAA", "left, then shown again from Settings")
-        onShow.show("CCCC-CCCC", for: a)
-        XCTAssertEqual(onShow.code(for: a), "CCCC-CCCC", "a new code asked for replaces it")
-        onShow.forget()
-        XCTAssertNil(onShow.code(for: a))
+        XCTAssertEqual(onShow.codeToShowAgain(for: a, unconfirmed: true, pending: false), "AAAA-AAAA",
+                       "left with Not now, then shown again from Settings")
+        XCTAssertNil(onShow.codeToShowAgain(for: a, unconfirmed: false, pending: false), "confirmed: nothing to show")
+        XCTAssertNil(onShow.codeToShowAgain(for: b, unconfirmed: true, pending: false), "never another account's")
+        // A new code failed half-way: some boxes may be sealed under it, so the
+        // kept code must not be offered (and confirmed) as if it still worked.
+        XCTAssertNil(onShow.codeToShowAgain(for: a, unconfirmed: true, pending: true))
     }
 
     func testSealedSessionRoundTrips() throws {

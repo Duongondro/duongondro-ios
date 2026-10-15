@@ -181,6 +181,14 @@ public struct RecoveryCodeOnShow: Equatable, Sendable {
         return code
     }
 
+    /// The code Settings may show again after "Not now": only while it is
+    /// unconfirmed, and never while a new code's upload is unfinished (`pending`),
+    /// since some boxes may already be sealed under the new one.
+    public func codeToShowAgain(for user: UUID?, unconfirmed: Bool, pending: Bool) -> String? {
+        guard unconfirmed, !pending else { return nil }
+        return code(for: user)
+    }
+
     public mutating func show(_ code: String, for user: UUID) {
         self.user = user
         self.code = code
