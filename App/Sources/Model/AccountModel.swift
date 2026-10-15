@@ -27,12 +27,14 @@ final class AccountModel: ObservableObject {
     @Published var error: String?
     /// A set-up, restore or new code is under way.
     @Published private(set) var busy = false
-    /// The code to show once, right after set-up or after making a new one.
+    /// The code on screen outside the onboarding, right after set-up or after
+    /// making a new one, or shown again from Settings; nil once confirmed or left.
     @Published var recoveryCode: String? {
         didSet { if recoveryCode != nil { recoveryUnconfirmed = true } }
     }
-    /// A code was made but never confirmed (the app was closed before "Done"):
-    /// Settings asks for a new one.
+    /// A code was made but never confirmed (left with "Not now", or the app was
+    /// closed): Settings shows it again while this launch keeps it, otherwise
+    /// asks for a new one.
     @Published var recoveryUnconfirmed = UserDefaults.standard.bool(forKey: "recoveryUnconfirmed") {
         didSet { UserDefaults.standard.set(recoveryUnconfirmed, forKey: "recoveryUnconfirmed") }
     }
@@ -44,10 +46,22 @@ final class AccountModel: ObservableObject {
         recoveryUnconfirmed = false
     }
 
-    /// The recovery code the onboarding is showing, until it is confirmed: a
-    /// step shown again (Back, then forward) gets this one rather than a second.
-    /// Only for the account it was made for: another one signed in during the
-    /// same onboarding gets nil, and sets up its own keys.
+    /// Leaves the code unconfirmed ("Not now"): it is kept, as on Android, in
+    /// memory for this launch, so Settings can show the same one again.
+    func leaveRecoveryCode() {
+        recoveryCode = nil
+    }
+
+    /// The code made this launch and left unconfirmed, on screen again. The
+    /// server's boxes are sealed under it, so it is the same code, not a new one.
+    func showRecoveryCodeAgain() {
+        if let code = shownCode { recoveryCode = code }
+    }
+
+    /// The recovery code made this launch, until it is confirmed: a step shown
+    /// again (Back, then forward), or Settings after "Not now", gets this one
+    /// rather than a second. Only for the account it was made for: another one
+    /// signed in during the same onboarding gets nil, and sets up its own keys.
     var shownCode: String? { onShow.code(for: userID) }
     @Published private var onShow = RecoveryCodeOnShow()
 
@@ -546,7 +560,8 @@ final class AccountModel: ObservableObject {
             try await self.keyed {
                 // A second tap, or one after the first finished: nothing more to do.
                 guard self.recoveryCode == nil, let account = self.account, !account.hasKeys else { return }
-                self.recoveryCode = try await account.setUpFirstDevice()
+                let code = try await account.setUpFirstDevice()
+                self.keepShown(code)
                 self.status = .ready
                 self.afterKeysInBackground(account)
             }
@@ -580,13 +595,22 @@ final class AccountModel: ObservableObject {
         }
     }
 
+    /// A new code, asked for in Settings: it replaces the old one, and any code
+    /// kept unconfirmed, on the server.
     func newRecoveryCode() async {
         await run {
             try await self.keyed {
                 guard self.recoveryCode == nil, let account = self.account else { return }
-                self.recoveryCode = try await account.newRecoveryCode()
+                // Replaces the kept code only once the new one's boxes are stored.
+                self.keepShown(try await account.newRecoveryCode())
             }
         }
+    }
+
+    /// Kept for showing again until confirmed, then on screen.
+    private func keepShown(_ code: String) {
+        if let user = userID { onShow.show(code, for: user) } else { onShow.forget() }
+        recoveryCode = code
     }
 
     // MARK: Sync

@@ -691,6 +691,11 @@ struct RecoveryStep: View {
                     flow.go(.recoveryCheck)
                 }
             }
+            // Into the app with the account ready and the code unconfirmed:
+            // Settings shows the same code again, and signing out waits for it.
+            if account.shownCode != nil {
+                TextAction(title: "Not now") { flow.finishOnline() }
+            }
         }
         .onAppear { if account.shownCode == nil { makeKeys() } }
     }

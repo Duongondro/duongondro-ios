@@ -84,7 +84,12 @@ struct AccountSection: View {
                 }
                 .disabled(account.busy)
                 // On the row, so the dialog (a popover on newer systems) points at it.
-                .confirmationDialog("Make a new recovery code?", isPresented: $replacingCode, titleVisibility: .visible) {
+                // A code left unconfirmed this launch is offered again before a new one.
+                .confirmationDialog(keptCode ? Text("Recovery code") : Text("Make a new recovery code?"),
+                                    isPresented: $replacingCode, titleVisibility: .visible) {
+                    if keptCode {
+                        Button("Show the code again") { account.showRecoveryCodeAgain() }
+                    }
                     Button("Make a new code") { Task { await account.newRecoveryCode() } }
                 } message: {
                     Text(verbatim: Gendered.mine("The code you wrote down stops working."))
@@ -156,6 +161,9 @@ struct AccountSection: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
+
+    /// The code made this launch and not confirmed yet, which Settings can show again.
+    private var keptCode: Bool { account.recoveryUnconfirmed && account.shownCode != nil }
 
     /// An unfinished account: set up here, or restore keys made on another phone.
     private func finishSetUp() {
@@ -266,9 +274,9 @@ struct AccountDoorRows: View {
     }
 }
 
-/// The recovery code, shown once (mockup: Recovery). The code is Crockford
-/// base32 in groups of four, numbered like the mockup's words; "I wrote it
-/// down" asks for two groups back before it goes away.
+/// The recovery code (mockup: Recovery). The code is Crockford base32 in
+/// groups of four, numbered like the mockup's words; "I wrote it down" asks for
+/// two groups back before it goes away, "Not now" leaves it unconfirmed.
 struct RecoveryCodeView: View {
     @EnvironmentObject private var account: AccountModel
     let code: String
@@ -296,6 +304,12 @@ struct RecoveryCodeView: View {
                 Spacer(minLength: 0)
                 Button(Gendered.mine("I wrote it down")) { checking = true }
                     .buttonStyle(FilledButtonStyle())
+                // Leaves it unconfirmed: Settings shows the same code again, and
+                // signing out waits for it. Never by a swipe, only on purpose.
+                Button("Not now") { account.leaveRecoveryCode() }
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(Theme.accent)
+                    .frame(maxWidth: .infinity, minHeight: Theme.Size.aboutButton)
             }
             .padding(.horizontal, Theme.Space.xl + Theme.Space.xs)
             .padding(.top, Theme.Space.xl)
