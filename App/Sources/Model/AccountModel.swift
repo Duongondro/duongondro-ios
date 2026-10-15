@@ -253,6 +253,8 @@ final class AccountModel: ObservableObject {
     }
 
     private func keep(_ result: SignInResult) {
+        email = sessionAddress
+        sessionAddress = nil
         try? secrets.write(Self.tokenName, Data(result.token.utf8))
         open(token: result.token)
     }
@@ -297,6 +299,7 @@ final class AccountModel: ObservableObject {
     func abandonHeldSignIn() async {
         guard let result = heldSignIn else { return }
         heldSignIn = nil
+        sessionAddress = nil
         try? await APIClient(baseURL: Self.serverURL, token: result.token).signOut()
     }
 
@@ -398,6 +401,11 @@ final class AccountModel: ObservableObject {
     }
 
     private var linkWindow = LinkWindow()
+    /// The address the last magic link went to, and the one the session being
+    /// kept signed in with (nil for a passkey): `email` is only ever an address
+    /// that signs in to this account.
+    private var requestedAddress: String?
+    private var sessionAddress: String?
 
     /// Whether an opened magic link may be redeemed now.
     func expectsLink(now: Date = Date()) -> Bool { linkWindow.expects(at: now) }
@@ -408,7 +416,8 @@ final class AccountModel: ObservableObject {
             try await anonymous.requestMagicLink(email: address,
                                                  signUp: consent.map { SignUp(proof: invitation?.proof, consent: $0) })
             linkWindow.requested()
-            email = address
+            // Kept as the account's address only once a link or code signs in.
+            requestedAddress = address
             return .sent
         } catch SignUpFailure.unknownInvitation {
             return .unknownInvite
@@ -440,6 +449,7 @@ final class AccountModel: ObservableObject {
     private func redeem(signIn: Bool = false, _ call: () async throws -> SignInResult) async throws -> Redeem {
         do {
             let result = try await call()
+            sessionAddress = signIn ? nil : requestedAddress
             // Signed in, by code, link or passkey: a link opened after this is not redeemed.
             linkWindow.close()
             return signedIn(result) ? .signedIn(created: result.created) : .otherAccountData
@@ -470,8 +480,12 @@ final class AccountModel: ObservableObject {
         Task { _ = try? await setUpKeys() }
     }
 
-    /// The account steps are done, or reached the recovery code.
+    /// The account steps are done: Not now, or the recovery code confirmed.
     func accountStepsDone() { stepsPending = false }
+
+    /// Into the app without a recovery code (a new one could not be made): Settings
+    /// keeps asking for one, and signing out waits for it.
+    func leaveWithoutCode() { recoveryUnconfirmed = true }
 
 
     /// The display name the server holds, read after a sign-up: an account made
@@ -480,7 +494,7 @@ final class AccountModel: ObservableObject {
     func serverDisplayName() async -> String? {
         guard let account, let me = try? await account.api.me() else { return nil }
         displayName = me.displayName
-        if let address = me.email { email = address }
+        email = me.email
         return me.displayName
     }
 
@@ -620,7 +634,7 @@ final class AccountModel: ObservableObject {
         if let me = try? await account.api.me() {
             if !me.displayName.isEmpty { displayName = me.displayName }
             username = me.username
-            if let address = me.email { email = address }
+            email = me.email
             if let g = me.gender { UserDefaults.standard.set(g, forKey: Gender.storageKey) }
         }
         return standing
@@ -810,6 +824,7 @@ final class AccountModel: ObservableObject {
             if let me = try? await social.account.api.me() {
                 displayName = me.displayName
                 username = me.username
+                email = me.email
                 deviceCount = me.devices.count
                 await reconcileGender(server: me.gender.flatMap(Gender.init(rawValue:)), social: social)
             }

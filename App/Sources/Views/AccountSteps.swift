@@ -564,7 +564,9 @@ struct GenderStep: View {
         // changed, and the gender now.
         let edited = flow.serverName.map { flow.displayName != $0 } ?? !flow.displayName.isEmpty
         // An account made by email has one already; a passkey account is offered one.
-        let next: OnboardingStep = flow.email.isEmpty && account.email == nil ? .addEmail : .recovery
+        // `email` is set only by an address that signs in (a magic-link sign-up,
+        // or GET /api/me), never by one merely asked for.
+        let next: OnboardingStep = account.email == nil ? .addEmail : .recovery
         // Nothing to send: on without a call.
         guard edited || gender != nil else { return flow.go(next) }
         call.run {
@@ -606,7 +608,7 @@ struct AddEmailStep: View {
         call.run {
             switch try await account.requestEmail(address) {
             case .sent: flow.go(.confirmEmail)
-            case .invalid: flow.newEmailProblem = accountError
+            case .invalid: flow.newEmailProblem = localized("That doesn't look like an email address.")
             case .tooMany: flow.newEmailProblem = localized("Too many tries. Wait a few minutes and try again.")
             }
         }
@@ -639,7 +641,7 @@ struct ConfirmEmailStep: View {
                 call.run {
                     switch try await account.requestEmail(address) {
                     case .sent: again = true
-                    case .invalid: problem = accountError
+                    case .invalid: problem = localized("That doesn't look like an email address.")
                     case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
                     }
                 }
@@ -740,6 +742,13 @@ struct RecoveryStep: View {
             } else {
                 ProgressView().frame(maxWidth: .infinity, minHeight: Theme.Size.passkeyBadge)
             }
+            // A resumed run whose keys exist makes a new code: the old one is gone.
+            if flow.newCodeOnResume, account.shownCode != nil {
+                Text("This is a new recovery code. Any code you wrote down earlier no longer works.")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             Text("Next we'll ask for two of these groups, to make sure. O and 0, I and 1 count as the same.")
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
@@ -758,6 +767,13 @@ struct RecoveryStep: View {
             // Settings shows the same code again, and signing out waits for it.
             if account.shownCode != nil {
                 TextAction(title: "Not now") { flow.finishOnline() }
+            } else if flow.newCodeOnResume, setUp.failed {
+                // Keys exist, so the app works without a code: in now, and
+                // Settings asks for a new one.
+                TextAction(title: "Not now") {
+                    account.leaveWithoutCode()
+                    flow.finishOnline()
+                }
             }
         }
         .onAppear {

@@ -15924,6 +15924,58 @@
         }
       }
     },
+    "That doesn't look like an email address." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tohle nevypadá jako e-mailová adresa."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das sieht nicht nach einer E-Mail-Adresse aus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eso no parece una dirección de correo."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez nem tűnik e-mail-címnek."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To nie wygląda na adres e-mail."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Это не похоже на адрес почты."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto nevyzerá ako e-mailová adresa."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це не схоже на адресу пошти."
+          }
+        }
+      }
+    },
     "That passkey did not work. Try again, or use your email instead." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -16916,6 +16968,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Це посилання з кодом дружби більше не працює. Продовжте, щоб створити обліковий запис без нього."
+          }
+        }
+      }
+    },
+    "This is a new recovery code. Any code you wrote down earlier no longer works." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto je nový obnovovací kód. Dříve zapsaný kód už nefunguje."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das ist ein neuer Wiederherstellungscode. Ein Code, den du früher aufgeschrieben hast, funktioniert nicht mehr."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este es un código de recuperación nuevo. El código que anotaste antes ya no funciona."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez egy új helyreállítási kód. A korábban leírt kód már nem érvényes."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To nowy kod odzyskiwania. Zapisany wcześniej kod już nie działa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Это новый код восстановления. Записанный ранее код больше не работает."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toto je nový obnovovací kód. Skôr zapísaný kód už nefunguje."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це новий код відновлення. Записаний раніше код більше не діє."
           }
         }
       }

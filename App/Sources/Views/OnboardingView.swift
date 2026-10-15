@@ -61,6 +61,8 @@ struct OnboardingView: View {
             } else {
                 flow.begin(start)
             }
+            // Resumed with keys already made: the recovery step makes a new code.
+            if flow.step == .name { flow.newCodeOnResume = account.status == .ready }
             flow.finishLocal = { [weak flow, model] in
                 if let done { done() } else { flow?.finish(into: model) }
             }
@@ -133,6 +135,8 @@ final class OnboardingFlow: ObservableObject {
     @Published var newEmailProblem: String?
     /// Began at Name after a relaunch: finishes with the answers held at sign-up.
     var resumed = false
+    /// Resumed at Name with keys already made, so the recovery code is a new one.
+    var newCodeOnResume = false
     @Published var displayName = ""
     /// The name the server gave the new account (a random one when none was
     /// given), read once; Skip keeps it.
