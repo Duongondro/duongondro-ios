@@ -16,6 +16,15 @@ public enum PushKey: String, CaseIterable, Sendable {
     case poke = "POKE"
     case pokeMale = "POKE_MALE"
     case pokeFemale = "POKE_FEMALE"
+    /// For a sender without a display name: FRIEND_DONE without the name. Args:
+    /// practice id (unused in the string), day count.
+    case friendDoneUnnamed = "FRIEND_DONE_UNNAMED"
+    case friendDoneUnnamedMale = "FRIEND_DONE_UNNAMED_MALE"
+    case friendDoneUnnamedFemale = "FRIEND_DONE_UNNAMED_FEMALE"
+    /// POKE for a sender without a display name. No args.
+    case pokeUnnamed = "POKE_UNNAMED"
+    case pokeUnnamedMale = "POKE_UNNAMED_MALE"
+    case pokeUnnamedFemale = "POKE_UNNAMED_FEMALE"
     /// Args: practice id (unused in the string), day count.
     case streakAtRisk = "STREAK_AT_RISK"
 
@@ -24,6 +33,10 @@ public enum PushKey: String, CaseIterable, Sendable {
     case friendDoneNamed = "FRIEND_DONE_NAMED"
     case friendDoneNamedMale = "FRIEND_DONE_NAMED_MALE"
     case friendDoneNamedFemale = "FRIEND_DONE_NAMED_FEMALE"
+    /// FRIEND_DONE_UNNAMED naming the practice: args practice name, day count.
+    case friendDoneUnnamedNamed = "FRIEND_DONE_UNNAMED_NAMED"
+    case friendDoneUnnamedNamedMale = "FRIEND_DONE_UNNAMED_NAMED_MALE"
+    case friendDoneUnnamedNamedFemale = "FRIEND_DONE_UNNAMED_NAMED_FEMALE"
     /// STREAK_AT_RISK naming the practice: args practice name, day count.
     case streakAtRiskNamed = "STREAK_AT_RISK_NAMED"
     /// Discreet notifications: no practice names on the lock screen. No args.
@@ -32,7 +45,9 @@ public enum PushKey: String, CaseIterable, Sendable {
 
     /// The keys the server sends.
     public static let server: [PushKey] = [.friendDone, .friendDoneMale, .friendDoneFemale,
-                                           .poke, .pokeMale, .pokeFemale, .streakAtRisk]
+                                           .poke, .pokeMale, .pokeFemale,
+                                           .friendDoneUnnamed, .friendDoneUnnamedMale, .friendDoneUnnamedFemale,
+                                           .pokeUnnamed, .pokeUnnamedMale, .pokeUnnamedFemale, .streakAtRisk]
 
     /// How many arguments the key is formatted with (loc-args, or the extension's).
     public var argumentCount: Int {
@@ -40,8 +55,10 @@ public enum PushKey: String, CaseIterable, Sendable {
         case .friendDone, .friendDoneMale, .friendDoneFemale,
              .friendDoneNamed, .friendDoneNamedMale, .friendDoneNamedFemale: 3
         case .poke, .pokeMale, .pokeFemale: 1
-        case .streakAtRisk, .streakAtRiskNamed: 2
-        case .friendDoneDiscreet, .streakAtRiskDiscreet: 0
+        case .streakAtRisk, .streakAtRiskNamed,
+             .friendDoneUnnamed, .friendDoneUnnamedMale, .friendDoneUnnamedFemale,
+             .friendDoneUnnamedNamed, .friendDoneUnnamedNamedMale, .friendDoneUnnamedNamedFemale: 2
+        case .friendDoneDiscreet, .streakAtRiskDiscreet, .pokeUnnamed, .pokeUnnamedMale, .pokeUnnamedFemale: 0
         }
     }
 
@@ -50,7 +67,7 @@ public enum PushKey: String, CaseIterable, Sendable {
     public var usedArguments: Set<Int> {
         switch self {
         case .friendDone, .friendDoneMale, .friendDoneFemale: [1, 3]
-        case .streakAtRisk: [2]
+        case .streakAtRisk, .friendDoneUnnamed, .friendDoneUnnamedMale, .friendDoneUnnamedFemale: [2]
         default: Set((0..<argumentCount).map { $0 + 1 })
         }
     }
@@ -61,6 +78,9 @@ public enum PushKey: String, CaseIterable, Sendable {
         case .friendDone: .friendDoneNamed
         case .friendDoneMale: .friendDoneNamedMale
         case .friendDoneFemale: .friendDoneNamedFemale
+        case .friendDoneUnnamed: .friendDoneUnnamedNamed
+        case .friendDoneUnnamedMale: .friendDoneUnnamedNamedMale
+        case .friendDoneUnnamedFemale: .friendDoneUnnamedNamedFemale
         case .streakAtRisk: .streakAtRiskNamed
         default: nil
         }
@@ -70,8 +90,23 @@ public enum PushKey: String, CaseIterable, Sendable {
     /// practice: the discreet text, so a failure never shows more than Discreet would.
     public var failSafe: PushKey? {
         switch self {
-        case .friendDone, .friendDoneMale, .friendDoneFemale: .friendDoneDiscreet
+        case .friendDone, .friendDoneMale, .friendDoneFemale,
+             .friendDoneUnnamed, .friendDoneUnnamedMale, .friendDoneUnnamedFemale: .friendDoneDiscreet
         case .streakAtRisk: .streakAtRiskDiscreet
+        default: nil
+        }
+    }
+
+    /// The key without the name, for a named key whose name came empty (a server
+    /// from before the UNNAMED keys): "A friend" rather than a sentence with a gap.
+    var unnamed: PushKey? {
+        switch self {
+        case .friendDone: .friendDoneUnnamed
+        case .friendDoneMale: .friendDoneUnnamedMale
+        case .friendDoneFemale: .friendDoneUnnamedFemale
+        case .poke: .pokeUnnamed
+        case .pokeMale: .pokeUnnamedMale
+        case .pokeFemale: .pokeUnnamedFemale
         default: nil
         }
     }
@@ -89,8 +124,13 @@ public struct PushText: Equatable, Sendable {
     /// arguments of the wrong shape: the system's own rendering then stands.
     public static func render(locKey: String, args: [String], discreet: Bool,
                               practiceName: (String) -> String?, number: (Int) -> String) -> PushText? {
-        guard let key = PushKey(rawValue: locKey), PushKey.server.contains(key),
+        guard var key = PushKey(rawValue: locKey), PushKey.server.contains(key),
               args.count == key.argumentCount else { return nil }
+        var args = args
+        if let unnamed = key.unnamed, args[0].trimmingCharacters(in: .whitespaces).isEmpty {
+            key = unnamed
+            args.removeFirst()
+        }
         func day(_ s: String) -> String { Int(s).map(number) ?? s }
         switch key {
         case .friendDone, .friendDoneMale, .friendDoneFemale:
@@ -103,6 +143,12 @@ public struct PushText: Equatable, Sendable {
                 return PushText(key: key, arguments: [args[0], args[1], day(args[2])])
             }
             return PushText(key: key.named!, arguments: [args[0], name, day(args[2])])
+        case .friendDoneUnnamed, .friendDoneUnnamedMale, .friendDoneUnnamedFemale:
+            if discreet { return PushText(key: .friendDoneDiscreet, arguments: []) }
+            guard let name = practiceName(args[0]) else {
+                return PushText(key: key, arguments: [args[0], day(args[1])])
+            }
+            return PushText(key: key.named!, arguments: [name, day(args[1])])
         case .streakAtRisk:
             if discreet { return PushText(key: .streakAtRiskDiscreet, arguments: []) }
             guard let name = practiceName(args[0]) else {

@@ -7057,6 +7057,366 @@
         }
       }
     },
+    "FRIEND_DONE_UNNAMED" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend without a display name logged a practice, neutral form (non-binary or no gender given): %2$@ the day of their streak; %1$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Někdo z přátel právě praktikoval · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jemand aus deinem Freundeskreis hat gerade geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just practised · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alguien de tus amigos acaba de practicar · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod épp gyakorolt · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ktoś z przyjaciół właśnie praktykował · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Кто-то из друзей только что практиковал · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Niekto z priateľov práve cvičil · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Хтось із друзів щойно практикував · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_FEMALE" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend without a display name logged a practice, the sender is female: %2$@ the day of their streak; %1$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně právě praktikovala · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin hat gerade geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just practised · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga acaba de practicar · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod épp gyakorolt · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka właśnie praktykowała · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга только что практиковала · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka práve cvičila · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга щойно практикувала · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_MALE" : {
+      "comment" : "Push loc-key, rendered by the system when the notification extension does not run, so it never names the practice (the server sends its id, and Discreet notifications may be on): a friend without a display name logged a practice, the sender is male: %2$@ the day of their streak; %1$@, the practice id, is left out.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel právě praktikoval · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat gerade geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just practised · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo acaba de practicar · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod épp gyakorolt · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel właśnie praktykował · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг только что практиковал · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ práve cvičil · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг щойно практикував · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_NAMED" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_UNNAMED (neutral form (non-binary or no gender given)): a friend without a display name; %1$@ the practice, %2$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Někdo z přátel právě dokončil %1$@ · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jemand aus deinem Freundeskreis hat gerade %1$@ geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just did their %1$@ · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alguien de tus amigos acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod épp befejezte: %1$@ · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ktoś z przyjaciół właśnie ukończył %1$@ · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Кто-то из друзей только что завершил %1$@ · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Niekto z priateľov práve dokončil %1$@ · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Хтось із друзів щойно завершив %1$@ · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_NAMED_FEMALE" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_UNNAMED_FEMALE (the sender is female): a friend without a display name; %1$@ the practice, %2$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně právě dokončila %1$@ · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin hat gerade %1$@ geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just did her %1$@ · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod épp befejezte: %1$@ · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka właśnie ukończyła %1$@ · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга только что завершила %1$@ · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka práve dokončila %1$@ · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга щойно завершила %1$@ · день %2$@"
+          }
+        }
+      }
+    },
+    "FRIEND_DONE_UNNAMED_NAMED_MALE" : {
+      "comment" : "The phone's own push key, which the notification extension shows for FRIEND_DONE_UNNAMED_MALE (the sender is male): a friend without a display name; %1$@ the practice, %2$@ the day of their streak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel právě dokončil %1$@ · den %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat gerade %1$@ geübt · Tag %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend just did his %1$@ · day %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod épp befejezte: %1$@ · %2$@. nap"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel właśnie ukończył %1$@ · dzień %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг только что завершил %1$@ · день %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ práve dokončil %1$@ · deň %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг щойно завершив %1$@ · день %2$@"
+          }
+        }
+      }
+    },
     "Female" : {
       "localizations" : {
         "de" : {
@@ -11270,6 +11630,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ підштовхнув вас. Час сідати практикувати?"
+          }
+        }
+      }
+    },
+    "POKE_UNNAMED" : {
+      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend without a display name poked you (once a day at most), neutral form (non-binary or no gender given). In the mascot's voice, written per language.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Někdo z přátel do tebe šťouchá. Nesedneš si k meditaci?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jemand aus deinem Freundeskreis hat dich angestupst. Zeit, dich hinzusetzen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend poked you. Time to sit down?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alguien de tus amigos te dio un toque. ¿Hora de sentarte a meditar?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod megbökött. Ideje leülni gyakorolni?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ktoś z przyjaciół cię szturcha. Czas usiąść do praktyki?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Кто-то из друзей подталкивает вас. Пора садиться практиковать?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Niekto z priateľov do teba štuchá. Nesadneš si k meditácii?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Хтось із друзів підштовхує вас. Час сідати практикувати?"
+          }
+        }
+      }
+    },
+    "POKE_UNNAMED_FEMALE" : {
+      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend without a display name poked you (once a day at most), the sender is female. In the mascot's voice, written per language.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítelkyně do tebe šťouchla. Nesedneš si k meditaci?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Freundin hat dich angestupst. Zeit, dich hinzusetzen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend poked you. Time to sit down?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una amiga te dio un toque. ¿Hora de sentarte a meditar?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod megbökött. Ideje leülni gyakorolni?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciółka cię szturchnęła. Czas usiąść do praktyki?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга подтолкнула вас. Пора садиться практиковать?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľka do teba štuchla. Nesadneš si k meditácii?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подруга підштовхнула вас. Час сідати практикувати?"
+          }
+        }
+      }
+    },
+    "POKE_UNNAMED_MALE" : {
+      "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend without a display name poked you (once a day at most), the sender is male. In the mascot's voice, written per language.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přítel do tebe šťouchl. Nesedneš si k meditaci?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Freund hat dich angestupst. Zeit, dich hinzusetzen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A friend poked you. Time to sit down?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un amigo te dio un toque. ¿Hora de sentarte a meditar?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy barátod megbökött. Ideje leülni gyakorolni?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyjaciel cię szturchnął. Czas usiąść do praktyki?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг подтолкнул вас. Пора садиться практиковать?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Priateľ do teba štuchol. Nesadneš si k meditácii?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Друг підштовхнув вас. Час сідати практикувати?"
           }
         }
       }
