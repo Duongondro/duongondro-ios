@@ -1,22 +1,25 @@
 import Foundation
 
 /// Signing up and in (onboarding v2): magic links mailed with an 8-character
-/// code, and passkeys. Every account is made with an invitation or an admission
-/// code; signing in to an existing one needs neither.
+/// code, and passkeys. A sign-up says it is one (`signUp`, with the consent the
+/// onboarding collected) and carries an invitation or admission code when there
+/// is one; a server with open sign-up needs neither. Signing in sends no flag.
 extension APIClient {
     // MARK: Magic links
 
     /// Mails a link (`https://duongondro.app/m#<token>`) and an 8-character code,
-    /// both good for 15 minutes. With `proof`, redeeming either makes the account
-    /// when none uses the address. 404: the invitation or admission code is
-    /// unknown, spent or expired; 429: too many requests.
-    public func requestMagicLink(email: String, proof: SignUpProof? = nil) async throws {
-        try await send("POST", "api/auth/magic-links", body: MagicLinkRequest(email: email, proof: proof))
+    /// both good for 15 minutes. With `signUp`, redeeming either makes the account
+    /// when none uses the address, and its failures throw `SignUpFailure`; without,
+    /// only an address with an account gets mail. 429: too many requests.
+    public func requestMagicLink(email: String, signUp: SignUp? = nil) async throws {
+        try await signingUp(signUp != nil) {
+            try await send("POST", "api/auth/magic-links", body: MagicLinkRequest(email: email, signUp: signUp))
+        }
     }
 
     /// Redeems an opened link's token. 400: wrong, expired or used; 403: no account
-    /// uses the address and the link carried no invitation; 404: the invitation
-    /// stopped being valid since the link was sent.
+    /// uses the address and the link was no sign-up, or sign-up closed since it was
+    /// sent; 404: the invitation stopped being valid since the link was sent.
     public func redeemMagicLink(token: String) async throws -> SignInResult {
         try await send("POST", "api/auth/magic-links/redeem", body: MagicLinkRedemption(token: token, email: nil, code: nil))
     }
@@ -29,10 +32,28 @@ extension APIClient {
     // MARK: Passkeys
 
     /// Starts making an account with a passkey; the profile names the passkey and
-    /// is set when the account is made. 404: the proof is not valid; 409: the
-    /// username is taken.
-    public func beginPasskeySignUp(proof: SignUpProof, profile: Profile = Profile()) async throws -> Ceremony {
-        try await send("POST", "api/auth/passkeys/sign-up", body: PasskeySignUp(proof: proof, profile: profile))
+    /// is set when the account is made. Throws `SignUpFailure` for 403, 404 and
+    /// 429; 409 (`APIError.conflict`): the username is taken.
+    public func beginPasskeySignUp(_ signUp: SignUp, profile: Profile = Profile()) async throws -> Ceremony {
+        try await signingUp {
+            try await send("POST", "api/auth/passkeys/sign-up", body: PasskeySignUp(signUp: signUp, profile: profile))
+        }
+    }
+
+    /// Completes a passkey sign-up: as `finishPasskey`, with 403 (sign-up closed
+    /// since it began), 404 and 429 as `SignUpFailure`.
+    public func finishPasskeySignUp(ceremony: UUID, credential: JSONValue) async throws -> SignInResult {
+        try await signingUp { try await finishPasskey(ceremony: ceremony, credential: credential) }
+    }
+
+    /// Runs a sign-up call, its refusals typed as `SignUpFailure`.
+    private func signingUp<T>(_ isSignUp: Bool = true, _ call: () async throws -> T) async throws -> T {
+        do {
+            return try await call()
+        } catch let error as APIError {
+            guard isSignUp, let failure = SignUpFailure(error) else { throw error }
+            throw failure
+        }
     }
 
     /// Starts a discoverable sign-in: the phone offers the passkeys it has.
@@ -109,6 +130,45 @@ public enum SignUpProof: Equatable, Sendable {
     case admission(String)
 }
 
+/// A sign-up: `signUp: true` on the request, with the onboarding's consent (GDPR
+/// Article 9, which the server requires with the flag) and the invitation or
+/// admission code, when there is one.
+public struct SignUp: Equatable, Sendable {
+    public var proof: SignUpProof?
+    public var consent: Bool
+
+    public init(proof: SignUpProof? = nil, consent: Bool) {
+        self.proof = proof
+        self.consent = consent
+    }
+}
+
+/// Why the server refused to start or finish a sign-up.
+public enum SignUpFailure: Error, Equatable {
+    /// 403: this server makes accounts only with an invitation or admission code
+    /// (open sign-up is off, or was turned off since the sign-up began).
+    case invitationNeeded
+    /// 404: the invitation or admission code is unknown, spent, revoked or expired.
+    case unknownInvitation
+    /// 429 from the limit on accounts made without an invitation from one network
+    /// in an hour. A sign-up with a code is not limited.
+    case tooManyAccounts
+    /// Any other 429: too many requests (or sign-in mails to one address).
+    case tooManyRequests
+
+    /// The sign-up refusal an API error means, or nil for any other error.
+    public init?(_ error: APIError) {
+        switch error {
+        case .forbidden: self = .invitationNeeded
+        case .notFound: self = .unknownInvitation
+        // The two limits share 429 and differ only in their message: the account
+        // limit's names the network.
+        case .tooManyRequests(let message): self = message.lowercased().contains("network") ? .tooManyAccounts : .tooManyRequests
+        default: return nil
+        }
+    }
+}
+
 /// The profile a passkey sign-up carries; nil fields are left out.
 public struct Profile: Equatable, Sendable {
     public var displayName: String?
@@ -125,11 +185,15 @@ public struct Profile: Equatable, Sendable {
 
 struct InviteProofBody: Encodable { let id: String; let auth: Data }
 
-private enum ProofKeys: String, CodingKey { case invite, admissionCode }
+private enum SignUpKeys: String, CodingKey { case invite, admissionCode, signUp, consent }
 
-private func encodeProof(_ proof: SignUpProof?, to encoder: Encoder) throws {
-    var c = encoder.container(keyedBy: ProofKeys.self)
-    switch proof {
+/// `signUp` and `consent`, and the code when there is one; nothing for a sign-in.
+private func encodeSignUp(_ signUp: SignUp?, to encoder: Encoder) throws {
+    guard let signUp else { return }
+    var c = encoder.container(keyedBy: SignUpKeys.self)
+    try c.encode(true, forKey: .signUp)
+    try c.encode(signUp.consent, forKey: .consent)
+    switch signUp.proof {
     case .invite(let id, let auth): try c.encode(InviteProofBody(id: id.uppercased(), auth: auth), forKey: .invite)
     case .admission(let code): try c.encode(code, forKey: .admissionCode)
     case nil: break
@@ -138,14 +202,14 @@ private func encodeProof(_ proof: SignUpProof?, to encoder: Encoder) throws {
 
 struct MagicLinkRequest: Encodable {
     let email: String
-    let proof: SignUpProof?
+    let signUp: SignUp?
 
     enum CodingKeys: String, CodingKey { case email }
 
     func encode(to encoder: Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encode(email, forKey: .email)
-        try encodeProof(proof, to: encoder)
+        try encodeSignUp(signUp, to: encoder)
     }
 }
 
@@ -156,13 +220,13 @@ struct MagicLinkRedemption: Encodable {
 }
 
 struct PasskeySignUp: Encodable {
-    let proof: SignUpProof
+    let signUp: SignUp
     let profile: Profile
 
     enum CodingKeys: String, CodingKey { case username, displayName, gender }
 
     func encode(to encoder: Encoder) throws {
-        try encodeProof(proof, to: encoder)
+        try encodeSignUp(signUp, to: encoder)
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encodeIfPresent(profile.username, forKey: .username)
         try c.encodeIfPresent(profile.displayName, forKey: .displayName)
@@ -176,7 +240,7 @@ public struct SignInResult: Codable, Equatable, Sendable {
     /// The bearer token.
     public let token: String
     public let userId: UUID
-    /// The redemption or passkey made a new account with the invitation.
+    /// The redemption or passkey made a new account.
     public let created: Bool
 
     public init(token: String, userId: UUID, created: Bool) {
