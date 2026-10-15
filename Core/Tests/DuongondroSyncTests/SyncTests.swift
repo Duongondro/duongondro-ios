@@ -76,6 +76,22 @@ final class StatementTests: XCTestCase {
         XCTAssertNil(onShow.code(for: b), "confirmed, signed out or switched away")
     }
 
+    /// "Not now" on the code (issue #10): the code stays on show for its account,
+    /// so Settings shows the one the boxes are sealed under; only a new code
+    /// asked for replaces it, and confirming forgets it.
+    func testACodeLeftUnconfirmedIsOfferedAgainOnlyWhileItStillOpensTheBoxes() {
+        let a = UUID(), b = UUID()
+        var onShow = RecoveryCodeOnShow()
+        onShow.show("AAAA-AAAA", for: a)
+        XCTAssertEqual(onShow.codeToShowAgain(for: a, unconfirmed: true, pending: false), "AAAA-AAAA",
+                       "left with Not now, then shown again from Settings")
+        XCTAssertNil(onShow.codeToShowAgain(for: a, unconfirmed: false, pending: false), "confirmed: nothing to show")
+        XCTAssertNil(onShow.codeToShowAgain(for: b, unconfirmed: true, pending: false), "never another account's")
+        // A new code failed half-way: some boxes may be sealed under it, so the
+        // kept code must not be offered (and confirmed) as if it still worked.
+        XCTAssertNil(onShow.codeToShowAgain(for: a, unconfirmed: true, pending: true))
+    }
+
     func testSealedSessionRoundTrips() throws {
         let s = Session(practiceID: "dorje-sempa", amount: 108, startedAt: Date(timeIntervalSince1970: 1_791_176_400),
                         startExact: false, timeZoneID: "Europe/Amsterdam", chosenDay: CivilDate("2026-10-04"),
