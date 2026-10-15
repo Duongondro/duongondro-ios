@@ -26,7 +26,13 @@ var invitationNeeded: String { localized("New accounts can't be made right now. 
 /// The 429 of the limits on sign-ups without an invitation from one network
 /// (accounts made, and sign-up mails requested).
 var tooManyAccounts: String {
-    localized("Too many sign-ups from this network in the last hour. Try again later, or enter a friendship code: it works regardless.")
+    localized("Too many sign-ups from this network in the last hour. Try again later, or open a friend's friendship link.")
+}
+
+/// The friendship link held for a sign-up no longer works: the next tap makes the
+/// account without it.
+var heldLinkGone: String {
+    localized("This friendship link no longer works. Continue to make the account without it.")
 }
 
 /// One call in flight: buttons disable while it runs, `failed` says it did not finish.
@@ -230,6 +236,7 @@ private enum Route {
     static func signedIn(created: Bool, flow: OnboardingFlow, account: AccountModel) async throws {
         if created {
             flow.signingIn = false
+            account.accountCreated()
             flow.signedUp(next: .name)
             return
         }
@@ -254,8 +261,8 @@ private enum Route {
         case .inviteGone:
             // The friendship link that went with the sign-up is gone: the next
             // request goes without it.
-            account.clearInvitation()
-            return localized("We don't know this friendship code. Check it, or ask whoever sent it.")
+            account.dropHeldInvite()
+            return heldLinkGone
         case .tooMany: return localized("Too many tries. Wait a few minutes and try again.")
         case .passkeyFailed: return localized("That passkey did not work. Try again, or use your email instead.")
         case .otherAccountData:
@@ -298,7 +305,6 @@ private struct OtherAccountDialog: ViewModifier {
 struct WhereStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
     @EnvironmentObject private var account: AccountModel
-    @StateObject private var call = StepCall()
 
     var body: some View {
         AccountPage(title: "Keep it on this phone, or online?",
@@ -325,12 +331,14 @@ struct WhereStep: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
         } actions: {
-            ErrorLine(text: call.failed ? accountError : nil)
             StepButton(title: "Make an online account") {
                 flow.signingIn = false
                 flow.go(.consent)
             }
-            OutlinedStepButton(title: "Only on this phone") { flow.finishLocal() }
+            OutlinedStepButton(title: "Only on this phone") {
+                account.forgetHeldInvite()
+                flow.finishLocal()
+            }
         }
     }
 }
@@ -342,7 +350,7 @@ struct ConsentStep: View {
 
     var body: some View {
         AccountPage(title: "Before we store anything",
-                    detail: Text("An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. With your consent the server keeps your passkey or email, the name friends see, your gender if you give it, your friends, and your public streaks. Your counts stay encrypted on your phones."),
+                    detail: Text("An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. The server keeps your account: your passkeys, and your email if you add one; the name friends see; your username and gender if you give them; your friends; and your public streaks. Your counts stay encrypted on your phones."),
                     centered: true) {
             Button { flow.consented.toggle() } label: {
                 HStack(alignment: .top, spacing: Theme.Space.m) {
@@ -405,8 +413,8 @@ struct EmailStep: View {
                                                       signUpWithConsent: flow.signUpConsent) {
             case .sent: flow.go(.checkEmail)
             case .unknownInvite:
-                account.clearInvitation()
-                problem = localized("We don't know this friendship code. Check it, or ask whoever sent it.")
+                account.dropHeldInvite()
+                problem = heldLinkGone
             case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
             case .tooManyAccounts: problem = tooManyAccounts
             case .invitationNeeded: problem = invitationNeeded
@@ -446,8 +454,8 @@ struct CheckEmailStep: View {
                     case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
                     case .tooManyAccounts: problem = tooManyAccounts
                     case .unknownInvite:
-                        account.clearInvitation()
-                        problem = localized("We don't know this friendship code. Check it, or ask whoever sent it.")
+                        account.dropHeldInvite()
+                        problem = heldLinkGone
                     case .invitationNeeded: problem = invitationNeeded
                     }
                 }
@@ -487,6 +495,11 @@ struct CheckEmailStep: View {
 struct NameStep: View {
     @EnvironmentObject private var flow: OnboardingFlow
     @EnvironmentObject private var account: AccountModel
+    @State private var loading = false
+    @State private var failed = false
+
+    /// Continue saves an edit of the name the server holds, so it waits for it.
+    private var loaded: Bool { flow.serverName != nil }
 
     var body: some View {
         AccountPage(title: "What should we call you?",
@@ -495,19 +508,33 @@ struct NameStep: View {
                         : Text("Friends see this name next to your streaks.")) {
             LabelledField(label: "Name", text: Binding(get: { flow.displayName }, set: { flow.displayName = String($0.prefix(64)) }),
                           capitalization: .words, contentType: .givenName,
-                          submit: { flow.go(.gender) })
+                          submit: { if loaded { flow.go(.gender) } })
         } actions: {
-            StepButton(title: "Continue") { flow.go(.gender) }
+            ErrorLine(text: failed ? accountError : nil)
+            if failed {
+                StepButton(title: "Try again", busy: loading) { Task { await load() } }
+            } else {
+                StepButton(title: "Continue", enabled: loaded, busy: loading) { flow.go(.gender) }
+            }
+            // Skip keeps whatever the server holds, loaded or not.
             TextAction(title: "Skip") {
                 flow.displayName = flow.serverName ?? ""
                 flow.go(.gender)
             }
         }
-        .task {
-            guard flow.serverName == nil, let name = await account.serverDisplayName() else { return }
+        .task { if !loaded { await load() } }
+    }
+
+    private func load() async {
+        loading = true
+        failed = false
+        if let name = await account.serverDisplayName() {
             flow.serverName = name
             if flow.displayName.isEmpty { flow.displayName = name }
+        } else {
+            failed = true
         }
+        loading = false
     }
 }
 
@@ -539,6 +566,12 @@ struct GenderStep: View {
         let edited = flow.serverName.map { flow.displayName != $0 } ?? !flow.displayName.isEmpty
         call.run {
             try await account.setProfile(name: edited ? flow.displayName : nil, gender: gender)
+            // Saved: the server holds this name now, so going back and on again
+            // sends nothing more.
+            if edited {
+                flow.displayName = AccountModel.trimmedName(flow.displayName)
+                flow.serverName = flow.displayName
+            }
             flow.go(.recovery)
         }
     }
@@ -572,7 +605,10 @@ struct PasskeyStep: View {
             StepButton(title: "Save a passkey", busy: call.busy) { save() }
             TextAction(title: "Use email instead") { if !call.busy { flow.go(.email) } }
         }
-        .modifier(OtherAccountDialog(call: call) { _ in flow.signedUp(next: .name) })
+        .modifier(OtherAccountDialog(call: call) { created in
+            if created { account.accountCreated() }
+            flow.signedUp(next: .name)
+        })
     }
 
     private func save() {
@@ -582,12 +618,14 @@ struct PasskeyStep: View {
             await account.holdPendingInvite()
             do {
                 switch try await account.createPasskey(profile: nil, consent: flow.consented) {
-                case .saved: flow.signedUp(next: .name)
+                case .saved:
+                    account.accountCreated()
+                    flow.signedUp(next: .name)
                 case .cancelled: break
                 case .inviteGone:
                     // The link's code is gone: the next try goes without it.
-                    account.clearInvitation()
-                    problem = localized("We don't know this friendship code. Check it, or ask whoever sent it.")
+                    account.dropHeldInvite()
+                    problem = heldLinkGone
                 case .invitationNeeded: problem = invitationNeeded
                 case .tooManyAccounts: problem = tooManyAccounts
                 case .tooMany: problem = localized("Too many tries. Wait a few minutes and try again.")
@@ -636,7 +674,11 @@ struct RecoveryStep: View {
                 TextAction(title: "Not now") { flow.finishOnline() }
             }
         }
-        .onAppear { if account.shownCode == nil { makeKeys() } }
+        .onAppear {
+            // Made at sign-up already, normally: this waits for the same work.
+            if account.shownCode == nil { makeKeys() }
+            account.accountStepsDone()
+        }
     }
 
     /// AccountModel runs the work one at a time and keeps the code, so showing
@@ -718,5 +760,7 @@ struct SignInStep: View {
             OutlinedStepButton(title: "Email me a link", enabled: !call.busy) { flow.go(.email) }
         }
         .modifier(OtherAccountDialog(call: call))
+        // Signing in instead of up: a friendship link held for the sign-up is dropped.
+        .onAppear { account.forgetHeldInvite() }
     }
 }

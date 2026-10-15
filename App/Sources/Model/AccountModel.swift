@@ -173,7 +173,9 @@ final class AccountModel: ObservableObject {
         /// The push token last sent, with its device and APNs environment (PushModel).
         static let pushSent = "account.pushSent"
         static let pushSentAt = "account.pushSentAt"
-        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt]
+        /// An account made here whose Name, Gender and recovery code steps are not done yet.
+        static let stepsPending = "account.stepsPending"
+        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt, stepsPending]
     }
 
     init(database: AppDatabase) {
@@ -340,9 +342,24 @@ final class AccountModel: ObservableObject {
     /// A friendship link opened before sign-up goes with the sign-up as its proof,
     /// and makes the friendship once keys exist (design: Social › Open sign-up). One
     /// that no longer checks out is dropped quietly: no code is needed for an account.
+    /// A link opened after the last check (on Consent, say) replaces the one held.
     func holdPendingInvite() async {
-        guard invitation == nil, let link = pendingInvite, heldLink != link.string else { return }
+        guard let link = pendingInvite, heldLink != link.string else { return }
         if (try? await checkInvite(Invitation.code(of: link))) != nil { heldLink = link.string }
+    }
+
+    /// The held link's code is gone (expired, withdrawn): the sign-up goes on
+    /// without it, and it is not offered for accepting later.
+    func dropHeldInvite() {
+        clearInvitation()
+        if pendingInvite?.string == heldLink { pendingInvite = nil }
+    }
+
+    /// Leaving the sign-up ("Only on this phone", closing it, or signing in
+    /// instead): nothing held goes with a later sign-up or sign-in.
+    func forgetHeldInvite() {
+        clearInvitation()
+        heldLink = nil
     }
 
     /// Forgets an invitation from an abandoned sign-up, so a later sign-in does not carry it.
@@ -437,6 +454,24 @@ final class AccountModel: ObservableObject {
     }
 
     // MARK: Profile
+
+    /// An account made by this phone's sign-up whose Name, Gender and recovery code
+    /// steps are not done: a relaunch resumes there, never at Consent or Passkey.
+    @Published private(set) var stepsPending = UserDefaults.standard.bool(forKey: Keys.stepsPending) {
+        didSet { UserDefaults.standard.set(stepsPending, forKey: Keys.stepsPending) }
+    }
+
+    /// The account was just made: keys are made at once, silently (design:
+    /// onboarding), so the held friendship link is redeemed and the recovery code
+    /// is ready by the time its step shows; that step waits for the same work.
+    func accountCreated() {
+        stepsPending = true
+        Task { _ = try? await setUpKeys() }
+    }
+
+    /// The account steps are done, or reached the recovery code.
+    func accountStepsDone() { stepsPending = false }
+
 
     /// The display name the server holds, read after a sign-up: an account made
     /// without one is given a random "Adjective Animal" there, which the Name step
@@ -579,11 +614,12 @@ final class AccountModel: ObservableObject {
         Task { await self.afterKeys(account) }
     }
 
-    /// The fallback report, then the invitation's friendship, once keys exist,
-    /// then the first sync. Failures here never fail the set-up.
+    /// The held friendship link's friendship, once keys exist, then the fallback
+    /// report and the first sync. Failures here never fail the set-up.
     private func afterKeys(_ account: Account) async {
-        await reportFallback(account)
-        if let checked = checkedInvite, let social {
+        // Taken now: the flow may be closed (forgetting what it held) while this runs.
+        let held = checkedInvite
+        if let checked = held, let social {
             if let me = userID, checked.inviter != me {
                 try? await social.redeem(checked)
             }
@@ -591,6 +627,7 @@ final class AccountModel: ObservableObject {
             if pendingInvite?.id == checked.link.id { pendingInvite = nil }
         }
         clearInvitation()
+        await reportFallback(account)
         await syncNow()
     }
 
@@ -926,7 +963,8 @@ final class AccountModel: ObservableObject {
         username = nil
         email = nil
         offline = false
-        clearInvitation()
+        forgetHeldInvite()
+        stepsPending = false
         heldSignIn = nil
         magicToken = nil
         linkWindow.close()
@@ -965,6 +1003,9 @@ final class AccountModel: ObservableObject {
 enum AccountFlow: String, Identifiable {
     /// "Make an online account": from the consent on.
     case newAccount
+    /// An account made here whose Name, Gender and recovery code steps were left
+    /// unfinished (the app closed): resumed at Name.
+    case finishAccount
     /// "I already have an account", "Sign in again".
     case signIn
 

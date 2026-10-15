@@ -5,7 +5,7 @@ import Foundation
 /// The code a sign-up starts from (design: Onboarding v2, Invitation): 24
 /// Crockford characters for a friend's invitation (the link's 8-character id,
 /// then its 16-character secret), 16 for an admission code. The length tells
-/// them apart; people only ever see "invitation code".
+/// them apart; people only ever see "friendship code".
 public enum Invitation: Equatable, Sendable {
     case invite(InviteLink)
     case admission(String)

@@ -2423,6 +2423,8 @@
     "100" : {},
     "108" : {},
     "A friend" : {
+      "comment" : "A friend without a display name, as a name. Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -3724,54 +3726,54 @@
         }
       }
     },
-    "An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. With your consent the server keeps your passkey or email, the name friends see, your gender if you give it, your friends, and your public streaks. Your counts stay encrypted on your phones." : {
+    "An account in a Buddhist practice app says something about your beliefs, which the GDPR treats as special. The server keeps your account: your passkeys, and your email if you add one; the name friends see; your username and gender if you give them; your friends; and your public streaks. Your counts stay encrypted on your phones." : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Účet v aplikaci pro buddhistickou praxi vypovídá o tvém přesvědčení, které GDPR považuje za zvláštní. S tvým souhlasem server uchovává tvůj přístupový klíč nebo e-mail, jméno, které vidí přátelé, pohlaví, pokud ho uvedeš, tvé přátele a veřejné série. Tvé počty zůstávají zašifrované v tvých telefonech."
+            "value" : "Účet v aplikaci pro buddhistickou praxi vypovídá o tvém přesvědčení, které GDPR považuje za zvláštní. Server uchovává tvůj účet: tvé přístupové klíče a e-mail, pokud ho přidáš; jméno, které vidí přátelé; uživatelské jméno a pohlaví, pokud je uvedeš; tvé přátele; a tvé veřejné série. Tvé počty zůstávají zašifrované v tvých telefonech."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Konto in einer App für buddhistische Praxis sagt etwas über deine Überzeugungen aus, die die DSGVO als besonders schützenswert behandelt. Mit deiner Einwilligung speichert der Server deinen Passkey oder deine E-Mail-Adresse, den Namen, den Freunde sehen, dein Geschlecht, falls du es angibst, deine Freunde und deine öffentlichen Serien. Deine Zähler bleiben auf deinen Handys verschlüsselt."
+            "value" : "Ein Konto in einer App für buddhistische Praxis sagt etwas über deine Überzeugungen aus, die die DSGVO als besonders schützenswert behandelt. Der Server speichert dein Konto: deine Passkeys und deine E-Mail-Adresse, falls du eine hinzufügst; den Namen, den Freunde sehen; deinen Benutzernamen und dein Geschlecht, falls du sie angibst; deine Freunde; und deine öffentlichen Serien. Deine Zähler bleiben auf deinen Handys verschlüsselt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. Con tu consentimiento, el servidor guarda tu clave de acceso o tu correo, el nombre que ven tus amigos, tu género si lo indicas, tus amigos y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
+            "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. El servidor guarda tu cuenta: tus llaves de acceso, y tu correo si lo añades; el nombre que ven tus amigos; tu nombre de usuario y tu género si los indicas; tus amigos; y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Egy buddhista gyakorlóalkalmazásban lévő fiók mond valamit a meggyőződésedről, amit a GDPR különleges adatként kezel. A hozzájárulásoddal a szerver tárolja a hozzáférési kulcsodat vagy e-mail-címedet, a nevet, amit a barátaid látnak, a nemedet, ha megadod, a barátaidat és a nyilvános sorozataidat. A számlálóid titkosítva maradnak a telefonjaidon."
+            "value" : "Egy buddhista gyakorlóalkalmazásban lévő fiók mond valamit a meggyőződésedről, amit a GDPR különleges adatként kezel. A szerver tárolja a fiókodat: a hozzáférési kulcsaidat, és az e-mail-címedet, ha megadsz egyet; a nevet, amit a barátaid látnak; a felhasználónevedet és a nemedet, ha megadod őket; a barátaidat; és a nyilvános sorozataidat. A számlálóid titkosítva maradnak a telefonjaidon."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Za Twoją zgodą serwer przechowuje Twój klucz dostępu lub e-mail, imię widoczne dla przyjaciół, płeć, jeśli ją podasz, przyjaciół i publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
+            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Serwer przechowuje Twoje konto: Twoje klucze dostępu oraz e-mail, jeśli go dodasz; imię widoczne dla przyjaciół; nazwę użytkownika i płeć, jeśli je podasz; Twoich przyjaciół; oraz publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Аккаунт в приложении для буддийской практики говорит о ваших убеждениях, а GDPR относит их к особой категории. С вашего согласия сервер хранит ваш ключ доступа или почту, имя, которое видят друзья, пол, если вы его укажете, ваших друзей и публичные серии. Ваши счётчики остаются зашифрованными на ваших телефонах."
+            "value" : "Аккаунт в приложении для буддийской практики говорит о ваших убеждениях, а GDPR относит их к особой категории. Сервер хранит ваш аккаунт: ваши ключи доступа и почту, если вы её добавите; имя, которое видят друзья; имя пользователя и пол, если вы их укажете; ваших друзей; и публичные серии. Ваши счётчики остаются зашифрованными на ваших телефонах."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Účet v aplikácii pre budhistickú prax vypovedá o tvojom presvedčení, ktoré GDPR považuje za osobitné. S tvojím súhlasom server uchováva tvoj prístupový kľúč alebo e-mail, meno, ktoré vidia priatelia, pohlavie, ak ho uvedieš, tvojich priateľov a verejné série. Tvoje počty zostávajú zašifrované v tvojich telefónoch."
+            "value" : "Účet v aplikácii pre budhistickú prax vypovedá o tvojom presvedčení, ktoré GDPR považuje za osobitné. Server uchováva tvoj účet: tvoje prístupové kľúče a e-mail, ak ho pridáš; meno, ktoré vidia priatelia; používateľské meno a pohlavie, ak ich uvedieš; tvojich priateľov; a tvoje verejné série. Tvoje počty zostávajú zašifrované v tvojich telefónoch."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Обліковий запис у застосунку для буддійської практики говорить про ваші переконання, а GDPR відносить їх до особливої категорії. За вашою згодою сервер зберігає ваш ключ доступу або пошту, ім’я, яке бачать друзі, стать, якщо ви її вкажете, ваших друзів і публічні серії. Ваші лічильники залишаються зашифрованими на ваших телефонах."
+            "value" : "Обліковий запис у застосунку для буддійської практики говорить про ваші переконання, а GDPR відносить їх до особливої категорії. Сервер зберігає ваш обліковий запис: ваші ключі доступу та пошту, якщо ви її додасте; ім’я, яке бачать друзі; ім’я користувача і стать, якщо ви їх вкажете; ваших друзів; і публічні серії. Ваші лічильники залишаються зашифрованими на ваших телефонах."
           }
         }
       }
@@ -12179,6 +12181,60 @@
         }
       }
     },
+    "Poke a friend" : {
+      "comment" : "Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťouchnout přítele"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einen Freund anstupsen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dar un toque a un amigo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barát megbökése"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szturchnij przyjaciela"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подтолкнуть друга"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťuchnúť priateľa"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Підштовхнути друга"
+          }
+        }
+      }
+    },
     "Poked" : {
       "localizations" : {
         "cs" : {
@@ -12279,6 +12335,60 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Le diste un toque a %@"
+          }
+        }
+      }
+    },
+    "Poked a friend" : {
+      "comment" : "Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťouchnuto: přítel"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einen Freund angestupst"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le diste un toque a un amigo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Barát megbökve"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szturchnięto przyjaciela"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подтолкнули: друг"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Šťuchnutie pre priateľa"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Підштовхнуто: друг"
           }
         }
       }
@@ -14660,6 +14770,60 @@
         }
       }
     },
+    "So a friend can nag you, and you hear when friends practise." : {
+      "comment" : "Looked up by Gendered for a friend without a display name: the neutral (masculine) form; Female.xcstrings holds the feminine one.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pak tě přítel může popohnat a dozvíš se, když přátelé praktikují."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Damit ein Freund dich anstupsen kann und du erfährst, wenn Freunde üben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Así un amigo podrá animarte y sabrás cuándo practican tus amigos."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Így egy barátod noszogathat, és megtudod, mikor gyakorolnak a barátaid."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wtedy przyjaciel może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тогда друг сможет вас подгонять, а вы узнаете, когда друзья практикуют."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Potom ťa priateľ môže postrčiť a dozvieš sa, keď priatelia cvičia."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тоді друг зможе вас підганяти, а ви дізнаєтеся, коли друзі практикують."
+          }
+        }
+      }
+    },
     "So far" : {
       "localizations" : {
         "cs" : {
@@ -16496,59 +16660,6 @@
         }
       }
     },
-    "This friendship code doesn't check out: it may have been changed on the way. Ask whoever sent it for a new one." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tento kód přátelství neprošel kontrolou: mohl být cestou změněn. Požádej odesílatele o nový."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dieser Freundschaftscode hält der Prüfung nicht stand: Er wurde unterwegs vielleicht verändert. Bitte um einen neuen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este código de amistad no supera la comprobación: puede que lo hayan cambiado por el camino. Pide uno nuevo a quien te lo envió."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ez a barátságkód nem ellenőrizhető: útközben megváltozhatott. Kérj újat attól, aki küldte."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ten kod przyjaźni nie przeszedł weryfikacji: mógł zostać zmieniony po drodze. Poproś osobę, która go wysłała, o nowy."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Этот код дружбы не прошёл проверку: возможно, его изменили по дороге. Попросите отправителя прислать новый."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tento kód priateľstva neprešiel kontrolou: mohol byť cestou zmenený. Popros odosielateľa o nový."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Цей код дружби не пройшов перевірку: можливо, його змінили дорогою. Попросіть відправника надіслати новий."
-          }
-        }
-      }
-    },
     "This friendship code has expired. Ask for a new one." : {
       "localizations" : {
         "cs" : {
@@ -16597,6 +16708,58 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Este código de amistad venció. Pide uno nuevo."
+          }
+        }
+      }
+    },
+    "This friendship link no longer works. Continue to make the account without it." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento odkaz s kódem přátelství už nefunguje. Pokračuj a účet se založí bez něj."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieser Freundschaftslink funktioniert nicht mehr. Mach weiter, um das Konto ohne ihn anzulegen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este enlace de amistad ya no funciona. Continúa para crear la cuenta sin él."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez a barátságlink már nem működik. Folytasd, és a fiók nélküle jön létre."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ten link z kodem przyjaźni już nie działa. Kontynuuj, aby założyć konto bez niego."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Эта ссылка с кодом дружбы больше не работает. Продолжите, чтобы создать аккаунт без неё."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento odkaz s kódom priateľstva už nefunguje. Pokračuj a účet sa založí bez neho."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це посилання з кодом дружби більше не працює. Продовжте, щоб створити обліковий запис без нього."
           }
         }
       }
@@ -17340,55 +17503,55 @@
         }
       }
     },
-    "Too many sign-ups from this network in the last hour. Try again later, or enter a friendship code: it works regardless." : {
+    "Too many sign-ups from this network in the last hour. Try again later, or open a friend's friendship link." : {
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z této sítě bylo za poslední hodinu příliš mnoho registrací. Zkus to později, nebo zadej kód přátelství: ten funguje i tak."
+            "value" : "Z této sítě bylo za poslední hodinu příliš mnoho registrací. Zkus to později, nebo otevři odkaz s kódem přátelství od přítele."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aus diesem Netz gab es in der letzten Stunde zu viele Registrierungen. Versuch es später, oder gib einen Freundschaftscode ein: Der funktioniert trotzdem."
+            "value" : "Aus diesem Netz gab es in der letzten Stunde zu viele Registrierungen. Versuch es später, oder öffne den Freundschaftslink eines Freundes."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Desde esta red ha habido demasiados registros en la última hora. Inténtalo más tarde o escribe un código de amistad: ese funciona igualmente."
+            "value" : "Desde esta red ha habido demasiados registros en la última hora. Inténtalo más tarde o abre el enlace de amistad de un amigo."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Erről a hálózatról az elmúlt órában túl sok regisztráció történt. Próbáld újra később, vagy írj be egy barátságkódot: az így is működik."
+            "value" : "Erről a hálózatról az elmúlt órában túl sok regisztráció történt. Próbáld újra később, vagy nyisd meg egy barátod barátságlinkjét."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo wpisz kod przyjaźni: on działa mimo to."
+            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo otwórz link z kodem przyjaźni od przyjaciela."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Из этой сети за последний час было слишком много регистраций. Попробуйте позже или введите код дружбы: он работает в любом случае."
+            "value" : "Из этой сети за последний час было слишком много регистраций. Попробуйте позже или откройте ссылку с кодом дружбы от друга."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z tejto siete bolo za poslednú hodinu príliš veľa registrácií. Skús to neskôr, alebo zadaj kód priateľstva: ten funguje aj tak."
+            "value" : "Z tejto siete bolo za poslednú hodinu príliš veľa registrácií. Skús to neskôr, alebo otvor odkaz s kódom priateľstva od priateľa."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "З цієї мережі за останню годину було забагато реєстрацій. Спробуйте пізніше або введіть код дружби: він спрацює в будь-якому разі."
+            "value" : "З цієї мережі за останню годину було забагато реєстрацій. Спробуйте пізніше або відкрийте посилання з кодом дружби від друга."
           }
         }
       }
@@ -18177,59 +18340,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Versión"
-          }
-        }
-      }
-    },
-    "We don't know this friendship code. Check it, or ask whoever sent it." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tento kód přátelství neznáme. Zkontroluj ho nebo se zeptej toho, kdo ho poslal."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Diesen Freundschaftscode kennen wir nicht. Prüfe ihn oder frag, wer ihn geschickt hat."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No conocemos este código de amistad. Revísalo o pregunta a quien te lo envió."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ezt a barátságkódot nem ismerjük. Ellenőrizd, vagy kérdezd meg, aki küldte."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie znamy tego kodu przyjaźni. Sprawdź go albo zapytaj osobę, która go wysłała."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Такого кода дружбы мы не знаем. Проверьте его или спросите того, кто его прислал."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tento kód priateľstva nepoznáme. Skontroluj ho alebo sa opýtaj toho, kto ho poslal."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Такого коду дружби ми не знаємо. Перевірте його або запитайте того, хто його надіслав."
           }
         }
       }

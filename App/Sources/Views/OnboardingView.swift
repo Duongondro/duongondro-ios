@@ -47,8 +47,12 @@ struct OnboardingView: View {
             .animation(.default, value: flow.step)
         }
         .environmentObject(flow)
+        // Closed, or finished: a friendship link held for this sign-up goes no further.
+        .onDisappear { account.forgetHeldInvite() }
         .onAppear {
-            flow.begin(start)
+            // An account this phone made whose remaining steps were left (the app
+            // closed): back at Name, never through Consent or Passkey again.
+            flow.begin(start == .welcome && account.stepsPending && account.status != .none ? .name : start)
             flow.finishLocal = { [weak flow, model] in
                 if let done { done() } else { flow?.finish(into: model) }
             }
@@ -236,6 +240,9 @@ private struct StepTopBar: View {
         let progress = flow.step.progress(signingIn: flow.signingIn)
         // No way back while keys are being made: the work goes on regardless, and
         // the steps behind it would ask for a passkey or profile it already has.
+        // Once the account exists, Name and Gender are left only forwards (Skip):
+        // closing there would leave the account half set up.
+        let leave = [OnboardingStep.name, .gender].contains(flow.step) ? nil : leave
         let canLeave = (flow.canGoBack || leave != nil) && !account.keyWorkRunning
         HStack(spacing: 0) {
             Button { if let leave { leave() } else { flow.back() } } label: {
