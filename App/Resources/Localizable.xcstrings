@@ -2636,7 +2636,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Náhodné jméno, aby tě přátelé poznali. Nech si ho, nebo ho změň."
+            "value" : "Náhodné jméno, aby tě přátelé rozeznali. Nech si ho, nebo ho změň."
           }
         },
         "de" : {
@@ -2648,13 +2648,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un nombre al azar, para que tus amigos te distingan. Quédatelo o cámbialo."
+            "value" : "Un nombre al azar, para que tus amigos te distingan. Déjalo o cámbialo."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Egy véletlen név, hogy a barátaid megkülönböztessenek. Tartsd meg, vagy változtasd meg."
+            "value" : "Egy véletlenszerű név, hogy a barátaid meg tudjanak különböztetni. Megtarthatod vagy megváltoztathatod."
           }
         },
         "pl" : {
@@ -2666,7 +2666,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Случайное имя, чтобы друзья могли вас отличить. Оставьте его или измените."
+            "value" : "Случайное имя, чтобы друзья могли вас различать. Оставьте его или измените."
           }
         },
         "sk" : {
@@ -2678,7 +2678,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Випадкове ім’я, щоб друзі могли вас розрізнити. Залиште його або змініть."
+            "value" : "Випадкове ім’я, щоб друзі могли вас розрізняти. Залиште його або змініть."
           }
         }
       }
@@ -3371,7 +3371,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Freunde hinzufügen"
+            "value" : "Freund hinzufügen"
           }
         },
         "hu" : {
@@ -11890,7 +11890,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wklej link przyjaźni"
+            "value" : "Wklej link z kodem przyjaźni"
           }
         },
         "ru" : {
@@ -12566,7 +12566,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kod QR linku przyjaźni"
+            "value" : "Kod QR linku z kodem przyjaźni"
           }
         },
         "ru" : {
@@ -17984,19 +17984,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Stattdessen E-Mail nutzen"
+            "value" : "Stattdessen E-Mail verwenden"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Usar el correo"
+            "value" : "Usar mi correo en su lugar"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "E-mail használata inkább"
+            "value" : "E-mail-cím használata helyette"
           }
         },
         "pl" : {
