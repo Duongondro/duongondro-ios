@@ -32,7 +32,7 @@ struct FriendsView: View {
                     // Asked here, on the first visit with a friend to be nagged by
                     // (design: Onboarding › the notification permission), not at sign-up.
                     if let friend = account.friends.first, push.authorization == .notDetermined, !push.askDismissed {
-                        NotificationAsk(friend: friend.displayName)
+                        NotificationAsk(friend: friend)
                     }
                     if !news.isEmpty {
                         CardSection(header: "Today") {
@@ -163,7 +163,7 @@ struct FriendsView: View {
 /// The notification permission, with its reason, before the system asks.
 private struct NotificationAsk: View {
     @EnvironmentObject private var push: PushModel
-    let friend: String
+    let friend: Social.FriendView
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.m) {
@@ -174,7 +174,7 @@ private struct NotificationAsk: View {
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                     Text("Let friends nag you").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
-                    Text("So \(name) can nag you, and you hear when friends practise.")
+                    reason
                         .font(.subheadline)
                         .foregroundStyle(Theme.muted)
                         .fixedSize(horizontal: false, vertical: true)
@@ -190,7 +190,11 @@ private struct NotificationAsk: View {
         .cardStyle()
     }
 
-    private var name: String { Social.FriendView.shownName(friend) }
+    /// Named, or "a friend" in the friend's gender, mid-sentence.
+    private var reason: Text {
+        friend.hasName ? Text("So \(friend.shownName) can nag you, and you hear when friends practise.")
+            : Text(verbatim: Gendered.string("So a friend can nag you, and you hear when friends practise.", for: friend.gender))
+    }
 }
 
 struct NewsRow: View {
@@ -225,7 +229,7 @@ struct NewsRow: View {
                     .foregroundStyle(poked ? Theme.muted : Theme.onAccent)
                     .padding(.horizontal, Theme.Space.l)
                     .frame(minHeight: Theme.Size.minTap)
-                    .accessibilityLabel(poked ? Text("Poked \(name)") : Text("Poke \(name)"))
+                    .accessibilityLabel(pokeLabel(poked))
                     .background(poked ? Theme.softFill : Theme.accent, in: Capsule())
                     .disabled(poked)
             }
@@ -236,9 +240,19 @@ struct NewsRow: View {
     private var practice: String { FriendsView.practiceName(item.streak.practice) }
     private var name: String { item.friend.shownName }
 
+    /// "A friend" takes the masculine forms unless she is a woman, as in pushes.
+    private var verbGender: Gender? {
+        item.friend.hasName || item.friend.gender == .female ? item.friend.gender : .male
+    }
+
     private var title: String {
-        item.doneToday ? Gendered.string("%@ finished %@", for: item.friend.gender, name, practice)
-            : Gendered.string("%@ hasn't practised yet", for: item.friend.gender, name)
+        item.doneToday ? Gendered.string("%@ finished %@", for: verbGender, name, practice)
+            : Gendered.string("%@ hasn't practised yet", for: verbGender, name)
+    }
+
+    private func pokeLabel(_ poked: Bool) -> Text {
+        if item.friend.hasName { return poked ? Text("Poked \(name)") : Text("Poke \(name)") }
+        return Text(verbatim: Gendered.string(poked ? "Poked a friend" : "Poke a friend", for: item.friend.gender))
     }
 
     private var detail: String {
@@ -340,12 +354,12 @@ private struct PasteInviteView: View {
 }
 
 extension Social.FriendView {
-    /// The name to show: "A friend" for one without a display name, which every
-    /// part of a profile may be (a passkey is enough for an account).
-    var shownName: String { Self.shownName(displayName) }
+    /// Whether the friend has a display name that shows (names.Clean on the server).
+    var hasName: Bool { !DisplayName.clean(displayName).isEmpty }
 
-    static func shownName(_ name: String) -> String {
-        name.trimmingCharacters(in: .whitespaces).isEmpty
-            ? String(localized: "A friend", bundle: .appLanguage, locale: .appLanguage) : name
+    /// The name to show: "A friend", in the friend's gender, for one without a
+    /// display name, which every part of a profile may be (a passkey is enough).
+    var shownName: String {
+        hasName ? DisplayName.clean(displayName) : Gendered.string("A friend", for: gender)
     }
 }

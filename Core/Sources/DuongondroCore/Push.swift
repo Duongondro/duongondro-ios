@@ -127,7 +127,7 @@ public struct PushText: Equatable, Sendable {
         guard var key = PushKey(rawValue: locKey), PushKey.server.contains(key),
               args.count == key.argumentCount else { return nil }
         var args = args
-        if let unnamed = key.unnamed, args[0].trimmingCharacters(in: .whitespaces).isEmpty {
+        if let unnamed = key.unnamed, DisplayName.clean(args[0]).isEmpty {
             key = unnamed
             args.removeFirst()
         }
