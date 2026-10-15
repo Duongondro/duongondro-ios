@@ -108,7 +108,7 @@ private struct DeleteEverythingView: View {
                     VStack(alignment: .leading, spacing: Theme.Space.s) {
                         Text(account.status == .none
                              ? LocalizedStringKey("This deletes every practice, session and streak on this phone, your reminders and any keys the app holds, then returns to the start.")
-                             : LocalizedStringKey("This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, invitations, passkeys and sign-ins. Your other phones are signed out and keep their own copy until you delete it there. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start."))
+                             : LocalizedStringKey("This deletes your account and everything stored with it on the server: your encrypted sessions, friends, public streaks, friendship codes, passkeys and sign-ins. Your other phones are signed out and keep their own copy until you delete it there. On this phone it deletes every practice, session and streak, your reminders and the app's keys, then returns to the start."))
                             .foregroundStyle(Theme.ink)
                             .fixedSize(horizontal: false, vertical: true)
                         Text("Export first if you want a copy.")

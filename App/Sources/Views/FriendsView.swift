@@ -21,11 +21,11 @@ struct FriendsView: View {
                     .padding(.horizontal, Theme.Space.xs)
                     .accessibilityAddTraits(.isHeader)
                 if account.status == .needsKeys {
-                    CardSection(footer: "Friends see your public streaks and nothing else. Finish setting up your account to invite them.") {
+                    CardSection(footer: "Friends see your public streaks and nothing else. Finish setting up your account to add them.") {
                         Button { model.tab = .you } label: { AccentRow(title: "Finish setting up", chevron: true) }
                     }
                 } else if account.status != .ready {
-                    CardSection(footer: "Friends see your public streaks and nothing else. An online account lets you invite them.") {
+                    CardSection(footer: "Friends see your public streaks and nothing else. An online account lets you add them.") {
                         AccountDoorRows()
                     }
                 } else {
@@ -59,7 +59,7 @@ struct FriendsView: View {
                         }
                     }
                     if account.friendsLoaded && account.friends.isEmpty {
-                        Text("No friends yet. An invite makes the two of you friends; they see your public streaks, never your counts.")
+                        Text("No friends yet. A friendship code makes the two of you friends; they see your public streaks, never your counts.")
                             .font(.subheadline)
                             .foregroundStyle(Theme.muted)
                             .padding(.horizontal, Theme.Space.l)
@@ -90,7 +90,7 @@ struct FriendsView: View {
                         }
                     }
                     InviteCard { inviting = true }
-                    Button("Paste an invite link") { pasting = true }
+                    Button("Paste a friendship link") { pasting = true }
                         .font(.subheadline.weight(.bold))
                         .foregroundStyle(Theme.accent)
                         .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap)
@@ -282,11 +282,11 @@ private struct InviteCard: View {
     var body: some View {
         HStack(spacing: Theme.Space.m) {
             VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                Text("Invite a friend").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
+                Text("Share a friendship code").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
                 Text("Link or QR code, valid 7 days").font(.footnote).foregroundStyle(Theme.muted)
             }
             Spacer(minLength: Theme.Space.s)
-            Button("Invite", action: invite)
+            Button("Add friend", action: invite)
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(Theme.accent)
                 .padding(.horizontal, Theme.Space.l + Theme.Space.xs)
@@ -300,7 +300,7 @@ private struct InviteCard: View {
     }
 }
 
-/// "Paste invite": the first-install path, when the App Store ate the link.
+/// "Paste link": the first-install path, when the App Store ate the link.
 private struct PasteInviteView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var pasted: InviteLink?
@@ -334,7 +334,7 @@ private struct PasteInviteView: View {
             }
             .padding(Theme.Space.xl)
             .background(Theme.ground.ignoresSafeArea())
-            .navigationTitle("Paste invite")
+            .navigationTitle("Paste link")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
         }

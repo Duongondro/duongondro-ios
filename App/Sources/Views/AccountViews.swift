@@ -61,7 +61,7 @@ struct AccountSection: View {
                 if let who = account.email ?? account.username {
                     SettingsRow("Signed in as", detail: Text(verbatim: who))
                 }
-                NavigationLink { InviteView() } label: { AccentRow(title: "Invite someone", chevron: true) }
+                NavigationLink { InviteView() } label: { AccentRow(title: "Share a friendship code", chevron: true) }
                 Button { naming = true } label: {
                     SettingsRow("Your name", detail: Text(verbatim: account.displayName), chevron: true)
                 }
