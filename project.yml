@@ -8,7 +8,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.9"
-    MARKETING_VERSION: "0.1"
+    MARKETING_VERSION: "0.4"
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_TEAM: ""   # set locally (local.mk); never commit a personal team id
     CODE_SIGN_STYLE: Automatic
@@ -44,8 +44,11 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        # No encryption beyond the system's yet. Becomes true with phase 3's sealing
-        # (standard algorithms, the mass-market exemption): docs/12-release-checklist.
+        # The sealing uses only the encryption in Apple's OS (CryptoKit, plus the
+        # Keychain and HTTPS): App Store Connect's questionnaire then asks for no
+        # documentation, so uploads declare it here instead of asking each time.
+        # Bundling a crypto library of our own (or any non-standard algorithm)
+        # changes the answer: docs/12-release-checklist.
         ITSAppUsesNonExemptEncryption: false
         CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu, es]
         # Resources in groups are copied flat into the bundle root, so bare names.
