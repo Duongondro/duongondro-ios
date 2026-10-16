@@ -98,11 +98,13 @@ public enum CSVExport {
     /// The tables of `content`. Friends need an account; invites, blocks, reports
     /// and devices exist only on the server, so they are left out without its part.
     /// `practiceName` gives a practice's names as the app shows them.
-    public static func tables(_ content: ExportContent,
+    /// `aFriend` names a friend without a display name, as the app does.
+    public static func tables(_ content: ExportContent, aFriend: String = "A friend",
                               practiceName: (Practice) -> (name: String, second: String?) = { ($0.name, $0.secondName) })
         -> [Table] {
         let zone = content.timeZone
-        func time(_ d: Date?, in tz: TimeZone? = nil) -> CSV.Cell { d.map { .text(stamp($0, in: tz ?? zone)) } ?? .empty }
+        // Outside sessions (which have a time zone column), times carry their offset.
+        func time(_ d: Date?) -> CSV.Cell { d.map { .text(iso($0, in: zone)) } ?? .empty }
         func opt(_ n: Int?) -> CSV.Cell { n.map(CSV.Cell.int) ?? .empty }
         let names = Dictionary(content.practices.map { ($0.id, practiceName($0.practice)) }, uniquingKeysWith: { a, _ in a })
 
@@ -115,13 +117,13 @@ public enum CSVExport {
                   }),
             Table(name: "sessions", columns: [.practice, .dayCounted, .start, .timeZone, .count, .round, .chosenDay],
                   rows: content.sessions.map { x in
-                      [.text(names[x.practiceID]?.name ?? x.practiceID), .text(x.day.description), time(x.start, in: x.timeZone),
+                      [.text(names[x.practiceID]?.name ?? x.practiceID), .text(x.day.description), .text(stamp(x.start, in: x.timeZone)),
                        .text(x.timeZone.identifier), .int(x.count), opt(x.round), x.dayChosen ? .text(x.day.description) : .empty]
                   }),
         ]
         if content.serverPart != .local {
             out.append(Table(name: "friends", columns: [.displayName, .friendsSince],
-                             rows: content.friends.map { [.text($0.displayName), time($0.since)] }))
+                             rows: content.friends.map { [.text($0.displayName.isEmpty ? aFriend : $0.displayName), time($0.since)] }))
         }
         if content.serverPart == .included {
             out += [
@@ -142,13 +144,53 @@ public enum CSVExport {
     }
 
     /// The ZIP: one `<name>.csv` per table.
-    public static func zip(_ content: ExportContent, header: (Column) -> String = { $0.english },
+    public static func zip(_ content: ExportContent, header: (Column) -> String = { $0.english }, aFriend: String = "A friend",
                            practiceName: (Practice) -> (name: String, second: String?) = { ($0.name, $0.secondName) }) -> Data {
         var zip = ZipWriter()
-        for t in tables(content, practiceName: practiceName) {
+        zip.add("README.txt", Data(readme(content).utf8), modified: content.exportedAt)
+        for t in tables(content, aFriend: aFriend, practiceName: practiceName) {
             zip.add("\(t.name).csv", CSV.table(header: t.columns.map(header), rows: t.rows), modified: content.exportedAt)
         }
         return zip.finish()
+    }
+
+    /// What the tables are and how their values read; English, as the JSON's README.
+    static func readme(_ content: ExportContent) -> String {
+        var lines = [
+            "Duongöndro: your data as tables",
+            "",
+            "One CSV file per kind of data: RFC 4180, UTF-8 (with a byte order mark), a",
+            "header row in the app's language, CRLF line ends. Numbers are plain digits.",
+            "A text cell that starts with =, +, -, @, a tab or a carriage return has a",
+            "leading ' so a spreadsheet does not run it as a formula.",
+            "",
+            "Values that are codes stay English in every language: true and false;",
+            "made and redeemed (friendship codes); hardware, tee and software (where a",
+            "device keeps its key). Session starts are local to the session's time",
+            "zone, given beside them; other times are ISO 8601 with their UTC offset.",
+        ]
+        switch content.serverPart {
+        case .local:
+            lines += ["", "This phone has no online account, so there are only practices and sessions."]
+        case .missing:
+            lines += ["", "The server could not be reached, so friends are as this phone knows them and",
+                      "there are no friendship codes, blocks, reports or devices. Export again online."]
+        case .included:
+            break
+        }
+        if content.unreadable > 0 {
+            lines += ["", "\(content.unreadable) sealed sessions could not be opened on this phone, so they",
+                      "are not in sessions.csv; the JSON export has them as the server stores them."]
+        }
+        return lines.joined(separator: "\n") + "\n"
+    }
+
+    /// "2026-10-16T09:27:00+02:00".
+    static func iso(_ date: Date, in timeZone: TimeZone) -> String {
+        let f = ISO8601DateFormatter()
+        f.timeZone = timeZone
+        f.formatOptions = [.withInternetDateTime]
+        return f.string(from: date)
     }
 
     /// "2026-10-13 06:40:00", local to `timeZone`: a form spreadsheets read as a date.

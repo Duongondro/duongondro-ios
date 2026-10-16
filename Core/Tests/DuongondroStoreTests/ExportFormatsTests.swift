@@ -158,7 +158,7 @@ final class ExportContentTests: XCTestCase {
         XCTAssertEqual(lines[1], "Dorje Sempa,2026-10-13,2026-10-13 06:40:00,Europe/Amsterdam,108,1,")
         XCTAssertEqual(lines[3], "Dorje Sempa,2026-10-13,2026-10-14 00:20:00,Europe/Amsterdam,108,2,2026-10-13")
         let friends = String(decoding: CSV.table(header: ["n", "s"], rows: tables[2].rows).dropFirst(3), as: UTF8.self)
-        XCTAssertTrue(friends.contains("'=Anna,2026-10-05 12:00:00"), friends)
+        XCTAssertTrue(friends.contains("'=Anna,2026-10-05T12:00:00+02:00"), friends)
 
         let local = ExportContent.build(snapshot: snapshot(), server: nil, local: nil, timeZone: ams)
         XCTAssertEqual(CSVExport.tables(local).map(\.name), ["practices", "sessions"])
@@ -167,7 +167,17 @@ final class ExportContentTests: XCTestCase {
 
         let out = try DataExportTests().unzip(CSVExport.zip(c))
         XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath: out.path).sorted(),
-                       ["blocks.csv", "devices.csv", "friends.csv", "invites.csv", "practices.csv", "reports.csv", "sessions.csv"])
+                       ["README.txt", "blocks.csv", "devices.csv", "friends.csv", "invites.csv", "practices.csv", "reports.csv", "sessions.csv"])
+        let readme = try String(contentsOf: out.appendingPathComponent("README.txt"), encoding: .utf8)
+        XCTAssertTrue(readme.contains("made and redeemed"))
+    }
+
+    func testNamelessFriendAndUnreadableNote() throws {
+        let raw = Data(#"{"users":{"id":"a"},"friendships":[{"id":"b","displayName":"","createdAt":"2026-10-05T10:00:00Z"}]}"#.utf8)
+        let c = ExportContent.build(snapshot: Snapshot(), server: DataExport.Server(account: Data(), raw: raw, unreadable: 3),
+                                    local: ExportContent.Local(), timeZone: ams)
+        XCTAssertEqual(CSVExport.tables(c, aFriend: "Ein Freund")[2].rows, [[.text("Ein Freund"), .text("2026-10-05T12:00:00+02:00")]])
+        XCTAssertTrue(CSVExport.readme(c).contains("3 sealed sessions could not be opened"))
     }
 }
 
@@ -207,5 +217,13 @@ final class PageFlowTests: XCTestCase {
         let rows = (0..<5).map { _ in B(height: 30, table: 1, group: 1) }
         let p = PageFlow.paginate([B(height: 50)] + rows, available: 100, headers: [1: 10])
         XCTAssertEqual(blocks(p), [[0, 1], [2, 3, 4], [5]])
+    }
+
+    func testGapsCollapseAtBreaksAndAtTheEnd() {
+        let p = PageFlow.paginate([B(height: 90), B(height: 20, collapsible: true), B(height: 40),
+                                   B(height: 50), B(height: 30, collapsible: true)], available: 100)
+        XCTAssertEqual(blocks(p), [[0], [2, 3]], "the gap at the break and the trailing one are dropped, no blank page")
+        let q = PageFlow.paginate([B(height: 95), B(height: 20, collapsible: true)], available: 100)
+        XCTAssertEqual(q.count, 1)
     }
 }

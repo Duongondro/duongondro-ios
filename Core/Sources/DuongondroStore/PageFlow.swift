@@ -13,12 +13,17 @@ public enum PageFlow {
         public var table: Int?
         /// Rows with the same group move to the next page together, where they fit on one.
         public var group: Int?
+        /// Space between sections: dropped where a page breaks, at the top of a page
+        /// and at the very end, so it never makes a blank page.
+        public var collapsible: Bool
 
-        public init(height: Double, keepWithNext: Bool = false, table: Int? = nil, group: Int? = nil) {
+        public init(height: Double, keepWithNext: Bool = false, table: Int? = nil, group: Int? = nil,
+                    collapsible: Bool = false) {
             self.height = height
             self.keepWithNext = keepWithNext
             self.table = table
             self.group = group
+            self.collapsible = collapsible
         }
     }
 
@@ -48,6 +53,14 @@ public enum PageFlow {
         func hasBlock() -> Bool { pages[pages.count - 1].contains { if case .block = $0 { true } else { false } } }
 
         while i < blocks.count {
+            if blocks[i].collapsible {
+                if hasBlock(), y + blocks[i].height <= available {
+                    pages[pages.count - 1].append(.block(i, y: y))
+                    y += blocks[i].height
+                }
+                i += 1
+                continue
+            }
             // The unit that moves as one: a run of keep-with-next blocks (headings, a
             // table's header) with the block they keep to, and the rest of a row's group.
             var end = i
@@ -73,6 +86,11 @@ public enum PageFlow {
             }
             i = end + 1
         }
+        // Nothing but space at the end.
+        while let last = pages[pages.count - 1].last, case let .block(k, _) = last, blocks[k].collapsible {
+            pages[pages.count - 1].removeLast()
+        }
+        if pages.count > 1, !hasBlock() { pages.removeLast() }
         return pages
     }
 }
