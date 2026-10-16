@@ -41,6 +41,7 @@ struct SettingsView: View {
         .background(Theme.ground.ignoresSafeArea())
         .statusBarScrim()
         .toolbar(.hidden, for: .navigationBar)
+        .numberPadDone()
         .sheet(isPresented: $adding) { AddPracticeView() }
     }
 }
@@ -256,6 +257,7 @@ struct PracticeSettingsView: View {
                 .themedRows()
             }
             .themedList()
+            .numberPadDone()
             .navigationTitle(Text(verbatim: p.practice.shownName))
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -390,7 +392,10 @@ private struct MalaSizeRows: View {
     var body: some View {
         Group {
             HStack {
+                // Wraps rather than running into the row below in longer languages
+                // ("Un mala compte pour"); the picker keeps its own width.
                 Text("A mala counts as").foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: Theme.Space.s)
                 Picker("A mala counts as", selection: Binding(get: { choice }, set: choose)) {
                     if let d = defaultSize { Text("Default (\(d))").tag(Choice.inherited) }
@@ -399,17 +404,19 @@ private struct MalaSizeRows: View {
                 }
                 .labelsHidden()
                 .pickerStyle(.menu)
+                .fixedSize()
                 .tint(Theme.accent)
             }
             .frame(minHeight: Theme.Size.minTap)
             if custom {
                 HStack(spacing: Theme.Space.m) {
                     Text("Custom value").foregroundStyle(Theme.ink)
+                        .fixedSize(horizontal: false, vertical: true)
                     Spacer(minLength: Theme.Space.s)
                     TextField("108", text: $text)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
-                        .frame(maxWidth: Theme.Size.numberField)
+                        .frame(minWidth: Theme.Size.numberField / 2, maxWidth: Theme.Size.numberField)
                         .accessibilityLabel(Text("Custom value"))
                         .onChange(of: text) { t in
                             // Digits only, and only a number in range is taken; anything

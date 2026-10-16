@@ -624,6 +624,7 @@ struct CustomPracticeSheet: View {
                 }
             }
             .navigationTitle("Your own practice")
+            .numberPadDone()
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
@@ -695,6 +696,7 @@ private struct CountsStep: View {
                     .padding(.top, Theme.Space.s)
                 }
                 .plainBottomEdge()
+                .numberPadDone()
                 PrimaryButton(title: "Continue") {
                     flow.go(index + 1 < flow.chosen.count ? .counts(index + 1) : .reminder)
                 }
