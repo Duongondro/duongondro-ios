@@ -17973,58 +17973,6 @@
         }
       }
     },
-    "Translations other than English are drafts awaiting review by practitioners. Practice names follow each country's practice books as they are collected." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alle Übersetzungen außer Englisch sind Entwürfe, die Praktizierende noch prüfen. Die Namen der Praxen folgen den Praxisbüchern des jeweiligen Landes, sobald sie gesammelt sind."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Все переводы, кроме английского, — черновики, которые ещё проверят практикующие. Названия практик будут взяты из практических книг каждой страны по мере их сбора."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Усі переклади, крім англійського, — чернетки, які ще перевірять практикуючі. Назви практик братимуться з практичних книжок кожної країни, щойно їх зберуть."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tłumaczenia inne niż angielskie to wersje robocze czekające na sprawdzenie przez praktykujących. Nazwy praktyk będą zgodne z książeczkami do praktyk w każdym kraju, gdy zostaną zebrane."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Překlady kromě angličtiny jsou koncepty, které ještě zkontrolují praktikující. Názvy praxí se budou řídit praktickými knížkami každé země, jakmile je shromáždíme."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Preklady okrem angličtiny sú koncepty, ktoré ešte skontrolujú praktizujúci. Názvy cvičení budú podľa meditačných knižiek každej krajiny, len čo ich zozbierame."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Az angolon kívüli fordítások vázlatok, amelyeket gyakorlók még átnéznek. A gyakorlatok neve az egyes országok gyakorlókönyveit követi, ahogy összegyűjtjük őket."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Las traducciones que no son al inglés son borradores pendientes de revisión por practicantes. Los nombres de las prácticas seguirán los libros de práctica de cada país, a medida que se recopilen."
-          }
-        }
-      }
-    },
     "Trusted environment" : {
       "localizations" : {
         "cs" : {

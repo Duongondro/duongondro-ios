@@ -349,8 +349,6 @@ private struct LanguageView: View {
                     .buttonStyle(.plain)
                     .accessibilityAddTraits(option == language ? .isSelected : [])
                 }
-            } footer: {
-                Text("Translations other than English are drafts awaiting review by practitioners. Practice names follow each country's practice books as they are collected.")
             }
             .themedRows()
         }
