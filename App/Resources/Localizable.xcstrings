@@ -3642,6 +3642,64 @@
         }
       }
     },
+    "Add a passkey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passkey hinzufügen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавить ключ доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додати ключ доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodaj klucz dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidat přístupový klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridať prístupový kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáférési kulcs hozzáadása"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir una clave de acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter une clé d'accès"
+          }
+        }
+      }
+    },
     "Add a practice" : {
       "localizations" : {
         "cs" : {
@@ -3990,6 +4048,64 @@
         }
       }
     },
+    "Added %@ · last used %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hinzugefügt am %1$@ · zuletzt verwendet %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавлен %1$@ · последний вход %2$@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додано %1$@ · останній вхід %2$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodano %1$@ · ostatnio użyty %2$@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidáno %1$@ · naposledy použit %2$@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridané %1$@ · naposledy použitý %2$@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáadva: %1$@ · utoljára használva: %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadida el %1$@ · último uso: %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutée le %1$@ · dernière utilisation : %2$@"
+          }
+        }
+      }
+    },
     "Added %@. Undo available." : {
       "localizations" : {
         "cs" : {
@@ -4044,6 +4160,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Se añadió %@. Puedes deshacerlo."
+          }
+        }
+      }
+    },
+    "Added on %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hinzugefügt am %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавлен %@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додано %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodano %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidáno %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridané %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáadva: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadida el %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutée le %@"
           }
         }
       }
@@ -4392,6 +4566,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Una hora antes de la hora en que sueles practicar, calculada en este teléfono con las últimas dos semanas."
+          }
+        }
+      }
+    },
+    "Another of your phones is setting this up. Try again after it has synced." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eines deiner anderen Handys richtet das gerade ein. Versuch es wieder, wenn es synchronisiert hat."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Другой ваш телефон сейчас это настраивает. Попробуйте снова после его синхронизации."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Інший ваш телефон зараз це налаштовує. Спробуйте знову після його синхронізації."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Inny twój telefon właśnie to konfiguruje. Spróbuj ponownie, gdy się zsynchronizuje."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jiný tvůj telefon to právě nastavuje. Zkus to znovu, až se synchronizuje."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iný tvoj telefón to práve nastavuje. Skús to znova, keď sa zosynchronizuje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy másik telefonod épp beállítja ezt. Próbáld újra, ha az szinkronizált."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otro de tus teléfonos lo está configurando. Vuelve a intentarlo cuando se haya sincronizado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un autre de tes téléphones est en train de le configurer. Réessaie une fois qu'il s'est synchronisé."
           }
         }
       }
@@ -6655,6 +6887,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Duongöndro"
+          }
+        }
+      }
+    },
+    "Each passkey signs you in to this account. Names are only for you." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jeder Passkey meldet dich bei diesem Konto an. Die Namen siehst nur du."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Каждый ключ доступа входит в этот аккаунт. Названия видите только вы."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Кожен ключ доступу входить у цей обліковий запис. Назви бачите лише ви."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Każdy klucz dostępu loguje cię do tego konta. Nazwy widzisz tylko ty."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Každý přístupový klíč tě přihlásí k tomuto účtu. Názvy vidíš jen ty."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Každý prístupový kľúč ťa prihlási do tohto účtu. Názvy vidíš len ty."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mindegyik hozzáférési kulcs ebbe a fiókba léptet be. A neveket csak te látod."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cada clave de acceso inicia sesión en esta cuenta. Los nombres solo los ves tú."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Chaque clé d'accès te connecte à ce compte. Toi seul vois les noms."
           }
         }
       }
@@ -9614,6 +9904,122 @@
         }
       }
     },
+    "It can no longer sign you in, and anywhere it is signed in now is signed out, this phone included. The passkey itself stays in your password manager until you delete it there." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Er kann dich nicht mehr anmelden, und überall, wo er gerade angemeldet ist, wirst du abgemeldet, auch auf diesem Handy. Der Passkey selbst bleibt in deinem Passwortmanager, bis du ihn dort löschst."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Он больше не сможет входить в аккаунт, и везде, где с ним выполнен вход, произойдёт выход, на этом телефоне тоже. Сам ключ останется в менеджере паролей, пока вы не удалите его там."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Він більше не зможе входити в обліковий запис, і всюди, де з ним виконано вхід, буде вихід, на цьому телефоні теж. Сам ключ залишиться в менеджері паролів, доки ви не видалите його там."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie będzie już cię logować, a wszędzie, gdzie jest teraz zalogowany, nastąpi wylogowanie, także na tym telefonie. Sam klucz zostaje w menedżerze haseł, dopóki go tam nie usuniesz."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Už tě nebude přihlašovat a všude, kde je teď přihlášený, dojde k odhlášení, i na tomto telefonu. Samotný klíč zůstane ve správci hesel, dokud ho tam nesmažeš."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Už ťa nebude prihlasovať a všade, kde je teraz prihlásený, dôjde k odhláseniu, aj v tomto telefóne. Samotný kľúč zostane v správcovi hesiel, kým ho tam nevymažeš."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Többé nem léptet be, és mindenhol, ahol most be vagy vele jelentkezve, kijelentkezel, ezen a telefonon is. Maga a kulcs a jelszókezelőben marad, amíg ott nem törlöd."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya no podrá iniciar tu sesión, y donde esté iniciada ahora se cerrará, también en este teléfono. La clave en sí sigue en tu gestor de contraseñas hasta que la borres allí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elle ne pourra plus te connecter, et partout où elle est connectée, tu seras déconnecté, sur ce téléphone aussi. La clé elle-même reste dans ton gestionnaire de mots de passe tant que tu ne l'y supprimes pas."
+          }
+        }
+      }
+    },
+    "It can no longer sign you in, and anywhere it is signed in now is signed out. The passkey itself stays in your password manager until you delete it there." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Er kann dich nicht mehr anmelden, und überall, wo er gerade angemeldet ist, wirst du abgemeldet. Der Passkey selbst bleibt in deinem Passwortmanager, bis du ihn dort löschst."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Он больше не сможет входить в аккаунт, и везде, где с ним выполнен вход, произойдёт выход. Сам ключ останется в менеджере паролей, пока вы не удалите его там."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Він більше не зможе входити в обліковий запис, і всюди, де з ним виконано вхід, буде вихід. Сам ключ залишиться в менеджері паролів, доки ви не видалите його там."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie będzie już cię logować, a wszędzie, gdzie jest teraz zalogowany, nastąpi wylogowanie. Sam klucz zostaje w menedżerze haseł, dopóki go tam nie usuniesz."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Už tě nebude přihlašovat a všude, kde je teď přihlášený, dojde k odhlášení. Samotný klíč zůstane ve správci hesel, dokud ho tam nesmažeš."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Už ťa nebude prihlasovať a všade, kde je teraz prihlásený, dôjde k odhláseniu. Samotný kľúč zostane v správcovi hesiel, kým ho tam nevymažeš."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Többé nem léptet be, és mindenhol, ahol most be vagy vele jelentkezve, kijelentkezel. Maga a kulcs a jelszókezelőben marad, amíg ott nem törlöd."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya no podrá iniciar tu sesión, y donde esté iniciada ahora se cerrará. La clave en sí sigue en tu gestor de contraseñas hasta que la borres allí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elle ne pourra plus te connecter, et partout où elle est connectée, tu seras déconnecté. La clé elle-même reste dans ton gestionnaire de mots de passe tant que tu ne l'y supprimes pas."
+          }
+        }
+      }
+    },
     "Keep it on this phone, or online?" : {
       "localizations" : {
         "cs" : {
@@ -9904,6 +10310,64 @@
         }
       }
     },
+    "Leave it empty to use the password manager's name." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Leer lassen, um den Namen des Passwortmanagers zu verwenden."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Оставьте пустым, чтобы использовать название менеджера паролей."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Залиште порожнім, щоб використовувати назву менеджера паролів."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zostaw puste, by użyć nazwy menedżera haseł."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nech prázdné, aby se použil název správce hesel."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nechaj prázdne, aby sa použil názov správcu hesiel."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hagyd üresen, és a jelszókezelő neve jelenik meg."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Déjalo vacío para usar el nombre del gestor de contraseñas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Laisse vide pour utiliser le nom du gestionnaire de mots de passe."
+          }
+        }
+      }
+    },
     "Let friends nag you" : {
       "comment" : "Friends: the card asking for the notification permission, on the first visit with a friend.",
       "localizations" : {
@@ -9965,6 +10429,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Нехай друзі вас підганяють"
+          }
+        }
+      }
+    },
+    "Let your passkey unlock your counts on a new phone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lass deinen Passkey deine Zählungen auf einem neuen Handy entsperren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Пусть ключ доступа открывает ваши счёты на новом телефоне"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Нехай ключ доступу відкриває ваші підрахунки на новому телефоні"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Niech klucz dostępu odblokowuje twoje liczby na nowym telefonie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nech přístupový klíč odemyká tvé počty na novém telefonu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nech prístupový kľúč odomyká tvoje počty v novom telefóne"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Old fel a számaidat új telefonon a hozzáférési kulcsoddal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deja que tu clave de acceso desbloquee tus cuentas en un teléfono nuevo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Laisse ta clé d'accès déverrouiller tes décomptes sur un nouveau téléphone"
           }
         }
       }
@@ -12596,6 +13118,122 @@
         }
       }
     },
+    "Passkey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passkey"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klucz dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přístupový klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prístupový kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáférési kulcs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clave de acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clé d'accès"
+          }
+        }
+      }
+    },
+    "Passkeys" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passkeys"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключи доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключі доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klucze dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přístupové klíče"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prístupové kľúče"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáférési kulcsok"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Claves de acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clés d'accès"
+          }
+        }
+      }
+    },
     "POKE" : {
       "comment" : "Push loc-key, rendered by the phone (design: Localisation › Localised pushes). A friend poked you (once a day at most), neutral form (non-binary or no gender given): %1$@ their name. In the mascot's voice, written per language.",
       "extractionState" : "manual",
@@ -14099,6 +14737,180 @@
         }
       }
     },
+    "Remove" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entfernen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалить"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Видалити"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usuń"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odebrat"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odstrániť"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eltávolítás"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimer"
+          }
+        }
+      }
+    },
+    "Remove %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ entfernen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалить %@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Видалити %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usuń: %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odebrat %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odstrániť %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ eltávolítása"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimer %@"
+          }
+        }
+      }
+    },
+    "Remove “%@”?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "„%@“ entfernen?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалить «%@»?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Видалити «%@»?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usunąć „%@”?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odebrat „%@“?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odstrániť „%@“?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eltávolítod: „%@”?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Quitar «%@»?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimer « %@ » ?"
+          }
+        }
+      }
+    },
     "Removes all your data from this phone. It cannot be undone." : {
       "localizations" : {
         "cs" : {
@@ -14153,6 +14965,122 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Elimina todos tus datos de este teléfono. No se puede deshacer."
+          }
+        }
+      }
+    },
+    "Rename %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ umbenennen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Переименовать %@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Перейменувати %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zmień nazwę: %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přejmenovat %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Premenovať %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ átnevezése"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renombrar %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renommer %@"
+          }
+        }
+      }
+    },
+    "Rename passkey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passkey umbenennen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Переименовать ключ доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Перейменувати ключ доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zmień nazwę klucza dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přejmenovat přístupový klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Premenovať prístupový kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hozzáférési kulcs átnevezése"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renombrar clave de acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renommer la clé d'accès"
           }
         }
       }
@@ -14565,6 +15493,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ronda %1$lld · %2$@ de %3$@"
+          }
+        }
+      }
+    },
+    "Signing in with it on a new phone then brings your counts back without the recovery code." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eine Anmeldung damit auf einem neuen Handy bringt deine Zählungen dann ohne Wiederherstellungscode zurück."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тогда вход с ним на новом телефоне вернёт ваши счёты без кода восстановления."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Тоді вхід із ним на новому телефоні поверне ваші підрахунки без коду відновлення."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Logowanie nim na nowym telefonie przywróci wtedy twoje liczby bez kodu odzyskiwania."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přihlášení s ním na novém telefonu pak vrátí tvé počty bez obnovovacího kódu."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prihlásenie s ním v novom telefóne potom vráti tvoje počty bez obnovovacieho kódu."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ha új telefonon ezzel lépsz be, a számaid helyreállítási kód nélkül visszakerülnek."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Al iniciar sesión con ella en un teléfono nuevo, tus cuentas vuelven sin el código de recuperación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Te connecter avec elle sur un nouveau téléphone ramène alors tes décomptes sans le code de récupération."
           }
         }
       }
@@ -17394,6 +18380,64 @@
         }
       }
     },
+    "That passkey belongs to another account." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieser Passkey gehört zu einem anderen Konto."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Этот ключ доступа принадлежит другому аккаунту."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Цей ключ доступу належить іншому обліковому запису."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ten klucz dostępu należy do innego konta."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento přístupový klíč patří k jinému účtu."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento prístupový kľúč patrí k inému účtu."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez a hozzáférési kulcs egy másik fiókhoz tartozik."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esa clave de acceso pertenece a otra cuenta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette clé d'accès appartient à un autre compte."
+          }
+        }
+      }
+    },
     "That passkey did not work. Try again, or use your email instead." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -18504,6 +19548,64 @@
         }
       }
     },
+    "This is the only way to sign in to your account, so it stays. Add another passkey or an email first." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das ist der einzige Weg, dich bei deinem Konto anzumelden, deshalb bleibt er. Füge zuerst einen weiteren Passkey oder eine E-Mail hinzu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Это единственный способ войти в ваш аккаунт, поэтому он остаётся. Сначала добавьте другой ключ доступа или e-mail."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Це єдиний спосіб увійти у ваш обліковий запис, тому він залишається. Спершу додайте інший ключ доступу або e-mail."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To jedyny sposób logowania do twojego konta, więc zostaje. Najpierw dodaj inny klucz dostępu albo e-mail."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Je to jediný způsob, jak se přihlásit k tvému účtu, proto zůstává. Nejdřív přidej další přístupový klíč nebo e-mail."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Je to jediný spôsob, ako sa prihlásiť do tvojho účtu, preto zostáva. Najprv pridaj ďalší prístupový kľúč alebo e-mail."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Csak ezzel tudsz belépni a fiókodba, ezért marad. Előbb adj hozzá egy másik hozzáférési kulcsot vagy egy e-mail-címet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Es la única forma de iniciar sesión en tu cuenta, así que se queda. Añade antes otra clave de acceso o un correo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "C'est le seul moyen de te connecter à ton compte, donc elle reste. Ajoute d'abord une autre clé d'accès ou une adresse e-mail."
+          }
+        }
+      }
+    },
     "This is your own friendship code. Send it to a friend instead." : {
       "localizations" : {
         "cs" : {
@@ -18558,6 +19660,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Este es tu propio código de amistad. Envíaselo a un amigo."
+          }
+        }
+      }
+    },
+    "This passkey can't unlock your counts. Keep your recovery code, or add a new passkey in Passkeys." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieser Passkey kann deine Zählungen nicht entsperren. Bewahre deinen Wiederherstellungscode auf, oder füge unter Passkeys einen neuen hinzu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Этот ключ доступа не может открыть ваши счёты. Сохраните код восстановления или добавьте новый ключ в разделе «Ключи доступа»."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Цей ключ доступу не може відкрити ваші підрахунки. Збережіть код відновлення або додайте новий ключ у розділі «Ключі доступу»."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ten klucz dostępu nie odblokuje twoich liczb. Zachowaj kod odzyskiwania albo dodaj nowy klucz w Kluczach dostępu."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento přístupový klíč tvé počty neodemkne. Uschovej si obnovovací kód, nebo přidej nový klíč v Přístupových klíčích."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tento prístupový kľúč tvoje počty neodomkne. Uschovaj si obnovovací kód alebo pridaj nový kľúč v Prístupových kľúčoch."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ez a hozzáférési kulcs nem tudja feloldani a számaidat. Őrizd meg a helyreállítási kódot, vagy adj hozzá új kulcsot a Hozzáférési kulcsoknál."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta clave de acceso no puede desbloquear tus cuentas. Guarda tu código de recuperación o añade una clave nueva en Claves de acceso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette clé d'accès ne peut pas déverrouiller tes décomptes. Garde ton code de récupération, ou ajoute une nouvelle clé dans Clés d'accès."
           }
         }
       }
@@ -18907,6 +20067,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hoy"
+          }
+        }
+      }
+    },
+    "today" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "heute"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "сегодня"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "сьогодні"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dzisiaj"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dnes"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dnes"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ma"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "hoy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "aujourd'hui"
           }
         }
       }
@@ -19972,6 +21190,64 @@
         }
       }
     },
+    "Unlocks your counts on a new phone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entsperrt deine Zählungen auf einem neuen Handy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Открывает ваши счёты на новом телефоне"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Відкриває ваші підрахунки на новому телефоні"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odblokowuje twoje liczby na nowym telefonie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odemkne tvé počty na novém telefonu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odomkne tvoje počty v novom telefóne"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Új telefonon feloldja a számaidat"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desbloquea tus cuentas en un teléfono nuevo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Déverrouille tes décomptes sur un nouveau téléphone"
+          }
+        }
+      }
+    },
     "Use email instead" : {
       "localizations" : {
         "cs" : {
@@ -20026,6 +21302,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Використати пошту"
+          }
+        }
+      }
+    },
+    "Use my passkey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meinen Passkey verwenden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Использовать мой ключ доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Використати мій ключ доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Użyj mojego klucza dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Použít můj přístupový klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Použiť môj prístupový kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A hozzáférési kulcsom használata"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar mi clave de acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Utiliser ma clé d'accès"
           }
         }
       }

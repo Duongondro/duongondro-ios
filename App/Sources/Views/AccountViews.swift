@@ -18,7 +18,6 @@ struct AccountSection: View {
     @State private var usernameText = ""
     @State private var note: String?
     @State private var finishing = false
-    @State private var savingPasskey = false
 
     var body: some View {
         Group { rows }
@@ -57,6 +56,7 @@ struct AccountSection: View {
                     .disabled(finishing)
             }
         case .ready:
+            if account.offersPasskeyUnlock { PasskeyUnlockCard() }
             CardSection(header: "Account", footer: account.offline ? "The last sync did not finish. Your counts are safe on this phone and sync when the server can be reached." : nil) {
                 if let who = account.email ?? account.username {
                     SettingsRow("Signed in as", detail: Text(verbatim: who))
@@ -98,8 +98,7 @@ struct AccountSection: View {
                 Button { Task { await account.syncNow() } } label: {
                     SettingsRow("Sync", detail: syncDetail)
                 }
-                Button { savePasskey() } label: { SettingsRow("Save a passkey", chevron: true) }
-                    .disabled(account.busy || savingPasskey)
+                NavigationLink { PasskeysView() } label: { SettingsRow("Passkeys", chevron: true) }
                 if account.canSignOut {
                     Button { signingOut = true } label: {
                         Text("Sign out on this phone")
@@ -174,28 +173,6 @@ struct AccountSection: View {
                 case .setUp: await account.setUp()
                 case .ready: break
                 }
-            } catch {
-                note = accountError
-            }
-        }
-    }
-
-    private func savePasskey() {
-        // One ceremony at a time: a second tap would start another the server
-        // and the system sheet know nothing of.
-        guard !savingPasskey else { return }
-        savingPasskey = true
-        note = nil
-        Task {
-            defer { savingPasskey = false }
-            do {
-                // Signed in, this only adds a passkey: no sign-up, so no consent goes with it.
-                switch try await account.createPasskey(profile: nil, consent: false) {
-                case .saved: note = localized("Passkey saved.")
-                default: break
-                }
-            } catch Passkeys.Failure.refused {
-                note = localized("This phone could not save a passkey for Duongöndro.")
             } catch {
                 note = accountError
             }

@@ -229,6 +229,7 @@ final class AccountModel: ObservableObject {
     /// (the one it syncs with, or the last one signed out here): then nothing is
     /// kept or uploaded until the person chooses, and this returns false.
     private func signedIn(_ result: SignInResult) -> Bool {
+        signedInUser = result.userId
         let syncUser = (try? database.syncState())?.userID
         let setUpUser = account?.setUpUser ?? Account(api: anonymous, secrets: secrets, database: database).setUpUser
         let lastUser = UserDefaults.standard.string(forKey: Keys.lastUser).flatMap(UUID.init(uuidString:))
@@ -263,6 +264,9 @@ final class AccountModel: ObservableObject {
     /// pokes, and a recovery code on show.
     private func forgetOtherAccount() {
         Purge.deleteKeychainItems()
+        passkeys = []
+        passkeysLoaded = false
+        userKeyKept = false
         let kept = email
         username = nil
         displayName = ""
@@ -576,16 +580,20 @@ final class AccountModel: ObservableObject {
     func createPasskey(profile: Profile?, consent: Bool) async throws -> PasskeyResult {
         if let account {
             let ceremony = try await account.api.beginPasskeyAdd()
-            guard let credential = try await Passkeys.create(ceremony) else { return .cancelled }
-            try await account.api.finishPasskeyAdd(ceremony: ceremony.sessionId, credential: credential)
+            guard let created = try await Passkeys.create(ceremony) else { return .cancelled }
+            try await account.api.finishPasskeyAdd(ceremony: ceremony.sessionId, credential: created.json)
+            await coverNewPasskey(created, account: account)
             return .saved
         }
         let result: SignInResult
         do {
             let ceremony = try await anonymous.beginPasskeySignUp(SignUp(proof: invitation?.proof, consent: consent),
                                                                   profile: profile ?? Profile())
-            guard let credential = try await Passkeys.create(ceremony) else { return .cancelled }
-            result = try await anonymous.finishPasskeySignUp(ceremony: ceremony.sessionId, credential: credential)
+            guard let created = try await Passkeys.create(ceremony) else { return .cancelled }
+            result = try await anonymous.finishPasskeySignUp(ceremony: ceremony.sessionId, credential: created.json)
+            // Its box goes up once the keys exist; a passkey that gave no output at
+            // creation is offered later, by the card in Settings.
+            heldPRF = created.prf.map { (result.userId, PasskeyPRF(credentialID: created.credentialID, output: $0)) }
         } catch APIError.conflict {
             return .usernameTaken
         } catch SignUpFailure.unknownInvitation {
@@ -614,10 +622,128 @@ final class AccountModel: ObservableObject {
         } catch APIError.tooManyRequests {
             return .tooMany
         }
-        guard let credential = try await Passkeys.assert(ceremony) else { return nil }
-        return try await redeem(signIn: true) {
-            try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: credential)
+        guard let asserted = try await Passkeys.assert(ceremony) else { return nil }
+        let redeemed = try await redeem(signIn: true) {
+            try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: asserted.json)
         }
+        if let output = asserted.prf, let user = signedInUser {
+            heldPRF = (user, PasskeyPRF(credentialID: asserted.credentialID, output: output))
+        }
+        return redeemed
+    }
+
+    // MARK: Passkey unlock (PRF)
+
+    /// The PRF output of this launch's passkey ceremony, for the account it signed
+    /// in or made: it opens the keys on a new phone, or becomes the passkey's box
+    /// once this phone holds them. Memory only, used once.
+    private var heldPRF: (user: UUID, prf: PasskeyPRF)?
+
+    /// The account the last sign-in or sign-up was for (kept or held back).
+    private var signedInUser: UUID?
+
+    /// The PRF output held for `user`, taken.
+    private func takePRF(for user: UUID?) -> PasskeyPRF? {
+        defer { heldPRF = nil }
+        guard let held = heldPRF, held.user == user else { return nil }
+        return held.prf
+    }
+
+    /// A passkey just added in Settings: its box, from the output at creation or,
+    /// when the passkey gives one only at sign-in, from one more ceremony with it.
+    /// A failure leaves it for the card; the passkey itself is saved either way.
+    private func coverNewPasskey(_ created: Passkeys.Created, account: Account) async {
+        var prf = created.prf.map { PasskeyPRF(credentialID: created.credentialID, output: $0) }
+        if prf == nil, created.prfSupported {
+            prf = try? await Passkeys.prf(allowing: [created.credentialID])
+        }
+        if let prf { _ = try? await account.savePasskeyBox(prf) }
+        await refreshPasskeys()
+    }
+
+    /// The account's passkeys, as last fetched for Settings › Passkeys.
+    @Published private(set) var passkeys: [Passkey] = []
+    @Published private(set) var passkeysLoaded = false
+
+    /// The calm card in Settings: this phone holds the keys, can ask for a PRF
+    /// output, and a passkey of the account cannot unlock the counts yet.
+    var offersPasskeyUnlock: Bool {
+        status == .ready && Passkeys.prfAvailable && passkeys.contains { !$0.canUnlock }
+    }
+
+    /// U checked once a launch, after a sync: made if the account has none,
+    /// wrapped to, and given to this account's other phones.
+    private var userKeyKept = false
+
+    private func keepPasskeyUnlock(_ account: Account) async {
+        if !userKeyKept { userKeyKept = (try? await account.keepUserKey()) ?? false }
+        if let prf = takePRF(for: userID) { _ = try? await account.savePasskeyBox(prf) }
+        await refreshPasskeys()
+    }
+
+    func refreshPasskeys() async {
+        guard let account, status == .ready || status == .needsKeys else { return }
+        if let list = try? await account.api.passkeys() {
+            passkeys = list
+            passkeysLoaded = true
+        }
+    }
+
+    enum UnlockResult { case saved, cancelled, noPRF, waiting, otherAccount, failed }
+
+    /// The card's ceremony: whichever passkey answers (no allowCredentials) gets
+    /// a box of U. One system prompt; a passkey without PRF is said so.
+    func letPasskeyUnlock() async -> UnlockResult {
+        guard let account, status == .ready else { return .failed }
+        do {
+            guard let prf = try await Passkeys.prf() else { return .cancelled }
+            let result = try await account.savePasskeyBox(prf)
+            await refreshPasskeys()
+            switch result {
+            case .saved: return .saved
+            case .waitingForUserKey: return .waiting
+            case .otherAccountsPasskey: return .otherAccount
+            }
+        } catch Passkeys.Failure.noPRF {
+            return .noPRF
+        } catch {
+            return .failed
+        }
+    }
+
+    enum RemoveResult { case removed, lastWayToSignIn, failed }
+
+    func renamePasskey(_ passkey: Passkey, to name: String) async -> Bool {
+        guard let account else { return false }
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        do {
+            try await account.api.renamePasskey(passkey.id, name: trimmed.isEmpty ? nil : String(trimmed.prefix(64)))
+            await refreshPasskeys()
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    /// Removes a passkey, its box and the sessions it signed in with; removing
+    /// the one this phone signed in with signs this phone out.
+    func removePasskey(_ passkey: Passkey) async -> RemoveResult {
+        guard let account else { return .failed }
+        do {
+            try await account.api.removePasskey(passkey.id)
+        } catch APIError.conflict {
+            return .lastWayToSignIn
+        } catch APIError.notFound {
+            // Already gone (removed on another phone).
+        } catch {
+            return .failed
+        }
+        if passkey.current {
+            sessionEnded()
+        } else {
+            await refreshPasskeys()
+        }
+        return .removed
     }
 
     // MARK: Keys
@@ -626,8 +752,12 @@ final class AccountModel: ObservableObject {
     /// also takes the profile as the server has it, for a sign-in on a new phone.
     func standing() async throws -> Account.Standing {
         guard let account else { throw Account.Failure.missingSecret }
-        let standing = try await account.standing()
-        if standing == .ready { status = .ready }
+        var standing = try await account.standing()
+        if standing == .restore, try await unlockWithPasskey(account) { standing = .ready }
+        if standing == .ready {
+            status = .ready
+            if heldPRF != nil { Task { await self.keepPasskeyUnlock(account) } }
+        }
         if let me = try? await account.api.me() {
             if !me.displayName.isEmpty { displayName = me.displayName }
             username = me.username
@@ -635,6 +765,27 @@ final class AccountModel: ObservableObject {
             if let g = me.gender { UserDefaults.standard.set(g, forKey: Gender.storageKey) }
         }
         return standing
+    }
+
+    /// A new phone signed in with a passkey that has a box: the keys come from
+    /// it, no recovery code asked. False without a box or a PRF output.
+    private func unlockWithPasskey(_ account: Account) async throws -> Bool {
+        guard let prf = heldPRF.flatMap({ held in held.user == signedInUser ? held.prf : nil }) else { return false }
+        return try await keyed {
+            guard !account.hasKeys else { return true }
+            do {
+                guard try await account.unlock(with: prf) else { return false }
+            } catch let error as URLError {
+                throw error
+            } catch {
+                // A box or wrap that does not verify: the recovery code still can.
+                return false
+            }
+            self.heldPRF = nil
+            self.status = .ready
+            self.afterKeysInBackground(account)
+            return true
+        }
     }
 
     /// Sets up keys during onboarding (or finishes an interrupted set-up, with the
@@ -765,6 +916,8 @@ final class AccountModel: ObservableObject {
             // Public streaks follow the sessions just synced; a failure here
             // leaves the counts synced and tries again next time.
             _ = try? await social?.publishStreaks()
+            // U and the passkeys' boxes follow, never ahead of the counts.
+            await keepPasskeyUnlock(account)
             lastSync = Date()
             UserDefaults.standard.set(lastSync, forKey: Keys.lastSync)
             offline = false
@@ -776,22 +929,29 @@ final class AccountModel: ObservableObject {
                 error = nil
             }
         } catch APIError.unauthorized {
-            // The session ended (removed elsewhere): keys stay, sign in again. The
-            // server dropped the push token with the session.
-            try? secrets.delete(Self.tokenName)
-            UserDefaults.standard.removeObject(forKey: Keys.pushSent)
-        UserDefaults.standard.removeObject(forKey: Keys.pushSentAt)
-            self.account = nil
-            social = nil
-            status = .signedOut
-            // No session to finish the account steps with: sign in again instead.
-            stepsPending = false
-            error = nil
+            sessionEnded()
         } catch {
             // Offline or the server is away: the data is safe here and syncs later.
             offline = true
             self.error = nil
         }
+    }
+
+    /// The session ended (removed elsewhere, or its passkey removed): keys stay,
+    /// sign in again. The server dropped the push token with the session.
+    private func sessionEnded() {
+        try? secrets.delete(Self.tokenName)
+        UserDefaults.standard.removeObject(forKey: Keys.pushSent)
+        UserDefaults.standard.removeObject(forKey: Keys.pushSentAt)
+        account = nil
+        social = nil
+        status = .signedOut
+        passkeys = []
+        passkeysLoaded = false
+        userKeyKept = false
+        // No session to finish the account steps with: sign in again instead.
+        stepsPending = false
+        error = nil
     }
 
     /// Only with an account: local mode makes no network call at all.
@@ -1017,6 +1177,10 @@ final class AccountModel: ObservableObject {
         forgetHeldInvite()
         stepsPending = false
         heldSignIn = nil
+        heldPRF = nil
+        passkeys = []
+        passkeysLoaded = false
+        userKeyKept = false
         magicToken = nil
         linkWindow.close()
         status = .none
