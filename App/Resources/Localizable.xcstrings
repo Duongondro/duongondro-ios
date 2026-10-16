@@ -1892,35 +1892,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@count@"
-          },
-          "substitutions" : {
-            "count" : {
-              "argNum" : 2,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%1$lld sur %2$lld pratique"
-                    }
-                  },
-                  "many" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%1$lld sur %2$lld pratiques"
-                    }
-                  },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%1$lld sur %2$lld pratiques"
-                    }
-                  }
-                }
-              }
-            }
+            "value" : "Pratique %1$lld sur %2$lld"
           }
         },
         "hu" : {
@@ -3751,7 +3723,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ajouter un e-mail ?"
+            "value" : "Ajouter une adresse e-mail ?"
           }
         },
         "hu" : {
@@ -4273,7 +4245,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un compte dans une app de pratique bouddhiste dit quelque chose de tes convictions, ce que le RGPD traite comme une catégorie particulière de données. Le serveur conserve ton compte : tes clés d'accès, et ton e-mail si tu en ajoutes un ; le nom que voient tes amis ; ton nom d'utilisateur et ton genre si tu les indiques ; tes amis ; et tes séries publiques. Tes décomptes restent chiffrés sur tes téléphones."
+            "value" : "Un compte dans une app de pratique bouddhiste dit quelque chose de tes convictions, ce que le RGPD traite comme une catégorie particulière de données. Le serveur conserve ton compte : tes clés d'accès, et ton e-mail si tu en ajoutes un ; le nom que voient tes amis ; ton nom d'utilisateur et ton genre si tu les indiques ; tes amis ; et tes séries publiques. Tes décomptes restent chiffrés sur tes téléphones."
           }
         },
         "hu" : {
@@ -4325,7 +4297,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un rappel le soir quand une série est menacée. Il est programmé sur ce téléphone ; rien n'en sort."
+            "value" : "Un rappel le soir quand une série est menacée. Il est programmé sur ce téléphone ; rien n'en sort."
           }
         },
         "hu" : {
@@ -4499,7 +4471,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Toute personne ayant ce code devient ton ami(e) · expire dans 7 jours"
+            "value" : "Toute personne ayant ce code devient ton ami(e) · valable 7 jours"
           }
         },
         "hu" : {
@@ -5021,7 +4993,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bloquer ?"
+            "value" : "Bloquer ?"
           }
         },
         "hu" : {
@@ -5654,7 +5626,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compte pour %@"
+            "value" : "Compté pour %@"
           }
         },
         "ru" : {
@@ -6768,7 +6740,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Huit lettres et chiffres, comme dans l'e-mail. Majuscules et minuscules sont équivalentes ; O et 0, I et 1 comptent pareil. Valable 15 minutes."
+            "value" : "Huit lettres et chiffres, comme dans l'e-mail. Majuscules et minuscules sont équivalentes ; O et 0, I et 1 se valent. Valable 15 minutes."
           }
         },
         "hu" : {
@@ -7116,7 +7088,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "L'effacer ici et continuer ? Ce qui en a été synchronisé reste dans ce compte-là."
+            "value" : "L'effacer ici et continuer ? Ce qui en a été synchronisé reste dans ce compte-là."
           }
         },
         "hu" : {
@@ -8955,7 +8927,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Depuis un carnet ou un tableur ; une estimation suffit."
+            "value" : "Depuis un carnet ou un tableur ; une estimation suffit."
           }
         },
         "hu" : {
@@ -9247,7 +9219,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As-tu terminé le ngöndro ?"
+            "value" : "As-tu terminé le ngöndro ?"
           }
         },
         "hu" : {
@@ -9307,7 +9279,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As-tu terminé le Short refuge ?"
+            "value" : "As-tu terminé le Short refuge ?"
           }
         },
         "hu" : {
@@ -9781,7 +9753,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sur ce téléphone seulement, ou en ligne ?"
+            "value" : "Sur ce téléphone seulement, ou en ligne ?"
           }
         },
         "hu" : {
@@ -10304,7 +10276,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lien ou QR code, valable 7 jours"
+            "value" : "Lien ou code QR, valable 7 jours"
           }
         },
         "hu" : {
@@ -10768,7 +10740,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Créer un nouveau code de récupération ?"
+            "value" : "Créer un nouveau code de récupération ?"
           }
         },
         "hu" : {
@@ -11000,7 +10972,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Marquer aujourd'hui comme fait"
+            "value" : "Marquer comme fait"
           }
         },
         "hu" : {
@@ -11413,7 +11385,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ensuite, nous te demanderons deux de ces groupes, pour vérifier. O et 0, I et 1 comptent pareil."
+            "value" : "Ensuite, nous te demanderons deux de ces groupes, pour vérifier. O et 0, I et 1 se valent."
           }
         },
         "hu" : {
@@ -11472,7 +11444,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aucun compte n'utilise cet e-mail. Vérifie l'adresse, ou reviens en arrière et crée un compte."
+            "value" : "Aucun compte n'utilise cette adresse e-mail. Vérifie l'adresse, ou reviens en arrière et crée un compte."
           }
         },
         "hu" : {
@@ -11524,7 +11496,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pas encore d'amis. Un code d'amitié vous rend ami(e)s tous les deux ; l'autre voit tes séries publiques, jamais tes décomptes."
+            "value" : "Pas encore d'amis. Un code d'amitié vous rend ami(e)s tous les deux ; l'autre voit tes séries publiques, jamais tes décomptes."
           }
         },
         "hu" : {
@@ -11641,7 +11613,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pas de rappels"
+            "value" : "Aucun rappel"
           }
         },
         "hu" : {
@@ -12640,7 +12612,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Seulement sur ce téléphone. Un compte ajoute les amis, les séries publiques et la synchronisation entre téléphones ; tes décomptes restent chiffrés de bout en bout."
+            "value" : "Seulement sur ce téléphone. Un compte ajoute les amis, les séries publiques et la synchronisation entre téléphones ; tes décomptes restent chiffrés de bout en bout."
           }
         },
         "hu" : {
@@ -12809,7 +12781,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Facultatif. Certaines langues, dont le polonais, le russe et le français, s'en servent pour accorder les mots qui te concernent, sur ce téléphone et sur ceux de tes amis. Sans lui, elles utilisent des formes neutres."
+            "value" : "Facultatif. Certaines langues, dont le français, le polonais, le tchèque, le slovaque, le russe et l'ukrainien, s'en servent pour accorder les mots qui te concernent, notamment sur les téléphones de tes amis. Sans lui, elles utilisent des formes neutres."
           }
         },
         "ru" : {
@@ -12887,7 +12859,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
+            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
           }
         },
         "hu" : {
@@ -12953,7 +12925,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
+            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
           }
         },
         "hu" : {
@@ -13019,7 +12991,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
+            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
           }
         },
         "hu" : {
@@ -13444,7 +13416,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Colle le lien que ton ami(e) t'a envoyé."
+            "value" : "Colle le lien qu'on t'a envoyé."
           }
         },
         "hu" : {
@@ -14202,7 +14174,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR code du lien d'amitié"
+            "value" : "Code QR du lien d'amitié"
           }
         },
         "hu" : {
@@ -15682,7 +15654,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu ne devrais pas être en train de méditer ?"
+            "value" : "Tu ne devrais pas être en train de méditer ?"
           }
         },
         "hu" : {
@@ -16268,7 +16240,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Se déconnecter sur ce téléphone ?"
+            "value" : "Se déconnecter sur ce téléphone ?"
           }
         },
         "hu" : {
@@ -16326,7 +16298,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Connecté(e) en tant que"
+            "value" : "Session ouverte en tant que"
           }
         },
         "hu" : {
@@ -18201,7 +18173,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le serveur indique maintenant pour cette personne une autre clé que celle que ce téléphone a vue en premier ; ses séries sont donc masquées. C'est peut-être un nouveau téléphone sans restauration, ou quelqu'un qui s'interpose. Voyez-vous en personne, ou demande un nouveau code d'amitié : l'accepter vérifie à nouveau sa clé."
+            "value" : "Le serveur indique maintenant pour cette personne une autre clé que celle que ce téléphone a vue en premier ; ses séries sont donc masquées. C'est peut-être un nouveau téléphone sans restauration, ou quelqu'un qui s'interpose. Retrouve cette personne en vrai, ou demande-lui un nouveau code d'amitié : l'accepter vérifie à nouveau sa clé."
           }
         },
         "hu" : {
@@ -18613,7 +18585,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cet e-mail appartient à un autre compte."
+            "value" : "Cette adresse e-mail appartient à un autre compte."
           }
         },
         "hu" : {
@@ -18723,7 +18695,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ce code d'amitié n'est pas valide, il n'a donc pas été accepté. Demande à ton ami(e) de le renvoyer."
+            "value" : "Ce code d'amitié n'est pas authentique : il a peut-être été modifié en route, il n'a donc pas été accepté. Demande à ton ami(e) de le renvoyer."
           }
         },
         "hu" : {
@@ -20197,7 +20169,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Saisis le code envoyé à %@."
+            "value" : "Saisis le code que nous avons envoyé à %@."
           }
         },
         "hu" : {
@@ -20423,7 +20395,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Retirer des amis ?"
+            "value" : "Retirer des amis ?"
           }
         },
         "hu" : {
@@ -20487,7 +20459,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Utiliser plutôt un e-mail"
+            "value" : "Utiliser plutôt l'e-mail"
           }
         },
         "hu" : {
@@ -20835,7 +20807,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bon retour"
+            "value" : "Content de te revoir"
           }
         },
         "hu" : {
@@ -20887,7 +20859,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Que s'est-il passé ?"
+            "value" : "Que s'est-il passé ?"
           }
         },
         "hu" : {
@@ -20951,7 +20923,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Comment devons-nous t'appeler ?"
+            "value" : "Comment devons-nous t'appeler ?"
           }
         },
         "hu" : {
@@ -21009,7 +20981,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Quelle est ton adresse e-mail ?"
+            "value" : "Quelle est ton adresse e-mail ?"
           }
         },
         "hu" : {
@@ -21061,7 +21033,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Quand veux-tu un rappel ?"
+            "value" : "Quand veux-tu un rappel ?"
           }
         },
         "hu" : {
@@ -21119,7 +21091,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Où en es-tu avec %@ ?"
+            "value" : "Où en es-tu avec %@ ?"
           }
         },
         "hu" : {
@@ -21177,7 +21149,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lesquelles pratiques-tu chaque jour ?"
+            "value" : "Lesquelles pratiques-tu chaque jour ?"
           }
         },
         "hu" : {
@@ -21409,7 +21381,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Toi"
+            "value" : "Profil"
           }
         },
         "hu" : {
@@ -21765,7 +21737,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tes décomptes sont chiffrés sur ce téléphone avant d'en sortir. Configure les clés sur ton premier téléphone ; sur un nouveau, restaure-les avec ton code de récupération."
+            "value" : "Tes décomptes sont chiffrés sur ce téléphone avant d'en sortir. Configure les clés sur ton premier téléphone ; sur un nouveau, restaure-les avec ton code de récupération."
           }
         },
         "hu" : {
@@ -22235,7 +22207,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ton téléphone propose la clé d'accès que tu as enregistrée. Pas de clé d'accès sur ce téléphone ? Nous t'envoyons un lien et un code par e-mail."
+            "value" : "Ton téléphone propose la clé d'accès que tu as enregistrée. Pas de clé d'accès sur ce téléphone ? Nous t'envoyons un lien et un code par e-mail."
           }
         },
         "hu" : {
@@ -22992,7 +22964,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "se termine %@"
+            "value" : "se termine le %@"
           }
         },
         "hu" : {
@@ -23462,7 +23434,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur ; l'export ne contient donc que ce qui se trouve sur ce téléphone."
+            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur ; l'export ne contient donc que ce qui se trouve sur ce téléphone."
           }
         },
         "hu" : {
