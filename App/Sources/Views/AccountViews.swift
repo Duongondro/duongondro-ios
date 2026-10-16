@@ -128,12 +128,6 @@ struct AccountSection: View {
                     }
                 }
             }
-            CardSection(header: "This device") {
-                SettingsRow("Device key", detail: Text(tierName))
-                if let n = account.deviceCount {
-                    SettingsRow("Your devices", detail: Text(verbatim: "\(n)"))
-                }
-            }
             .alert("Your name", isPresented: $naming) {
                 TextField("Name", text: $name)
                 Button("Save") { Task { await account.setDisplayName(name) } }
@@ -228,15 +222,6 @@ struct AccountSection: View {
         if account.syncing { return Text("Syncing…") }
         if let last = account.lastSync { return Text(last.formatted(Date.RelativeFormatStyle(presentation: .named, locale: .appLanguage))) }
         return Text("Not yet")
-    }
-
-    private var tierName: LocalizedStringKey {
-        switch account.deviceTier {
-        case .hardware: "Secure Enclave"
-        case .tee: "Trusted environment"
-        case .software: "Keychain"
-        case nil: "None"
-        }
     }
 }
 

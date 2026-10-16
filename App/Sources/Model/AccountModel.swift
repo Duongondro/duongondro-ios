@@ -134,8 +134,6 @@ final class AccountModel: ObservableObject {
     /// Where the account steps open over the app (Settings, Friends): a new
     /// account, or signing in.
     @Published var accountFlow: AccountFlow?
-    /// The account's registered devices, for Settings' "Your devices".
-    @Published private(set) var deviceCount: Int?
     /// The server's build, for Settings' About.
     @Published private(set) var serverVersion: ServerVersion?
     /// An invite opened from a link or pasted, waiting to be accepted.
@@ -277,7 +275,6 @@ final class AccountModel: ObservableObject {
         pokedOn = [:]
         invites = [:]
         lastSync = nil
-        deviceCount = nil
         // The other account's gender would otherwise go up to this one.
         for key in Keys.all + [Keys.lastUser, Gender.storageKey] { UserDefaults.standard.removeObject(forKey: key) }
         email = kept
@@ -825,7 +822,6 @@ final class AccountModel: ObservableObject {
                 displayName = me.displayName
                 username = me.username
                 email = me.email
-                deviceCount = me.devices.count
                 await reconcileGender(server: me.gender.flatMap(Gender.init(rawValue:)), social: social)
             }
         } catch {
@@ -1028,7 +1024,6 @@ final class AccountModel: ObservableObject {
         recoveryCode = nil
         onShow.forget()
         recoveryUnconfirmed = false
-        deviceCount = nil
         serverVersion = nil
         error = nil
         // Last, as the properties above write some of these back: nothing of the
