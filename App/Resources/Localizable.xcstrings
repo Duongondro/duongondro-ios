@@ -15085,6 +15085,64 @@
         }
       }
     },
+    "Removed, but the unlock key was not replaced. Try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entfernt, aber der Entsperrschlüssel wurde nicht ersetzt. Versuch es noch einmal."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалён, но ключ разблокировки не заменён. Попробуйте ещё раз."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Видалено, але ключ розблокування не замінено. Спробуйте ще раз."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usunięto, ale klucz odblokowania nie został wymieniony. Spróbuj ponownie."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odebráno, ale odemykací klíč se nevyměnil. Zkus to znovu."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odstránené, ale odomykací kľúč sa nevymenil. Skús to znova."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eltávolítva, de a feloldókulcs nem cserélődött le. Próbáld újra."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitada, pero la llave de desbloqueo no se cambió. Vuelve a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimée, mais la clé de déverrouillage n'a pas été remplacée. Réessaie."
+          }
+        }
+      }
+    },
     "Removes all your data from this phone. It cannot be undone." : {
       "localizations" : {
         "cs" : {
@@ -15255,6 +15313,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Renommer la clé d'accès"
+          }
+        }
+      }
+    },
+    "Replace the unlock key" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entsperrschlüssel ersetzen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Заменить ключ разблокировки"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Замінити ключ розблокування"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wymień klucz odblokowania"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vyměnit odemykací klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vymeniť odomykací kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A feloldókulcs cseréje"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cambiar la llave de desbloqueo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remplacer la clé de déverrouillage"
           }
         }
       }
@@ -19196,6 +19312,122 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "La meditación de Short refuge que haces antes de empezar el ngöndro."
+          }
+        }
+      }
+    },
+    "The unlock key was not replaced, so the passkey was not removed. Try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Entsperrschlüssel wurde nicht ersetzt, deshalb wurde der Passkey nicht entfernt. Versuch es noch einmal."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ разблокировки не заменён, поэтому ключ доступа не удалён. Попробуйте ещё раз."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ розблокування не замінено, тому ключ доступу не видалено. Спробуйте ще раз."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klucz odblokowania nie został wymieniony, więc klucz dostępu nie został usunięty. Spróbuj ponownie."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odemykací klíč se nevyměnil, takže přístupový klíč nebyl odebrán. Zkus to znovu."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odomykací kľúč sa nevymenil, takže prístupový kľúč nebol odstránený. Skús to znova."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A feloldókulcs nem cserélődött le, ezért a hozzáférési kulcs nem lett eltávolítva. Próbáld újra."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La llave de desbloqueo no se cambió, así que la clave de acceso no se quitó. Vuelve a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La clé de déverrouillage n'a pas été remplacée, donc la clé d'accès n'a pas été supprimée. Réessaie."
+          }
+        }
+      }
+    },
+    "The unlock key was replaced." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Entsperrschlüssel wurde ersetzt."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ разблокировки заменён."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ розблокування замінено."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klucz odblokowania został wymieniony."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odemykací klíč byl vyměněn."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odomykací kľúč bol vymenený."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A feloldókulcs lecserélődött."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La llave de desbloqueo se cambió."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La clé de déverrouillage a été remplacée."
           }
         }
       }

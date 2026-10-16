@@ -13,6 +13,7 @@ struct PasskeysView: View {
     @State private var renaming: Passkey?
     @State private var newName = ""
     @State private var removing: Passkey?
+    @State private var replacing = false
 
     var body: some View {
         ScrollView {
@@ -35,6 +36,11 @@ struct PasskeysView: View {
                     ProgressView().frame(maxWidth: .infinity)
                 }
                 StepButton(title: "Add a passkey", busy: adding) { add() }
+                if account.unlockKeyNotReplaced {
+                    Button { replaceAgain() } label: { AccentRow(title: "Replace the unlock key") }
+                        .disabled(replacing)
+                        .padding(.horizontal, Theme.Space.l)
+                }
                 if let note {
                     Text(verbatim: note)
                         .font(.footnote)
@@ -67,7 +73,7 @@ struct PasskeysView: View {
             Button("Remove", role: .destructive) { remove(passkey) }
             // Removing is not revocation: a passkey that could unlock the counts
             // may have opened them already (docs/crypto.md › Passkey unlock).
-            if passkey.canUnlock {
+            if account.canReplaceUnlockKey(removing: passkey) {
                 Button("Remove and replace the unlock key", role: .destructive) { remove(passkey, replacingUnlockKey: true) }
             }
             Button("Cancel", role: .cancel) {}
@@ -75,7 +81,7 @@ struct PasskeysView: View {
             let removal = passkey.current
                 ? Text("It can no longer sign you in, and anywhere it is signed in now is signed out, this phone included. The passkey itself stays in your password manager until you delete it there.")
                 : Text("It can no longer sign you in, and anywhere it is signed in now is signed out. The passkey itself stays in your password manager until you delete it there.")
-            if passkey.canUnlock {
+            if account.canReplaceUnlockKey(removing: passkey) {
                 removal + Text(verbatim: "\n\n")
                     + Text("Replacing the unlock key too: other phones are signed out, and this passkey can no longer unlock your counts on a new phone. A phone it already unlocked keeps what it has. Your other passkeys then need setting up again.")
             } else {
@@ -116,6 +122,24 @@ struct PasskeysView: View {
             case .lastWayToSignIn:
                 note = localized("This is the only way to sign in to your account, so it stays. Add another passkey or an email first.")
             case .failed: note = accountError
+            case .removedButKeyNotReplaced:
+                note = localized("Removed, but the unlock key was not replaced. Try again.")
+            case .keyNotReplaced:
+                note = localized("The unlock key was not replaced, so the passkey was not removed. Try again.")
+            }
+        }
+    }
+
+    private func replaceAgain() {
+        guard !replacing else { return }
+        replacing = true
+        note = nil
+        Task {
+            defer { replacing = false }
+            if await account.replaceUnlockKey() {
+                note = localized("The unlock key was replaced.")
+            } else {
+                note = localized("Removed, but the unlock key was not replaced. Try again.")
             }
         }
     }

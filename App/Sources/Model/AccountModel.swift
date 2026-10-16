@@ -714,7 +714,37 @@ final class AccountModel: ObservableObject {
         }
     }
 
-    enum RemoveResult { case removed, lastWayToSignIn, failed }
+    enum RemoveResult {
+        case removed, lastWayToSignIn, failed
+        /// Removed, but U was not replaced: the person can try again.
+        case removedButKeyNotReplaced
+        /// This phone's own passkey: U was not replaced, so nothing was removed.
+        case keyNotReplaced
+    }
+
+    /// The last "Remove and replace the unlock key" removed the passkey but did
+    /// not replace U: Passkeys offers to try again.
+    @Published private(set) var unlockKeyNotReplaced = false
+
+    /// "Replace the unlock key" again, after a replacement was refused.
+    func replaceUnlockKey() async -> Bool {
+        guard let account else { return false }
+        do {
+            try await account.replaceUnlockKey()
+            unlockKeyNotReplaced = false
+            await refreshPasskeys()
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    /// Whether this passkey could be removed with the unlock key replaced: the
+    /// passkey this phone signed in with is removed last, so it is not offered
+    /// when it is plainly the last way to sign in.
+    func canReplaceUnlockKey(removing passkey: Passkey) -> Bool {
+        passkey.canUnlock && !(passkey.current && passkeys.count == 1 && email == nil)
+    }
 
     func renamePasskey(_ passkey: Passkey, to name: String) async -> Bool {
         guard let account else { return false }
@@ -742,11 +772,19 @@ final class AccountModel: ObservableObject {
             }
         } catch APIError.conflict {
             return .lastWayToSignIn
+        } catch Account.Failure.lastWayToSignIn {
+            return .lastWayToSignIn
+        } catch Account.Failure.userKeyNotReplaced {
+            if passkey.current { return .keyNotReplaced }
+            unlockKeyNotReplaced = true
+            await refreshPasskeys()
+            return .removedButKeyNotReplaced
         } catch APIError.notFound {
             // Already gone (removed on another phone).
         } catch {
             return .failed
         }
+        if replacingUnlockKey { unlockKeyNotReplaced = false }
         if passkey.current {
             sessionEnded()
         } else {
@@ -957,6 +995,7 @@ final class AccountModel: ObservableObject {
         passkeys = []
         passkeysLoaded = false
         userKeyKept = false
+        unlockKeyNotReplaced = false
         heldPRF = nil
         // No session to finish the account steps with: sign in again instead.
         stepsPending = false
