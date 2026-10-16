@@ -136,7 +136,7 @@ private struct GeneralSection: View {
                     .pickerStyle(.menu)
                     .tint(Theme.accent)
                 }
-                Text("Optional. Polish, Czech, Slovak, Russian and Ukrainian use it to conjugate words about you, on this phone and your friends'. Without it, they use neutral forms.")
+                Text("Optional. Some languages use different forms for men and women.")
                     .font(.footnote)
                     .foregroundStyle(Theme.muted)
                     .fixedSize(horizontal: false, vertical: true)

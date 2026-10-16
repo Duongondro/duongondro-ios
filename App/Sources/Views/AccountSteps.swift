@@ -545,7 +545,7 @@ struct GenderStep: View {
 
     var body: some View {
         AccountPage(title: "Your gender",
-                    detail: Text("Some languages use different verb endings for men and women. If you skip this step or choose \u{201C}Non-binary,\u{201D} the app will use gender-neutral forms wherever possible.")) {
+                    detail: Text("Optional. Some languages use different forms for men and women.")) {
             EmptyView()
         } actions: {
             ErrorLine(text: call.failed ? accountError : nil)

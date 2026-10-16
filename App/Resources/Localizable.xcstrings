@@ -12654,60 +12654,60 @@
         }
       }
     },
-    "Optional. Polish, Czech, Slovak, Russian and Ukrainian use it to conjugate words about you, on this phone and your friends'. Without it, they use neutral forms." : {
+    "Optional. Some languages use different forms for men and women." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Freiwillig. Polnisch, Tschechisch, Slowakisch, Russisch und Ukrainisch beugen damit Wörter über dich, auf diesem Telefon und auf denen deiner Freunde. Ohne Angabe gelten neutrale Formen."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Facultatif. Certaines langues, dont le français, le polonais, le tchèque, le slovaque, le russe et l'ukrainien, s'en servent pour accorder les mots qui te concernent, notamment sur les téléphones de tes amis. Sans lui, elles utilisent des formes neutres."
+            "state" : "translated",
+            "value" : "Optional. Manche Sprachen haben unterschiedliche Formen für Männer und Frauen."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Необязательно. В польском, чешском, словацком, русском и украинском по нему согласуются слова о вас — на этом телефоне и у ваших друзей. Без него используются нейтральные формы."
+            "state" : "translated",
+            "value" : "Необязательно. В некоторых языках есть разные формы для мужчин и женщин."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Необов’язково. Польська, чеська, словацька, російська й українська узгоджують за нею слова про вас — на цьому телефоні й у ваших друзів. Без неї використовуються нейтральні форми."
+            "state" : "translated",
+            "value" : "Необов'язково. У деяких мовах є різні форми для чоловіків і жінок."
           }
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Opcjonalne. Polski, czeski, słowacki, rosyjski i ukraiński odmieniają według niej słowa o Tobie, na tym telefonie i u Twoich przyjaciół. Bez niej używane są formy neutralne."
+            "state" : "translated",
+            "value" : "Opcjonalnie. Niektóre języki mają różne formy dla mężczyzn i kobiet."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nepovinné. Polština, čeština, slovenština, ruština a ukrajinština podle něj ohýbají slova o tobě, v tomto telefonu i u tvých přátel. Bez něj se použijí neutrální tvary."
+            "state" : "translated",
+            "value" : "Nepovinné. Některé jazyky mají různé tvary pro muže a ženy."
           }
         },
         "sk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nepovinné. Poľština, čeština, slovenčina, ruština a ukrajinčina podľa neho ohýbajú slová o tebe, v tomto telefóne aj u tvojich priateľov. Bez neho sa použijú neutrálne tvary."
+            "state" : "translated",
+            "value" : "Nepovinné. Niektoré jazyky majú rôzne tvary pre mužov a ženy."
           }
         },
         "hu" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nem kötelező. A lengyel, cseh, szlovák, orosz és ukrán nyelv ez alapján ragozza a rólad szóló szavakat, ezen a telefonon és a barátaidén is. Enélkül semleges alakokat használnak."
+            "state" : "translated",
+            "value" : "Nem kötelező. Egyes nyelvek eltérő alakokat használnak férfiakra és nőkre."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Opcional. El polaco, el checo, el eslovaco, el ruso y el ucraniano lo usan para conjugar las palabras sobre ti, en este teléfono y en los de tus amigos. Sin él, usan formas neutras."
+            "state" : "translated",
+            "value" : "Opcional. Algunos idiomas usan formas distintas para hombres y mujeres."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Facultatif. Certaines langues ont des formes différentes pour les hommes et les femmes."
           }
         }
       }
@@ -16512,64 +16512,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hasta ahora"
-          }
-        }
-      }
-    },
-    "Some languages use different verb endings for men and women. If you skip this step or choose “Non-binary,” the app will use gender-neutral forms wherever possible." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Některé jazyky, včetně češtiny, mají pro muže a ženy různé koncovky sloves. Pokud tento krok přeskočíš nebo zvolíš „Nebinární“, aplikace bude všude, kde to jde, používat genderově neutrální tvary."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Manche Sprachen haben für Männer und Frauen unterschiedliche Verbendungen. Wenn du diesen Schritt überspringst oder „Nicht-binär“ wählst, verwendet die App, wo immer möglich, geschlechtsneutrale Formen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Algunos idiomas usan terminaciones verbales distintas para hombres y mujeres. Si te saltas este paso o eliges «No binario», la app usará formas neutras siempre que sea posible."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Certaines langues accordent certains mots différemment pour les hommes et pour les femmes. Si tu passes cette étape ou choisis « Non binaire », l'app utilisera des formes neutres autant que possible."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyes nyelvekben a férfiakra és a nőkre vonatkozó igék végződése eltér. Ha kihagyod ezt a lépést, vagy a „Nem bináris” lehetőséget választod, az alkalmazás, ahol csak lehet, nemsemleges alakokat használ."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Niektóre języki, w tym polski, mają różne końcówki czasowników dla mężczyzn i kobiet. Jeśli pominiesz ten krok albo wybierzesz „Osoba niebinarna”, aplikacja będzie w miarę możliwości używać form neutralnych płciowo."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "В некоторых языках, включая русский, глаголы имеют разные окончания для мужчин и женщин. Если вы пропустите этот шаг или выберете «Небинарный», приложение будет по возможности использовать гендерно-нейтральные формы."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Niektoré jazyky, vrátane slovenčiny, majú pre mužov a ženy rôzne koncovky slovies. Ak tento krok preskočíš alebo zvolíš „Nebinárne“, aplikácia bude všade, kde sa dá, používať rodovo neutrálne tvary."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "У деяких мовах, зокрема в українській, дієслова мають різні закінчення для чоловіків і жінок. Якщо ви пропустите цей крок або виберете «Небінарна», застосунок по змозі використовуватиме гендерно-нейтральні форми."
           }
         }
       }
@@ -21604,6 +21546,64 @@
         }
       }
     },
+    "Your account data could not be fetched from the server, so the export holds only what is on this phone." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Data účtu se ze serveru nepodařilo stáhnout, takže export obsahuje jen to, co je v tomto telefonu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Die Kontodaten konnten nicht vom Server abgerufen werden; der Export enthält nur, was auf diesem Telefon liegt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur ; l'export ne contient donc que ce qui se trouve sur ce téléphone."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A fiók adatait nem sikerült lekérni a szerverről, ezért az export csak a telefonon lévő adatokat tartalmazza."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie udało się pobrać danych konta z serwera, więc eksport zawiera tylko to, co jest na tym telefonie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не удалось получить данные учётной записи с сервера, поэтому в экспорте только то, что хранится на этом телефоне."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Údaje účtu sa nepodarilo stiahnuť zo servera, takže export obsahuje iba to, čo je v tomto telefóne."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не вдалося отримати дані облікового запису з сервера, тому в експорті лише те, що зберігається на цьому телефоні."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudieron obtener del servidor los datos de la cuenta, así que la exportación solo contiene lo que hay en este teléfono."
+          }
+        }
+      }
+    },
     "Your counts are encrypted on this phone before they leave it. Set up keys on your first phone; on a new one, restore them with your recovery code." : {
       "localizations" : {
         "cs" : {
@@ -23297,64 +23297,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "su propia práctica"
-          }
-        }
-      }
-    },
-    "Your account data could not be fetched from the server, so the export holds only what is on this phone." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Data účtu se ze serveru nepodařilo stáhnout, takže export obsahuje jen to, co je v tomto telefonu."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Die Kontodaten konnten nicht vom Server abgerufen werden; der Export enthält nur, was auf diesem Telefon liegt."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur ; l'export ne contient donc que ce qui se trouve sur ce téléphone."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A fiók adatait nem sikerült lekérni a szerverről, ezért az export csak a telefonon lévő adatokat tartalmazza."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nie udało się pobrać danych konta z serwera, więc eksport zawiera tylko to, co jest na tym telefonie."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не удалось получить данные учётной записи с сервера, поэтому в экспорте только то, что хранится на этом телефоне."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Údaje účtu sa nepodarilo stiahnuť zo servera, takže export obsahuje iba to, čo je v tomto telefóne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Не вдалося отримати дані облікового запису з сервера, тому в експорті лише те, що зберігається на цьому телефоні."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se pudieron obtener del servidor los datos de la cuenta, así que la exportación solo contiene lo que hay en este teléfono."
           }
         }
       }
