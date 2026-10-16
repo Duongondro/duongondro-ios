@@ -96,12 +96,14 @@ struct Bar: View {
 struct CardSection<Content: View>: View {
     var header: LocalizedStringKey?
     var footer: LocalizedStringKey?
+    /// A header already in the app's language (from another string table), shown as is.
+    var verbatimHeader: String?
     @ViewBuilder let content: Content
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.s) {
-            if let header {
-                Text(header)
+            if header != nil || verbatimHeader != nil {
+                (header.map { Text($0) } ?? Text(verbatim: verbatimHeader ?? ""))
                     .font(.footnote.weight(.bold))
                     .textCase(.uppercase)
                     .tracking(0.6)

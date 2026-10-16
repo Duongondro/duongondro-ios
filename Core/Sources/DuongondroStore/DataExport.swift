@@ -35,20 +35,18 @@ public enum DataExport {
     /// `knownSessionIDs` are all of this phone's session ids, deleted ones too (the
     /// snapshot lacks those). `accountWithoutServer` is a signed-in account whose
     /// server part is missing, which the README says rather than "local mode".
-    public static func zip(snapshot: Snapshot, server: Server?, covers: [String: Data] = [:],
+    /// No cover photos, in any format (design decision of 15 October 2026): they
+    /// never reach the server, so they are not data the service processes.
+    public static func zip(snapshot: Snapshot, server: Server?,
                            knownSessionIDs: Set<UUID> = [], accountWithoutServer: Bool = false,
                            appVersion: String, now: Date = Date()) throws -> Data {
         var zip = ZipWriter()
         let state: ReadmeState = server != nil ? .included : (accountWithoutServer ? .missing : .local)
-        zip.add("README.txt", Data(readme(state, unreadable: server?.unreadable ?? 0, refused: server?.refused ?? 0,
-                                          hasCovers: !covers.isEmpty).utf8), modified: now)
+        zip.add("README.txt", Data(readme(state, unreadable: server?.unreadable ?? 0, refused: server?.refused ?? 0).utf8), modified: now)
         zip.add("practice.json", try practiceJSON(merged(snapshot, server, known: knownSessionIDs), appVersion: appVersion, now: now), modified: now)
         if let server {
             zip.add("account.json", server.account, modified: now)
             zip.add("server-raw.json", server.raw, modified: now)
-        }
-        for (practiceID, image) in covers.sorted(by: { $0.key < $1.key }) {
-            zip.add("covers/\(practiceID).jpg", image, modified: now)
         }
         return zip.finish()
     }
@@ -76,8 +74,8 @@ public enum DataExport {
         return out
     }
 
-    public static func fileName(now: Date = Date(), timeZone: TimeZone = .current) -> String {
-        "duongondro-export-\(CivilDate.of(now, in: timeZone)).zip"
+    public static func fileName(now: Date = Date(), timeZone: TimeZone = .current, suffix: String = "", ext: String = "zip") -> String {
+        "duongondro-export-\(CivilDate.of(now, in: timeZone))\(suffix).\(ext)"
     }
 
     // MARK: - practice.json
@@ -171,7 +169,7 @@ public enum DataExport {
 
     enum ReadmeState { case local, included, missing }
 
-    static func readme(_ state: ReadmeState, unreadable: Int = 0, refused: Int = 0, hasCovers: Bool) -> String {
+    static func readme(_ state: ReadmeState, unreadable: Int = 0, refused: Int = 0) -> String {
         let hasServer = state == .included
         var lines = [
             "Duongöndro: all of your data",
@@ -229,9 +227,6 @@ public enum DataExport {
                 "This phone is in local mode: no account exists, so nothing about you is on",
                 "any server, and there is no account.json or server-raw.json.",
             ]
-        }
-        if hasCovers {
-            lines += ["", "covers/", "  Your own cover photos, which never left the phone."]
         }
         return lines.joined(separator: "\n") + "\n"
     }
