@@ -21734,8 +21734,8 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Odblokowuje Twoje liczby na nowym telefonie"
+            "state" : "translated",
+            "value" : "Odblokowuje Twoje dane na nowym telefonie"
           }
         },
         "cs" : {
