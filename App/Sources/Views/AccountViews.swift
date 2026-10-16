@@ -69,18 +69,10 @@ struct AccountSection: View {
                     SettingsRow("Username", detail: account.username.map { Text(verbatim: $0) } ?? Text("None"), chevron: true)
                 }
                 Button { replacingCode = true } label: {
-                    HStack(spacing: Theme.Space.s) {
-                        Text("Recovery code").foregroundStyle(Theme.ink)
-                        Spacer(minLength: Theme.Space.s)
-                        (account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"))
-                            .foregroundStyle(account.recoveryUnconfirmed ? Theme.destructive : Theme.muted)
-                        Image(systemName: "chevron.right")
-                            .font(.footnote.weight(.bold))
-                            .foregroundStyle(Theme.muted)
-                            .accessibilityHidden(true)
-                    }
-                    .frame(minHeight: Theme.Size.minTap)
-                    .contentShape(Rectangle())
+                    SettingsRow("Recovery code",
+                                detail: account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"),
+                                detailColor: account.recoveryUnconfirmed ? Theme.destructive : Theme.muted,
+                                chevron: true)
                 }
                 .disabled(account.busy)
                 // On the row, so the dialog (a popover on newer systems) points at it.
@@ -103,6 +95,7 @@ struct AccountSection: View {
                     Button { signingOut = true } label: {
                         Text("Sign out on this phone")
                             .foregroundStyle(Theme.destructive)
+                            .padding(.vertical, Theme.Space.s)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                             .contentShape(Rectangle())
                     }
@@ -218,6 +211,7 @@ struct AccentRow: View {
                     .accessibilityHidden(true)
             }
         }
+        .padding(.vertical, Theme.Space.s)
         .frame(minHeight: Theme.Size.minTap)
         .contentShape(Rectangle())
     }
