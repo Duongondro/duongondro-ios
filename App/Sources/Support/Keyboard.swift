@@ -1,33 +1,94 @@
 import SwiftUI
 import UIKit
 
-/// A number pad has no return key, so a screen with a number field gets a Done button
-/// above the keyboard, and dragging its content closes the keyboard too. Attach once per
-/// screen, not per field: SwiftUI shows one button for every keyboard toolbar in view.
-/// The button is offered only while its screen is on top, so a screen pushed over one
-/// that has it (Settings › practice settings) never shows two.
-private struct NumberPadDone: ViewModifier {
-    @State private var onTop = false
+/// A number pad has no return key. Every number-pad field in the app gets a bar with
+/// Done attached to its keyboard, set as the field begins editing so it arrives with
+/// the keyboard (SwiftUI's keyboard toolbar can show up a beat later, or not at all),
+/// and a tap anywhere outside a text field closes any keyboard. Installed once, at
+/// launch, for the whole app.
+enum KeyboardDismissal {
+    @MainActor private static var installed = false
+    @MainActor private static let outsideTaps = OutsideTaps()
 
-    func body(content: Content) -> some View {
-        content
-            .scrollDismissesKeyboard(.interactively)
-            .onAppear { onTop = true }
-            .onDisappear { onTop = false }
-            .toolbar {
-                if onTop {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        Button("Done") {
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        }
-                        .fontWeight(.semibold)
-                    }
-                }
+    @MainActor static func install() {
+        guard !installed else { return }
+        installed = true
+        NotificationCenter.default.addObserver(forName: UITextField.textDidBeginEditingNotification,
+                                               object: nil, queue: .main) { note in
+            MainActor.assumeIsolated {
+                guard let field = note.object as? UITextField else { return }
+                attachDone(to: field)
+                outsideTaps.attach(to: field.window)
             }
+        }
+        NotificationCenter.default.addObserver(forName: UITextView.textDidBeginEditingNotification,
+                                               object: nil, queue: .main) { note in
+            MainActor.assumeIsolated {
+                outsideTaps.attach(to: (note.object as? UIView)?.window)
+            }
+        }
+    }
+
+    @MainActor private static func attachDone(to field: UITextField) {
+        guard [.numberPad, .decimalPad, .phonePad, .asciiCapableNumberPad].contains(field.keyboardType),
+              !(field.inputAccessoryView is DoneBar) else { return }
+        field.inputAccessoryView = DoneBar()
+        field.reloadInputViews()
+    }
+
+    @MainActor static func dismiss() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
+/// The bar above a number pad: Done on the trailing side, in the app's language.
+private final class DoneBar: UIToolbar {
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
+        let done = UIBarButtonItem(title: String(localized: "Done", bundle: .appLanguage, locale: .appLanguage),
+                                   primaryAction: UIAction { _ in KeyboardDismissal.dismiss() })
+        done.style = .done
+        done.tintColor = UIColor(Theme.accent)
+        items = [UIBarButtonItem(systemItem: .flexibleSpace), done]
+        sizeToFit()
+    }
+
+    required init?(coder: NSCoder) { nil }
+}
+
+/// One tap recogniser per window: a tap outside any text field closes the keyboard,
+/// and still reaches whatever was tapped.
+@MainActor private final class OutsideTaps: NSObject, UIGestureRecognizerDelegate {
+    private var windows: [ObjectIdentifier: UITapGestureRecognizer] = [:]
+
+    func attach(to window: UIWindow?) {
+        guard let window, windows[ObjectIdentifier(window)] == nil else { return }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tap.cancelsTouchesInView = false
+        tap.delegate = self
+        window.addGestureRecognizer(tap)
+        windows[ObjectIdentifier(window)] = tap
+    }
+
+    @objc private func tapped() { KeyboardDismissal.dismiss() }
+
+    nonisolated func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        MainActor.assumeIsolated {
+            var view = touch.view
+            while let v = view {
+                if v is UITextField || v is UITextView || v is DoneBar { return false }
+                view = v.superview
+            }
+            return true
+        }
+    }
+
+    nonisolated func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                       shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool { true }
+}
+
 extension View {
-    func numberPadDone() -> some View { modifier(NumberPadDone()) }
+    /// Dragging the screen's content closes the keyboard too. The Done bar and the
+    /// tap outside come from `KeyboardDismissal`, for every screen.
+    func numberPadDone() -> some View { scrollDismissesKeyboard(.interactively) }
 }

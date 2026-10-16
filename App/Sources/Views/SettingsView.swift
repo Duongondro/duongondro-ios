@@ -22,6 +22,7 @@ struct SettingsView: View {
                         Text("Add a practice")
                             .font(.body.weight(.semibold))
                             .foregroundStyle(Theme.accent)
+                            .padding(.vertical, Theme.Space.s)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                     }
                 }
@@ -70,6 +71,9 @@ struct SettingsRow: View {
                     .accessibilityHidden(true)
             }
         }
+        // Room above and below a label that wraps in a longer language; a one-line
+        // row stays at the minimum height.
+        .padding(.vertical, Theme.Space.s)
         .frame(minHeight: Theme.Size.minTap)
         .contentShape(Rectangle())
     }
@@ -154,6 +158,7 @@ private struct GeneralSection: View {
                 Text("Evening reminder").foregroundStyle(Theme.ink)
             }
             .tint(Theme.accent)
+            .padding(.vertical, Theme.Space.s)
             .frame(minHeight: Theme.Size.minTap)
             if let minutes = model.preferences.reminderMinutes {
                 DatePicker(selection: Binding(
@@ -165,6 +170,7 @@ private struct GeneralSection: View {
                     Text("Time").foregroundStyle(Theme.ink)
                 }
                 .tint(Theme.accent)
+                .padding(.vertical, Theme.Space.s)
                 .frame(minHeight: Theme.Size.minTap)
             }
             Toggle(isOn: Binding(
@@ -407,6 +413,7 @@ private struct MalaSizeRows: View {
                 .fixedSize()
                 .tint(Theme.accent)
             }
+            .padding(.vertical, Theme.Space.s)
             .frame(minHeight: Theme.Size.minTap)
             if custom {
                 HStack(spacing: Theme.Space.m) {
@@ -432,6 +439,7 @@ private struct MalaSizeRows: View {
                             if text != accepted { text = accepted }
                         }
                 }
+                .padding(.vertical, Theme.Space.s)
                 .frame(minHeight: Theme.Size.minTap)
             }
         }

@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         // Before launch finishes, so a tap that launched the app is delivered.
         UNUserNotificationCenter.current().delegate = push
+        KeyboardDismissal.install()
         return true
     }
 

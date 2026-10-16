@@ -48,6 +48,7 @@ private struct SourceRow: View {
                     .foregroundStyle(Theme.muted)
                     .accessibilityHidden(true)
             }
+            .padding(.vertical, Theme.Space.s)
             .frame(minHeight: Theme.Size.minTap)
             .contentShape(Rectangle())
         }

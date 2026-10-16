@@ -79,6 +79,7 @@ struct AccountSection: View {
                             .foregroundStyle(Theme.muted)
                             .accessibilityHidden(true)
                     }
+                    .padding(.vertical, Theme.Space.s)
                     .frame(minHeight: Theme.Size.minTap)
                     .contentShape(Rectangle())
                 }
@@ -103,6 +104,7 @@ struct AccountSection: View {
                     Button { signingOut = true } label: {
                         Text("Sign out on this phone")
                             .foregroundStyle(Theme.destructive)
+                            .padding(.vertical, Theme.Space.s)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                             .contentShape(Rectangle())
                     }
@@ -218,6 +220,7 @@ struct AccentRow: View {
                     .accessibilityHidden(true)
             }
         }
+        .padding(.vertical, Theme.Space.s)
         .frame(minHeight: Theme.Size.minTap)
         .contentShape(Rectangle())
     }

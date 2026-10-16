@@ -43,6 +43,7 @@ struct YourDataView: View {
                                 .foregroundStyle(Theme.muted)
                                 .accessibilityHidden(true)
                         }
+                        .padding(.vertical, Theme.Space.s)
                         .frame(minHeight: Theme.Size.minTap)
                         .contentShape(Rectangle())
                     }
@@ -109,6 +110,7 @@ private struct DeleteEverythingView: View {
                     Button { choosingFormat = true } label: {
                         Text("Export my data first", tableName: "Export")
                             .foregroundStyle(Theme.accent)
+                            .padding(.vertical, Theme.Space.s)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                             .contentShape(Rectangle())
                     }

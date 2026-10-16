@@ -51,6 +51,7 @@ struct FriendDetailView: View {
                             Text("Tell me when they practise").foregroundStyle(Theme.ink)
                         }
                         .tint(Theme.accent)
+                        .padding(.vertical, Theme.Space.s)
                         .frame(minHeight: Theme.Size.minTap)
                         if f.notifyDone && push.authorization == .denied {
                             Button {
@@ -63,6 +64,7 @@ struct FriendDetailView: View {
                         Button { reporting = true } label: { SettingsRow("Report") }
                         Button { confirmingBlock = true } label: {
                             Text("Block").foregroundStyle(Theme.destructive)
+                                .padding(.vertical, Theme.Space.s)
                                 .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                         }
                     }
