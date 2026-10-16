@@ -16,6 +16,12 @@ final class PasskeyTests: XCTestCase {
         XCTAssertNil(list[0].displayName, "no name, no AAGUID: the app says Passkey")
         XCTAssertEqual(list[1].displayName, "Laptop key", "the person's name first")
         XCTAssertTrue(list[1].canUnlock)
+        XCTAssertEqual(list[0].devices, [], "a server before devices sends none")
+        let withDevices = try APIClient.decoder.decode(Passkey.self, from: Data("""
+            {"id":"a","createdAt":"2026-10-07T09:00:00Z","current":false,"canUnlock":true,
+             "devices":["0192f3a0-0000-7000-8000-000000000001"]}
+            """.utf8))
+        XCTAssertEqual(withDevices.devices, [UUID(uuidString: "0192f3a0-0000-7000-8000-000000000001")!])
     }
 
     func testAnUnnamedPasskeyIsCalledAfterItsPasswordManager() {
@@ -24,6 +30,7 @@ final class PasskeyTests: XCTestCase {
         let blank = Passkey(id: "b", name: "  ", aaguid: "ea9b8d66-4d01-1d21-3ce4-b6b48cb575d4", createdAt: Date())
         XCTAssertEqual(blank.displayName, "Google Password Manager")
         XCTAssertNil(Passkey(id: "c", aaguid: "00000000-0000-0000-0000-000000000001", createdAt: Date()).displayName)
+        XCTAssertEqual(Passkey(id: "d", aaguid: "50726f74-6f6e-5061-7373-50726f746f6e", createdAt: Date()).displayName, "Proton Pass")
     }
 
     func testRenamingSendsTheNameOrAnExplicitNull() throws {

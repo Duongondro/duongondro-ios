@@ -79,6 +79,7 @@ extension Account {
                                    identity: identity),
               let key = Statements.parseUserKey(state.statement.payload),
               key.user == user, key.id == state.id, key.version == state.version,
+              key.version >= 1, UInt32(exactly: key.version) != nil,
               key.publicKey.count == E2EE.publicKeySize else { throw Failure.notAuthentic }
         return key
     }
@@ -252,11 +253,13 @@ extension Account {
     /// (the card in Settings). Only when the person asks: after removing a
     /// passkey that could unlock the counts, so a copy of its box opens nothing
     /// new. It cannot take back keys already opened with the old U.
-    public func replaceUserKey() async throws {
-        try await userKeyGate.run { try await self.replaceUserKeyNow() }
+    /// `excluding`: devices that never get the new U from this phone (those the
+    /// removed passkey reached).
+    public func replaceUserKey(excluding: Set<UUID> = []) async throws {
+        try await userKeyGate.run { try await self.replaceUserKeyNow(excluding: excluding) }
     }
 
-    private func replaceUserKeyNow() async throws {
+    private func replaceUserKeyNow(excluding: Set<UUID>) async throws {
         guard let state = try database.syncState() else { throw Failure.accountHasNoKeys }
         let identity = try identity()
         let user = state.userID
@@ -270,15 +273,30 @@ extension Account {
                                      user: user, version: held.version)
         let payload = Statements.userKey(key)
         let signature = try E2EE.signStatement(type: "user-key", payload: payload, identity: identity)
-        guard case .created = try await api.createUserKey(SignedStatement(payload: payload, signature: signature),
-                                                           replace: current != nil) else {
+        let created: UserKeyCreation
+        do {
+            created = try await api.createUserKey(SignedStatement(payload: payload, signature: signature), replace: current != nil)
+        } catch APIError.conflict {
+            created = .exists(id: current?.id ?? UUID(), version: version)
+        }
+        guard case .created = created else {
+            // Refused (409): not a device holding the current practice key, or
+            // another replacement landed first. The old U stays.
             try secrets.delete(SecretName.userKeyPending)
             throw Failure.userKeyNotReplaced
         }
         try secrets.delete(SecretName.userKeyShared)
         try hold(held)
         try secrets.delete(SecretName.userKeyPending)
-        try await wrapKeys(to: key, already: [], user: user, identity: identity, keyVersion: state.keyVersion)
+        // The phones the removed passkey reached never get the new U from here.
+        if !excluding.isEmpty {
+            try secrets.write(SecretName.userKeyShared, try JSONEncoder().encode(Shared(userKey: held.id, devices: excluding)))
+        }
+        do {
+            try await wrapKeys(to: key, already: [], user: user, identity: identity, keyVersion: state.keyVersion)
+        } catch APIError.conflict {
+            throw Failure.userKeyNotReplaced
+        }
         try await shareUserKey(key, held: held, user: user, identity: identity)
     }
 
@@ -289,13 +307,41 @@ extension Account {
     /// new phone; a phone it already unlocked keeps what it has (iOS has neither
     /// device removal nor rotation). The passkey this phone signed in with is
     /// removed last, since removing it ends this session.
-    /// Throws `APIError.conflict` when it is the last way to sign in: then, unless
-    /// it was this phone's own, nothing else was done.
+    /// Throws `Failure.lastWayToSignIn` when it is the last way to sign in, and
+    /// then nothing else was done; `Failure.userKeyNotReplaced` when the passkey
+    /// went but U could not be replaced (try `replaceUnlockKey` again).
     public func removePasskeyAndReplaceUserKey(_ passkey: Passkey) async throws {
-        if !passkey.current { try await api.removePasskey(passkey.id) }
+        // The devices this passkey reached are read before it goes, and are left
+        // out when the new U is shared.
+        let reached = Set(passkey.devices).subtracting(deviceID.map { [$0] } ?? [])
+        if passkey.current {
+            // Removed last, as that ends this session: so first make sure the
+            // server will let it go, before anything else is changed.
+            let me = try await api.me()
+            let others = try await api.passkeys().filter { $0.id != passkey.id }
+            if others.isEmpty, me.email == nil { throw Failure.lastWayToSignIn }
+        } else {
+            try await removeOnly(passkey)
+        }
+        try await replaceUnlockKey(excluding: reached)
+        if passkey.current { try await removeOnly(passkey) }
+    }
+
+    /// Signs out every other session and replaces U: the second half of the
+    /// above, also on its own to retry it.
+    public func replaceUnlockKey(excluding: Set<UUID> = []) async throws {
         try await api.signOutOthers()
-        try await replaceUserKey()
-        if passkey.current { try await api.removePasskey(passkey.id) }
+        try await replaceUserKey(excluding: excluding)
+    }
+
+    private func removeOnly(_ passkey: Passkey) async throws {
+        do {
+            try await api.removePasskey(passkey.id)
+        } catch APIError.conflict {
+            throw Failure.lastWayToSignIn
+        } catch APIError.notFound {
+            // Already gone (removed on another phone): the rest still applies.
+        }
     }
 
     // MARK: A passkey's box
@@ -363,22 +409,32 @@ extension Account {
         guard E2EE.verifyPasskeyBox(unlock.box, aad: aad, signature: unlock.signature, identity: identityPublic) else {
             throw Failure.notAuthentic
         }
-        let key = try verifiedUserKey(unlock.userKey, user: me.id, identity: identityPublic)
-        let u = try E2EE.userKey(scalar: scalar, expectedPublicKey: key.publicKey)
+        // From here every failure to verify or decrypt is one answer: not authentic,
+        // so the recovery code is asked instead.
+        let key: Statements.UserKey, u: P256.KeyAgreement.PrivateKey
+        do {
+            key = try verifiedUserKey(unlock.userKey, user: me.id, identity: identityPublic)
+            u = try E2EE.userKey(scalar: scalar, expectedPublicKey: key.publicKey)
+        } catch {
+            throw Failure.notAuthentic
+        }
 
         func open(_ kind: E2EE.WrapKind, version: Int?) throws -> Data? {
             guard let w = unlock.userKey.wraps.first(where: {
                 $0.userKeyId == key.id && $0.kind == Int(kind.rawValue) && (version == nil || $0.keyVersion == version)
             }) else { return nil }
-            let wrapAAD = E2EE.wrapAAD(user: me.id, keyVersion: UInt32(w.keyVersion), device: key.id, kind: kind)
+            // The server's number, before any signature: never trapped on.
+            guard let version = UInt32(exactly: w.keyVersion) else { throw Failure.notAuthentic }
+            let wrapAAD = E2EE.wrapAAD(user: me.id, keyVersion: version, device: key.id, kind: kind)
             let wrapped = E2EE.Wrapped(epk: w.ephemeralKey, box: w.box)
             guard E2EE.verifyWrap(wrapped, aad: wrapAAD, recipientPk: key.publicKey, signature: w.signature, identity: identityPublic)
             else { throw Failure.notAuthentic }
-            return try E2EE.unwrap(wrapped, with: u, aad: wrapAAD)
+            guard let secret = try? E2EE.unwrap(wrapped, with: u, aad: wrapAAD) else { throw Failure.notAuthentic }
+            return secret
         }
         guard let seed = try open(.identitySeed, version: nil),
               let practiceKey = try open(.practiceKey, version: me.keyVersion) else { return false }
-        let identity = try Curve25519.Signing.PrivateKey(rawRepresentation: seed)
+        guard let identity = try? Curve25519.Signing.PrivateKey(rawRepresentation: seed) else { throw Failure.notAuthentic }
         // The seed must be the account's own: the server published its public half.
         guard identity.publicKey.rawRepresentation == identityPk else { throw Failure.notAuthentic }
 

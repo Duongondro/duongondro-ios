@@ -81,9 +81,11 @@ public struct Passkey: Codable, Equatable, Sendable, Identifiable {
     public let current: Bool
     /// It holds a box of U: signing in with it brings the keys to a new phone.
     public let canUnlock: Bool
+    /// Devices bound to live sessions this passkey signed in with.
+    public let devices: [UUID]
 
     public init(id: String, name: String? = nil, aaguid: String? = nil, createdAt: Date, lastUsedAt: Date? = nil,
-                current: Bool = false, canUnlock: Bool = false) {
+                current: Bool = false, canUnlock: Bool = false, devices: [UUID] = []) {
         self.id = id
         self.name = name
         self.aaguid = aaguid
@@ -91,6 +93,22 @@ public struct Passkey: Codable, Equatable, Sendable, Identifiable {
         self.lastUsedAt = lastUsedAt
         self.current = current
         self.canUnlock = canUnlock
+        self.devices = devices
+    }
+
+    enum CodingKeys: String, CodingKey { case id, name, aaguid, createdAt, lastUsedAt, current, canUnlock, devices }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        name = try c.decodeIfPresent(String.self, forKey: .name)
+        aaguid = try c.decodeIfPresent(String.self, forKey: .aaguid)
+        createdAt = try c.decode(Date.self, forKey: .createdAt)
+        lastUsedAt = try c.decodeIfPresent(Date.self, forKey: .lastUsedAt)
+        current = try c.decode(Bool.self, forKey: .current)
+        canUnlock = try c.decode(Bool.self, forKey: .canUnlock)
+        // Required by the contract; a server before it sends none.
+        devices = try c.decodeIfPresent([UUID].self, forKey: .devices) ?? []
     }
 }
 
@@ -205,6 +223,9 @@ public enum PasswordManagers {
         "531126d6-e717-415c-9320-3d9aa6981239": "Dashlane",
         "53414d53-554e-4700-0000-000000000000": "Samsung Pass",
         "fdb141b2-5d84-443e-8a35-4698c205a502": "KeePassXC",
+        "50726f74-6f6e-5061-7373-50726f746f6e": "Proton Pass",
+        "b84e4048-15dc-4dd0-8640-f4f60813c8af": "NordPass",
+        "f3809540-7f14-49c1-a8b3-8f813b225541": "Enpass",
     ]
 
     public static func name(aaguid: String) -> String? { names[aaguid.lowercased()] }

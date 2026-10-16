@@ -51,6 +51,8 @@ public final class Account: @unchecked Sendable {
         /// The server kept the old U: this phone does not hold the current
         /// practice key, or another replacement landed first.
         case userKeyNotReplaced
+        /// The passkey is the account's last way to sign in, so it stays (409).
+        case lastWayToSignIn
     }
 
     // MARK: Identity
@@ -352,7 +354,8 @@ public final class Account: @unchecked Sendable {
                 newest = max(newest, w.keyVersion)
                 continue
             }
-            let aad = E2EE.wrapAAD(user: user, keyVersion: UInt32(w.keyVersion), device: deviceID, kind: .practiceKey)
+            guard let version = UInt32(exactly: w.keyVersion) else { continue }
+            let aad = E2EE.wrapAAD(user: user, keyVersion: version, device: deviceID, kind: .practiceKey)
             let wrapped = E2EE.Wrapped(epk: w.ephemeralKey, box: w.box)
             guard w.authType == .signature,
                   E2EE.verifyWrap(wrapped, aad: aad, recipientPk: key.publicKey, signature: w.authenticator, identity: identityPublic)
