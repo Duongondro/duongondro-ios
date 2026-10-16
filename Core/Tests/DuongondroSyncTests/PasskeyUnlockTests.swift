@@ -342,6 +342,45 @@ final class PasskeyUnlockTests: XCTestCase {
         XCTAssertEqual(try second.heldUserKey()?.id, published)
     }
 
+    /// A kind 4 wrap at another version than U's statement, or one whose scalar
+    /// is not the signed key's (even signed by the identity), is ignored.
+    func testAKindFourAtAnotherVersionOrWithAnotherScalarIsIgnored() async throws {
+        let (first, _, _) = try phone()
+        let code = try await first.setUpFirstDevice()
+        let (second, secrets, _) = try phone()
+        try await second.restore(recoveryCode: code)
+        let created = try await first.keepUserKey()
+        XCTAssertTrue(created)
+        let me = try XCTUnwrap(second.deviceID)
+        let user = KeyServer.with { $0.user }
+        let devicePk = try XCTUnwrap(try DeviceKeys(store: secrets, preferSoftware: true).current()).publicKey
+        let identity = try first.identity()
+        let key = Statements.parseUserKey(KeyServer.with { $0.userKey!.payload })!
+
+        // Signed, right version, but another scalar.
+        let aad = E2EE.wrapAAD(user: user, keyVersion: UInt32(key.version), device: me, kind: .userKey)
+        let wrapped = try E2EE.wrap(P256.KeyAgreement.PrivateKey().rawRepresentation,
+                                    to: try P256.KeyAgreement.PublicKey(x963Representation: devicePk), aad: aad)
+        let signature = try E2EE.signWrap(wrapped, aad: aad, recipientPk: devicePk, identity: identity)
+        KeyServer.with {
+            $0.wraps[me] = [["kind": 4, "keyVersion": key.version, "ephemeralKey": wrapped.epk.base64EncodedString(),
+                             "box": wrapped.box.base64EncodedString(), "authType": "signature",
+                             "authenticator": signature.base64EncodedString(), "deviceId": me.uuidString, "createdAt": KeyServer.now]]
+        }
+        var holds = try await second.keepUserKey()
+        XCTAssertFalse(holds, "scalar·G is not the signed pk")
+        XCTAssertNil(try secrets.read(SecretName.userKey))
+
+        // The real one, relabelled at another version.
+        try secrets.delete(SecretName.userKeyShared)
+        try first.secrets.delete(SecretName.userKeyShared)
+        _ = try await first.keepUserKey()
+        KeyServer.with { s in s.wraps[me] = s.wraps[me]!.map { var w = $0; w["keyVersion"] = key.version + 1; return w } }
+        holds = try await second.keepUserKey()
+        XCTAssertFalse(holds, "not U's current version")
+        XCTAssertNil(try secrets.read(SecretName.userKey))
+    }
+
     func testAUserKeyTheIdentityDidNotSignIsRefused() async throws {
         let (first, _, _) = try phone()
         _ = try await first.setUpFirstDevice()
