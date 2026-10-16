@@ -35,10 +35,9 @@ final class DataExportTests: XCTestCase {
 
     func testLocalModeExport() throws {
         let snap = try sample().snapshot()
-        let out = try unzip(try DataExport.zip(snapshot: snap, server: nil, covers: ["dorje-sempa": Data([0xFF, 0xD8, 0xFF])],
-                                               appVersion: "0.1 (1)"))
+        let out = try unzip(try DataExport.zip(snapshot: snap, server: nil, appVersion: "0.1 (1)"))
         let files = try FileManager.default.subpathsOfDirectory(atPath: out.path).sorted()
-        XCTAssertEqual(files, ["README.txt", "covers", "covers/dorje-sempa.jpg", "practice.json"])
+        XCTAssertEqual(files, ["README.txt", "practice.json"], "no cover photos, in any format")
 
         let json = try JSONSerialization.jsonObject(with: Data(contentsOf: out.appendingPathComponent("practice.json"))) as! [String: Any]
         let practices = json["practices"] as! [[String: Any]]
