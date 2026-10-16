@@ -64,6 +64,8 @@ struct ExportPDF {
 
     private struct Table {
         let columns: [Column]
+        /// The header band, as tall as its longest title wraps.
+        var height: CGFloat = 18
     }
 
     private struct Item {
@@ -77,7 +79,7 @@ struct ExportPDF {
         var tables: [Int: Table] = [:]
         build(&items, &tables)
         let available = Double(Self.contentBottom - Self.contentTop)
-        let headerHeights = tables.mapValues { _ in Double(Self.headerHeight) }
+        let headerHeights = tables.mapValues { Double($0.height) }
         let pages = PageFlow.paginate(items.map(\.block), available: available, headers: headerHeights)
 
         let format = UIGraphicsPDFRendererFormat()
@@ -147,12 +149,10 @@ struct ExportPDF {
         text(pageText, Self.smallFont, Self.muted, x: Self.side, y: footer, w: width, align: .right)
     }
 
-    private static let headerHeight: CGFloat = 18
-
     private func drawHeader(_ table: Table, at y: CGFloat) {
         if let cg = UIGraphicsGetCurrentContext() {
             cg.setFillColor(Self.band.cgColor)
-            cg.fill(CGRect(x: Self.side, y: y, width: width, height: Self.headerHeight))
+            cg.fill(CGRect(x: Self.side, y: y, width: width, height: table.height))
         }
         layout(table.columns) { _, column, x, w in
             text(column.title, Self.labelFont, Self.muted, x: x + 4, y: y + 4, w: w - 8, align: column.right ? .right : .left)
@@ -185,10 +185,13 @@ struct ExportPDF {
         items.append(Item(block: PageFlow.Block(height: Double(h))) { _ in })
     }
 
-    private func paragraph(_ string: String, color: UIColor = Self.muted, keep: Bool = false, into items: inout [Item]) {
-        let h = text(string, Self.bodyFont, color, x: 0, y: 0, w: width, draw: false) + 4
+    private func paragraph(_ string: String, color: UIColor = Self.muted, keep: Bool = false, bullet: Bool = false,
+                           into items: inout [Item]) {
+        let indent: CGFloat = bullet ? 12 : 0
+        let h = text(string, Self.bodyFont, color, x: 0, y: 0, w: width - indent, draw: false) + 4
         items.append(Item(block: PageFlow.Block(height: Double(h), keepWithNext: keep)) { y in
-            text(string, Self.bodyFont, color, x: Self.side, y: y, w: width)
+            if bullet { text("•", Self.bodyFont, color, x: Self.side + 2, y: y, w: indent) }
+            text(string, Self.bodyFont, color, x: Self.side + indent, y: y, w: width - indent)
         })
     }
 
@@ -221,9 +224,14 @@ struct ExportPDF {
 
     private func table(_ id: Int, _ columns: [Column], rows: [(cells: [Cell], group: Int?)], into items: inout [Item],
                        tables: inout [Int: Table]) {
-        let table = Table(columns: columns)
+        var table = Table(columns: columns)
+        var titles: CGFloat = 0
+        layout(columns) { _, column, _, w in
+            titles = max(titles, text(column.title, Self.labelFont, Self.muted, x: 0, y: 0, w: w - 8, draw: false))
+        }
+        table.height = titles + 8
         tables[id] = table
-        items.append(Item(block: PageFlow.Block(height: Double(Self.headerHeight), keepWithNext: true)) { y in
+        items.append(Item(block: PageFlow.Block(height: Double(table.height), keepWithNext: true)) { [table] y in
             drawHeader(table, at: y)
         })
         for row in rows {
@@ -308,13 +316,13 @@ struct ExportPDF {
         // 2. Practices
         heading("2. " + l("Practices"), detail: l("\(content.practices.count) practices"), into: &items)
         table(0, [
-            Column(title: l("Practice"), weight: 2.6),
+            Column(title: l("Practice"), weight: 2.4),
             Column(title: l("Total"), weight: 1.1, right: true, figure: true),
-            Column(title: l("Target"), weight: 1.1, right: true, figure: true),
+            Column(title: l("Target"), weight: 1.0, right: true, figure: true),
             Column(title: l("Round"), weight: 0.8, right: true, figure: true),
             Column(title: l("Streak"), weight: 1.0, right: true, figure: true),
-            Column(title: l("Longest"), weight: 1.0, right: true, figure: true),
-            Column(title: l("Public"), weight: 0.7, right: true),
+            Column(title: l("Longest"), weight: 1.1, right: true, figure: true),
+            Column(title: l("Public"), weight: 1.0, right: true),
         ], rows: content.practices.map { p in
             var name = names(p.practice)
             if p.archived { name.second = [name.second, l("Archived")].compactMap { $0 }.joined(separator: " · ") }
@@ -417,7 +425,7 @@ struct ExportPDF {
         ]
         for (title, entries) in lists {
             paragraph(title, color: Self.ink, keep: true, into: &items)
-            for e in entries { paragraph("•  " + e, into: &items) }
+            for e in entries { paragraph(e, bullet: true, into: &items) }
             gap(8, into: &items)
         }
     }

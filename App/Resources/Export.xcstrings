@@ -1793,64 +1793,6 @@
         }
       }
     },
-    "A PDF to read or print, tables for a spreadsheet, or everything as JSON, readable without this app." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ein PDF zum Lesen oder Drucken, Tabellen für eine Tabellenkalkulation oder alles als JSON, lesbar ohne diese App."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "PDF для чтения или печати, таблицы для электронных таблиц или всё в JSON — читается без этого приложения."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "PDF для читання чи друку, таблиці для електронних таблиць або все в JSON — читається без цього застосунку."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "PDF do czytania lub druku, tabele do arkusza kalkulacyjnego albo wszystko jako JSON, czytelne bez tej aplikacji."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "PDF ke čtení nebo tisku, tabulky pro tabulkový procesor nebo vše jako JSON, čitelné i bez této aplikace."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "PDF na čítanie alebo tlač, tabuľky pre tabuľkový procesor alebo všetko ako JSON, čitateľné aj bez tejto aplikácie."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "PDF olvasáshoz vagy nyomtatáshoz, táblázatok táblázatkezelőhöz, vagy minden JSON-ban, az app nélkül is olvasható."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Un PDF para leer o imprimir, tablas para una hoja de cálculo o todo en JSON, legible sin esta app."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Un PDF à lire ou imprimer, des tableaux pour un tableur, ou tout en JSON, lisible sans cette app."
-          }
-        }
-      }
-    },
     "A friend" : {
       "localizations" : {
         "de" : {
@@ -3069,60 +3011,60 @@
         }
       }
     },
-    "Everything, machine-readable" : {
+    "Every practice, session and streak, and everything the server keeps about your account. Your counts are decrypted on this phone and are readable in the file; the server never sees them. PDF to read and print, JSON for everything machine-readable, CSV as a ZIP with one table per kind of data." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alles, maschinenlesbar"
+            "value" : "Jede Übung, Sitzung und Serie und alles, was der Server über dein Konto speichert. Deine Zählungen werden auf diesem Handy entschlüsselt und stehen lesbar in der Datei; der Server sieht sie nie. PDF zum Lesen und Drucken, JSON für alles maschinenlesbar, CSV als ZIP mit einer Tabelle pro Art von Daten."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Всё, в машиночитаемом виде"
+            "value" : "Все практики, сессии и серии и всё, что сервер хранит о вашем аккаунте. Счётчики расшифровываются на этом телефоне и в файле видны открыто; сервер их никогда не видит. PDF — для чтения и печати, JSON — всё в машиночитаемом виде, CSV — ZIP с таблицей на каждый вид данных."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Усе, у машинозчитуваному вигляді"
+            "value" : "Усі практики, сесії та серії й усе, що сервер зберігає про ваш обліковий запис. Лічильники розшифровуються на цьому телефоні й у файлі видні відкрито; сервер їх ніколи не бачить. PDF — для читання й друку, JSON — усе в машинозчитуваному вигляді, CSV — ZIP із таблицею на кожен вид даних."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wszystko, w formie do odczytu maszynowego"
+            "value" : "Każda praktyka, sesja i seria oraz wszystko, co serwer przechowuje o Twoim koncie. Liczniki są odszyfrowywane na tym telefonie i w pliku są czytelne; serwer nigdy ich nie widzi. PDF do czytania i druku, JSON – wszystko do odczytu maszynowego, CSV jako ZIP z jedną tabelą na każdy rodzaj danych."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vše, strojově čitelné"
+            "value" : "Každá praxe, sezení a série a vše, co server o tvém účtu uchovává. Tvé počty se dešifrují v tomto telefonu a v souboru jsou čitelné; server je nikdy nevidí. PDF ke čtení a tisku, JSON pro vše strojově čitelné, CSV jako ZIP s jednou tabulkou na každý druh dat."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Všetko, strojovo čitateľné"
+            "value" : "Každá prax, cvičenie a séria a všetko, čo server o tvojom účte uchováva. Tvoje počty sa dešifrujú v tomto telefóne a v súbore sú čitateľné; server ich nikdy nevidí. PDF na čítanie a tlač, JSON pre všetko strojovo čitateľné, CSV ako ZIP s jednou tabuľkou na každý druh údajov."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Minden, géppel olvasható formában"
+            "value" : "Minden gyakorlat, ülés és sorozat, és minden, amit a szerver a fiókodról tárol. A számlálóidat ezen a telefonon fejtjük vissza, és a fájlban olvashatók; a szerver soha nem látja őket. PDF olvasáshoz és nyomtatáshoz, JSON mindenhez géppel olvashatóan, CSV egy ZIP-ben, adatfajtánként egy táblázattal."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Todo, legible por máquina"
+            "value" : "Cada práctica, sesión y racha, y todo lo que el servidor guarda sobre tu cuenta. Tus recuentos se descifran en este teléfono y se pueden leer en el archivo; el servidor nunca los ve. PDF para leer e imprimir, JSON para todo legible por máquina, CSV como ZIP con una tabla por tipo de dato."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tout, lisible par une machine"
+            "value" : "Chaque pratique, séance et série, et tout ce que le serveur garde sur ton compte. Tes décomptes sont déchiffrés sur ce téléphone et lisibles dans le fichier ; le serveur ne les voit jamais. PDF pour lire et imprimer, JSON pour tout en format lisible par une machine, CSV en ZIP avec un tableau par type de données."
           }
         }
       }
@@ -3243,6 +3185,180 @@
         }
       }
     },
+    "Export all my data as CSV" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle meine Daten als CSV exportieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Экспортировать все мои данные в CSV"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Експортувати всі мої дані в CSV"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eksportuj wszystkie moje dane jako CSV"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportovat všechna moje data jako CSV"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportovať všetky moje údaje ako CSV"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Összes adatom exportálása CSV-be"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportar todos mis datos en CSV"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporter toutes mes données en CSV"
+          }
+        }
+      }
+    },
+    "Export all my data as JSON" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle meine Daten als JSON exportieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Экспортировать все мои данные в JSON"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Експортувати всі мої дані в JSON"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eksportuj wszystkie moje dane jako JSON"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportovat všechna moje data jako JSON"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportovať všetky moje údaje ako JSON"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Összes adatom exportálása JSON-be"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportar todos mis datos en JSON"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporter toutes mes données en JSON"
+          }
+        }
+      }
+    },
+    "Export all my data as PDF" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle meine Daten als PDF exportieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Экспортировать все мои данные в PDF"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Експортувати всі мої дані в PDF"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eksportuj wszystkie moje dane jako PDF"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportovat všechna moje data jako PDF"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportovať všetky moje údaje ako PDF"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Összes adatom exportálása PDF-be"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exportar todos mis datos en PDF"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporter toutes mes données en PDF"
+          }
+        }
+      }
+    },
     "Export failed" : {
       "localizations" : {
         "de" : {
@@ -3301,60 +3417,60 @@
         }
       }
     },
-    "Export my data" : {
+    "Export my data first" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Meine Daten exportieren"
+            "value" : "Erst meine Daten exportieren"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Экспорт моих данных"
+            "value" : "Сначала экспортировать мои данные"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Експорт моїх даних"
+            "value" : "Спершу експортувати мої дані"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eksportuj moje dane"
+            "value" : "Najpierw wyeksportuj moje dane"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Exportovat moje data"
+            "value" : "Nejdřív exportovat moje data"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Exportovať moje údaje"
+            "value" : "Najprv exportovať moje údaje"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Adataim exportálása"
+            "value" : "Előbb exportálom az adataimat"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Exportar mis datos"
+            "value" : "Exportar primero mis datos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Exporter mes données"
+            "value" : "Exporter d'abord mes données"
           }
         }
       }
@@ -3471,64 +3587,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Féminin"
-          }
-        }
-      }
-    },
-    "For a spreadsheet: one table per kind of data" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Für eine Tabellenkalkulation: eine Tabelle pro Art von Daten"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Для электронных таблиц: по таблице на каждый вид данных"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Для електронних таблиць: по таблиці на кожен вид даних"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Do arkusza kalkulacyjnego: jedna tabela na każdy rodzaj danych"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pro tabulkový procesor: jedna tabulka na každý druh dat"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pre tabuľkový procesor: jedna tabuľka na každý druh údajov"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Táblázatkezelőhöz: adatfajtánként egy táblázat"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para una hoja de cálculo: una tabla por tipo de dato"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pour un tableur : un tableau par type de données"
           }
         }
       }
@@ -6027,64 +6085,6 @@
         }
       }
     },
-    "The file holds your counts unencrypted: they are decrypted on this phone, and the server never sees them. Keep it somewhere private." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Die Datei enthält deine Zählungen unverschlüsselt: Sie werden auf diesem Handy entschlüsselt, der Server sieht sie nie. Bewahre sie privat auf."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Файл содержит ваши счётчики в незашифрованном виде: они расшифровываются на этом телефоне, сервер их никогда не видит. Храните его в надёжном месте."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Файл містить ваші лічильники в незашифрованому вигляді: їх розшифровано на цьому телефоні, сервер їх ніколи не бачить. Зберігайте його в надійному місці."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Plik zawiera Twoje liczniki bez szyfrowania: są odszyfrowywane na tym telefonie, a serwer nigdy ich nie widzi. Przechowuj go w prywatnym miejscu."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Soubor obsahuje tvé počty nezašifrované: dešifrují se v tomto telefonu a server je nikdy nevidí. Uchovej ho v soukromí."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Súbor obsahuje tvoje počty nezašifrované: dešifrujú sa v tomto telefóne a server ich nikdy nevidí. Uchovaj ho v súkromí."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A fájl titkosítás nélkül tartalmazza a számlálóidat: ezen a telefonon fejtjük vissza őket, a szerver soha nem látja őket. Tartsd biztonságos helyen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "El archivo contiene tus recuentos sin cifrar: se descifran en este teléfono y el servidor nunca los ve. Guárdalo en un lugar privado."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Le fichier contient tes décomptes en clair : ils sont déchiffrés sur ce téléphone, et le serveur ne les voit jamais. Garde-le en lieu sûr."
-          }
-        }
-      }
-    },
     "The public keys of your account, devices and passkeys" : {
       "localizations" : {
         "de" : {
@@ -6313,64 +6313,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Fuseau horaire"
-          }
-        }
-      }
-    },
-    "To read or print: every practice and session" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zum Lesen oder Drucken: jede Übung und jede Sitzung"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Для чтения или печати: все практики и сессии"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Для читання чи друку: усі практики й сесії"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Do czytania lub druku: każda praktyka i sesja"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ke čtení nebo tisku: každá praxe a každé sezení"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Na čítanie alebo tlač: každá prax a každé cvičenie"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Olvasáshoz vagy nyomtatáshoz: minden gyakorlat és ülés"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para leer o imprimir: cada práctica y sesión"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pour lire ou imprimer : chaque pratique et chaque séance"
           }
         }
       }

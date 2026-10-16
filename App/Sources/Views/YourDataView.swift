@@ -6,24 +6,30 @@ import DuongondroStore
 struct YourDataView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var account: AccountModel
-    @State private var exporting = false
+    @StateObject private var exports = ExportController()
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
-                CardSection {
-                    Button { exporting = true } label: {
-                        Label("Export all my data", systemImage: "square.and.arrow.up")
-                            .foregroundStyle(Theme.accent)
-                            .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                // As CodeShare's Manage my data: a card with one row per format, what
+                // the export holds in the footer.
+                CardSection(header: LocalizedStringKey(Self.exportHeader)) {
+                    ExportRows(controller: exports)
+                }
+                VStack(alignment: .leading, spacing: Theme.Space.s) {
+                    Text("Every practice, session and streak, and everything the server keeps about your account. Your counts are decrypted on this phone and are readable in the file; the server never sees them. PDF to read and print, JSON for everything machine-readable, CSV as a ZIP with one table per kind of data.",
+                         tableName: "Export")
+                        .foregroundStyle(Theme.muted)
+                    if exports.serverMissing {
+                        Text("Your account data could not be fetched from the server, so the export holds only what is on this phone.",
+                             tableName: "Export")
+                            .foregroundStyle(Theme.destructive)
                     }
                 }
-                Text("A PDF to read or print, tables for a spreadsheet, or everything as JSON, readable without this app.", tableName: "Export")
-                    .font(.footnote)
-                    .foregroundStyle(Theme.muted)
-                    .padding(.horizontal, Theme.Space.l)
-                    .padding(.top, -Theme.Space.s)
-                    .fixedSize(horizontal: false, vertical: true)
+                .font(.footnote)
+                .padding(.horizontal, Theme.Space.l)
+                .padding(.top, -Theme.Space.s)
+                .fixedSize(horizontal: false, vertical: true)
                 // With an account, the server and the person's other phones lose it too.
                 CardSection(footer: account.status == .none
                             ? LocalizedStringKey("Removes all your data from this phone. It cannot be undone.")
@@ -49,7 +55,24 @@ struct YourDataView: View {
         .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Your data")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $exporting) { ExportSheet() }
+        .disabled(exports.working)
+        .overlay { if exports.working { ProgressView() } }
+        .exportFailureAlert(exports)
+    }
+
+    static var exportHeader: String {
+        String(localized: "Export", table: "Export", bundle: .appLanguage, locale: .appLanguage)
+    }
+}
+
+extension View {
+    func exportFailureAlert(_ exports: ExportController) -> some View {
+        alert(Text("Export failed", tableName: "Export"),
+              isPresented: Binding(get: { exports.problem != nil }, set: { if !$0 { exports.problem = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(verbatim: exports.problem ?? "")
+        }
     }
 }
 
@@ -63,6 +86,8 @@ private struct DeleteEverythingView: View {
     /// Set once the server confirmed: a retry after a failed local wipe skips it
     /// (the session is gone with the account, so a second delete would fail).
     @State private var serverDeleted = false
+    @StateObject private var exports = ExportController()
+    @State private var choosingFormat = false
     private let word = String(localized: "delete", bundle: .appLanguage, locale: .appLanguage, comment: "The word typed to confirm deleting everything; lowercase")
 
     var body: some View {
@@ -80,6 +105,14 @@ private struct DeleteEverythingView: View {
                             .foregroundStyle(Theme.muted)
                     }
                     .padding(.vertical, Theme.Space.m)
+                    // As CodeShare's delete confirmation: export first, in any format.
+                    Button { choosingFormat = true } label: {
+                        Text("Export my data first", tableName: "Export")
+                            .foregroundStyle(Theme.accent)
+                            .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
                 }
                 CardSection(header: "Type \u{201C}\(word)\u{201D} to confirm") {
                     TextField(word, text: $typed)
@@ -113,6 +146,15 @@ private struct DeleteEverythingView: View {
         .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Delete everything")
         .navigationBarTitleDisplayMode(.inline)
+        .disabled(exports.working)
+        .overlay { if exports.working { ProgressView() } }
+        .confirmationDialog(Text("Export my data first", tableName: "Export"), isPresented: $choosingFormat, titleVisibility: .hidden) {
+            ForEach(ExportFormat.allCases) { format in
+                Button(format.rowTitle) { Task { await exports.export(format, model: model, account: account) } }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
+        .exportFailureAlert(exports)
         .alert("Could not delete", isPresented: Binding(get: { failure != nil }, set: { if !$0 { failure = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {

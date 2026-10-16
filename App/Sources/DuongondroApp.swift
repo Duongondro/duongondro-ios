@@ -24,7 +24,12 @@ struct DuongondroApp: App {
                 .environmentObject(model)
                 .environmentObject(account)
                 .environmentObject(delegate.push)
-                .onAppear { delegate.push.attach(model: model, account: account) }
+                .onAppear {
+                    delegate.push.attach(model: model, account: account)
+                    #if DEBUG
+                    ExportSample.writeIfAsked()
+                    #endif
+                }
                 // The interface language for every view below: string lookups and
                 // formatting. Always set (System = the phone's own locale).
                 .environment(\.locale, language.locale())
