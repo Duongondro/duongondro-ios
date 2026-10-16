@@ -773,7 +773,9 @@ struct NumberField: View {
                 set: { value = Int($0.filter { $0.isASCII && $0.isNumber }.prefix(9)) ?? 0 }))
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.trailing)
-                .frame(maxWidth: Theme.Size.numberField)
+                // A fixed width, so typing never moves the row between its two
+                // layouts (which would rebuild the field and close the keyboard).
+                .frame(minWidth: Theme.Size.numberField, maxWidth: Theme.Size.numberField)
         }
     }
 }

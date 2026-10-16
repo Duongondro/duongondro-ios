@@ -246,8 +246,9 @@ struct PasskeyUnlockCard: View {
                 if waiting {
                     action("Replace the unlock key") { await replace() }
                 }
-                if working { ProgressView() }
             }
+            // Outside the stack, so the spinner never switches its layout mid-request.
+            if working { ProgressView() }
         }
         .padding(Theme.Space.l)
         .frame(maxWidth: .infinity, alignment: .leading)
