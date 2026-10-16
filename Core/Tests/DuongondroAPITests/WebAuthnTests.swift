@@ -70,4 +70,36 @@ final class WebAuthnTests: XCTestCase {
             XCTAssertEqual(WebAuthn.data(base64URL: text), bytes)
         }
     }
+
+    // MARK: The PRF output never reaches the server
+
+    /// Options that ask for PRF with the server's own input change nothing the
+    /// phone reads: the input is the app's fixed label.
+    func testTheServersExtensionsAreIgnored() throws {
+        let plain = try json(#"{"rp":{"id":"duongondro.app"},"user":{"name":"a","id":"AA"},"challenge":"AA"}"#)
+        let withPRF = try json(#"{"rp":{"id":"duongondro.app"},"user":{"name":"a","id":"AA"},"challenge":"AA","extensions":{"prf":{"eval":{"first":"c2VydmVy"}}}}"#)
+        XCTAssertEqual(WebAuthn.creation(plain), WebAuthn.creation(withPRF))
+        let request = try json(#"{"challenge":"AA","rpId":"duongondro.app","extensions":{"prf":{"eval":{"first":"c2VydmVy"}}}}"#)
+        XCTAssertEqual(WebAuthn.assertion(request), WebAuthn.assertion(try json(#"{"challenge":"AA","rpId":"duongondro.app"}"#)))
+    }
+
+    /// What finish posts: no PRF result, ever, even from a credential that held one.
+    func testTheFinishBodyCarriesNoPRFResult() throws {
+        let output = Data(repeating: 0xAB, count: 32)
+        let registration = WebAuthn.registration(credentialID: Data([1, 2]), clientDataJSON: Data("{}".utf8), attestationObject: Data([3]))
+        let assertion = WebAuthn.assertion(credentialID: Data([1, 2]), clientDataJSON: Data("{}".utf8), authenticatorData: Data([4]),
+                                           signature: Data([5]), userHandle: Data([6]))
+        guard case .object(var leaky) = assertion else { return XCTFail() }
+        leaky["clientExtensionResults"] = .object(["prf": .object(["enabled": .bool(true), "results": .object(["first": .string(WebAuthn.base64URL(output))])])])
+        for credential in [registration, assertion, JSONValue.object(leaky)] {
+            let body = try APIClient.encoder.encode(PasskeyResponse(credential: credential))
+            let text = String(decoding: body, as: UTF8.self)
+            XCTAssertFalse(text.contains("prf"), text)
+            XCTAssertFalse(text.contains(WebAuthn.base64URL(output)), text)
+            XCTAssertFalse(text.contains(output.base64EncodedString()), text)
+            let object = try JSONSerialization.jsonObject(with: body) as! [String: Any]
+            let results = (object["credential"] as! [String: Any])["clientExtensionResults"] as! [String: Any]
+            XCTAssertTrue(results.isEmpty)
+        }
+    }
 }

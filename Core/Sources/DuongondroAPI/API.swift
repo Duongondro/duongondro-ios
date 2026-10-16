@@ -309,9 +309,12 @@ public struct RotationWrap: Codable, Sendable {
 public struct KeyRotation: Codable, Sendable {
     public let newVersion: Int
     public let wraps: [RotationWrap]
-    public init(newVersion: Int, wraps: [RotationWrap]) {
+    /// The new key wrapped to U, required while U holds the current one.
+    public let userKeyWrap: UserKeyWrapInput?
+    public init(newVersion: Int, wraps: [RotationWrap], userKeyWrap: UserKeyWrapInput? = nil) {
         self.newVersion = newVersion
         self.wraps = wraps
+        self.userKeyWrap = userKeyWrap
     }
 }
 

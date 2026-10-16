@@ -250,7 +250,12 @@ struct PasskeySignUp: Encodable {
     }
 }
 
-struct PasskeyResponse: Encodable { let credential: JSONValue }
+/// A finish call's body. The PRF output never reaches the server (api#26): the
+/// credential goes up with empty client extension results, whatever it held.
+struct PasskeyResponse: Encodable {
+    let credential: JSONValue
+    init(credential: JSONValue) { self.credential = WebAuthn.withoutExtensionResults(credential) }
+}
 
 public struct SignInResult: Codable, Equatable, Sendable {
     /// The bearer token.

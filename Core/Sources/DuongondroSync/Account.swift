@@ -227,14 +227,21 @@ public final class Account: @unchecked Sendable {
             guard (try? E2EE.openSession(sealKey: sealKey, session: sample.id, user: me.id, keyVersion: UInt32(version),
                                          sealed: sample.sealed!)) != nil else { throw Failure.recoveryOutdated }
         }
-        try secrets.write(SecretName.identitySeed, seed)
+        try await enrol(user: me.id, identity: identity, identityPublic: identityPublic, practiceKey: practiceKey, version: version)
+    }
+
+    /// A new phone that has opened the keys (by the recovery code or a passkey):
+    /// keeps them, registers this device, lists it, and wraps the keys to itself.
+    func enrol(user: UUID, identity: Curve25519.Signing.PrivateKey, identityPublic: Curve25519.Signing.PublicKey,
+               practiceKey: Data, version: Int) async throws {
+        try secrets.write(SecretName.identitySeed, identity.rawRepresentation)
         try secrets.write(SecretName.practiceKey(version), practiceKey)
 
         let device = try await registerThisDevice()
         let previous = try await api.deviceList()
-        try await publishDeviceList(adding: device, user: me.id, identity: identity, previous: previous, verifyWith: identityPublic)
-        try await wrapSecrets(to: device, user: me.id, keyVersion: version, identity: identity, practiceKey: practiceKey)
-        try database.saveSyncState(SyncState(userID: me.id, keyVersion: version))
+        try await publishDeviceList(adding: device, user: user, identity: identity, previous: previous, verifyWith: identityPublic)
+        try await wrapSecrets(to: device, user: user, keyVersion: version, identity: identity, practiceKey: practiceKey)
+        try database.saveSyncState(SyncState(userID: user, keyVersion: version))
         try database.markAllDirty()
     }
 
