@@ -34,7 +34,7 @@ final class VectorTests: XCTestCase {
     }
     struct Prf: Decodable {
         struct Inputs: Decodable {
-            let credentialId, prfOutput, userKeyId, userKeyPrivate, userKeyPublic: String
+            let credentialId, identityPublic, prfOutput, userKeyId, userKeyPrivate, userKeyPublic: String
             let keyVersion: UInt32
         }
         struct Wrap: Decodable { let name, aad, box, epk, recipient, signature: String; let kind: UInt8 }
@@ -179,15 +179,20 @@ final class VectorTests: XCTestCase {
         let key = E2EE.prfKey(output: hex(p.inputs.prfOutput), user: user)
         XCTAssertEqual(key.data, hex(p.prfKey))
         let uid = uuid(p.inputs.userKeyId)
-        let aad = E2EE.prfAAD(user: user, userKey: uid, credentialID: hex(p.inputs.credentialId))
+        let ipk = hex(p.inputs.identityPublic)
+        XCTAssertEqual(ipk, hex(v.inputs.identityPublic))
+        let aad = E2EE.prfAAD(user: user, identityPublicKey: ipk, userKey: uid, credentialID: hex(p.inputs.credentialId))
         XCTAssertEqual(aad, hex(p.aad))
         let scalar = hex(p.inputs.userKeyPrivate)
         let box = try E2EE.sealPasskeyBox(scalar, key: key, aad: aad, nonce: hex(v.inputs.nonce))
         XCTAssertEqual(box, hex(p.box))
         XCTAssertEqual(try E2EE.openPasskeyBox(box, key: key, aad: aad), scalar)
         // Another passkey's credential id, or another U, does not open it.
-        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, userKey: uid, credentialID: Data([1]))))
-        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, userKey: user, credentialID: hex(p.inputs.credentialId))))
+        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, identityPublicKey: ipk, userKey: uid, credentialID: Data([1]))))
+        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, identityPublicKey: ipk, userKey: user, credentialID: hex(p.inputs.credentialId))))
+        // Under another identity key (a server's own), it does not open.
+        let other = Curve25519.Signing.PrivateKey().publicKey.rawRepresentation
+        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, identityPublicKey: other, userKey: uid, credentialID: hex(p.inputs.credentialId))))
 
         let identity = try Curve25519.Signing.PrivateKey(rawRepresentation: hex(v.inputs.identitySeed))
         XCTAssertTrue(E2EE.verifyPasskeyBox(box, aad: aad, signature: hex(p.boxSignature), identity: identity.publicKey))

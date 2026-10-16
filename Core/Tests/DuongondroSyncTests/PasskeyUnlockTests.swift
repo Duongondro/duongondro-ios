@@ -31,7 +31,7 @@ final class KeyServer: URLProtocol {
     nonisolated(unsafe) static var state = State()
 
     static func reset() { lock.withLock { state = State() } }
-    static func with<T>(_ f: (inout State) -> T) -> T { lock.withLock { f(&state) } }
+    static func with<T>(_ f: (inout State) throws -> T) rethrows -> T { try lock.withLock { try f(&state) } }
 
     static func client(token: String = "t") -> APIClient {
         let config = URLSessionConfiguration.ephemeral
@@ -247,21 +247,50 @@ final class PasskeyUnlockTests: XCTestCase {
         XCTAssertEqual(v7, .otherAccountsPasskey)
     }
 
-    func testABoxTheServerSwappedDoesNotVerify() async throws {
+    func testABoxTheServerMovedToAnotherPasskeyDoesNotOpen() async throws {
         let (first, _, _) = try phone()
         _ = try await first.setUpFirstDevice()
         let a = prf("a"), b = prf("b")
         addPasskey(a)
         addPasskey(b)
-        let v8 = try await first.savePasskeyBox(a)
-        XCTAssertEqual(v8, .saved)
-        // The server serves a's box as b's: its signature names a's credential id.
+        let saved = try await first.savePasskeyBox(a)
+        XCTAssertEqual(saved, .saved)
+        // The server serves a's box as b's: its AAD names a's credential id.
         KeyServer.with { $0.passkeys[b.credentialKey] = $0.passkeys[a.credentialKey]! }
-        let (second, _, _) = try phone()
-        do {
-            _ = try await second.unlock(with: b)
-            XCTFail("a box under another credential id must not verify")
-        } catch Account.Failure.notAuthentic {}
+        let (second, secrets, _) = try phone()
+        let opened = try await second.unlock(with: PasskeyPRF(credentialID: b.credentialID, output: a.output))
+        XCTAssertFalse(opened, "a box under another credential id does not open")
+        XCTAssertNil(try secrets.read(SecretName.identitySeed))
+    }
+
+    /// A server that publishes an identity key of its own, re-signs U's statement
+    /// and serves wraps of keys it chose: the box, sealed under the real identity
+    /// key, does not open, and nothing from that response is trusted.
+    func testAServersOwnIdentityKeyIsShutOutByTheBox() async throws {
+        let (first, _, _) = try phone()
+        _ = try await first.setUpFirstDevice()
+        let passkey = prf("p")
+        addPasskey(passkey)
+        let saved = try await first.savePasskeyBox(passkey)
+        XCTAssertEqual(saved, .saved)
+        let forger = Curve25519.Signing.PrivateKey()
+        try KeyServer.with { s in
+            s.identity = forger.publicKey.rawRepresentation
+            let u = s.userKey!
+            s.userKey = (u.id, u.version, u.payload, try E2EE.signStatement(type: "user-key", payload: u.payload, identity: forger))
+            let key = Statements.parseUserKey(u.payload)!
+            s.userKeyWraps = try [(E2EE.WrapKind.practiceKey, SymmetricKey(size: .bits256).data), (.identitySeed, forger.rawRepresentation)].map { kind, secret in
+                let w = try Account.wrapToUserKey(secret, kind: kind, key: key, user: s.user, keyVersion: 1, identity: forger)
+                return ["userKeyId": w.userKeyId.uuidString, "kind": w.kind, "keyVersion": w.keyVersion, "ephemeralKey": w.ephemeralKey.base64EncodedString(),
+                        "box": w.box.base64EncodedString(), "signature": w.signature.base64EncodedString(), "createdAt": KeyServer.now]
+            }
+        }
+        let (second, secrets, db) = try phone()
+        let opened = try await second.unlock(with: passkey)
+        XCTAssertFalse(opened)
+        XCTAssertNil(try secrets.read(SecretName.identitySeed))
+        XCTAssertNil(try secrets.read(SecretName.userKey))
+        XCTAssertNil(try db.syncState())
     }
 
     func testAnExistingUserKeyIsNeverReplacedAndArrivesAsKindFour() async throws {

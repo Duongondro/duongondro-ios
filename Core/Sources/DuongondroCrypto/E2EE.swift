@@ -250,10 +250,12 @@ public enum E2EE {
         derive(output, salt: user.bytes, info: labelPrfWrap)
     }
 
-    /// uuid(user) ‖ uuid(U.id) ‖ credentialId: the credential id last, so its
-    /// length needs no prefix.
-    public static func prfAAD(user: UUID, userKey: UUID, credentialID: Data) -> Data {
-        user.bytes + userKey.bytes + credentialID
+    /// uuid(user) ‖ identityPk ‖ uuid(U.id) ‖ credentialId: the credential id last,
+    /// so its length needs no prefix. The identity public key (32 bytes) is bound
+    /// in because nothing else on a new phone authenticates it: a box opens only
+    /// under the identity key the phone that sealed it saw.
+    public static func prfAAD(user: UUID, identityPublicKey: Data, userKey: UUID, credentialID: Data) -> Data {
+        user.bytes + identityPublicKey + userKey.bytes + credentialID
     }
 
     /// U's 32-byte scalar sealed under a passkey's PRF key: the passkey's box.

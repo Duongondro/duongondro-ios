@@ -241,7 +241,8 @@ extension Account {
 
     static func passkeyBox(_ prf: PasskeyPRF, held: HeldUserKey, user: UUID,
                            identity: Curve25519.Signing.PrivateKey) throws -> PasskeyBoxInput {
-        let aad = E2EE.prfAAD(user: user, userKey: held.id, credentialID: prf.credentialID)
+        let aad = E2EE.prfAAD(user: user, identityPublicKey: identity.publicKey.rawRepresentation, userKey: held.id,
+                              credentialID: prf.credentialID)
         let box = try E2EE.sealPasskeyBox(held.scalar, key: E2EE.prfKey(output: prf.output, user: user), aad: aad)
         return PasskeyBoxInput(userKeyId: held.id, box: box, signature: try E2EE.signPasskeyBox(box, aad: aad, identity: identity))
     }
@@ -260,14 +261,19 @@ extension Account {
             throw Failure.accountHasNoKeys
         }
         guard let unlock = try await api.passkeyUnlock(credential: prf.credentialKey) else { return false }
-        let key = try verifiedUserKey(unlock.userKey, user: me.id, identity: identityPublic)
-        let aad = E2EE.prfAAD(user: me.id, userKey: key.id, credentialID: prf.credentialID)
-        guard E2EE.verifyPasskeyBox(unlock.box, aad: aad, signature: unlock.signature, identity: identityPublic) else {
-            throw Failure.notAuthentic
-        }
+        // The box first, under the identity key just read: only the PRF output
+        // opens it, so a box that opens proves this identity key, U's id and this
+        // passkey are the ones the sealing phone saw. Nothing else in the response
+        // (statement, wraps) is trusted unless it does.
+        let aad = E2EE.prfAAD(user: me.id, identityPublicKey: identityPk, userKey: unlock.userKey.id,
+                              credentialID: prf.credentialID)
         guard let scalar = try? E2EE.openPasskeyBox(unlock.box, key: E2EE.prfKey(output: prf.output, user: me.id), aad: aad) else {
             return false
         }
+        guard E2EE.verifyPasskeyBox(unlock.box, aad: aad, signature: unlock.signature, identity: identityPublic) else {
+            throw Failure.notAuthentic
+        }
+        let key = try verifiedUserKey(unlock.userKey, user: me.id, identity: identityPublic)
         let u = try E2EE.userKey(scalar: scalar, expectedPublicKey: key.publicKey)
 
         func open(_ kind: E2EE.WrapKind, version: Int?) throws -> Data? {
