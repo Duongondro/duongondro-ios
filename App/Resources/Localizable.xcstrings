@@ -4048,64 +4048,6 @@
         }
       }
     },
-    "Added %@ · last used %@" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hinzugefügt am %1$@ · zuletzt verwendet %2$@"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Добавлен %1$@ · последний вход %2$@"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Додано %1$@ · останній вхід %2$@"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dodano %1$@ · ostatnio użyty %2$@"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Přidáno %1$@ · naposledy použit %2$@"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pridané %1$@ · naposledy použitý %2$@"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hozzáadva: %1$@ · utoljára használva: %2$@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadida el %1$@ · último uso: %2$@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ajoutée le %1$@ · dernière utilisation : %2$@"
-          }
-        }
-      }
-    },
     "Added %@. Undo available." : {
       "localizations" : {
         "cs" : {
@@ -4218,6 +4160,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ajoutée le %@"
+          }
+        }
+      }
+    },
+    "Added today" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Heute hinzugefügt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавлен сегодня"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додано сьогодні"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodano dzisiaj"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidáno dnes"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridané dnes"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ma hozzáadva"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadida hoy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutée aujourd'hui"
           }
         }
       }
@@ -6902,13 +6902,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Каждый ключ доступа входит в этот аккаунт. Названия видите только вы."
+            "value" : "С каждым ключом доступа вы входите в этот аккаунт. Названия видите только вы."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Кожен ключ доступу входить у цей обліковий запис. Назви бачите лише ви."
+            "value" : "З кожним ключем доступу ви входите в цей обліковий запис. Назви бачите лише ви."
           }
         },
         "pl" : {
@@ -6944,7 +6944,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Chaque clé d'accès te connecte à ce compte. Toi seul vois les noms."
+            "value" : "Chaque clé d'accès te connecte à ce compte. Les noms ne sont visibles que par toi."
           }
         }
       }
@@ -9957,7 +9957,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elle ne pourra plus te connecter, et partout où elle est connectée, tu seras déconnecté, sur ce téléphone aussi. La clé elle-même reste dans ton gestionnaire de mots de passe tant que tu ne l'y supprimes pas."
+            "value" : "Elle ne pourra plus te connecter, et partout où elle est connectée, tu seras déconnecté(e), sur ce téléphone aussi. La clé elle-même reste dans ton gestionnaire de mots de passe tant que tu ne l'y supprimes pas."
           }
         }
       }
@@ -10015,7 +10015,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elle ne pourra plus te connecter, et partout où elle est connectée, tu seras déconnecté. La clé elle-même reste dans ton gestionnaire de mots de passe tant que tu ne l'y supprimes pas."
+            "value" : "Elle ne pourra plus te connecter, et partout où elle est connectée, tu seras déconnecté(e). La clé elle-même reste dans ton gestionnaire de mots de passe tant que tu ne l'y supprimes pas."
           }
         }
       }
@@ -10248,6 +10248,122 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Última práctica"
+          }
+        }
+      }
+    },
+    "last used %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "zuletzt verwendet am %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "последний вход %@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "останній вхід %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ostatnio użyty %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "naposledy použit %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "naposledy použitý %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "utoljára használva: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "último uso: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dernière utilisation le %@"
+          }
+        }
+      }
+    },
+    "last used today" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "heute zuletzt verwendet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "последний вход сегодня"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "останній вхід сьогодні"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ostatnio użyty dzisiaj"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "naposledy použit dnes"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "naposledy použitý dnes"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ma használva utoljára"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "último uso: hoy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dernière utilisation aujourd'hui"
           }
         }
       }
@@ -14853,6 +14969,64 @@
         }
       }
     },
+    "Remove and replace the unlock key" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entfernen und Entsperrschlüssel ersetzen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалить и заменить ключ разблокировки"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Видалити й замінити ключ розблокування"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usuń i wymień klucz odblokowania"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odebrat a vyměnit odemykací klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odstrániť a vymeniť odomykací kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eltávolítás és a feloldókulcs cseréje"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar y cambiar la llave de desbloqueo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimer et remplacer la clé de déverrouillage"
+          }
+        }
+      }
+    },
     "Remove “%@”?" : {
       "localizations" : {
         "de" : {
@@ -15081,6 +15255,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Renommer la clé d'accès"
+          }
+        }
+      }
+    },
+    "Replacing the unlock key too: other phones are signed out, and this passkey can no longer unlock your counts on a new phone. A phone it already unlocked keeps what it has. Your other passkeys then need setting up again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wenn du auch den Entsperrschlüssel ersetzt: Andere Handys werden abgemeldet, und dieser Passkey kann deine Zählungen auf einem neuen Handy nicht mehr entsperren. Ein Handy, das er schon entsperrt hat, behält, was es hat. Deine anderen Passkeys musst du danach neu einrichten."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Если заменить и ключ разблокировки: другие телефоны выйдут из аккаунта, а этот ключ доступа больше не сможет открыть ваши счёты на новом телефоне. Телефон, который он уже разблокировал, сохранит то, что у него есть. Остальные ключи доступа потом нужно будет настроить заново."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Якщо замінити й ключ розблокування: інші телефони вийдуть з облікового запису, а цей ключ доступу більше не зможе відкрити ваші підрахунки на новому телефоні. Телефон, який він уже розблокував, збереже те, що має. Інші ключі доступу потім треба буде налаштувати заново."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jeśli wymienisz też klucz odblokowania: inne telefony zostaną wylogowane, a ten klucz dostępu nie odblokuje już twoich liczb na nowym telefonie. Telefon, który już odblokował, zachowa to, co ma. Pozostałe klucze dostępu trzeba potem skonfigurować ponownie."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Když vyměníš i odemykací klíč: ostatní telefony se odhlásí a tento přístupový klíč už tvé počty na novém telefonu neodemkne. Telefon, který už odemkl, si ponechá, co má. Ostatní přístupové klíče pak bude třeba znovu nastavit."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keď vymeníš aj odomykací kľúč: ostatné telefóny sa odhlásia a tento prístupový kľúč už tvoje počty v novom telefóne neodomkne. Telefón, ktorý už odomkol, si ponechá, čo má. Ostatné prístupové kľúče potom bude treba znova nastaviť."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ha a feloldókulcsot is lecseréled: a többi telefon kijelentkezik, és ez a hozzáférési kulcs új telefonon már nem tudja feloldani a számaidat. Az a telefon, amelyet már feloldott, megtartja, ami rajta van. A többi hozzáférési kulcsot ezután újra be kell állítanod."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si cambias también la llave de desbloqueo: los demás teléfonos cierran sesión y esta clave de acceso ya no podrá desbloquear tus cuentas en un teléfono nuevo. Un teléfono que ya desbloqueó conserva lo que tiene. Tus demás claves de acceso tendrán que configurarse de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si tu remplaces aussi la clé de déverrouillage : les autres téléphones sont déconnectés, et cette clé d'accès ne peut plus déverrouiller tes décomptes sur un nouveau téléphone. Un téléphone qu'elle a déjà déverrouillé garde ce qu'il a. Tes autres clés d'accès devront ensuite être reconfigurées."
           }
         }
       }
@@ -20067,64 +20299,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hoy"
-          }
-        }
-      }
-    },
-    "today" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "heute"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "сегодня"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "сьогодні"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "dzisiaj"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "dnes"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "dnes"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ma"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "hoy"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "aujourd'hui"
           }
         }
       }

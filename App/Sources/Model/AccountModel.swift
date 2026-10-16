@@ -301,6 +301,8 @@ final class AccountModel: ObservableObject {
         guard let result = heldSignIn else { return }
         heldSignIn = nil
         sessionAddress = nil
+        heldPRF = nil
+        signedInUser = nil
         try? await APIClient(baseURL: Self.serverURL, token: result.token).signOut()
     }
 
@@ -626,8 +628,9 @@ final class AccountModel: ObservableObject {
         let redeemed = try await redeem(signIn: true) {
             try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: asserted.json)
         }
-        if let output = asserted.prf, let user = signedInUser {
-            heldPRF = (user, PasskeyPRF(credentialID: asserted.credentialID, output: output))
+        // This sign-in's output, or none: never an older ceremony's.
+        heldPRF = asserted.prf.flatMap { output in
+            signedInUser.map { ($0, PasskeyPRF(credentialID: asserted.credentialID, output: output)) }
         }
         return redeemed
     }
@@ -726,11 +729,17 @@ final class AccountModel: ObservableObject {
     }
 
     /// Removes a passkey, its box and the sessions it signed in with; removing
-    /// the one this phone signed in with signs this phone out.
-    func removePasskey(_ passkey: Passkey) async -> RemoveResult {
+    /// the one this phone signed in with signs this phone out. With
+    /// `replacingUnlockKey` (offered for a passkey that can unlock the counts),
+    /// every other phone is signed out and U is replaced too.
+    func removePasskey(_ passkey: Passkey, replacingUnlockKey: Bool = false) async -> RemoveResult {
         guard let account else { return .failed }
         do {
-            try await account.api.removePasskey(passkey.id)
+            if replacingUnlockKey {
+                try await account.removePasskeyAndReplaceUserKey(passkey)
+            } else {
+                try await account.api.removePasskey(passkey.id)
+            }
         } catch APIError.conflict {
             return .lastWayToSignIn
         } catch APIError.notFound {
@@ -770,14 +779,13 @@ final class AccountModel: ObservableObject {
     /// A new phone signed in with a passkey that has a box: the keys come from
     /// it, no recovery code asked. False without a box or a PRF output.
     private func unlockWithPasskey(_ account: Account) async throws -> Bool {
-        guard let prf = heldPRF.flatMap({ held in held.user == signedInUser ? held.prf : nil }) else { return false }
+        guard let held = heldPRF else { return false }
         return try await keyed {
             guard !account.hasKeys else { return true }
             do {
-                guard try await account.unlock(with: prf) else { return false }
-            } catch let error as URLError {
-                throw error
-            } catch {
+                // The account signed in must be the one the output was held for.
+                guard try await account.unlock(with: held.prf, for: held.user) else { return false }
+            } catch Account.Failure.notAuthentic {
                 // A box or wrap that does not verify: the recovery code still can.
                 return false
             }
@@ -949,6 +957,7 @@ final class AccountModel: ObservableObject {
         passkeys = []
         passkeysLoaded = false
         userKeyKept = false
+        heldPRF = nil
         // No session to finish the account steps with: sign in again instead.
         stepsPending = false
         error = nil

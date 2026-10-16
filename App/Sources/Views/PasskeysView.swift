@@ -65,11 +65,22 @@ struct PasskeysView: View {
                             isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }),
                             titleVisibility: .visible, presenting: removing) { passkey in
             Button("Remove", role: .destructive) { remove(passkey) }
+            // Removing is not revocation: a passkey that could unlock the counts
+            // may have opened them already (docs/crypto.md › Passkey unlock).
+            if passkey.canUnlock {
+                Button("Remove and replace the unlock key", role: .destructive) { remove(passkey, replacingUnlockKey: true) }
+            }
             Button("Cancel", role: .cancel) {}
         } message: { passkey in
-            passkey.current
+            let removal = passkey.current
                 ? Text("It can no longer sign you in, and anywhere it is signed in now is signed out, this phone included. The passkey itself stays in your password manager until you delete it there.")
                 : Text("It can no longer sign you in, and anywhere it is signed in now is signed out. The passkey itself stays in your password manager until you delete it there.")
+            if passkey.canUnlock {
+                removal + Text(verbatim: "\n\n")
+                    + Text("Replacing the unlock key too: other phones are signed out, and this passkey can no longer unlock your counts on a new phone. A phone it already unlocked keeps what it has. Your other passkeys then need setting up again.")
+            } else {
+                removal
+            }
         }
     }
 
@@ -97,10 +108,10 @@ struct PasskeysView: View {
         }
     }
 
-    private func remove(_ passkey: Passkey) {
+    private func remove(_ passkey: Passkey, replacingUnlockKey: Bool = false) {
         note = nil
         Task {
-            switch await account.removePasskey(passkey) {
+            switch await account.removePasskey(passkey, replacingUnlockKey: replacingUnlockKey) {
             case .removed: break
             case .lastWayToSignIn:
                 note = localized("This is the only way to sign in to your account, so it stays. Add another passkey or an email first.")
@@ -141,16 +152,20 @@ private struct PasskeyRow: View {
         }
     }
 
-    /// "Added 7 Oct 2026 · last used today".
+    /// "Added on 7 Oct 2026 · last used today": each half its own string, so
+    /// "today" never lands after a preposition made for a date.
     private var used: String {
-        let added = Self.day(passkey.createdAt)
-        guard let last = passkey.lastUsedAt else { return localized("Added on \(added)") }
-        return localized("Added \(added) · last used \(Self.day(last))")
+        let created = passkey.createdAt
+        let added = Self.isToday(created) ? localized("Added today") : localized("Added on \(Self.day(created))")
+        guard let last = passkey.lastUsedAt else { return added }
+        let used = Self.isToday(last) ? localized("last used today") : localized("last used \(Self.day(last))")
+        return added + " · " + used
     }
 
+    private static func isToday(_ date: Date) -> Bool { Calendar.current.isDateInToday(date) }
+
     private static func day(_ date: Date) -> String {
-        if Calendar.current.isDateInToday(date) { return localized("today") }
-        return date.formatted(Date.FormatStyle(date: .abbreviated, time: .omitted, locale: .appLanguage))
+        date.formatted(Date.FormatStyle(date: .abbreviated, time: .omitted, locale: .appLanguage))
     }
 }
 
