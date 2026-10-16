@@ -10629,8 +10629,8 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Niech klucz dostępu odblokowuje Twoje liczby na nowym telefonie"
+            "state" : "translated",
+            "value" : "Niech klucz dostępu odblokowuje Twoje dane na nowym telefonie"
           }
         },
         "cs" : {
@@ -15455,8 +15455,8 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jeśli wymienisz też klucz odblokowania: inne telefony zostaną wylogowane, a ten klucz dostępu nie odblokuje już Twoich liczb na nowym telefonie. Telefon, który już odblokował, zachowa to, co ma. Pozostałe klucze dostępu trzeba potem skonfigurować ponownie."
+            "state" : "translated",
+            "value" : "Jeśli wymienisz też klucz odblokowania: inne telefony zostaną wylogowane, a ten klucz dostępu nie odblokuje już Twoich danych na nowym telefonie. Telefon, który już odblokował, zachowa to, co ma. Pozostałe klucze dostępu trzeba potem skonfigurować ponownie."
           }
         },
         "cs" : {
@@ -15925,8 +15925,8 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Logowanie nim na nowym telefonie przywróci wtedy Twoje liczby bez kodu odzyskiwania."
+            "state" : "translated",
+            "value" : "Logowanie nim na nowym telefonie przywróci wtedy Twoje dane bez kodu odzyskiwania."
           }
         },
         "cs" : {
@@ -20266,8 +20266,8 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ten klucz dostępu nie odblokuje Twoich liczb. Zachowaj kod odzyskiwania albo dodaj nowy klucz w Kluczach dostępu."
+            "state" : "translated",
+            "value" : "Ten klucz dostępu nie odblokuje Twoich danych. Zachowaj kod odzyskiwania albo dodaj nowy klucz w Kluczach dostępu."
           }
         },
         "cs" : {
@@ -23598,8 +23598,8 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Twój klucz dostępu nie odblokuje Twoich liczb na nowym telefonie"
+            "state" : "translated",
+            "value" : "Twój klucz dostępu nie odblokuje Twoich danych na nowym telefonie"
           }
         },
         "cs" : {
