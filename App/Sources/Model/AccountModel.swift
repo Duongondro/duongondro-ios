@@ -268,7 +268,6 @@ final class AccountModel: ObservableObject {
         Purge.deleteKeychainItems()
         passkeys = []
         passkeysLoaded = false
-        userKeyKept = false
         noPRFPasskeys = []
         let kept = email
         username = nil
@@ -698,12 +697,11 @@ final class AccountModel: ObservableObject {
         didSet { UserDefaults.standard.set(Array(noPRFPasskeys), forKey: Keys.noPRFPasskeys) }
     }
 
-    /// U checked once a launch, after a sync: made if the account has none,
-    /// wrapped to, and given to this account's other phones.
-    private var userKeyKept = false
 
     private func keepPasskeyUnlock(_ account: Account) async {
-        if !userKeyKept { userKeyKept = (try? await account.keepUserKey()) ?? false }
+        // Every sync, one at a time (Core's gate): a phone that joined, or a U
+        // replaced elsewhere, is picked up without a relaunch.
+        _ = try? await account.keepUserKey()
         if let prf = takePRF(for: userID) { _ = try? await account.savePasskeyBox(prf) }
         await refreshPasskeys()
     }
@@ -1036,7 +1034,6 @@ final class AccountModel: ObservableObject {
         status = .signedOut
         passkeys = []
         passkeysLoaded = false
-        userKeyKept = false
         noPRFPasskeys = []
         unlockKeyNotReplaced = false
         heldPRF = nil
@@ -1272,7 +1269,6 @@ final class AccountModel: ObservableObject {
         signedInUser = nil
         passkeys = []
         passkeysLoaded = false
-        userKeyKept = false
         noPRFPasskeys = []
         magicToken = nil
         linkWindow.close()
