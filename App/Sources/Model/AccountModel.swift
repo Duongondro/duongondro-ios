@@ -628,9 +628,17 @@ final class AccountModel: ObservableObject {
         let redeemed = try await redeem(signIn: true) {
             try await self.anonymous.finishPasskey(ceremony: ceremony.sessionId, credential: asserted.json)
         }
-        // This sign-in's output, or none: never an older ceremony's.
-        heldPRF = asserted.prf.flatMap { output in
-            signedInUser.map { ($0, PasskeyPRF(credentialID: asserted.credentialID, output: output)) }
+        // This sign-in's output, or none: never an older ceremony's, and only
+        // for a sign-in that went through (or is held until this phone's other
+        // practice is dealt with).
+        heldPRF = nil
+        let wentThrough: Bool
+        switch redeemed {
+        case .signedIn, .otherAccountData: wentThrough = true
+        default: wentThrough = false
+        }
+        if wentThrough, let output = asserted.prf, let user = signedInUser {
+            heldPRF = (user, PasskeyPRF(credentialID: asserted.credentialID, output: output))
         }
         return redeemed
     }
@@ -822,9 +830,14 @@ final class AccountModel: ObservableObject {
             guard !account.hasKeys else { return true }
             do {
                 // The account signed in must be the one the output was held for.
-                guard try await account.unlock(with: held.prf, for: held.user) else { return false }
+                guard try await account.unlock(with: held.prf, for: held.user) else {
+                    self.heldPRF = nil
+                    return false
+                }
             } catch Account.Failure.notAuthentic {
-                // A box or wrap that does not verify: the recovery code still can.
+                // A box or wrap that does not verify: the recovery code still can,
+                // and this output is not tried again.
+                self.heldPRF = nil
                 return false
             }
             self.heldPRF = nil
@@ -1226,6 +1239,7 @@ final class AccountModel: ObservableObject {
         stepsPending = false
         heldSignIn = nil
         heldPRF = nil
+        signedInUser = nil
         passkeys = []
         passkeysLoaded = false
         userKeyKept = false
