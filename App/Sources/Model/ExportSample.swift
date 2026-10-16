@@ -21,7 +21,7 @@ enum ExportSample {
             let language = AppLanguage.stored().localization()
             try ExportPDF(content: content, build: "\(identity.version) · \(identity.shortRevision)").data()
                 .write(to: folder.appendingPathComponent("sample-\(language).pdf"))
-            try CSVExport.zip(content, header: ExportBuilder.header) { ($0.shownName, $0.shownSecondName) }
+            try CSVExport.zip(content, header: ExportBuilder.header, aFriend: ExportBuilder.string("A friend")) { ($0.shownName, $0.shownSecondName) }
                 .write(to: folder.appendingPathComponent("sample-\(language)-csv.zip"))
             try DataExport.zip(snapshot: snapshot, server: server, appVersion: identity.version)
                 .write(to: folder.appendingPathComponent("sample-\(language).zip"))

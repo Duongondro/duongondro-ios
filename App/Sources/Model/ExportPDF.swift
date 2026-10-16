@@ -64,8 +64,12 @@ struct ExportPDF {
 
     private struct Table {
         let columns: [Column]
+        /// "Dorje Sempa (continued)", above the header where the table carries on on a new page.
+        var continued: String
         /// The header band, as tall as its longest title wraps.
         var height: CGFloat = 18
+        /// The continuation line above it.
+        var continuedHeight: CGFloat = 0
     }
 
     private struct Item {
@@ -79,7 +83,7 @@ struct ExportPDF {
         var tables: [Int: Table] = [:]
         build(&items, &tables)
         let available = Double(Self.contentBottom - Self.contentTop)
-        let headerHeights = tables.mapValues { Double($0.height) }
+        let headerHeights = tables.mapValues { Double($0.continuedHeight + $0.height) }
         let pages = PageFlow.paginate(items.map(\.block), available: available, headers: headerHeights)
 
         let format = UIGraphicsPDFRendererFormat()
@@ -95,7 +99,7 @@ struct ExportPDF {
                 for p in placements {
                     switch p {
                     case let .block(i, y): items[i].draw(Self.contentTop + CGFloat(y))
-                    case let .header(t, y): if let table = tables[t] { drawHeader(table, at: Self.contentTop + CGFloat(y)) }
+                    case let .header(t, y): if let table = tables[t] { drawHeader(table, at: Self.contentTop + CGFloat(y), continued: true) }
                     }
                 }
             }
@@ -149,7 +153,12 @@ struct ExportPDF {
         text(pageText, Self.smallFont, Self.muted, x: Self.side, y: footer, w: width, align: .right)
     }
 
-    private func drawHeader(_ table: Table, at y: CGFloat) {
+    private func drawHeader(_ table: Table, at top: CGFloat, continued: Bool = false) {
+        var y = top
+        if continued {
+            text(table.continued, Self.smallFont, Self.muted, x: Self.side, y: y, w: width)
+            y += table.continuedHeight
+        }
         if let cg = UIGraphicsGetCurrentContext() {
             cg.setFillColor(Self.band.cgColor)
             cg.fill(CGRect(x: Self.side, y: y, width: width, height: table.height))
@@ -171,18 +180,25 @@ struct ExportPDF {
 
     // MARK: - Building blocks
 
+    /// The detail ("69 sessions") is measured first, on one line at the right; the
+    /// title wraps in the width left of it, so a long practice name never runs under it.
     private func heading(_ title: String, detail: String? = nil, into items: inout [Item]) {
-        let h = text(title, Self.sectionFont, Self.ink, x: 0, y: 0, w: width, draw: false) + 8
+        let detailWidth = detail.map {
+            ceil(NSAttributedString(string: $0, attributes: Self.attributes(Self.smallFont, Self.muted, .right))
+                .boundingRect(with: CGSize(width: width, height: 100), options: [.usesLineFragmentOrigin], context: nil).width) + 12
+        } ?? 0
+        let titleWidth = width - detailWidth
+        let h = text(title, Self.sectionFont, Self.ink, x: 0, y: 0, w: titleWidth, draw: false) + 8
         items.append(Item(block: PageFlow.Block(height: Double(h), keepWithNext: true)) { y in
-            text(title, Self.sectionFont, Self.ink, x: Self.side, y: y, w: width)
+            text(title, Self.sectionFont, Self.ink, x: Self.side, y: y, w: titleWidth)
             if let detail {
-                text(detail, Self.smallFont, Self.muted, x: Self.side, y: y + 4, w: width, align: .right)
+                text(detail, Self.smallFont, Self.muted, x: Self.side + titleWidth, y: y + 4, w: detailWidth, align: .right)
             }
         })
     }
 
     private func gap(_ h: CGFloat, into items: inout [Item]) {
-        items.append(Item(block: PageFlow.Block(height: Double(h))) { _ in })
+        items.append(Item(block: PageFlow.Block(height: Double(h), collapsible: true)) { _ in })
     }
 
     private func paragraph(_ string: String, color: UIColor = Self.muted, keep: Bool = false, bullet: Bool = false,
@@ -222,9 +238,10 @@ struct ExportPDF {
         return out
     }
 
-    private func table(_ id: Int, _ columns: [Column], rows: [(cells: [Cell], group: Int?)], into items: inout [Item],
-                       tables: inout [Int: Table]) {
-        var table = Table(columns: columns)
+    private func table(_ id: Int, continued name: String, _ columns: [Column], rows: [(cells: [Cell], group: Int?)],
+                       into items: inout [Item], tables: inout [Int: Table]) {
+        var table = Table(columns: columns, continued: l("\(name) (continued)"))
+        table.continuedHeight = text(table.continued, Self.smallFont, Self.muted, x: 0, y: 0, w: width, draw: false) + 4
         var titles: CGFloat = 0
         layout(columns) { _, column, _, w in
             titles = max(titles, text(column.title, Self.labelFont, Self.muted, x: 0, y: 0, w: w - 8, draw: false))
@@ -315,7 +332,7 @@ struct ExportPDF {
 
         // 2. Practices
         heading("2. " + l("Practices"), detail: l("\(content.practices.count) practices"), into: &items)
-        table(0, [
+        table(0, continued: l("Practices"), [
             Column(title: l("Practice"), weight: 2.4),
             Column(title: l("Total"), weight: 1.1, right: true, figure: true),
             Column(title: l("Target"), weight: 1.0, right: true, figure: true),
@@ -360,7 +377,7 @@ struct ExportPDF {
                     ], group))
                 }
             }
-            table(tableID, [
+            table(tableID, continued: p.practice.shownName, [
                 Column(title: l("Day"), weight: 1.6),
                 Column(title: l("Started"), weight: 0.9),
                 Column(title: l("Count"), weight: 0.9, right: true, figure: true),
@@ -389,7 +406,7 @@ struct ExportPDF {
             paragraph(l("No friends yet."), into: &items)
             gap(18, into: &items)
         } else {
-            table(tableID, [
+            table(tableID, continued: l("Friends"), [
                 Column(title: l("Name"), weight: 2), Column(title: l("Friends since"), weight: 1),
             ], rows: content.friends.map { ([Cell($0.displayName.isEmpty ? l("A friend") : $0.displayName), Cell(date($0.since))], nil) },
             into: &items, tables: &tables)
@@ -401,32 +418,45 @@ struct ExportPDF {
             paragraph(l("Nothing: this phone has no online account."), color: Self.ink, into: &items)
             return
         }
-        let lists: [(String, [String])] = [
-            (l("End-to-end encrypted: sealed on your phone, the server stores them and cannot read them"), [
-                l("Practice sessions: day, time and count"),
-                l("Counts, rounds, totals and targets"),
-                l("Imported streak seeds"),
-            ]),
-            (l("Encrypted by the server: kept encrypted in its database, read only while it works with them"), [
-                l("Your display name, and your gender if you gave it"),
-                l("Your e-mail address, if you added one"),
-                l("Your username"),
-                l("Streaks of the practices you made public"),
-                l("The public keys of your account, devices and passkeys"),
-                l("Push notification tokens"),
-                l("The text of any report you sent"),
-            ]),
-            (l("Stored in plain form"), [
-                l("That your account exists, as a random number"),
-                l("Who is friends with, invited, blocked, poked or reported whom"),
-                l("Which kinds of sign-in, notification service and device key storage you use"),
-                l("When each thing was written and changed, and how large each sealed blob is"),
-            ]),
+        // Word for word the privacy page's three lists (duongondro-landing
+        // src/pages/privacy.astro, sections "sealed", "encrypted" and "plain", as of
+        // landing PR #7); a change there is a change here, in every language.
+        let lists: [(title: String, intro: String?, entries: [String], outro: [String])] = [
+            (l("What is end-to-end encrypted"),
+             l("These are sealed on your device before they are uploaded. The server stores them and cannot read them:"), [
+                l("practice sessions, including the day, the duration and your notes"),
+                l("counts, rounds and totals"),
+                l("targets"),
+                l("imported streak seeds"),
+             ], [l("The keys that open them stay on your devices. The server never receives a plaintext count or a key, and signing in does not give it one.")]),
+            (l("What the server encrypts"),
+             l("The server has to read these to do its job, for example to show your name to your friends or to send a notification. It keeps them encrypted in its database, with a key held outside the database, so a copy of the database or a backup does not reveal them:"), [
+                l("your display name, and your grammatical gender if you give it"),
+                l("your e-mail address, if you sign in with one; an account with only a passkey has none"),
+                l("your username, if you chose one; it names your passkey and friends do not see it"),
+                l("the Apple or Google account your sign-in is linked to"),
+                l("your streaks, only for practices where you chose to publish them"),
+                l("the public keys of your account, your devices and your passkeys"),
+                l("push notification tokens"),
+                l("the text of any report you send"),
+             ], [l("Unlike your practice data, these can be read by the running server while it works with them.")]),
+            (l("What the server stores in plain form"), nil, [
+                l("that your account exists, as a random number"),
+                l("which accounts are friends, and who invited, blocked, poked or reported whom, as links between those numbers"),
+                l("for each friend, whether you asked to hear when they practise"),
+                l("whether and when you set up a recovery key"),
+                l("which kinds of sign-in, notification service and device key storage you use, for example a passkey on an Android phone"),
+                l("for a streak you publish, when it runs out, so the server can remind you in time, and how many times it has been updated"),
+                l("when each thing was written and last changed, and how large each sealed blob is; for a practice session, also when your phone logged it and last changed or deleted it, by the phone's clock, even if it synced later"),
+             ], [l("The last item is a real limit. These times and sizes can show when you practise, even for a private streak."),
+                 l("Cover photos for practices never leave your phone.")]),
         ]
-        for (title, entries) in lists {
-            paragraph(title, color: Self.ink, keep: true, into: &items)
-            for e in entries { paragraph(e, bullet: true, into: &items) }
-            gap(8, into: &items)
+        for list in lists {
+            paragraph(list.title, color: Self.ink, keep: true, into: &items)
+            if let intro = list.intro { paragraph(intro, keep: true, into: &items) }
+            for e in list.entries { paragraph(e, bullet: true, into: &items) }
+            for o in list.outro { paragraph(o, into: &items) }
+            gap(10, into: &items)
         }
     }
 }

@@ -1,6 +1,64 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ (continued)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (Fortsetzung)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (продолжение)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (продовження)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (ciąg dalszy)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (pokračování)"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (pokračovanie)"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (folytatás)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (continuación)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ (suite)"
+          }
+        }
+      }
+    },
     "%lld days" : {
       "localizations" : {
         "en" : {
@@ -1846,7 +1904,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un·e ami·e"
+            "value" : "Un(e) ami(e)"
           }
         }
       }
@@ -2136,7 +2194,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Archivée"
+            "value" : "Archivées"
           }
         }
       }
@@ -2257,60 +2315,60 @@
         }
       }
     },
-    "Counts, rounds, totals and targets" : {
+    "Cover photos for practices never leave your phone." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zählungen, Runden, Summen und Ziele"
+            "value" : "Titelbilder von Übungen verlassen dein Handy nie."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Счёт, круги, итоги и цели"
+            "value" : "Обложки практик никогда не покидают ваш телефон."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Лічильники, кола, підсумки й цілі"
+            "value" : "Обкладинки практик ніколи не залишають ваш телефон."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Liczniki, rundy, sumy i cele"
+            "value" : "Okładki praktyk nigdy nie opuszczają Twojego telefonu."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Počty, kola, součty a cíle"
+            "value" : "Titulní fotky praktik nikdy neopustí tvůj telefon."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Počty, kolá, súčty a ciele"
+            "value" : "Titulné fotky cvičení nikdy neopustia tvoj telefón."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Számlálók, körök, összegek és célok"
+            "value" : "A gyakorlatok borítóképei sosem hagyják el a telefonodat."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Recuentos, rondas, totales y objetivos"
+            "value" : "Las fotos de portada de las prácticas nunca salen de tu teléfono."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Décomptes, tours, totaux et objectifs"
+            "value" : "Les photos de couverture des pratiques ne quittent jamais ton téléphone."
           }
         }
       }
@@ -2895,122 +2953,6 @@
         }
       }
     },
-    "Encrypted by the server: kept encrypted in its database, read only while it works with them" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vom Server verschlüsselt: verschlüsselt in seiner Datenbank, nur gelesen, während er damit arbeitet"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Шифруются сервером: хранятся в его базе зашифрованными, читаются только во время работы с ними"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Шифруються сервером: зберігаються в його базі зашифрованими, читаються лише під час роботи з ними"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Szyfrowane przez serwer: zaszyfrowane w jego bazie danych, odczytywane tylko podczas pracy z nimi"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Šifruje server: uloženo šifrovaně v jeho databázi, čte je jen při práci s nimi"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Šifruje server: uložené šifrovane v jeho databáze, číta ich len pri práci s nimi"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A szerver titkosítja: titkosítva tárolja az adatbázisában, csak munka közben olvassa"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cifrado por el servidor: guardado cifrado en su base de datos, solo se lee mientras trabaja con ello"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Chiffré par le serveur : stocké chiffré dans sa base de données, lu seulement pendant qu'il s'en sert"
-          }
-        }
-      }
-    },
-    "End-to-end encrypted: sealed on your phone, the server stores them and cannot read them" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ende-zu-Ende-verschlüsselt: auf deinem Handy versiegelt; der Server speichert sie und kann sie nicht lesen"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Сквозное шифрование: запечатываются на вашем телефоне, сервер хранит их и не может прочитать"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Наскрізне шифрування: запечатуються на вашому телефоні, сервер зберігає їх і не може прочитати"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Szyfrowane end-to-end: zapieczętowane na Twoim telefonie; serwer je przechowuje i nie może ich odczytać"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Šifrováno end-to-end: zapečetěno v tvém telefonu; server je uchovává a nemůže je přečíst"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Šifrované end-to-end: zapečatené v tvojom telefóne; server ich uchováva a nemôže ich prečítať"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Végpontok között titkosítva: a telefonodon lezárva; a szerver tárolja, de nem tudja elolvasni"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cifrado de extremo a extremo: sellado en tu teléfono; el servidor lo guarda y no puede leerlo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Chiffré de bout en bout : scellé sur ton téléphone ; le serveur le stocke sans pouvoir le lire"
-          }
-        }
-      }
-    },
     "Every practice, session and streak, and everything the server keeps about your account. Your counts are decrypted on this phone and are readable in the file; the server never sees them. PDF to read and print, JSON for everything machine-readable, CSV as a ZIP with one table per kind of data." : {
       "localizations" : {
         "de" : {
@@ -3586,7 +3528,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Féminin"
+            "value" : "Femme"
           }
         }
       }
@@ -3881,64 +3823,6 @@
         }
       }
     },
-    "Imported streak seeds" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Importierte Serienstände"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Импортированные начальные серии"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Імпортовані початкові серії"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaimportowane serie początkowe"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Importované počáteční série"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Importované počiatočné série"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Importált kezdő sorozatok"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Rachas iniciales importadas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Séries de départ importées"
-          }
-        }
-      }
-    },
     "Key storage" : {
       "localizations" : {
         "de" : {
@@ -4224,7 +4108,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Masculin"
+            "value" : "Homme"
           }
         }
       }
@@ -4983,64 +4867,6 @@
         }
       }
     },
-    "Practice sessions: day, time and count" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sitzungen: Tag, Uhrzeit und Anzahl"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Сессии практики: день, время и счёт"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Сесії практики: день, час і кількість"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sesje praktyki: dzień, godzina i liczba"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sezení praxe: den, čas a počet"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cvičenia: deň, čas a počet"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gyakorlási ülések: nap, időpont és darabszám"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sesiones de práctica: día, hora y recuento"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Séances de pratique : jour, heure et décompte"
-          }
-        }
-      }
-    },
     "Practices" : {
       "localizations" : {
         "de" : {
@@ -5153,64 +4979,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Publique"
-          }
-        }
-      }
-    },
-    "Push notification tokens" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Push-Token für Benachrichtigungen"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Токены push-уведомлений"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Токени push-сповіщень"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tokeny powiadomień push"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tokeny push oznámení"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tokeny push upozornení"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Push-értesítési tokenek"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tokens de notificaciones push"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jetons de notifications push"
           }
         }
       }
@@ -5737,64 +5505,6 @@
         }
       }
     },
-    "Stored in plain form" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Unverschlüsselt gespeichert"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Хранится в открытом виде"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Зберігається у відкритому вигляді"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Przechowywane jawnie"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uloženo v čitelné podobě"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uložené v čitateľnej podobe"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Titkosítás nélkül tárolva"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardado sin cifrar"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Stocké en clair"
-          }
-        }
-      }
-    },
     "Streak" : {
       "localizations" : {
         "de" : {
@@ -5906,65 +5616,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Série seule"
-          }
-        }
-      }
-    },
-    "Streaks of the practices you made public" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Serien der Übungen, die du öffentlich gemacht hast"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Серии практик, которые вы сделали публичными"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Серії практик, які ви зробили публічними"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Serie praktyk, które upubliczniono"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Série zveřejněných praxí"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Série zverejnených praxí"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A nyilvánossá tett gyakorlataid sorozatai"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Las rachas de las prácticas que hiciste públicas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Les séries des pratiques que tu as rendues publiques"
+            "value" : "Série seulement"
           }
         }
       }
@@ -6027,176 +5679,292 @@
         }
       }
     },
-    "That your account exists, as a random number" : {
+    "The keys that open them stay on your devices. The server never receives a plaintext count or a key, and signing in does not give it one." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dass dein Konto existiert, als Zufallszahl"
+            "value" : "Die Schlüssel dazu bleiben auf deinen Geräten. Der Server erhält nie eine Zahl im Klartext oder einen Schlüssel, und auch eine Anmeldung gibt ihm keinen."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Что ваш аккаунт существует — в виде случайного числа"
+            "value" : "Ключи к ним остаются на ваших устройствах. Сервер никогда не получает ни числа в открытом виде, ни ключа, и вход в аккаунт их ему не даёт."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Що ваш обліковий запис існує — у вигляді випадкового числа"
+            "value" : "Ключі до них залишаються на ваших пристроях. Сервер ніколи не отримує ні числа у відкритому вигляді, ні ключа, і вхід до облікового запису їх йому не дає."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Że Twoje konto istnieje, jako losowa liczba"
+            "value" : "Klucze do nich zostają na Twoich urządzeniach. Serwer nigdy nie dostaje liczby w postaci jawnej ani klucza, a logowanie mu ich nie daje."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Že tvůj účet existuje, jako náhodné číslo"
+            "value" : "Klíče k nim zůstávají na tvých zařízeních. Server nikdy nedostane počet v čitelné podobě ani klíč a přihlášení mu je nedá."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Že tvoj účet existuje, ako náhodné číslo"
+            "value" : "Kľúče k nim zostávajú v tvojich zariadeniach. Server nikdy nedostane počet v čitateľnej podobe ani kľúč a prihlásenie mu ich nedá."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hogy létezik a fiókod, egy véletlen számként"
+            "value" : "A megnyitásukhoz szükséges kulcsok az eszközeiden maradnak. A szerver soha nem kap meg nyílt számot vagy kulcsot, és a bejelentkezés sem ad neki."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Que tu cuenta existe, como un número aleatorio"
+            "value" : "Las claves que los abren se quedan en tus dispositivos. El servidor nunca recibe una cuenta en claro ni una clave, e iniciar sesión no se la da."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Que ton compte existe, sous forme de nombre aléatoire"
+            "value" : "Les clés qui les ouvrent restent sur tes appareils. Le serveur ne reçoit jamais un décompte en clair ni une clé, et la connexion ne lui en donne pas."
           }
         }
       }
     },
-    "The public keys of your account, devices and passkeys" : {
+    "The last item is a real limit. These times and sizes can show when you practise, even for a private streak." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die öffentlichen Schlüssel deines Kontos, deiner Geräte und Passkeys"
+            "value" : "Der letzte Punkt ist eine echte Grenze. Diese Zeiten und Größen können zeigen, wann du übst, auch bei einer privaten Serie."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Открытые ключи вашего аккаунта, устройств и ключей доступа"
+            "value" : "Последний пункт — реальное ограничение. Эти времена и размеры могут показать, когда вы практикуете, даже для приватной серии."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Відкриті ключі вашого облікового запису, пристроїв і ключів доступу"
+            "value" : "Останній пункт — справжнє обмеження. Ці часи й розміри можуть показати, коли ви практикуєте, навіть для приватної серії."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klucze publiczne Twojego konta, urządzeń i kluczy dostępu"
+            "value" : "Ostatni punkt to realne ograniczenie. Te czasy i rozmiary mogą pokazać, kiedy praktykujesz, nawet przy prywatnej serii."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Veřejné klíče tvého účtu, zařízení a přístupových klíčů"
+            "value" : "Poslední bod je skutečné omezení. Tyto časy a velikosti mohou ukázat, kdy praktikuješ, i u soukromé série."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verejné kľúče tvojho účtu, zariadení a prístupových kľúčov"
+            "value" : "Posledný bod je skutočné obmedzenie. Tieto časy a veľkosti môžu ukázať, kedy cvičíš, aj pri súkromnej sérii."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A fiókod, az eszközeid és a hozzáférési kulcsaid nyilvános kulcsai"
+            "value" : "Az utolsó pont valódi korlát. Ezek az időpontok és méretek megmutathatják, mikor gyakorolsz, privát sorozatnál is."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las claves públicas de tu cuenta, tus dispositivos y tus claves de acceso"
+            "value" : "El último punto es un límite real. Estas horas y tamaños pueden mostrar cuándo practicas, incluso con una racha privada."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les clés publiques de ton compte, de tes appareils et de tes clés d'accès"
+            "value" : "Le dernier point est une vraie limite. Ces heures et ces tailles peuvent montrer quand tu pratiques, même pour une série privée."
           }
         }
       }
     },
-    "The text of any report you sent" : {
+    "The server has to read these to do its job, for example to show your name to your friends or to send a notification. It keeps them encrypted in its database, with a key held outside the database, so a copy of the database or a backup does not reveal them:" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Text deiner Meldungen"
+            "value" : "Diese Daten muss der Server lesen, um seine Arbeit zu tun, etwa um deinen Freunden deinen Namen zu zeigen oder eine Benachrichtigung zu senden. Er speichert sie verschlüsselt in seiner Datenbank, mit einem Schlüssel außerhalb der Datenbank, sodass eine Kopie der Datenbank oder ein Backup sie nicht preisgibt:"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Текст отправленных вами жалоб"
+            "value" : "Их сервер должен читать, чтобы делать свою работу, например показывать ваше имя друзьям или отправлять уведомление. Он хранит их в базе данных в зашифрованном виде, с ключом вне базы, поэтому копия базы или резервная копия их не раскрывает:"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Текст надісланих вами скарг"
+            "value" : "Їх сервер мусить читати, щоб виконувати свою роботу, наприклад показувати ваше ім’я друзям чи надсилати сповіщення. Він зберігає їх у базі даних зашифрованими, з ключем поза базою, тож копія бази чи резервна копія їх не розкриває:"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Treść wysłanych zgłoszeń"
+            "value" : "Te dane serwer musi odczytywać, żeby działać, na przykład żeby pokazać Twoje imię znajomym albo wysłać powiadomienie. Przechowuje je w bazie danych zaszyfrowane, kluczem trzymanym poza bazą, więc kopia bazy ani kopia zapasowa ich nie ujawnia:"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Text odeslaných nahlášení"
+            "value" : "Tato data server potřebuje číst, aby mohl fungovat, například aby ukázal tvé jméno přátelům nebo poslal oznámení. Uchovává je ve své databázi šifrovaná klíčem drženým mimo databázi, takže je kopie databáze ani záloha neprozradí:"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Text odoslaných nahlásení"
+            "value" : "Tieto údaje server potrebuje čítať, aby mohol fungovať, napríklad aby ukázal tvoje meno priateľom alebo poslal upozornenie. Uchováva ich vo svojej databáze šifrované kľúčom drženým mimo databázy, takže ich kópia databázy ani záloha neprezradí:"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Az elküldött bejelentéseid szövege"
+            "value" : "Ezeket a szervernek olvasnia kell a munkájához, például hogy megmutassa a nevedet a barátaidnak, vagy értesítést küldjön. Titkosítva tárolja őket az adatbázisában, az adatbázison kívül tartott kulccsal, így az adatbázis másolata vagy egy biztonsági mentés nem fedi fel őket:"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "El texto de cualquier denuncia que enviaste"
+            "value" : "El servidor tiene que leer esto para hacer su trabajo, por ejemplo para mostrar tu nombre a tus amigos o enviar una notificación. Lo guarda cifrado en su base de datos, con una clave que se guarda fuera de ella, así que una copia de la base de datos o una copia de seguridad no lo revela:"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le texte de tout signalement que tu as envoyé"
+            "value" : "Le serveur doit lire ces données pour faire son travail, par exemple pour montrer ton nom à tes amis ou envoyer une notification. Il les garde chiffrées dans sa base de données, avec une clé conservée hors de la base, si bien qu'une copie de la base ou une sauvegarde ne les révèle pas :"
+          }
+        }
+      }
+    },
+    "The share sheet could not be shown. Try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das Teilen-Menü ließ sich nicht öffnen. Versuche es noch einmal."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не удалось открыть меню «Поделиться». Попробуйте ещё раз."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Не вдалося відкрити меню «Поділитися». Спробуйте ще раз."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nie udało się otworzyć menu udostępniania. Spróbuj ponownie."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nabídku sdílení se nepodařilo otevřít. Zkus to znovu."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ponuku zdieľania sa nepodarilo otvoriť. Skús to znova."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A megosztási menüt nem sikerült megnyitni. Próbáld újra."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo abrir el menú de compartir. Vuelve a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le menu de partage n'a pas pu s'ouvrir. Réessaie."
+          }
+        }
+      }
+    },
+    "These are sealed on your device before they are uploaded. The server stores them and cannot read them:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diese Daten werden auf deinem Gerät versiegelt, bevor sie hochgeladen werden. Der Server speichert sie und kann sie nicht lesen:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Эти данные запечатываются на вашем устройстве до загрузки. Сервер хранит их и не может прочитать:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ці дані запечатуються на вашому пристрої до завантаження. Сервер зберігає їх і не може прочитати:"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Te dane są pieczętowane na Twoim urządzeniu przed wysłaniem. Serwer je przechowuje i nie może ich odczytać:"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tato data se zapečetí na tvém zařízení, než se nahrají. Server je uchovává a nemůže je přečíst:"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tieto údaje sa zapečatia v tvojom zariadení skôr, ako sa nahrajú. Server ich uchováva a nemôže ich prečítať:"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ezeket az eszközöd lezárja, mielőtt feltöltené. A szerver tárolja őket, de nem tudja elolvasni:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esto se sella en tu dispositivo antes de subirse. El servidor lo guarda y no puede leerlo:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ces données sont scellées sur ton appareil avant d'être envoyées. Le serveur les stocke et ne peut pas les lire :"
           }
         }
       }
@@ -6439,6 +6207,64 @@
         }
       }
     },
+    "Unlike your practice data, these can be read by the running server while it works with them." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Anders als deine Übungsdaten kann der laufende Server diese lesen, während er damit arbeitet."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "В отличие от данных о практике, их может читать работающий сервер, пока он с ними работает."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "На відміну від даних про практику, їх може читати працюючий сервер, поки працює з ними."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "W przeciwieństwie do danych o praktyce działający serwer może je odczytać, gdy z nimi pracuje."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Na rozdíl od dat o praxi je běžící server může číst, když s nimi pracuje."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Na rozdiel od údajov o cvičení ich bežiaci server môže čítať, keď s nimi pracuje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A gyakorlási adataiddal ellentétben ezeket a futó szerver el tudja olvasni, amíg dolgozik velük."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A diferencia de tus datos de práctica, el servidor en marcha puede leer esto mientras trabaja con ello."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Contrairement à tes données de pratique, le serveur en marche peut les lire pendant qu'il travaille avec."
+          }
+        }
+      }
+    },
     "Username" : {
       "localizations" : {
         "de" : {
@@ -6493,6 +6319,122 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Nom d'utilisateur"
+          }
+        }
+      }
+    },
+    "What is end-to-end encrypted" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Was Ende-zu-Ende-verschlüsselt ist"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Что зашифровано сквозным шифрованием"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Що зашифровано наскрізним шифруванням"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Co jest szyfrowane end-to-end"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Co je šifrováno end-to-end"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Čo je šifrované end-to-end"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mi végponttól végpontig titkosított"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Qué está cifrado de extremo a extremo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce qui est chiffré de bout en bout"
+          }
+        }
+      }
+    },
+    "What the server encrypts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Was der Server verschlüsselt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Что шифрует сервер"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Що шифрує сервер"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Co szyfruje serwer"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Co šifruje server"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Čo šifruje server"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mit titkosít a szerver"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Qué cifra el servidor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce que le serveur chiffre"
           }
         }
       }
@@ -6555,176 +6497,60 @@
         }
       }
     },
-    "When each thing was written and changed, and how large each sealed blob is" : {
+    "What the server stores in plain form" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wann etwas geschrieben und geändert wurde und wie groß jeder versiegelte Datenblock ist"
+            "value" : "Was der Server im Klartext speichert"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Когда что записано и изменено и какого размера каждый запечатанный блок"
+            "value" : "Что сервер хранит в открытом виде"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Коли що записано й змінено та якого розміру кожен запечатаний блок"
+            "value" : "Що сервер зберігає у відкритому вигляді"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kiedy co zapisano i zmieniono oraz jak duży jest każdy zapieczętowany blok"
+            "value" : "Co serwer przechowuje w postaci jawnej"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kdy bylo co zapsáno a změněno a jak velký je každý zapečetěný blok"
+            "value" : "Co server ukládá v čitelné podobě"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kedy bolo čo zapísané a zmenené a aký veľký je každý zapečatený blok"
+            "value" : "Čo server ukladá v čitateľnej podobe"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mikor írták és módosították az egyes elemeket, és mekkora minden lezárt adatblokk"
+            "value" : "Mit tárol a szerver nyílt formában"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuándo se escribió y cambió cada cosa, y qué tamaño tiene cada bloque sellado"
+            "value" : "Qué guarda el servidor sin cifrar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Quand chaque élément a été écrit et modifié, et la taille de chaque bloc scellé"
-          }
-        }
-      }
-    },
-    "Which kinds of sign-in, notification service and device key storage you use" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Welche Anmeldearten, welchen Benachrichtigungsdienst und welche Schlüsselspeicher deiner Geräte du nutzt"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Какие способы входа, службу уведомлений и хранилище ключей устройства вы используете"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Які способи входу, службу сповіщень і сховище ключів пристрою ви використовуєте"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jakich sposobów logowania, usługi powiadomień i magazynu kluczy urządzenia używasz"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jaké způsoby přihlášení, službu oznámení a úložiště klíčů zařízení používáš"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aké spôsoby prihlásenia, službu upozornení a úložisko kľúčov zariadenia používaš"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Milyen bejelentkezést, értesítési szolgáltatást és eszközkulcs-tárolást használsz"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Qué tipos de inicio de sesión, servicio de notificaciones y almacenamiento de claves del dispositivo usas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Quels modes de connexion, service de notifications et stockage de clés d'appareil tu utilises"
-          }
-        }
-      }
-    },
-    "Who is friends with, invited, blocked, poked or reported whom" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wer mit wem befreundet ist und wer wen eingeladen, blockiert, angestupst oder gemeldet hat"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Кто с кем дружит и кто кого пригласил, заблокировал, подтолкнул или на кого пожаловался"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Хто з ким дружить і хто кого запросив, заблокував, підштовхнув або на кого поскаржився"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kto z kim się przyjaźni i kto kogo zaprosił, zablokował, szturchnął lub zgłosił"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kdo je s kým přítel a kdo koho pozval, zablokoval, šťouchl nebo nahlásil"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kto je s kým priateľ a kto koho pozval, zablokoval, štuchol alebo nahlásil"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ki kinek a barátja, és ki kit hívott meg, tiltott le, bökött meg vagy jelentett"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Quién es amigo de quién y quién invitó, bloqueó, avisó o denunció a quién"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Qui est ami avec qui, et qui a invité, bloqué, relancé ou signalé qui"
+            "value" : "Ce que le serveur stocke en clair"
           }
         }
       }
@@ -6840,181 +6666,1109 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur : l'export ne contient que ce qui est sur ce téléphone."
+            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur ; l'export ne contient donc que ce qui se trouve sur ce téléphone."
           }
         }
       }
     },
-    "Your display name, and your gender if you gave it" : {
+    "counts, rounds and totals" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Anzeigename und dein Geschlecht, falls angegeben"
+            "value" : "Zahlen, Runden und Summen"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваше отображаемое имя и пол, если вы его указали"
+            "value" : "счёт, круги и итоги"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваше ім’я для показу та стать, якщо ви її вказали"
+            "value" : "кількість, кола й підсумки"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Twoja wyświetlana nazwa i płeć, jeśli ją podano"
+            "value" : "liczby, rundy i sumy"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvé zobrazované jméno a pohlaví, pokud je uvedeno"
+            "value" : "počty, kola a součty"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvoje zobrazované meno a pohlavie, ak je uvedené"
+            "value" : "počty, kolá a súčty"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A megjelenített neved és a nemed, ha megadtad"
+            "value" : "számok, körök és összegek"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu nombre visible y tu género, si lo indicaste"
+            "value" : "las cuentas, las rondas y los totales"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ton nom affiché, et ton genre si tu l'as indiqué"
+            "value" : "les décomptes, les tours et les totaux"
           }
         }
       }
     },
-    "Your e-mail address, if you added one" : {
+    "for a streak you publish, when it runs out, so the server can remind you in time, and how many times it has been updated" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine E-Mail-Adresse, falls du eine hinzugefügt hast"
+            "value" : "für eine Serie, die du veröffentlichst, wann sie abläuft, damit der Server dich rechtzeitig erinnern kann, und wie oft sie aktualisiert wurde"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваш адрес почты, если вы его добавили"
+            "value" : "для публикуемой серии — когда она прервётся, чтобы сервер мог вовремя напомнить, и сколько раз она обновлялась"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваша адреса пошти, якщо ви її додали"
+            "value" : "для серії, яку ви публікуєте, — коли вона урветься, щоб сервер міг вчасно нагадати, і скільки разів її оновлювали"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Twój adres e-mail, jeśli go dodano"
+            "value" : "dla publikowanej serii: kiedy się skończy, żeby serwer mógł przypomnieć na czas, i ile razy była aktualizowana"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvá e-mailová adresa, pokud je přidaná"
+            "value" : "u zveřejňované série, kdy vyprší, aby ti server mohl včas připomenout, a kolikrát byla aktualizována"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvoja e-mailová adresa, ak je pridaná"
+            "value" : "pri zverejňovanej sérii, kedy vyprší, aby ti server mohol včas pripomenúť, a koľkokrát bola aktualizovaná"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Az e-mail-címed, ha megadtál egyet"
+            "value" : "egy közzétett sorozatnál, mikor jár le, hogy a szerver időben emlékeztethessen, és hányszor frissült"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu dirección de correo, si añadiste una"
+            "value" : "de una racha que publicas, cuándo se acaba, para que el servidor pueda avisarte a tiempo, y cuántas veces se ha actualizado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ton adresse e-mail, si tu en as ajouté une"
+            "value" : "pour une série que tu publies, quand elle expire, afin que le serveur puisse te le rappeler à temps, et combien de fois elle a été mise à jour"
           }
         }
       }
     },
-    "Your username" : {
+    "for each friend, whether you asked to hear when they practise" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Benutzername"
+            "value" : "für jeden Freund, ob du erfahren willst, wenn er übt"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваше имя пользователя"
+            "value" : "для каждого друга, просили ли вы сообщать, когда он практикует"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваше ім’я користувача"
+            "value" : "для кожного друга, чи просили ви повідомляти, коли він практикує"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Twoja nazwa użytkownika"
+            "value" : "dla każdego znajomego, czy chcesz wiedzieć, kiedy praktykuje"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvé uživatelské jméno"
+            "value" : "u každého přítele, jestli chceš vědět, kdy praktikuje"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tvoje používateľské meno"
+            "value" : "pri každom priateľovi, či chceš vedieť, kedy cvičí"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A felhasználóneved"
+            "value" : "minden barátnál, kérted-e, hogy szóljunk, amikor gyakorol"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu nombre de usuario"
+            "value" : "de cada amigo, si pediste saber cuándo practica"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ton nom d'utilisateur"
+            "value" : "pour chaque ami, si tu as demandé à savoir quand il pratique"
+          }
+        }
+      }
+    },
+    "imported streak seeds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "importierte Serienstände"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "импортированные серии"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "імпортовані серії"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "zaimportowane serie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "importované série"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "importované série"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "importált sorozatok"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "las rachas importadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "les séries importées"
+          }
+        }
+      }
+    },
+    "practice sessions, including the day, the duration and your notes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sitzungen, mit Tag, Dauer und deinen Notizen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "занятия, включая день, длительность и ваши заметки"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "сесії, зокрема день, тривалість і ваші нотатки"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "sesje praktyki, w tym dzień, czas trwania i Twoje notatki"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "sezení, včetně dne, délky a tvých poznámek"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "sedenia vrátane dňa, dĺžky a tvojich poznámok"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "a gyakorlási ülések, a nappal, az időtartammal és a jegyzeteiddel együtt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "las sesiones de práctica, con el día, la duración y tus notas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "les séances de pratique, avec le jour, la durée et tes notes"
+          }
+        }
+      }
+    },
+    "push notification tokens" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Push-Benachrichtigungs-Tokens"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "токены push-уведомлений"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "токени push-сповіщень"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tokeny powiadomień push"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tokeny oznámení push"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tokeny push upozornení"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "push-értesítési tokenek"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "los tokens de notificaciones push"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "les jetons de notification push"
+          }
+        }
+      }
+    },
+    "targets" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ziele"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "цели"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "цілі"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "cele"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "cíle"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ciele"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "célok"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "los objetivos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "les objectifs"
+          }
+        }
+      }
+    },
+    "that your account exists, as a random number" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dass dein Konto existiert, als Zufallszahl"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "что ваш аккаунт существует, в виде случайного числа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "що ваш обліковий запис існує, у вигляді випадкового числа"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "że Twoje konto istnieje, jako losowa liczba"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "že tvůj účet existuje, jako náhodné číslo"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "že tvoj účet existuje, ako náhodné číslo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "hogy a fiókod létezik, véletlen számként"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "que tu cuenta existe, como un número aleatorio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "que ton compte existe, sous forme d'un nombre aléatoire"
+          }
+        }
+      }
+    },
+    "the Apple or Google account your sign-in is linked to" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "das Apple- oder Google-Konto, mit dem deine Anmeldung verknüpft ist"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "аккаунт Apple или Google, с которым связан ваш вход"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "обліковий запис Apple чи Google, з яким пов’язано ваш вхід"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "konto Apple lub Google, z którym powiązane jest Twoje logowanie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "účet Apple nebo Google, se kterým je tvé přihlášení propojené"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "účet Apple alebo Google, s ktorým je tvoje prihlásenie prepojené"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "az Apple- vagy Google-fiók, amelyhez a bejelentkezésed kapcsolódik"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "la cuenta de Apple o Google a la que está vinculado tu inicio de sesión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "le compte Apple ou Google auquel ta connexion est liée"
+          }
+        }
+      }
+    },
+    "the public keys of your account, your devices and your passkeys" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "die öffentlichen Schlüssel deines Kontos, deiner Geräte und deiner Passkeys"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "открытые ключи вашего аккаунта, ваших устройств и ключей доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "відкриті ключі вашого облікового запису, пристроїв і ключів доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "klucze publiczne Twojego konta, Twoich urządzeń i kluczy dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "veřejné klíče tvého účtu, tvých zařízení a přístupových klíčů"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "verejné kľúče tvojho účtu, tvojich zariadení a prístupových kľúčov"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "a fiókod, az eszközeid és a hozzáférési kulcsaid nyilvános kulcsai"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "las claves públicas de tu cuenta, tus dispositivos y tus llaves de acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "les clés publiques de ton compte, de tes appareils et de tes clés d'accès"
+          }
+        }
+      }
+    },
+    "the text of any report you send" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "der Text jeder Meldung, die du sendest"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "текст любой отправленной вами жалобы"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "текст будь-якої надісланої вами скарги"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "treść każdego wysłanego przez Ciebie zgłoszenia"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "text každého nahlášení, které pošleš"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "text každého nahlásenia, ktoré pošleš"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "minden általad küldött bejelentés szövege"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "el texto de cualquier denuncia que envíes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "le texte de tout signalement que tu envoies"
+          }
+        }
+      }
+    },
+    "when each thing was written and last changed, and how large each sealed blob is; for a practice session, also when your phone logged it and last changed or deleted it, by the phone's clock, even if it synced later" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "wann etwas geschrieben und zuletzt geändert wurde und wie groß jeder versiegelte Block ist; bei einer Sitzung auch, wann dein Handy sie erfasst und zuletzt geändert oder gelöscht hat, nach der Uhr des Handys, auch wenn sie später synchronisiert wurde"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "когда что-то было записано и в последний раз изменено и какого размера каждый запечатанный блок; для занятия — также когда телефон его записал и в последний раз изменил или удалил, по часам телефона, даже если синхронизация была позже"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "коли щось було записано й востаннє змінено і якого розміру кожен запечатаний блок; для сесії — також коли телефон її записав і востаннє змінив чи видалив, за годинником телефона, навіть якщо синхронізація була пізніше"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "kiedy coś zapisano i ostatnio zmieniono oraz jak duży jest każdy zapieczętowany blok; dla sesji praktyki także, kiedy telefon ją zapisał i ostatnio zmienił lub usunął, według zegara telefonu, nawet jeśli zsynchronizowała się później"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "kdy se co zapsalo a naposledy změnilo a jak velký je každý zapečetěný blok; u sezení také, kdy ho telefon zaznamenal a naposledy změnil nebo smazal, podle hodin telefonu, i když se synchronizovalo později"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "kedy sa čo zapísalo a naposledy zmenilo a aký veľký je každý zapečatený blok; pri sedení aj to, kedy ho telefón zaznamenal a naposledy zmenil alebo zmazal, podľa hodín telefónu, aj keď sa synchronizovalo neskôr"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "mikor íródott és változott utoljára valami, és mekkora minden lezárt blokk; egy ülésnél azt is, mikor rögzítette és mikor módosította vagy törölte utoljára a telefonod, a telefon órája szerint, akkor is, ha később szinkronizálódott"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "cuándo se escribió y se cambió por última vez cada cosa, y cuánto ocupa cada bloque sellado; de una sesión de práctica, también cuándo la registró tu teléfono y la cambió o borró por última vez, según su reloj, aunque se sincronizara después"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "quand chaque chose a été écrite et modifiée pour la dernière fois, et la taille de chaque bloc scellé ; pour une séance, aussi quand ton téléphone l'a enregistrée et modifiée ou supprimée pour la dernière fois, selon son horloge, même si elle a été synchronisée plus tard"
+          }
+        }
+      }
+    },
+    "whether and when you set up a recovery key" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ob und wann du einen Wiederherstellungsschlüssel eingerichtet hast"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "настраивали ли вы ключ восстановления и когда"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "чи налаштовували ви ключ відновлення і коли"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "czy i kiedy ustawiłeś klucz odzyskiwania"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "jestli a kdy sis nastavil klíč pro obnovení"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "či a kedy si si nastavil kľúč na obnovenie"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "beállítottál-e helyreállítási kulcsot, és mikor"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "si configuraste una clave de recuperación y cuándo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "si et quand tu as configuré une clé de récupération"
+          }
+        }
+      }
+    },
+    "which accounts are friends, and who invited, blocked, poked or reported whom, as links between those numbers" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "welche Konten befreundet sind und wer wen eingeladen, blockiert, angestupst oder gemeldet hat, als Verknüpfungen zwischen diesen Zahlen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "какие аккаунты дружат и кто кого пригласил, заблокировал, подтолкнул или на кого пожаловался, в виде связей между этими числами"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "які облікові записи дружать і хто кого запросив, заблокував, штурхнув чи на кого поскаржився, у вигляді зв’язків між цими числами"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "które konta się znają i kto kogo zaprosił, zablokował, szturchnął lub zgłosił, jako powiązania między tymi liczbami"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "které účty se přátelí a kdo koho pozval, zablokoval, šťouchl nebo nahlásil, jako vazby mezi těmi čísly"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ktoré účty sa priatelia a kto koho pozval, zablokoval, štuchol alebo nahlásil, ako väzby medzi tými číslami"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "mely fiókok barátok, és ki kit hívott meg, tiltott le, bökött meg vagy jelentett, e számok közötti kapcsolatokként"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "qué cuentas son amigas y quién invitó, bloqueó, dio un toque o denunció a quién, como vínculos entre esos números"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "quels comptes sont amis, et qui a invité, bloqué, relancé ou signalé qui, sous forme de liens entre ces nombres"
+          }
+        }
+      }
+    },
+    "which kinds of sign-in, notification service and device key storage you use, for example a passkey on an Android phone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "welche Arten von Anmeldung, Benachrichtigungsdienst und Schlüsselspeicher auf dem Gerät du nutzt, zum Beispiel einen Passkey auf einem Android-Handy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "какие способы входа, службу уведомлений и хранилище ключей на устройстве вы используете, например ключ доступа на телефоне Android"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "які способи входу, службу сповіщень і сховище ключів на пристрої ви використовуєте, наприклад ключ доступу на телефоні Android"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "jakich rodzajów logowania, usługi powiadomień i przechowywania kluczy na urządzeniu używasz, na przykład klucza dostępu na telefonie z Androidem"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "jaké druhy přihlášení, služby oznámení a úložiště klíčů v zařízení používáš, například přístupový klíč na telefonu s Androidem"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "aké druhy prihlásenia, služby upozornení a úložiska kľúčov v zariadení používaš, napríklad prístupový kľúč v telefóne s Androidom"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "milyen bejelentkezést, értesítési szolgáltatást és eszközös kulcstárolást használsz, például hozzáférési kulcsot egy androidos telefonon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "qué tipos de inicio de sesión, servicio de notificaciones y almacén de claves del dispositivo usas, por ejemplo una llave de acceso en un teléfono Android"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "quels types de connexion, de service de notification et de stockage de clés de l'appareil tu utilises, par exemple une clé d'accès sur un téléphone Android"
+          }
+        }
+      }
+    },
+    "your display name, and your grammatical gender if you give it" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dein Anzeigename und dein grammatisches Geschlecht, wenn du es angibst"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваше отображаемое имя и грамматический род, если вы его указали"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваше ім’я для показу та граматичний рід, якщо ви його вказали"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoja wyświetlana nazwa i rodzaj gramatyczny, jeśli go podasz"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvé zobrazované jméno a gramatický rod, pokud ho uvedeš"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvoje zobrazované meno a gramatický rod, ak ho uvedieš"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "a megjelenített neved és a nyelvtani nemed, ha megadod"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tu nombre visible y tu género gramatical, si lo indicas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ton nom affiché, et ton genre grammatical si tu l'indiques"
+          }
+        }
+      }
+    },
+    "your e-mail address, if you sign in with one; an account with only a passkey has none" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "deine E-Mail-Adresse, wenn du dich damit anmeldest; ein Konto nur mit Passkey hat keine"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваш адрес почты, если вы входите с ним; у аккаунта только с ключом доступа его нет"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваша адреса пошти, якщо ви входите з нею; обліковий запис лише з ключем доступу її не має"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twój adres e-mail, jeśli logujesz się nim; konto tylko z kluczem dostępu go nie ma"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvá e-mailová adresa, pokud se s ní přihlašuješ; účet jen s přístupovým klíčem žádnou nemá"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvoja e-mailová adresa, ak sa s ňou prihlasuješ; účet len s prístupovým kľúčom žiadnu nemá"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "az e-mail-címed, ha azzal jelentkezel be; a csak hozzáférési kulccsal rendelkező fióknak nincs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tu correo, si inicias sesión con él; una cuenta solo con llave de acceso no tiene"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ton adresse e-mail, si tu te connectes avec ; un compte avec seulement une clé d'accès n'en a pas"
+          }
+        }
+      }
+    },
+    "your streaks, only for practices where you chose to publish them" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "deine Serien, nur bei Übungen, für die du sie veröffentlichst"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваши серии, только для практик, где вы решили их публиковать"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваші серії, лише для практик, де ви вирішили їх публікувати"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoje serie, tylko dla praktyk, w których zdecydowałeś się je publikować"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvé série, jen u praktik, u kterých ses rozhodl je zveřejňovat"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvoje série, len pri cvičeniach, pri ktorých si sa rozhodol ich zverejňovať"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "a sorozataid, csak azoknál a gyakorlatoknál, ahol közzétételüket választottad"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tus rachas, solo de las prácticas en las que elegiste publicarlas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tes séries, seulement pour les pratiques où tu as choisi de les publier"
+          }
+        }
+      }
+    },
+    "your username, if you chose one; it names your passkey and friends do not see it" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "dein Benutzername, wenn du einen gewählt hast; er benennt deinen Passkey, und Freunde sehen ihn nicht"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваше имя пользователя, если вы его выбрали; оно называет ваш ключ доступа, и друзья его не видят"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ваше ім’я користувача, якщо ви його вибрали; воно називає ваш ключ доступу, і друзі його не бачать"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoja nazwa użytkownika, jeśli ją wybrałeś; nazywa Twój klucz dostępu i znajomi jej nie widzą"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvé uživatelské jméno, pokud sis ho zvolil; pojmenovává tvůj přístupový klíč a přátelé ho nevidí"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tvoje používateľské meno, ak si si ho zvolil; pomenúva tvoj prístupový kľúč a priatelia ho nevidia"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "a felhasználóneved, ha választottál; ez nevezi meg a hozzáférési kulcsodat, és a barátaid nem látják"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tu nombre de usuario, si elegiste uno; da nombre a tu llave de acceso y tus amigos no lo ven"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ton nom d'utilisateur, si tu en as choisi un ; il nomme ta clé d'accès et tes amis ne le voient pas"
           }
         }
       }

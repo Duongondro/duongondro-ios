@@ -13,7 +13,7 @@ struct YourDataView: View {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
                 // As CodeShare's Manage my data: a card with one row per format, what
                 // the export holds in the footer.
-                CardSection(header: LocalizedStringKey(Self.exportHeader)) {
+                CardSection(verbatimHeader: Self.exportHeader) {
                     ExportRows(controller: exports)
                 }
                 VStack(alignment: .leading, spacing: Theme.Space.s) {

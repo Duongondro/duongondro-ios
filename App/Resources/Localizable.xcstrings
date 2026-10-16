@@ -7239,64 +7239,6 @@
         }
       }
     },
-    "Export all my data" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Exportovat všechna moje data"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alle meine Daten exportieren"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Exporter toutes mes données"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Összes adatom exportálása"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eksportuj wszystkie moje dane"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Экспортировать все мои данные"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Exportovať všetky moje údaje"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Експортувати всі мої дані"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Exportar todos mis datos"
-          }
-        }
-      }
-    },
     "Export and delete" : {
       "localizations" : {
         "cs" : {
@@ -12469,64 +12411,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "OK"
-          }
-        }
-      }
-    },
-    "One ZIP with every practice, session and streak, readable without this app." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jeden ZIP se všemi praktikami, sezeními a sériemi, čitelný i bez této aplikace."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eine ZIP-Datei mit jeder Übung, Sitzung und Serie, lesbar auch ohne diese App."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Un seul ZIP avec chaque pratique, séance et série, lisible sans cette app."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyetlen ZIP minden gyakorlattal, üléssel és sorozattal, az alkalmazás nélkül is olvasható."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jeden plik ZIP z każdą praktyką, sesją i serią, do odczytania bez tej aplikacji."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Один ZIP-архив со всеми практиками, занятиями и сериями, читается без этого приложения."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jeden ZIP so všetkými cvičeniami, sedeniami a sériami, čitateľný aj bez tejto aplikácie."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Один ZIP з усіма практиками, сесіями та серіями; його можна прочитати й без цього застосунку."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Un ZIP con todas tus prácticas, sesiones y rachas, que se puede leer sin esta app."
           }
         }
       }
