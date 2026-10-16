@@ -70,8 +70,11 @@ struct ExportRows: View {
     var body: some View {
         ForEach(ExportFormat.allCases) { format in
             Button { Task { await controller.export(format, model: model, account: account) } } label: {
+                // A title that wraps (French, German) makes its row taller, not cramped.
                 Text(verbatim: format.rowTitle)
                     .foregroundStyle(Theme.accent)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.vertical, Theme.Space.s)
                     .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                     .contentShape(Rectangle())
             }
