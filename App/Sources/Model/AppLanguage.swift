@@ -2,7 +2,7 @@ import Foundation
 import DuongondroCore
 
 /// The app's interface language (Settings → Language), as in CodeShare: System (follow
-/// the phone, or iOS's per-app language) or one of our nine localizations.
+/// the phone, or iOS's per-app language) or one of our ten localizations.
 ///
 /// Applied in two ways, and every string or formatted value must go through one of
 /// them, so no screen ends up half in one language:
@@ -23,6 +23,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     case slovak = "sk"
     case hungarian = "hu"
     case spanish = "es"
+    case french = "fr"
 
     /// UserDefaults key (`@AppStorage`).
     static let storageKey = "appLanguage"

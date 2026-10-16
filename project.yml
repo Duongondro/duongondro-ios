@@ -50,7 +50,7 @@ targets:
         # Bundling a crypto library of our own (or any non-standard algorithm)
         # changes the answer: docs/12-release-checklist.
         ITSAppUsesNonExemptEncryption: false
-        CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu, es]
+        CFBundleLocalizations: [en, de, ru, uk, pl, cs, sk, hu, es, fr]
         # Resources in groups are copied flat into the bundle root, so bare names.
         UIAppFonts: [IBMPlexSans-SemiBold.ttf, IBMPlexSans-Bold.ttf]
     settings:

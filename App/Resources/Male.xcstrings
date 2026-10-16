@@ -73,6 +73,18 @@
         }
       }
     },
+    "A friend" : {
+      "comment" : "The masculine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un ami"
+          }
+        }
+      }
+    },
     "Have you finished ngöndro?" : {
       "comment" : "The masculine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
       "extractionState" : "manual",
@@ -177,6 +189,42 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Я записав"
+          }
+        }
+      }
+    },
+    "Poke a friend" : {
+      "comment" : "The masculine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relancer un ami"
+          }
+        }
+      }
+    },
+    "Poked a friend" : {
+      "comment" : "The masculine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relance envoyée à un ami"
+          }
+        }
+      }
+    },
+    "So a friend can nag you, and you hear when friends practise." : {
+      "comment" : "The masculine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pour qu'un ami puisse te relancer, et que tu saches quand tes amis pratiquent."
           }
         }
       }

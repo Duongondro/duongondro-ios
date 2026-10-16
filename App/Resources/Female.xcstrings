@@ -95,6 +95,12 @@
             "value" : "Una amiga"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une amie"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -251,6 +257,12 @@
             "value" : "Dar un toque a una amiga"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relancer une amie"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -299,6 +311,12 @@
             "value" : "Le diste un toque a una amiga"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relance envoyée à une amie"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -345,6 +363,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Así una amiga podrá animarte y sabrás cuándo practican tus amigos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pour qu'une amie puisse te relancer, et que tu saches quand tes amis pratiquent."
           }
         },
         "pl" : {

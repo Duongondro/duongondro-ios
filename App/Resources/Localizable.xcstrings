@@ -25,6 +25,12 @@
             "value" : "%1$@ finished %2$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ a terminé %2$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -79,6 +85,12 @@
             "value" : "%@ hat noch nicht geübt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ n'a pas encore pratiqué"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -131,6 +143,12 @@
             "value" : "%@ insgesamt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ au total"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -181,6 +199,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ gesamt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ depuis le début"
           }
         },
         "hu" : {
@@ -239,6 +263,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ of %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ sur %2$@"
           }
         },
         "hu" : {
@@ -370,6 +400,40 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "%1$@ streak: %2$lld days, %3$@"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Série %1$@ : %2$lld jour, %3$@"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Série %1$@ : %2$lld jours, %3$@"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Série %1$@ : %2$lld jours, %3$@"
                     }
                   }
                 }
@@ -615,6 +679,12 @@
             "value" : "%lld"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -744,6 +814,40 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "%lld changes could not be synced. Check that the phone's clock is right."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld modification n'a pas pu être synchronisée. Vérifie que l'horloge du téléphone est à l'heure."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld modifications n'ont pas pu être synchronisées. Vérifie que l'horloge du téléphone est à l'heure."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld modifications n'ont pas pu être synchronisées. Vérifie que l'horloge du téléphone est à l'heure."
                     }
                   }
                 }
@@ -1073,6 +1177,40 @@
             }
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld jour"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld jours"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld jours"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1388,6 +1526,40 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "%1$lld days · longest %2$lld"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld jour · record %2$lld"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld jours · record %2$lld"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld jours · record %2$lld"
                     }
                   }
                 }
@@ -1717,6 +1889,40 @@
             }
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld sur %2$lld pratique"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld sur %2$lld pratiques"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%1$lld sur %2$lld pratiques"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2039,6 +2245,40 @@
             }
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld séance d'un autre téléphone ne peut pas encore être ouverte ici."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld séances d'un autre téléphone ne peuvent pas encore être ouvertes ici."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%lld séances d'un autre téléphone ne peuvent pas encore être ouvertes ici."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2277,6 +2517,12 @@
             "value" : "+ Eigene hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "+ Ajouter la tienne"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2329,6 +2575,12 @@
             "value" : "+ Eigene"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "+ Autre"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2376,6 +2628,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "+%lld"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "+%lld"
@@ -2438,6 +2696,12 @@
             "value" : "Ein Freund"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un(e) ami(e)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2490,6 +2754,12 @@
             "value" : "Ein Freundschaftscode"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un code d'amitié"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2540,6 +2810,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Eine Mala zählt als"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un mala compte pour"
           }
         },
         "hu" : {
@@ -2601,6 +2877,12 @@
             "value" : "Un teléfono nuevo sigue donde lo dejó este"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un nouveau téléphone reprend là où celui-ci s'est arrêté"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2651,6 +2933,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Un nombre al azar, para que tus amigos te distingan. Déjalo o cámbialo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un nom tiré au hasard, pour que tes amis puissent te reconnaître. Garde-le ou change-le."
           }
         },
         "hu" : {
@@ -2705,6 +2993,12 @@
             "value" : "Una segunda forma de iniciar sesión, por ejemplo en un teléfono nuevo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un deuxième moyen de te connecter, par exemple sur un nouveau téléphone."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2749,6 +3043,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Auch eine kurze Sitzung zählt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une courte séance compte aussi."
           }
         },
         "hu" : {
@@ -2810,6 +3110,12 @@
             "value" : "Un nombre de usuario tiene de 3 a 32 letras, dígitos, puntos y guiones bajos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un nom d'utilisateur compte de 3 à 32 lettres, chiffres, points et tirets bas."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2854,6 +3160,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Über"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "À propos"
           }
         },
         "hu" : {
@@ -2908,6 +3220,12 @@
             "value" : "Über die App und Mitwirkende"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "À propos et contributeurs"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2958,6 +3276,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Annehmen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Accepter"
           }
         },
         "hu" : {
@@ -3012,6 +3336,12 @@
             "value" : "Wenn du annimmst, seid ihr befreundet: Jeder sieht die öffentlichen Serien des anderen, nie die Zählungen."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En acceptant, vous devenez ami(e)s : chacun voit les séries publiques de l'autre, jamais ses décomptes."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3062,6 +3392,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Konto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compte"
           }
         },
         "hu" : {
@@ -3122,6 +3458,12 @@
             "value" : "Cuenta, paso %1$lld de %2$lld"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compte, étape %1$lld sur %2$lld"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3166,6 +3508,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hinzufügen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter"
           }
         },
         "hu" : {
@@ -3220,6 +3568,12 @@
             "value" : "Titelbild hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter une photo de couverture"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3272,6 +3626,12 @@
             "value" : "Freunde hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter un(e) ami(e)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3322,6 +3682,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Übung hinzufügen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter une pratique"
           }
         },
         "hu" : {
@@ -3382,6 +3748,12 @@
             "value" : "¿Añadir un correo?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter un e-mail ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3426,6 +3798,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Weitere Menge hinzufügen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter un autre nombre"
           }
         },
         "hu" : {
@@ -3480,6 +3858,12 @@
             "value" : "Freund hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter un(e) ami(e)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3530,6 +3914,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Eine Mala hinzufügen, %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter un mala, %lld"
           }
         },
         "hu" : {
@@ -3584,6 +3974,12 @@
             "value" : "%@ hinzugefügt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouté : %@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3634,6 +4030,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ hinzugefügt. Rückgängig möglich."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouté : %@. Annulation possible."
           }
         },
         "hu" : {
@@ -3688,6 +4090,12 @@
             "value" : "Alle vier Teile, je 111.111. Wiederholungsrunden kommen später."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les quatre parties, 111 111 chacune. Les tours suivants viennent plus tard."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3738,6 +4146,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Menge"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nombre"
           }
         },
         "hu" : {
@@ -3798,6 +4212,12 @@
             "value" : "Una cuenta añade amigos, rachas públicas y sincronización entre teléfonos. Los recuentos van cifrados de extremo a extremo en ambos casos: el servidor nunca los ve."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un compte ajoute les amis, les séries publiques et la synchronisation entre téléphones. Dans les deux cas, les décomptes sont chiffrés de bout en bout : le serveur ne les voit jamais."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3850,6 +4270,12 @@
             "value" : "Una cuenta en una app de práctica budista dice algo sobre tus creencias, que el RGPD trata como datos especiales. El servidor guarda tu cuenta: tus llaves de acceso, y tu correo si lo añades; el nombre que ven tus amigos; tu nombre de usuario y tu género si los indicas; tus amigos; y tus rachas públicas. Tus recuentos siguen cifrados en tus teléfonos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un compte dans une app de pratique bouddhiste dit quelque chose de tes convictions, ce que le RGPD traite comme une catégorie particulière de données. Le serveur conserve ton compte : tes clés d'accès, et ton e-mail si tu en ajoutes un ; le nom que voient tes amis ; ton nom d'utilisateur et ton genre si tu les indiques ; tes amis ; et tes séries publiques. Tes décomptes restent chiffrés sur tes téléphones."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3894,6 +4320,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ein Anstoß am Abend, wenn deine Serie in Gefahr ist. Er wird auf diesem Handy geplant; nichts verlässt es."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un rappel le soir quand une série est menacée. Il est programmé sur ce téléphone ; rien n'en sort."
           }
         },
         "hu" : {
@@ -3948,6 +4380,12 @@
             "value" : "Eine Stunde vor deiner üblichen Übungszeit, auf diesem Handy aus den letzten zwei Wochen gelernt."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une heure avant ton heure de pratique habituelle, apprise sur ce téléphone à partir des deux dernières semaines."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3998,6 +4436,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Jede Übung heute startet eine Serie."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "N'importe quelle pratique aujourd'hui lance une série."
           }
         },
         "hu" : {
@@ -4052,6 +4496,12 @@
             "value" : "Jeder mit diesem Code wird dein Freund · läuft in 7 Tagen ab"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toute personne ayant ce code devient ton ami(e) · expire dans 7 jours"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4102,6 +4552,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Archivieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archiver"
           }
         },
         "hu" : {
@@ -4156,6 +4612,12 @@
             "value" : "Archiviert"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivées"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4206,6 +4668,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Archiviert (%lld)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivées (%lld)"
           }
         },
         "hu" : {
@@ -4260,6 +4728,12 @@
             "value" : "Beim Archivieren verschwindet die Übung aus „Heute“; Zählungen und Verlauf bleiben erhalten."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'archivage masque la pratique dans Aujourd'hui et conserve ses décomptes et son historique."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4310,6 +4784,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Zurück"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Retour"
           }
         },
         "hu" : {
@@ -4370,6 +4850,12 @@
             "value" : "Antes de cerrar sesión aquí, termina tu código de recuperación: sin él, tus cuentas no podrían volver."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avant de te déconnecter ici, termine ton code de récupération : sans lui, tes décomptes ne pourraient pas revenir."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4422,6 +4908,12 @@
             "value" : "Antes de guardar nada"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avant d'enregistrer quoi que ce soit"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4466,6 +4958,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Blockieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bloquer"
           }
         },
         "hu" : {
@@ -4520,6 +5018,12 @@
             "value" : "Blockieren?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bloquer ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4572,6 +5076,12 @@
             "value" : "Abbrechen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Annuler"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4622,6 +5132,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Titelbild ändern"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Changer la couverture"
           }
         },
         "hu" : {
@@ -4682,6 +5198,12 @@
             "value" : "Revisa tu correo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consulte tes e-mails"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4726,6 +5248,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Prüfe deinen Wiederherstellungscode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vérifie ton code de récupération"
           }
         },
         "hu" : {
@@ -4778,6 +5306,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Foto auswählen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choisir une photo"
           }
         },
         "hu" : {
@@ -4838,6 +5372,12 @@
             "value" : "Código"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Code"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4882,6 +5422,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Weiter"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Continuer"
           }
         },
         "hu" : {
@@ -4936,6 +5482,12 @@
             "value" : "Ganzen Hash kopieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copier le hash complet"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4986,6 +5538,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Löschen nicht möglich"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suppression impossible"
           }
         },
         "hu" : {
@@ -5040,6 +5598,12 @@
             "value" : "Duongöndro ist nicht erreichbar. Prüfe die Verbindung und versuche es noch einmal."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Impossible de joindre Duongöndro. Vérifie la connexion et réessaie."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5085,6 +5649,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Gezählt für %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compte pour %@"
           }
         },
         "ru" : {
@@ -5145,6 +5715,12 @@
             "value" : "Zählen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Décompte"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5197,6 +5773,12 @@
             "value" : "Bisher erfasste Zählungen bleiben erhalten."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les décomptes enregistrés jusqu'ici sont conservés."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5247,6 +5829,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Titelbild"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Couverture"
           }
         },
         "hu" : {
@@ -5307,6 +5895,12 @@
             "value" : "Valor personalizado"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Valeur personnalisée"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5359,6 +5953,12 @@
             "value" : "Personalizado…"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Personnalisé…"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5403,6 +6003,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Tägliche Übungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pratiques quotidiennes"
           }
         },
         "hu" : {
@@ -5457,6 +6063,12 @@
             "value" : "Tag %lld"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jour %lld"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5507,6 +6119,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "In der App geübte Tage, von ihnen signiert. Zählungen bleiben privat."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jours pratiqués dans l'app, signés par cette personne. Les décomptes restent privés."
           }
         },
         "hu" : {
@@ -5561,6 +6179,12 @@
             "value" : "Standard (%lld)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Par défaut (%lld)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5611,6 +6235,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Alles löschen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tout supprimer"
           }
         },
         "hu" : {
@@ -5671,6 +6301,12 @@
             "value" : "Elimina tu cuenta y sus datos del servidor, y todo lo que hay en este teléfono. Tus otros teléfonos cierran sesión, pero conservan su copia. No se puede deshacer."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprime ton compte et ses données sur le serveur, ainsi que tout ce qui se trouve sur ce téléphone. Tes autres téléphones sont déconnectés mais gardent leur copie. C'est irréversible."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5715,6 +6351,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Nur für Entwicklungs-Builds: ein neues Konto auf dem Entwicklungsserver dieses Macs."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Versions de développement uniquement : un nouveau compte sur le serveur de développement de ce Mac."
           }
         },
         "hu" : {
@@ -5769,6 +6411,12 @@
             "value" : "Geräteschlüssel"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clé de l'appareil"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5819,6 +6467,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Diskrete Mitteilungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notifications discrètes"
           }
         },
         "hu" : {
@@ -5873,6 +6527,12 @@
             "value" : "Schließen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fermer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5923,6 +6583,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Fertig"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Terminé"
           }
         },
         "hu" : {
@@ -5977,6 +6643,12 @@
             "value" : "Heute erledigt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fait aujourd'hui"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6024,6 +6696,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Duongöndro"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Duongöndro"
@@ -6087,6 +6765,12 @@
             "value" : "Ocho letras y cifras, como en el correo. Da igual mayúsculas o minúsculas; O y 0, I y 1 cuentan como iguales. Vale 15 minutos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Huit lettres et chiffres, comme dans l'e-mail. Majuscules et minuscules sont équivalentes ; O et 0, I et 1 comptent pareil. Valable 15 minutes."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6137,6 +6821,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Correo electrónico"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-mail"
           }
         },
         "hu" : {
@@ -6191,6 +6881,12 @@
             "value" : "Envíame un enlace por correo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "M'envoyer un lien par e-mail"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6235,6 +6931,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ende-zu-Ende-verschlüsselt und vollständig Open Source."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Chiffré de bout en bout et entièrement open source."
           }
         },
         "hu" : {
@@ -6287,6 +6989,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Beendet die Freundschaft für beide Seiten und stoppt Freundschaftscodes und Anstupser zwischen euch."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Met fin à l'amitié des deux côtés et bloque les codes d'amitié et les relances entre vous."
           }
         },
         "hu" : {
@@ -6347,6 +7055,12 @@
             "value" : "Borrar y continuar"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Effacer et continuer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6399,6 +7113,12 @@
             "value" : "¿Borrarla aquí y continuar? Lo que se sincronizó sigue en esa cuenta."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'effacer ici et continuer ? Ce qui en a été synchronisé reste dans ce compte-là."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6443,6 +7163,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Abendliche Erinnerung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rappel du soir"
           }
         },
         "hu" : {
@@ -6497,6 +7223,12 @@
             "value" : "Alle, die zu den Repositories für App, Server, Design oder Android beigetragen haben, mit den meisten Commits zuerst. Wird beim Bauen der App aus dem Git-Verlauf erzeugt."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toutes les personnes qui ont contribué aux dépôts de l'app, du serveur, du design ou Android, par nombre de commits décroissant. Généré à partir de l'historique git lors de la compilation de l'app."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6547,6 +7279,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Alle meine Daten exportieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporter toutes mes données"
           }
         },
         "hu" : {
@@ -6601,6 +7339,12 @@
             "value" : "Exportieren und löschen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporter et supprimer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6653,6 +7397,12 @@
             "value" : "Export fehlgeschlagen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'export a échoué"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6703,6 +7453,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Exportiere zuerst, wenn du eine Kopie möchtest."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exporte d'abord si tu veux une copie."
           }
         },
         "hu" : {
@@ -6771,6 +7527,12 @@
             "value" : "%1$@ acaba de practicar · día %3$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ vient de pratiquer · jour %3$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6829,6 +7591,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Un amigo practicó"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un(e) ami(e) a pratiqué"
           }
         },
         "hu" : {
@@ -6891,6 +7659,12 @@
             "value" : "%1$@ acaba de practicar · día %3$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ vient de pratiquer · jour %3$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6949,6 +7723,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ acaba de practicar · día %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ vient de pratiquer · jour %3$@"
           }
         },
         "hu" : {
@@ -7011,6 +7791,12 @@
             "value" : "%1$@ acaba de hacer %2$@ · día %3$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ vient de faire %2$@ · jour %3$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7069,6 +7855,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ acaba de hacer %2$@ · día %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ vient de faire %2$@ · jour %3$@"
           }
         },
         "hu" : {
@@ -7131,6 +7923,12 @@
             "value" : "%1$@ acaba de hacer %2$@ · día %3$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ vient de faire %2$@ · jour %3$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7189,6 +7987,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Un amigo acaba de practicar · día %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un(e) ami(e) vient de pratiquer · jour %2$@"
           }
         },
         "hu" : {
@@ -7251,6 +8055,12 @@
             "value" : "Una amiga acaba de practicar · día %2$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une amie vient de pratiquer · jour %2$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7309,6 +8119,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Un amigo acaba de practicar · día %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un ami vient de pratiquer · jour %2$@"
           }
         },
         "hu" : {
@@ -7371,6 +8187,12 @@
             "value" : "Un amigo acaba de hacer %1$@ · día %2$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un(e) ami(e) vient de faire %1$@ · jour %2$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7429,6 +8251,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Una amiga acaba de hacer %1$@ · día %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une amie vient de faire %1$@ · jour %2$@"
           }
         },
         "hu" : {
@@ -7491,6 +8319,12 @@
             "value" : "Un amigo acaba de hacer %1$@ · día %2$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un ami vient de faire %1$@ · jour %2$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7529,6 +8363,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Weiblich"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Femme"
           }
         },
         "ru" : {
@@ -7595,6 +8435,12 @@
             "value" : "Terminar la configuración"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Terminer la configuration"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7633,6 +8479,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sprache des Telefons verwenden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suivre la langue du téléphone"
           }
         },
         "ru" : {
@@ -7693,6 +8545,12 @@
             "value" : "Freunde"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Amis"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7745,6 +8603,12 @@
             "value" : "Freunde sehen diesen Namen neben deinen Serien."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes amis voient ce nom à côté de tes séries."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7795,6 +8659,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Freunde sehen diese Serie"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes amis voient cette série"
           }
         },
         "hu" : {
@@ -7855,6 +8725,12 @@
             "value" : "Tus amigos ven tus rachas públicas y nada más. Con una cuenta en línea puedes añadirlos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes amis voient tes séries publiques, et rien d'autre. Un compte en ligne te permet de les ajouter."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7905,6 +8781,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Tus amigos ven tus rachas públicas y nada más. Termina de configurar tu cuenta para añadirlos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes amis voient tes séries publiques, et rien d'autre. Termine la configuration de ton compte pour les ajouter."
           }
         },
         "hu" : {
@@ -7960,6 +8842,12 @@
             "value" : "Tus amigos ven tus rachas, nunca tus recuentos"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes amis voient tes séries, jamais tes décomptes"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8012,6 +8900,12 @@
             "value" : "Código de amistad"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Code d'amitié"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8058,6 +8952,12 @@
             "value" : "Von Papier oder aus einer Tabelle; ungefähr reicht."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Depuis un carnet ou un tableur ; une estimation suffit."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8102,6 +9002,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Geschlecht"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Genre"
           }
         },
         "ru" : {
@@ -8162,6 +9068,12 @@
             "value" : "Allgemein"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Général"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8220,6 +9132,12 @@
             "value" : "Empezar"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Commencer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8264,6 +9182,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Gruppe %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Groupe %lld"
           }
         },
         "hu" : {
@@ -8320,6 +9244,12 @@
             "value" : "Hast du das Ngöndro abgeschlossen?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As-tu terminé le ngöndro ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8374,6 +9304,12 @@
             "value" : "Hast du Short refuge abgeschlossen?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As-tu terminé le Short refuge ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8424,6 +9360,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Verlauf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Historique"
           }
         },
         "hu" : {
@@ -8484,6 +9426,12 @@
             "value" : "Acepto que Duongöndro guarde esto para gestionar mi cuenta. Puedo exportarlo o borrarlo todo en Ajustes."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "J'accepte que Duongöndro enregistre ces données pour gérer mon compte. Je peux tout exporter ou tout supprimer dans les Paramètres."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8528,6 +9476,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ich habe schon ein Konto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "J'ai déjà un compte"
           }
         },
         "hu" : {
@@ -8576,6 +9530,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ich habe nach Mitternacht angefangen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "J'ai commencé après minuit"
           }
         },
         "ru" : {
@@ -8638,6 +9598,12 @@
             "value" : "Ich habe ihn aufgeschrieben"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Je l'ai noté"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8690,6 +9656,12 @@
             "value" : "Ich bin in einer späteren Runde"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "J'en suis à un tour suivant"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8740,6 +9712,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Wenn du dieses Handy verlierst, ist dieser Code der einzige Weg zurück zu deinen Zählungen. Niemand sonst hat ihn, auch wir nicht."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si tu perds ce téléphone, ce code est le seul moyen de retrouver tes décomptes. Personne d'autre ne l'a, pas même nous."
           }
         },
         "hu" : {
@@ -8800,6 +9778,12 @@
             "value" : "¿Solo en este teléfono, o en línea?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sur ce téléphone seulement, ou en ligne ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8844,6 +9828,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Schlüssel geändert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clé modifiée"
           }
         },
         "hu" : {
@@ -8898,6 +9888,12 @@
             "value" : "Schlüsselbund"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Trousseau"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8948,6 +9944,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sprache"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Langue"
           }
         },
         "hu" : {
@@ -9002,6 +10004,12 @@
             "value" : "Zuletzt geübt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dernière pratique"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9052,6 +10060,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Rangliste · in der App erfasst"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Classement · suivi dans l'app"
           }
         },
         "hu" : {
@@ -9119,6 +10133,12 @@
             "value" : "Deja que tus amigos te animen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Laisse tes amis te relancer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9171,6 +10191,12 @@
             "value" : "Letras, cifras, puntos y guiones bajos. Tus amigos no lo ven."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lettres, chiffres, points et tirets bas. Tes amis ne le voient pas."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9215,6 +10241,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Lizenzen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Licences"
           }
         },
         "hu" : {
@@ -9269,6 +10301,12 @@
             "value" : "Link oder QR-Code, 7 Tage gültig"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lien ou QR code, valable 7 jours"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9319,6 +10357,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Auf dem Sperrbildschirm steht „Ein Freund hat geübt“ statt der Übung."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'écran de verrouillage affiche « Un(e) ami(e) a pratiqué » au lieu de la pratique."
           }
         },
         "hu" : {
@@ -9373,6 +10417,12 @@
             "value" : "%@ erfasst"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enregistré : %@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9423,6 +10473,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Längste %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Record %lld"
           }
         },
         "hu" : {
@@ -9477,6 +10533,12 @@
             "value" : "Längste Serie (optional)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Plus longue série (facultatif)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9527,6 +10589,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Gemacht von"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Réalisé par"
           }
         },
         "hu" : {
@@ -9581,6 +10649,12 @@
             "value" : "Neuen Code erstellen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Créer un nouveau code"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9633,6 +10707,12 @@
             "value" : "Neuen erstellen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En créer un nouveau"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9683,6 +10763,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Neuen Wiederherstellungscode erstellen?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Créer un nouveau code de récupération ?"
           }
         },
         "hu" : {
@@ -9743,6 +10829,12 @@
             "value" : "Crear una cuenta en línea"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Créer un compte en ligne"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9789,6 +10881,12 @@
             "value" : "Deine Schlüssel werden erstellt …"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Création de tes clés…"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9833,6 +10931,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Männlich"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Homme"
           }
         },
         "ru" : {
@@ -9893,6 +10997,12 @@
             "value" : "Heute als erledigt markieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marquer aujourd'hui comme fait"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9943,6 +11053,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Als erledigt markiert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marqué comme fait"
           }
         },
         "hu" : {
@@ -9997,6 +11113,12 @@
             "value" : "Als erledigt markiert. Rückgängig möglich."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marqué comme fait. Annulation possible."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10047,6 +11169,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Name"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nom"
           }
         },
         "hu" : {
@@ -10108,6 +11236,12 @@
             "value" : "Ahora mismo no se pueden crear cuentas nuevas. Inténtalo más tarde o sigue practicando en este teléfono."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Impossible de créer de nouveaux comptes pour le moment. Réessaie plus tard, ou continue de pratiquer sur ce téléphone."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10160,6 +11294,12 @@
             "value" : "La próxima vez accedes con Face ID o Touch ID. El Llavero de iCloud la guarda, así que un iPhone nuevo también la tiene."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La prochaine fois, tu te connectes avec Face ID ou Touch ID. Le trousseau iCloud la conserve, donc un nouvel iPhone l'aura aussi."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10204,6 +11344,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Als Nächstes fragen wir zur Sicherheit nach zwei dieser Gruppen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ensuite, nous te demanderons deux de ces groupes, pour vérifier."
           }
         },
         "hu" : {
@@ -10264,6 +11410,12 @@
             "value" : "Después te pediremos dos de estos grupos, para comprobarlo. O y 0, I y 1 cuentan como iguales."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ensuite, nous te demanderons deux de ces groupes, pour vérifier. O et 0, I et 1 comptent pareil."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10317,6 +11469,12 @@
             "value" : "Ninguna cuenta usa este correo. Revisa la dirección o vuelve atrás y crea una cuenta."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucun compte n'utilise cet e-mail. Vérifie l'adresse, ou reviens en arrière et crée un compte."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10361,6 +11519,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Noch keine Freunde. Mit einem Freundschaftscode seid ihr befreundet; sie sehen deine öffentlichen Serien, nie deine Zählungen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas encore d'amis. Un code d'amitié vous rend ami(e)s tous les deux ; l'autre voit tes séries publiques, jamais tes décomptes."
           }
         },
         "hu" : {
@@ -10422,6 +11586,12 @@
             "value" : "No hay clave de acceso de Duongöndro en este teléfono. Usa tu correo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucune clé d'accès pour Duongöndro sur ce téléphone. Utilise plutôt ton e-mail."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10468,6 +11638,12 @@
             "value" : "Keine Erinnerungen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas de rappels"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10512,6 +11688,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Nichtbinär"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non binaire"
           }
         },
         "ru" : {
@@ -10572,6 +11754,12 @@
             "value" : "Keine"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucun"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10622,6 +11810,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Noch nichts geteilt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rien de partagé pour l'instant"
           }
         },
         "hu" : {
@@ -10676,6 +11870,12 @@
             "value" : "Nicht bestätigt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non confirmé"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10720,6 +11920,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Keine Angabe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non indiqué"
           }
         },
         "ru" : {
@@ -10780,6 +11986,12 @@
             "value" : "Jetzt nicht"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas maintenant"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10830,6 +12042,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Noch nicht"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas encore"
           }
         },
         "hu" : {
@@ -10884,6 +12102,12 @@
             "value" : "Heute noch nicht"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas encore aujourd'hui"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10934,6 +12158,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Heute noch nichts erfasst"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rien d'enregistré aujourd'hui"
           }
         },
         "hu" : {
@@ -10988,6 +12218,12 @@
             "value" : "Noch nichts erfasst."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rien d'enregistré pour l'instant."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11038,6 +12274,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mitteilungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notifications"
           }
         },
         "hu" : {
@@ -11105,6 +12347,12 @@
             "value" : "Las notificaciones de Duongöndro están desactivadas. Actívalas en Ajustes."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les notifications sont désactivées pour Duongöndro. Active-les dans Réglages."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11149,6 +12397,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Anstoß zu meiner üblichen Zeit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Me relancer à mon heure habituelle"
           }
         },
         "hu" : {
@@ -11198,6 +12452,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "OK"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "OK"
@@ -11253,6 +12513,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Eine ZIP-Datei mit jeder Übung, Sitzung und Serie, lesbar auch ohne diese App."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un seul ZIP avec chaque pratique, séance et série, lisible sans cette app."
           }
         },
         "hu" : {
@@ -11313,6 +12579,12 @@
             "value" : "Solo en este teléfono"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seulement sur ce téléphone"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11365,6 +12637,12 @@
             "value" : "Solo en este teléfono. Una cuenta añade amigos, rachas públicas y sincronización entre teléfonos; tus cuentas siguen cifradas de extremo a extremo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seulement sur ce téléphone. Un compte ajoute les amis, les séries publiques et la synchronisation entre téléphones ; tes décomptes restent chiffrés de bout en bout."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11409,6 +12687,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Nur die Anzahl der in der App geübten Tage, nie Zählungen oder Summen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seulement le nombre de jours pratiqués dans l'app, jamais les décomptes ni les totaux."
           }
         },
         "hu" : {
@@ -11476,6 +12760,12 @@
             "value" : "Abrir Ajustes"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ouvrir Réglages"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11514,6 +12804,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Freiwillig. Polnisch, Tschechisch, Slowakisch, Russisch und Ukrainisch beugen damit Wörter über dich, auf diesem Telefon und auf denen deiner Freunde. Ohne Angabe gelten neutrale Formen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facultatif. Certaines langues, dont le polonais, le russe et le français, s'en servent pour accorder les mots qui te concernent, sur ce téléphone et sur ceux de tes amis. Sans lui, elles utilisent des formes neutres."
           }
         },
         "ru" : {
@@ -11588,6 +12884,12 @@
             "value" : "%1$@ te dio un toque. ¿Hora de sentarte a meditar?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11646,6 +12948,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ te dio un toque. ¿Hora de sentarte a meditar?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
           }
         },
         "hu" : {
@@ -11708,6 +13016,12 @@
             "value" : "%1$@ te dio un toque. ¿Hora de sentarte a meditar?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ te relance. Et si tu t'asseyais ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11766,6 +13080,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Un amigo te dio un toque"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un(e) ami(e) te relance"
           }
         },
         "hu" : {
@@ -11828,6 +13148,12 @@
             "value" : "Una amiga te dio un toque"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une amie te relance"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11888,6 +13214,12 @@
             "value" : "Un amigo te dio un toque"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un ami te relance"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11941,6 +13273,12 @@
             "value" : "Clave de acceso guardada."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clé d'accès enregistrée."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11985,6 +13323,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Freundschaftslink einfügen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Coller un lien d'amitié"
           }
         },
         "hu" : {
@@ -12039,6 +13383,12 @@
             "value" : "Link einfügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Coller le lien"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12089,6 +13439,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Füge den Link ein, den dein Freund geschickt hat."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Colle le lien que ton ami(e) t'a envoyé."
           }
         },
         "hu" : {
@@ -12143,6 +13499,12 @@
             "value" : "Wähle so viele, wie du übst."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choisis toutes celles que tu fais."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12195,6 +13557,12 @@
             "value" : "Anstupsen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relancer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12245,6 +13613,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ anstupsen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relancer %@"
           }
         },
         "hu" : {
@@ -12307,6 +13681,12 @@
             "value" : "Dar un toque a un amigo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relancer un(e) ami(e)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12351,6 +13731,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Angestupst"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relance envoyée"
           }
         },
         "hu" : {
@@ -12403,6 +13789,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ angestupst"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relance envoyée à %@"
           }
         },
         "hu" : {
@@ -12465,6 +13857,12 @@
             "value" : "Le diste un toque a un amigo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Relance envoyée à un(e) ami(e)"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12509,6 +13907,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Übungsserie · längste %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Série de pratique · record %lld"
           }
         },
         "hu" : {
@@ -12563,6 +13967,12 @@
             "value" : "Übungen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pratiques"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12613,6 +14023,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Übe mit mir auf Duongöndro: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pratique avec moi sur Duongöndro : %@"
           }
         },
         "hu" : {
@@ -12673,6 +14089,12 @@
             "value" : "Política de privacidad"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Politique de confidentialité"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12717,6 +14139,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Öffentliche Serien"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Séries publiques"
           }
         },
         "hu" : {
@@ -12771,6 +14199,12 @@
             "value" : "QR-Code des Freundschaftslinks"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "QR code du lien d'amitié"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12821,6 +14255,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Wiederherstellungscode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Code de récupération"
           }
         },
         "hu" : {
@@ -12875,6 +14315,12 @@
             "value" : "Erinnere mich zu dieser Uhrzeit"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Me le rappeler à cette heure"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12925,6 +14371,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Entfernt alle deine Daten von diesem Handy. Das lässt sich nicht rückgängig machen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprime toutes tes données de ce téléphone. C'est irréversible."
           }
         },
         "hu" : {
@@ -12979,6 +14431,12 @@
             "value" : "Melden"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Signaler"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13029,6 +14487,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Gemeldet. Danke."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Signalement envoyé. Merci."
           }
         },
         "hu" : {
@@ -13083,6 +14547,12 @@
             "value" : "Meldungen gehen an die Menschen, die Duongöndro betreiben."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les signalements vont aux personnes qui gèrent Duongöndro."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13133,6 +14603,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Wiederherstellen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaurer"
           }
         },
         "hu" : {
@@ -13187,6 +14663,12 @@
             "value" : "Mit deinem Wiederherstellungscode wiederherstellen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaurer avec ton code de récupération"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13237,6 +14719,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Runde %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tour %lld"
           }
         },
         "hu" : {
@@ -13295,6 +14783,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Round %1$lld · %2$@ of %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tour %1$lld · %2$@ sur %3$@"
           }
         },
         "hu" : {
@@ -13363,6 +14857,12 @@
             "value" : "Tu racha termina en menos de dos horas · día %2$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ta série se termine dans moins de deux heures · jour %2$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13421,6 +14921,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Una de tus rachas termina en menos de dos horas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une de tes séries se termine dans moins de deux heures"
           }
         },
         "hu" : {
@@ -13483,6 +14989,12 @@
             "value" : "Tu racha de %1$@ termina en menos de dos horas · día %2$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ta série %1$@ se termine dans moins de deux heures · jour %2$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13527,6 +15039,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sichern"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enregistrer"
           }
         },
         "hu" : {
@@ -13587,6 +15105,12 @@
             "value" : "Guarda una clave de acceso"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enregistrer une clé d'accès"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13631,6 +15155,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mit jeder Handykamera scannen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scanne avec l'appareil photo de n'importe quel téléphone"
           }
         },
         "hu" : {
@@ -13680,6 +15210,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Secure Enclave"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Secure Enclave"
@@ -13735,6 +15271,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Senden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Envoyer"
           }
         },
         "hu" : {
@@ -13795,6 +15337,12 @@
             "value" : "Enviarlo otra vez"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le renvoyer"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13847,6 +15395,12 @@
             "value" : "Enviado otra vez"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renvoyé"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13891,6 +15445,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Server"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serveur"
           }
         },
         "hu" : {
@@ -13943,6 +15503,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Einstellungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Paramètres"
           }
         },
         "hu" : {
@@ -14003,6 +15569,12 @@
             "value" : "Compartir un código de amistad"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Partager un code d'amitié"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14047,6 +15619,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Link teilen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Partager le lien"
           }
         },
         "hu" : {
@@ -14101,6 +15679,12 @@
             "value" : "Wäre jetzt nicht Zeit zum Meditieren?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu ne devrais pas être en train de méditer ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14151,6 +15735,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Meinen Freundescode zeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Afficher mon code d'amitié"
           }
         },
         "hu" : {
@@ -14205,6 +15795,12 @@
             "value" : "Wieder unter „Heute“ zeigen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Réafficher dans Aujourd'hui"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14255,6 +15851,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Code noch einmal zeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Afficher à nouveau le code"
           }
         },
         "hu" : {
@@ -14309,6 +15911,12 @@
             "value" : "Freundschaftscode zeigen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Afficher le code d'amitié"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14359,6 +15967,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Zeig das persönlich vor · läuft in 10 Minuten ab"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "À montrer en personne · expire dans 10 minutes"
           }
         },
         "hu" : {
@@ -14419,6 +16033,12 @@
             "value" : "Iniciar sesión de nuevo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se reconnecter"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14463,6 +16083,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Für die Entwicklung anmelden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se connecter pour le développement"
           }
         },
         "hu" : {
@@ -14523,6 +16149,12 @@
             "value" : "Acceder con una clave de acceso"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se connecter avec une clé d'accès"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14573,6 +16205,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Cerrar sesión en este teléfono"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se déconnecter sur ce téléphone"
           }
         },
         "hu" : {
@@ -14627,6 +16265,12 @@
             "value" : "¿Cerrar sesión en este teléfono?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se déconnecter sur ce téléphone ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14679,6 +16323,12 @@
             "value" : "Sesión iniciada como"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Connecté(e) en tant que"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14723,6 +16373,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Abgemeldet. Melde dich wieder an, um weiter zu synchronisieren."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Session fermée. Reconnecte-toi pour continuer à synchroniser."
           }
         },
         "hu" : {
@@ -14781,6 +16437,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Omitir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passer"
           }
         },
         "hu" : {
@@ -14842,6 +16504,12 @@
             "value" : "Así %@ podrá animarte y sabrás cuándo practican tus amigos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pour que %@ puisse te relancer, et que tu saches quand tes amis pratiquent."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14896,6 +16564,12 @@
             "value" : "Así un amigo podrá animarte y sabrás cuándo practican tus amigos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pour qu'un(e) ami(e) puisse te relancer, et que tu saches quand tes amis pratiquent."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14940,6 +16614,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bisher"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jusqu'ici"
           }
         },
         "hu" : {
@@ -15000,6 +16680,12 @@
             "value" : "Algunos idiomas usan terminaciones verbales distintas para hombres y mujeres. Si te saltas este paso o eliges «No binario», la app usará formas neutras siempre que sea posible."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Certaines langues accordent certains mots différemment pour les hommes et pour les femmes. Si tu passes cette étape ou choisis « Non binaire », l'app utilisera des formes neutres autant que possible."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15044,6 +16730,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Etwas konnte nicht gesichert werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quelque chose n'a pas pu être enregistré."
           }
         },
         "hu" : {
@@ -15105,6 +16797,12 @@
             "value" : "Algo salió mal. Revisa la conexión e inténtalo de nuevo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un problème est survenu. Vérifie ta connexion et réessaie."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15149,6 +16847,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Quelle"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Source"
           }
         },
         "hu" : {
@@ -15201,6 +16905,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Quellcode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Code source"
           }
         },
         "hu" : {
@@ -15261,6 +16971,12 @@
             "value" : "Step %1$lld of %2$lld"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Étape %1$lld sur %2$lld"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15311,6 +17027,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Nur Serie"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Série seulement"
           }
         },
         "hu" : {
@@ -15365,6 +17087,12 @@
             "value" : "Nur Serie, keine Zählung"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Série seulement, sans décompte"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15415,6 +17143,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Serie, Tage"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Série, en jours"
           }
         },
         "hu" : {
@@ -15469,6 +17203,12 @@
             "value" : "Synchronisieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Synchronisation"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15521,6 +17261,12 @@
             "value" : "Synchronisiere …"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Synchronisation…"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15565,6 +17311,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "System"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Système"
           }
         },
         "ru" : {
@@ -15625,6 +17377,12 @@
             "value" : "Tippe auf „Quelle“, um genau diesen Commit auf GitHub zu öffnen."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Touche Source pour ouvrir ce commit précis sur GitHub."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15675,6 +17433,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ziel (optional)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Objectif (facultatif)"
           }
         },
         "hu" : {
@@ -15729,6 +17493,12 @@
             "value" : "Ziel pro Runde"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Objectif par tour"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15779,6 +17549,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sag mir Bescheid, wenn sie üben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Me prévenir quand cette personne pratique"
           }
         },
         "hu" : {
@@ -15840,6 +17616,12 @@
             "value" : "Ese código no coincide. Revisa el correo e inténtalo de nuevo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce code ne correspond pas. Vérifie l'e-mail et réessaie."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15884,6 +17666,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Das passt nicht. Sieh dir den Code noch einmal an."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ça ne correspond pas. Regarde à nouveau le code."
           }
         },
         "hu" : {
@@ -15944,6 +17732,12 @@
             "value" : "Eso no parece una dirección de correo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ça ne ressemble pas à une adresse e-mail."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15997,6 +17791,12 @@
             "value" : "Esa clave de acceso no funcionó. Inténtalo de nuevo o usa tu correo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette clé d'accès n'a pas fonctionné. Réessaie, ou utilise plutôt ton e-mail."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16041,6 +17841,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dieser Wiederherstellungscode öffnet dieses Konto nicht."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce code de récupération n'ouvre pas ce compte."
           }
         },
         "hu" : {
@@ -16102,6 +17908,12 @@
             "value" : "Ese nombre de usuario ya está cogido. Prueba con otro."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce nom d'utilisateur est déjà pris. Essaies-en un autre."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16148,6 +17960,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Der Code, den du aufgeschrieben hast, funktioniert dann nicht mehr."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le code que tu as noté cessera de fonctionner."
           }
         },
         "hu" : {
@@ -16204,6 +18022,12 @@
             "value" : "Der Code, den du beim Einrichten deines ersten Handys aufgeschrieben hast. Leerzeichen und Bindestriche spielen keine Rolle."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le code que tu as noté en configurant ton premier téléphone. Les espaces et les tirets ne comptent pas."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16256,6 +18080,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Die Datenbank konnte nicht geöffnet werden. Nichts, was du jetzt erfasst, würde gespeichert, daher ist das Erfassen bis zum Neustart der App aus."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La base de données n'a pas pu être ouverte. Rien de ce que tu enregistrerais maintenant ne serait conservé : l'enregistrement est donc désactivé jusqu'au redémarrage de l'app."
           }
         },
         "hu" : {
@@ -16316,6 +18146,12 @@
             "value" : "La última sincronización no terminó. Tus cuentas están a salvo en este teléfono y se sincronizarán cuando el servidor esté disponible."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La dernière synchronisation n'a pas abouti. Tes décomptes sont en sécurité sur ce téléphone et se synchroniseront dès que le serveur sera joignable."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16360,6 +18196,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Der Server nennt für diesen Freund jetzt einen anderen Schlüssel als den, den dieses Handy zuerst gesehen hat, deshalb sind seine Serien ausgeblendet. Vielleicht ist es ein neues Handy ohne Wiederherstellung, oder jemand hängt dazwischen. Triff dich mit ihm oder bitte um einen neuen Freundschaftscode: Wenn du ihn annimmst, wird sein Schlüssel erneut geprüft."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le serveur indique maintenant pour cette personne une autre clé que celle que ce téléphone a vue en premier ; ses séries sont donc masquées. C'est peut-être un nouveau téléphone sans restauration, ou quelqu'un qui s'interpose. Voyez-vous en personne, ou demande un nouveau code d'amitié : l'accepter vérifie à nouveau sa clé."
           }
         },
         "hu" : {
@@ -16414,6 +18256,12 @@
             "value" : "Die Meditation „Short refuge“, die du vor Beginn des Ngöndro machst."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La méditation Short refuge que tu fais avant de commencer le ngöndro."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16464,6 +18312,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ihr Schlüssel hat sich geändert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sa clé a changé"
           }
         },
         "hu" : {
@@ -16518,6 +18372,12 @@
             "value" : "Dieses Konto hat bereits Schlüssel: Stelle es stattdessen mit seinem Wiederherstellungscode wieder her."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce compte a déjà des clés : restaure-le plutôt avec son code de récupération."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16568,6 +18428,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Das löscht jede Übung, Sitzung und Serie auf diesem Handy, deine Erinnerungen und alle Schlüssel, die die App hält, und kehrt dann zum Anfang zurück."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cela supprime chaque pratique, séance et série de ce téléphone, tes rappels et toutes les clés que l'app détient, puis revient au début."
           }
         },
         "hu" : {
@@ -16628,6 +18494,12 @@
             "value" : "Esto elimina tu cuenta y todo lo que se guarda con ella en el servidor: tus sesiones cifradas, amigos, rachas públicas, códigos de amistad, llaves de acceso y formas de iniciar sesión. Tus otros teléfonos cierran sesión y conservan su propia copia hasta que la elimines allí. En este teléfono elimina todas las prácticas, sesiones y rachas, tus recordatorios y las claves de la app, y luego vuelve al inicio."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cela supprime ton compte et tout ce qui y est associé sur le serveur : tes séances chiffrées, tes amis, tes séries publiques, tes codes d'amitié, tes clés d'accès et tes connexions. Tes autres téléphones sont déconnectés et gardent leur propre copie jusqu'à ce que tu la supprimes là-bas. Sur ce téléphone, cela supprime chaque pratique, séance et série, tes rappels et les clés de l'app, puis revient au début."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16672,6 +18544,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dieses Gerät"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cet appareil"
           }
         },
         "hu" : {
@@ -16732,6 +18610,12 @@
             "value" : "Este correo pertenece a otra cuenta."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cet e-mail appartient à un autre compte."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16776,6 +18660,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dieser Freundschaftscode kann nicht verwendet werden: Er ist vielleicht abgelaufen oder zurückgezogen worden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce code d'amitié ne peut pas être utilisé : il a peut-être expiré ou été retiré."
           }
         },
         "hu" : {
@@ -16830,6 +18720,12 @@
             "value" : "Dieser Freundschaftscode ist nicht stimmig und wurde deshalb nicht angenommen. Bitte deinen Freund, ihn noch einmal zu schicken."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce code d'amitié n'est pas valide, il n'a donc pas été accepté. Demande à ton ami(e) de le renvoyer."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16880,6 +18776,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dieser Freundschaftscode ist abgelaufen. Bitte um einen neuen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce code d'amitié a expiré. Demandes-en un nouveau."
           }
         },
         "hu" : {
@@ -16940,6 +18842,12 @@
             "value" : "Este enlace de amistad ya no funciona. Continúa para crear la cuenta sin él."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce lien d'amitié ne fonctionne plus. Continue pour créer le compte sans lui."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16992,6 +18900,12 @@
             "value" : "Este es un código de recuperación nuevo. El código que anotaste antes ya no funciona."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "C'est un nouveau code de récupération. Tout code noté auparavant ne fonctionne plus."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17036,6 +18950,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Das ist dein eigener Freundschaftscode. Schick ihn stattdessen einem Freund."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "C'est ton propre code d'amitié. Envoie-le plutôt à un(e) ami(e)."
           }
         },
         "hu" : {
@@ -17088,6 +19008,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dieses Handy gehört zu einem Konto, ist aber abgemeldet. Melde dich zuerst wieder an, damit auch die Kopie auf dem Server gelöscht wird."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce téléphone appartient à un compte, mais la session est fermée. Reconnecte-toi d'abord, pour que la copie du serveur soit supprimée aussi."
           }
         },
         "hu" : {
@@ -17149,6 +19075,12 @@
             "value" : "Este teléfono no pudo guardar una clave de acceso para Duongöndro."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce téléphone n'a pas pu enregistrer de clé d'accès pour Duongöndro."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17201,6 +19133,12 @@
             "value" : "Este teléfono tiene la práctica de otra cuenta"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce téléphone contient la pratique d'un autre compte"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17245,6 +19183,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Diese Übung gibt es nicht mehr."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette pratique n'existe plus."
           }
         },
         "hu" : {
@@ -17299,6 +19243,12 @@
             "value" : "Uhrzeit"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Heure"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17351,6 +19301,12 @@
             "value" : "Heute"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aujourd'hui"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17401,6 +19357,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Heute %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aujourd'hui %@"
           }
         },
         "hu" : {
@@ -17532,6 +19494,40 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "Today %1$@ · %2$lld malas"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Aujourd'hui %1$@ · %2$lld mala"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Aujourd'hui %1$@ · %2$lld malas"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Aujourd'hui %1$@ · %2$lld malas"
                     }
                   }
                 }
@@ -17784,6 +19780,12 @@
             "value" : "Desde esta red ha habido demasiados registros en la última hora. Inténtalo más tarde o abre el enlace de amistad de un amigo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Trop d'inscriptions depuis ce réseau au cours de la dernière heure. Réessaie plus tard, ou ouvre le lien d'amitié d'un(e) ami(e)."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17837,6 +19839,12 @@
             "value" : "Demasiados intentos. Espera unos minutos y vuelve a intentarlo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Trop de tentatives. Attends quelques minutes et réessaie."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17881,6 +19889,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Gesamt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Total"
           }
         },
         "hu" : {
@@ -17935,6 +19949,12 @@
             "value" : "Verfolge deine Meditationspraxis gemeinsam mit deinen Freunden."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suis ta pratique de méditation avec tes amis."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -17985,6 +20005,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Vertrauenswürdige Umgebung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Environnement de confiance"
           }
         },
         "hu" : {
@@ -18043,6 +20069,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Reintentar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Réessayer"
           }
         },
         "hu" : {
@@ -18104,6 +20136,12 @@
             "value" : "Activar notificaciones"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activer les notifications"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18156,6 +20194,12 @@
             "value" : "Escribe el código que enviamos a %@."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saisis le code envoyé à %@."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18200,6 +20244,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Zum Bestätigen „%@“ eingeben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saisis « %@ » pour confirmer"
           }
         },
         "hu" : {
@@ -18254,6 +20304,12 @@
             "value" : "Rückgängig"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Annuler"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18306,6 +20362,12 @@
             "value" : "Freundschaft beenden"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Retirer des amis"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18356,6 +20418,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Freundschaft beenden?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Retirer des amis ?"
           }
         },
         "hu" : {
@@ -18416,6 +20484,12 @@
             "value" : "Usar mi correo en su lugar"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Utiliser plutôt un e-mail"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18460,6 +20534,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Standard verwenden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Utiliser celle par défaut"
           }
         },
         "hu" : {
@@ -18520,6 +20600,12 @@
             "value" : "Nombre de usuario"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nom d'utilisateur"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18561,6 +20647,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Version"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Version"
@@ -18624,6 +20716,12 @@
             "value" : "Te enviamos allí un enlace de acceso. Nadie más lo ve."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nous y envoyons un lien de connexion. Personne d'autre ne la voit."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18674,6 +20772,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Enviamos un enlace a %1$@. Ábrelo en este teléfono o escribe el código del correo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nous avons envoyé un lien à %@. Ouvre-le sur ce téléphone, ou saisis le code de l'e-mail."
           }
         },
         "hu" : {
@@ -18728,6 +20832,12 @@
             "value" : "Hola de nuevo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bon retour"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18772,6 +20882,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Was ist passiert?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Que s'est-il passé ?"
           }
         },
         "hu" : {
@@ -18832,6 +20948,12 @@
             "value" : "¿Cómo te llamamos?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Comment devons-nous t'appeler ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18884,6 +21006,12 @@
             "value" : "¿Cuál es tu correo?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quelle est ton adresse e-mail ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -18928,6 +21056,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Wann sollen wir dich erinnern?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quand veux-tu un rappel ?"
           }
         },
         "hu" : {
@@ -18982,6 +21116,12 @@
             "value" : "Wo stehst du bei %@?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Où en es-tu avec %@ ?"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19032,6 +21172,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Welche übst du täglich?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lesquelles pratiques-tu chaque jour ?"
           }
         },
         "hu" : {
@@ -19086,6 +21232,12 @@
             "value" : "Schreibe deinen Wiederherstellungscode auf"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Note ton code de récupération"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19136,6 +21288,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ja"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Oui"
           }
         },
         "hu" : {
@@ -19190,6 +21348,12 @@
             "value" : "Gestern"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hier"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19240,6 +21404,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Du"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toi"
           }
         },
         "hu" : {
@@ -19307,6 +21477,12 @@
             "value" : "Ya no sois amigos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vous n'êtes plus ami(e)s."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19360,6 +21536,12 @@
             "value" : "Puedes crear una más tarde en Ajustes"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu pourras en créer un plus tard dans les Paramètres"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19404,6 +21586,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ihr seht die Serien des anderen nicht mehr. Mit einem Freundschaftscode könnt ihr wieder Freunde werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vous ne verrez plus vos séries respectives. Un code d'amitié peut vous rendre de nouveau ami(e)s."
           }
         },
         "hu" : {
@@ -19458,6 +21646,12 @@
             "value" : "Um diese Zeit setzt du dich normalerweise zum Meditieren hin."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "D'habitude, tu t'installes à peu près à cette heure-ci."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19510,6 +21704,12 @@
             "value" : "Um diese Zeit setzt du dich normalerweise für %@ hin."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "D'habitude, tu t'installes pour %@ à peu près à cette heure-ci."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19560,6 +21760,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Deine Zählungen werden auf diesem Handy verschlüsselt, bevor sie es verlassen. Richte die Schlüssel auf deinem ersten Handy ein; auf einem neuen stellst du sie mit deinem Wiederherstellungscode wieder her."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes décomptes sont chiffrés sur ce téléphone avant d'en sortir. Configure les clés sur ton premier téléphone ; sur un nouveau, restaure-les avec ton code de récupération."
           }
         },
         "hu" : {
@@ -19620,6 +21826,12 @@
             "value" : "Tus cuentas se quedan en este teléfono, pero dejan de sincronizarse. Para volver a sincronizarlas, inicia sesión e introduce tu código de recuperación."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes décomptes restent sur ce téléphone mais ne sont plus synchronisés. Pour les synchroniser à nouveau, connecte-toi et saisis ton code de récupération."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19664,6 +21876,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Deine Daten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes données"
           }
         },
         "hu" : {
@@ -19718,6 +21936,12 @@
             "value" : "Deine Geräte"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes appareils"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19768,6 +21992,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Deine Freunde"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes amis"
           }
         },
         "hu" : {
@@ -19828,6 +22058,12 @@
             "value" : "Tu género"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ton genre"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -19872,6 +22108,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dein Name"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ton nom"
           }
         },
         "hu" : {
@@ -19924,6 +22166,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Deine eigene Übung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ta propre pratique"
           }
         },
         "hu" : {
@@ -19984,6 +22232,12 @@
             "value" : "Tu teléfono ofrece la clave de acceso que guardaste. ¿Sin clave de acceso en este teléfono? Te enviamos un enlace y un código por correo."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ton téléphone propose la clé d'accès que tu as enregistrée. Pas de clé d'accès sur ce téléphone ? Nous t'envoyons un lien et un code par e-mail."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20028,6 +22282,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dein Foto bleibt auf diesem Handy: Es wird weder synchronisiert noch gesichert."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ta photo reste sur ce téléphone : elle n'est ni synchronisée ni sauvegardée."
           }
         },
         "hu" : {
@@ -20080,6 +22340,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Deine Übungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes pratiques"
           }
         },
         "hu" : {
@@ -20211,6 +22477,40 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "Your streak of %lld days ends at midnight."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Ta série de %lld jour se termine à minuit."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Ta série de %lld jours se termine à minuit."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Ta série de %lld jours se termine à minuit."
                     }
                   }
                 }
@@ -20456,6 +22756,12 @@
             "value" : "Deine bisherige Serie zählt auf deinem eigenen Heute-Bildschirm. Freunde sehen immer nur die in der App erfassten Tage."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ta série jusqu'ici compte sur ton propre écran Aujourd'hui. Tes amis ne voient que les jours enregistrés dans l'app."
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20507,6 +22813,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "löschen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "supprimer"
           }
         },
         "hu" : {
@@ -20561,6 +22873,12 @@
             "value" : "erledigt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "fait"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20611,6 +22929,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "heute erledigt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "fait aujourd'hui"
           }
         },
         "hu" : {
@@ -20665,6 +22989,12 @@
             "value" : "endet %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "se termine %@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20715,6 +23045,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "endet um Mitternacht"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "se termine à minuit"
           }
         },
         "hu" : {
@@ -20769,6 +23105,12 @@
             "value" : "heute noch nicht"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "pas encore aujourd'hui"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20821,6 +23163,12 @@
             "value" : "von %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "sur %@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20871,6 +23219,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Runde %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tour %lld"
           }
         },
         "hu" : {
@@ -20931,6 +23285,12 @@
             "value" : "round %1$lld · %2$@ of %3$@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tour %1$lld · %2$@ sur %3$@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -20981,6 +23341,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "nur Serie"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "série seulement"
           }
         },
         "hu" : {
@@ -21035,6 +23401,12 @@
             "value" : "ihre eigene Übung"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "sa propre pratique"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -21085,6 +23457,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Die Kontodaten konnten nicht vom Server abgerufen werden; der Export enthält nur, was auf diesem Telefon liegt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les données de ton compte n'ont pas pu être récupérées sur le serveur ; l'export ne contient donc que ce qui se trouve sur ce téléphone."
           }
         },
         "hu" : {
