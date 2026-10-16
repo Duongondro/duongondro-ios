@@ -722,7 +722,6 @@ private struct CountsStep: View {
             } control: {
                 SegmentedChoice(options: [(true, String(localized: "Today", bundle: .appLanguage, locale: .appLanguage)), (false, String(localized: "Yesterday", bundle: .appLanguage, locale: .appLanguage))],
                                 selection: p.lastWasToday)
-                    .layoutPriority(1)
             }
         }
         .padding(Theme.Space.l)

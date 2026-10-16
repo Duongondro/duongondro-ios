@@ -13,8 +13,11 @@ struct FittingRow<Label: View, Control: View>: View {
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
+            // The label keeps its one-line width here, so this branch is taken only
+            // when it really fits: a greedy control can never squeeze it to nothing.
             HStack(spacing: spacing) {
                 label()
+                    .fixedSize()
                 Spacer(minLength: spacing)
                 control()
             }
