@@ -154,11 +154,14 @@ private struct PasskeyRow: View {
         HStack(spacing: Theme.Space.s) {
             VStack(alignment: .leading, spacing: Theme.Space.xs) {
                 Text(verbatim: PasskeysView.name(passkey)).foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(verbatim: used).font(.subheadline).foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
                 if passkey.canUnlock {
                     Label("Unlocks your counts on a new phone", systemImage: "key")
                         .font(.footnote)
                         .foregroundStyle(Theme.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(.vertical, Theme.Space.s)
@@ -233,7 +236,8 @@ struct PasskeyUnlockCard: View {
                     .foregroundStyle(Theme.accent)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            HStack(spacing: Theme.Space.l) {
+            // One under the other when both actions do not fit on a line.
+            FittingStack(spacing: Theme.Space.l) {
                 if account.offersPasskeyUnlock {
                     action("Use my passkey") { await useMyPasskey() }
                 } else {

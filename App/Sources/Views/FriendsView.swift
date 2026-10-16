@@ -46,6 +46,7 @@ struct FriendsView: View {
                                     Text(verbatim: "\(row.name) · \(Self.practiceName(row.practice))")
                                         .font(.subheadline.weight(.semibold))
                                         .foregroundStyle(Theme.ink)
+                                        .fixedSize(horizontal: false, vertical: true)
                                     Spacer(minLength: Theme.Space.s)
                                     Label {
                                         Text(verbatim: "\(row.current)").font(.subheadline.weight(.bold)).foregroundStyle(Theme.ink)
@@ -53,7 +54,9 @@ struct FriendsView: View {
                                         Image(systemName: "flame.fill").foregroundStyle(Theme.flame)
                                     }
                                     .labelStyle(.titleAndIcon)
+                                    .fixedSize()
                                 }
+                                .padding(.vertical, Theme.Space.xs)
                                 .frame(minHeight: Theme.Size.minTap)
                             }
                         }
@@ -70,19 +73,23 @@ struct FriendsView: View {
                             ForEach(account.friends) { f in
                                 NavigationLink { FriendDetailView(friendID: f.userID) } label: {
                                     HStack(spacing: Theme.Space.m) {
-                                        Text(verbatim: f.shownName)
-                                            .foregroundStyle(Theme.ink)
-                                        Spacer(minLength: Theme.Space.s)
-                                        if f.keyChanged {
-                                            Label("Key changed", systemImage: "exclamationmark.triangle.fill")
-                                                .font(.footnote.weight(.semibold))
-                                                .foregroundStyle(Theme.destructive)
+                                        // "Clé modifiée" goes under a long name rather than beside it.
+                                        FittingRow(spacing: Theme.Space.m) {
+                                            Text(verbatim: f.shownName)
+                                                .foregroundStyle(Theme.ink)
+                                        } control: {
+                                            if f.keyChanged {
+                                                Label("Key changed", systemImage: "exclamationmark.triangle.fill")
+                                                    .font(.footnote.weight(.semibold))
+                                                    .foregroundStyle(Theme.destructive)
+                                            }
                                         }
                                         Image(systemName: "chevron.right")
                                             .font(.footnote.weight(.bold))
                                             .foregroundStyle(Theme.muted)
                                             .accessibilityHidden(true)
                                     }
+                                    .padding(.vertical, Theme.Space.s)
                                     .frame(minHeight: Theme.Size.minTap)
                                     .contentShape(Rectangle())
                                 }
@@ -292,12 +299,16 @@ private struct InviteCard: View {
     let invite: () -> Void
 
     var body: some View {
-        HStack(spacing: Theme.Space.m) {
+        // The button goes under the text when the two do not fit side by side
+        // ("Partager un code d'amitié" beside "Ajouter un(e) ami(e)").
+        FittingRow(spacing: Theme.Space.m) {
             VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                 Text("Share a friendship code").font(.body.weight(.bold)).foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text("Link or QR code, valid 7 days").font(.footnote).foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer(minLength: Theme.Space.s)
+        } control: {
             Button("Add friend", action: invite)
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(Theme.accent)

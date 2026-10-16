@@ -149,12 +149,13 @@ struct PracticeView: View {
             if let rounds, let target = practice.practice.target {
                 Bar(fraction: Double(rounds.inRound) / Double(target), height: Theme.Size.barThick)
             }
-            HStack {
+            // The streak goes under today's total when the two do not fit on a line.
+            FittingRow {
                 Text(todayTotal >= mala
                      ? String(localized: "Today \(todayTotal.grouped) · \(todayTotal / mala) malas", bundle: .appLanguage, locale: .appLanguage)
                      : String(localized: "Today \(todayTotal.grouped)", bundle: .appLanguage, locale: .appLanguage))
                     .foregroundStyle(Theme.muted)
-                Spacer()
+            } control: {
                 StreakBadge(streak: streak)
             }
             .font(.subheadline)

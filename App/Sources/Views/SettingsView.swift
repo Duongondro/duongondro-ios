@@ -51,19 +51,25 @@ struct SettingsView: View {
 struct SettingsRow: View {
     let title: LocalizedStringKey
     var detail: Text?
+    var detailColor: Color
     var chevron = false
 
-    init(_ title: LocalizedStringKey, detail: Text? = nil, chevron: Bool = false) {
+    init(_ title: LocalizedStringKey, detail: Text? = nil, detailColor: Color = Theme.muted, chevron: Bool = false) {
         self.title = title
         self.detail = detail
+        self.detailColor = detailColor
         self.chevron = chevron
     }
 
     var body: some View {
         HStack(spacing: Theme.Space.s) {
-            Text(title).foregroundStyle(Theme.ink)
-            Spacer(minLength: Theme.Space.s)
-            if let detail { detail.foregroundStyle(Theme.muted) }
+            // The value goes under the title when the two do not fit on one line
+            // ("Code de récupération · En créer un nouveau", a long email).
+            FittingRow {
+                Text(title).foregroundStyle(Theme.ink)
+            } control: {
+                if let detail { detail.foregroundStyle(detailColor) }
+            }
             if chevron {
                 Image(systemName: "chevron.right")
                     .font(.footnote.weight(.bold))
@@ -124,9 +130,9 @@ private struct GeneralSection: View {
                 SettingsRow("Language", detail: language.nativeName.map { Text(verbatim: $0) } ?? Text("System"), chevron: true)
             }
             VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                HStack {
+                FittingRow {
                     Text("Gender").foregroundStyle(Theme.ink)
-                    Spacer(minLength: Theme.Space.s)
+                } control: {
                     Picker("Gender", selection: Binding(get: { gender }, set: { v in
                         gender = v
                         Task { await account.setGender(Gender(rawValue: v)) }
@@ -138,6 +144,7 @@ private struct GeneralSection: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.menu)
+                    .fixedSize()
                     .tint(Theme.accent)
                 }
                 Text("Optional. Some languages use different forms for men and women.")
@@ -397,12 +404,11 @@ private struct MalaSizeRows: View {
 
     var body: some View {
         Group {
-            HStack {
-                // Wraps rather than running into the row below in longer languages
-                // ("Un mala compte pour"); the picker keeps its own width.
+            // The picker goes under the label when both do not fit on one line
+            // ("Un mala compte pour · Personnalisé…"); it always keeps its own width.
+            FittingRow {
                 Text("A mala counts as").foregroundStyle(Theme.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                Spacer(minLength: Theme.Space.s)
+            } control: {
                 Picker("A mala counts as", selection: Binding(get: { choice }, set: choose)) {
                     if let d = defaultSize { Text("Default (\(d))").tag(Choice.inherited) }
                     Text(verbatim: "108").tag(Choice.standard)
@@ -416,10 +422,9 @@ private struct MalaSizeRows: View {
             .padding(.vertical, Theme.Space.s)
             .frame(minHeight: Theme.Size.minTap)
             if custom {
-                HStack(spacing: Theme.Space.m) {
+                FittingRow(spacing: Theme.Space.m) {
                     Text("Custom value").foregroundStyle(Theme.ink)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer(minLength: Theme.Space.s)
+                } control: {
                     TextField("108", text: $text)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)

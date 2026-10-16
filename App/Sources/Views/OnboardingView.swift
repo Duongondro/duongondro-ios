@@ -713,12 +713,16 @@ private struct CountsStep: View {
                 }
                 CountField(label: "Streak, days", value: p.streak)
             }
-            HStack(spacing: Theme.Space.s) {
+            // The choice goes under the label when "Dernière pratique" and
+            // "Aujourd'hui | Hier" do not fit on one line.
+            FittingRow {
                 Text("Last practised")
                     .font(.system(size: 14))
                     .foregroundStyle(Theme.soft)
+            } control: {
                 SegmentedChoice(options: [(true, String(localized: "Today", bundle: .appLanguage, locale: .appLanguage)), (false, String(localized: "Yesterday", bundle: .appLanguage, locale: .appLanguage))],
                                 selection: p.lastWasToday)
+                    .layoutPriority(1)
             }
         }
         .padding(Theme.Space.l)
@@ -760,10 +764,11 @@ struct NumberField: View {
     @Binding var value: Int
 
     var body: some View {
-        HStack(spacing: Theme.Space.m) {
+        // The field goes under the title when both do not fit on one line
+        // ("Meilleure série (facultatif)").
+        FittingRow(spacing: Theme.Space.m) {
             Text(title)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: Theme.Space.s)
+        } control: {
             TextField("0", text: Binding(
                 get: { value == 0 ? "" : value.grouped },
                 set: { value = Int($0.filter { $0.isASCII && $0.isNumber }.prefix(9)) ?? 0 }))
