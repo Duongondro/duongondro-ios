@@ -171,7 +171,7 @@ final class PushTests: XCTestCase {
             .deletingLastPathComponent().deletingLastPathComponent()
     }
 
-    static let languages = ["en", "de", "ru", "uk", "pl", "cs", "sk", "hu", "es"]
+    static let languages = ["en", "de", "ru", "uk", "pl", "cs", "sk", "hu", "es", "fr"]
 
     /// Every key, the server's and the phone's own, has a string in every language
     /// with exactly the arguments it uses, positional (%1$@ …), as the system formats

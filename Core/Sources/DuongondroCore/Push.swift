@@ -2,7 +2,7 @@ import Foundation
 
 /// The server's push loc-keys (duongondro-api internal/service/nudges.go), and the
 /// phone's own variants of them (design: Social › Nudges, Localisation › Localised
-/// pushes). Every key is a string in Localizable.xcstrings in all nine languages: the
+/// pushes). Every key is a string in Localizable.xcstrings in all ten languages: the
 /// system renders the server's keys from there when the notification service
 /// extension does not run, so their strings never name the practice (the server sends
 /// its id, and Discreet notifications may be on): they leave that argument unused.
