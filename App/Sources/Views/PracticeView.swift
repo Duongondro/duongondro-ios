@@ -338,6 +338,7 @@ private struct CustomAmountSheet: View {
                     .focused($focused)
             }
             .navigationTitle("Add another amount")
+            .numberPadDone()
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
