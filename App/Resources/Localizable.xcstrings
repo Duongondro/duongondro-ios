@@ -10630,7 +10630,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Niech klucz dostępu odblokowuje twoje liczby na nowym telefonie"
+            "value" : "Niech klucz dostępu odblokowuje Twoje liczby na nowym telefonie"
           }
         },
         "cs" : {
@@ -15456,7 +15456,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jeśli wymienisz też klucz odblokowania: inne telefony zostaną wylogowane, a ten klucz dostępu nie odblokuje już twoich liczb na nowym telefonie. Telefon, który już odblokował, zachowa to, co ma. Pozostałe klucze dostępu trzeba potem skonfigurować ponownie."
+            "value" : "Jeśli wymienisz też klucz odblokowania: inne telefony zostaną wylogowane, a ten klucz dostępu nie odblokuje już Twoich liczb na nowym telefonie. Telefon, który już odblokował, zachowa to, co ma. Pozostałe klucze dostępu trzeba potem skonfigurować ponownie."
           }
         },
         "cs" : {
@@ -15926,7 +15926,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Logowanie nim na nowym telefonie przywróci wtedy twoje liczby bez kodu odzyskiwania."
+            "value" : "Logowanie nim na nowym telefonie przywróci wtedy Twoje liczby bez kodu odzyskiwania."
           }
         },
         "cs" : {
@@ -20151,7 +20151,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "To jedyny sposób logowania do twojego konta, więc zostaje. Najpierw dodaj inny klucz dostępu albo e-mail."
+            "value" : "To jedyny sposób logowania do Twojego konta, więc zostaje. Najpierw dodaj inny klucz dostępu albo e-mail."
           }
         },
         "cs" : {
@@ -20267,7 +20267,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ten klucz dostępu nie odblokuje twoich liczb. Zachowaj kod odzyskiwania albo dodaj nowy klucz w Kluczach dostępu."
+            "value" : "Ten klucz dostępu nie odblokuje Twoich liczb. Zachowaj kod odzyskiwania albo dodaj nowy klucz w Kluczach dostępu."
           }
         },
         "cs" : {
@@ -21735,7 +21735,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Odblokowuje twoje liczby na nowym telefonie"
+            "value" : "Odblokowuje Twoje liczby na nowym telefonie"
           }
         },
         "cs" : {
