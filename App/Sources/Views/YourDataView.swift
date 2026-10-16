@@ -6,25 +6,24 @@ import DuongondroStore
 struct YourDataView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var account: AccountModel
-    @State private var exported: ExportedFile?
-    @State private var exportError: String?
     @State private var exporting = false
-    /// The export went out without the server's part.
-    @State private var serverMissing = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
-                CardSection(footer: serverMissing
-                            ? LocalizedStringKey("Your account data could not be fetched from the server, so the export holds only what is on this phone.")
-                            : LocalizedStringKey("One ZIP with every practice, session and streak, readable without this app.")) {
-                    Button { Task { await export() } } label: {
+                CardSection {
+                    Button { exporting = true } label: {
                         Label("Export all my data", systemImage: "square.and.arrow.up")
                             .foregroundStyle(Theme.accent)
                             .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
                     }
-                    .disabled(exporting)
                 }
+                Text("A PDF to read or print, tables for a spreadsheet, or everything as JSON, readable without this app.", tableName: "Export")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .padding(.horizontal, Theme.Space.l)
+                    .padding(.top, -Theme.Space.s)
+                    .fixedSize(horizontal: false, vertical: true)
                 // With an account, the server and the person's other phones lose it too.
                 CardSection(footer: account.status == .none
                             ? LocalizedStringKey("Removes all your data from this phone. It cannot be undone.")
@@ -50,41 +49,7 @@ struct YourDataView: View {
         .background(Theme.ground.ignoresSafeArea())
         .navigationTitle("Your data")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(item: $exported) { file in ShareSheet(items: [file.url]) }
-        .alert("Export failed", isPresented: Binding(get: { exportError != nil }, set: { if !$0 { exportError = nil } })) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(exportError ?? "")
-        }
-    }
-
-    private func export() async {
-        exporting = true
-        defer { exporting = false }
-        serverMissing = false
-        // The export holds final sessions only: the open undo window closes first.
-        // The published snapshot updates asynchronously, so read the database directly.
-        model.finalisePending()
-        // With a ready account the server's rows and sealed sessions come first;
-        // offline or failed, the phone's part is exported and the screen says so.
-        var server: DataExport.Server?
-        do {
-            server = try await account.serverExport()
-        } catch {
-            serverMissing = true
-        }
-        // An account that is signed out or still without keys cannot be asked either.
-        let accountWithoutServer = server == nil && account.status != .none
-        if accountWithoutServer { serverMissing = true }
-        do {
-            let zip = try DataExport.zip(snapshot: try model.database.snapshot(), server: server, covers: Covers.all(),
-                                         knownSessionIDs: try model.database.allSessionIDs(),
-                                         accountWithoutServer: accountWithoutServer,
-                                         appVersion: BuildIdentity.current.version)
-            exported = ExportedFile(url: try ExportFile.write(zip, name: DataExport.fileName()))
-        } catch {
-            exportError = error.localizedDescription
-        }
+        .sheet(isPresented: $exporting) { ExportSheet() }
     }
 }
 
@@ -154,19 +119,4 @@ private struct DeleteEverythingView: View {
             Text(failure ?? "")
         }
     }
-}
-
-private struct ShareSheet: UIViewControllerRepresentable {
-    let items: [Any]
-
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
-    }
-
-    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
-}
-
-private struct ExportedFile: Identifiable {
-    let url: URL
-    var id: URL { url }
 }
