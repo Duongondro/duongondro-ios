@@ -107,6 +107,34 @@ public enum Statements {
                       deadline: date(raw.deadline), seq: raw.seq)
     }
 
+    // MARK: Passkey unlock
+
+    /// The user key U: a new id for every key, its public point, and a version
+    /// that starts at 1.
+    public struct UserKey: Equatable, Sendable {
+        public let id: UUID
+        public let publicKey: Data
+        public let user: UUID
+        public let version: Int
+        public init(id: UUID, publicKey: Data, user: UUID, version: Int) {
+            self.id = id
+            self.publicKey = publicKey
+            self.user = user
+            self.version = version
+        }
+    }
+
+    public static func userKey(_ k: UserKey) -> Data {
+        Data(#"{"id":"\#(k.id.uuidString.lowercased())","pk":"\#(base64url(k.publicKey))","user":"\#(k.user.uuidString.lowercased())","version":\#(k.version)}"#.utf8)
+    }
+
+    public static func parseUserKey(_ payload: Data) -> UserKey? {
+        struct Raw: Decodable { let id: String; let pk: String; let user: String; let version: Int }
+        guard let raw = try? JSONDecoder().decode(Raw.self, from: payload), let id = UUID(uuidString: raw.id),
+              let pk = fromBase64url(raw.pk), let user = UUID(uuidString: raw.user) else { return nil }
+        return UserKey(id: id, publicKey: pk, user: user, version: raw.version)
+    }
+
     static func date(_ millis: Int64) -> Date { Date(timeIntervalSince1970: Double(millis) / 1000) }
 
     /// To the nearest millisecond: a Date read back from the database or parsed from

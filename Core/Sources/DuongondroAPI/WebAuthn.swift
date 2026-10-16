@@ -82,6 +82,16 @@ public enum WebAuthn {
         ])
     }
 
+    /// The credential with `clientExtensionResults` emptied: a PRF output, or
+    /// anything derived from it, must never be posted (docs/crypto.md › Passkey
+    /// unlock). The PRF input is made on the phone; the options' `extensions` are
+    /// never read.
+    public static func withoutExtensionResults(_ credential: JSONValue) -> JSONValue {
+        guard case .object(var o) = credential else { return credential }
+        o["clientExtensionResults"] = .object([:])
+        return .object(o)
+    }
+
     /// base64url without padding, as WebAuthn writes byte strings.
     public static func base64URL(_ data: Data) -> String {
         data.base64EncodedString()

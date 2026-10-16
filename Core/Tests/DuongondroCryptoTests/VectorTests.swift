@@ -30,6 +30,19 @@ final class VectorTests: XCTestCase {
         let statements: [Statement]
         let invite: Invite
         let recovery: Recovery
+        let prf: Prf
+    }
+    struct Prf: Decodable {
+        struct Inputs: Decodable {
+            let credentialId, identityPublic, prfOutput, userKeyId, userKeyPrivate, userKeyPublic: String
+            let keyVersion: UInt32
+        }
+        struct Wrap: Decodable { let name, aad, box, epk, recipient, signature: String; let kind: UInt8 }
+        let inputs: Inputs
+        let prfInput, prfKey, aad, box, boxSignature: String
+        struct UserKeyStatement: Decodable { let type, payload, signature: String }
+        let statement: UserKeyStatement
+        let wraps: [Wrap]
     }
 
     var v: Vectors!
@@ -158,6 +171,69 @@ final class VectorTests: XCTestCase {
                                              signature: hex(v.recovery.practiceKeyBoxSignature), identity: identity.publicKey))
         XCTAssertFalse(E2EE.verifyRecoveryBox(box, user: user, kind: .identitySeed,
                                               signature: hex(v.recovery.practiceKeyBoxSignature), identity: identity.publicKey))
+    }
+
+    func testPasskeyBox() throws {
+        let p = v.prf
+        XCTAssertEqual(E2EE.prfInput, hex(p.prfInput))
+        let key = E2EE.prfKey(output: hex(p.inputs.prfOutput), user: user)
+        XCTAssertEqual(key.data, hex(p.prfKey))
+        let uid = uuid(p.inputs.userKeyId)
+        let ipk = hex(p.inputs.identityPublic)
+        XCTAssertEqual(ipk, hex(v.inputs.identityPublic))
+        let aad = E2EE.prfAAD(user: user, identityPublicKey: ipk, userKey: uid, credentialID: hex(p.inputs.credentialId))
+        XCTAssertEqual(aad, hex(p.aad))
+        let scalar = hex(p.inputs.userKeyPrivate)
+        let box = try E2EE.sealPasskeyBox(scalar, key: key, aad: aad, nonce: hex(v.inputs.nonce))
+        XCTAssertEqual(box, hex(p.box))
+        XCTAssertEqual(try E2EE.openPasskeyBox(box, key: key, aad: aad), scalar)
+        // Another passkey's credential id, or another U, does not open it.
+        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, identityPublicKey: ipk, userKey: uid, credentialID: Data([1]))))
+        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, identityPublicKey: ipk, userKey: user, credentialID: hex(p.inputs.credentialId))))
+        // Under another identity key (a server's own), it does not open.
+        let other = Curve25519.Signing.PrivateKey().publicKey.rawRepresentation
+        XCTAssertThrowsError(try E2EE.openPasskeyBox(box, key: key, aad: E2EE.prfAAD(user: user, identityPublicKey: other, userKey: uid, credentialID: hex(p.inputs.credentialId))))
+
+        let identity = try Curve25519.Signing.PrivateKey(rawRepresentation: hex(v.inputs.identitySeed))
+        XCTAssertTrue(E2EE.verifyPasskeyBox(box, aad: aad, signature: hex(p.boxSignature), identity: identity.publicKey))
+        XCTAssertFalse(E2EE.verifyPasskeyBox(box, aad: hex(v.recovery.aad), signature: hex(p.boxSignature), identity: identity.publicKey))
+        let ours = try E2EE.signPasskeyBox(box, aad: aad, identity: identity)
+        XCTAssertTrue(E2EE.verifyPasskeyBox(box, aad: aad, signature: ours, identity: identity.publicKey))
+
+        // U from its scalar matches the signed public key, and nothing else.
+        let u = try E2EE.userKey(scalar: scalar, expectedPublicKey: hex(p.inputs.userKeyPublic))
+        XCTAssertEqual(u.publicKey.x963Representation, hex(p.inputs.userKeyPublic))
+        XCTAssertThrowsError(try E2EE.userKey(scalar: scalar, expectedPublicKey: hex(v.inputs.recipientPublic)))
+
+        // The statement's signature verifies over the payload as received.
+        XCTAssertTrue(E2EE.verifyStatement(type: p.statement.type, payload: Data(p.statement.payload.utf8),
+                                           signature: hex(p.statement.signature), identity: identity.publicKey))
+    }
+
+    func testWrapsToTheUserKey() throws {
+        let p = v.prf
+        let identity = try Curve25519.Signing.PrivateKey(rawRepresentation: hex(v.inputs.identitySeed))
+        let ephemeral = try P256.KeyAgreement.PrivateKey(rawRepresentation: hex(v.inputs.ephemeralPrivate))
+        let u = try P256.KeyAgreement.PrivateKey(rawRepresentation: hex(p.inputs.userKeyPrivate))
+        let device = try P256.KeyAgreement.PrivateKey(rawRepresentation: hex(v.inputs.recipientPrivate))
+        let scalar = hex(p.inputs.userKeyPrivate)
+        XCTAssertEqual(p.wraps.count, 3)
+        for w in p.wraps {
+            let kind = try XCTUnwrap(E2EE.WrapKind(rawValue: w.kind))
+            // Kinds 1 and 2 go to U (its id in the device's place); kind 4 carries
+            // U's scalar to a device, at U's version.
+            let recipient: P256.KeyAgreement.PrivateKey = kind == .userKey ? device : u
+            let secret: Data = [.practiceKey: hex(v.inputs.practiceKey), .identitySeed: hex(v.inputs.identitySeed),
+                                .userKey: scalar][kind]!
+            let aad = E2EE.wrapAAD(user: user, keyVersion: p.inputs.keyVersion, device: uuid(w.recipient), kind: kind)
+            XCTAssertEqual(aad, hex(w.aad), w.name)
+            let wrapped = try E2EE.wrap(secret, to: recipient.publicKey, aad: aad, ephemeral: ephemeral, nonce: hex(v.inputs.nonce))
+            XCTAssertEqual(wrapped.epk, hex(w.epk), w.name)
+            XCTAssertEqual(wrapped.box, hex(w.box), w.name)
+            XCTAssertEqual(try E2EE.unwrap(wrapped, with: recipient, aad: aad), secret, w.name)
+            let rpk = recipient.publicKey.x963Representation
+            XCTAssertTrue(E2EE.verifyWrap(wrapped, aad: aad, recipientPk: rpk, signature: hex(w.signature), identity: identity.publicKey), w.name)
+        }
     }
 
     func testTagComparisonIsExact() {

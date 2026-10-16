@@ -115,6 +115,12 @@ public struct APIClient: Sendable {
 
     /// The response body of a successful call, or the error its status means.
     func perform<B: Encodable>(_ method: String, _ path: String, query: [URLQueryItem], body: B?) async throws -> Data {
+        let (status, data) = try await exchange(method, path, query: query, body: body)
+        return try Self.check(status, data)
+    }
+
+    /// The status and body as they came, for a caller that reads an error's body.
+    func exchange<B: Encodable>(_ method: String, _ path: String, query: [URLQueryItem], body: B?) async throws -> (Int, Data) {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
         if !query.isEmpty { components.queryItems = query }
         var req = URLRequest(url: components.url!)
@@ -126,21 +132,25 @@ public struct APIClient: Sendable {
             req.httpBody = try Self.encoder.encode(body)
         }
         let (data, response) = try await session.data(for: req)
-        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        return ((response as? HTTPURLResponse)?.statusCode ?? 0, data)
+    }
+
+    /// The body of a successful answer, or the error its status means.
+    static func check(_ status: Int, _ data: Data) throws -> Data {
         switch status {
         case 200..<300: return data
-        case 400: throw APIError.badRequest(Self.message(data))
+        case 400: throw APIError.badRequest(message(data))
         case 401: throw APIError.unauthorized
-        case 403: throw APIError.forbidden(Self.message(data))
+        case 403: throw APIError.forbidden(message(data))
         case 404: throw APIError.notFound
-        case 429: throw APIError.tooManyRequests(Self.message(data))
+        case 429: throw APIError.tooManyRequests(message(data))
         case 422:
-            if let old = try? Self.decoder.decode(OldKeyError.self, from: data) {
+            if let old = try? decoder.decode(OldKeyError.self, from: data) {
                 throw APIError.oldKey(currentKeyVersion: old.currentKeyVersion)
             }
-            throw APIError.status(status, Self.message(data))
-        case 409: throw APIError.conflict(Self.message(data))
-        default: throw APIError.status(status, Self.message(data))
+            throw APIError.status(status, message(data))
+        case 409: throw APIError.conflict(message(data))
+        default: throw APIError.status(status, message(data))
         }
     }
 
@@ -309,9 +319,12 @@ public struct RotationWrap: Codable, Sendable {
 public struct KeyRotation: Codable, Sendable {
     public let newVersion: Int
     public let wraps: [RotationWrap]
-    public init(newVersion: Int, wraps: [RotationWrap]) {
+    /// The new key wrapped to U, required while U holds the current one.
+    public let userKeyWrap: UserKeyWrapInput?
+    public init(newVersion: Int, wraps: [RotationWrap], userKeyWrap: UserKeyWrapInput? = nil) {
         self.newVersion = newVersion
         self.wraps = wraps
+        self.userKeyWrap = userKeyWrap
     }
 }
 

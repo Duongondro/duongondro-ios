@@ -18,6 +18,10 @@ public enum E2EE {
     public static let labelInvitePin = "duongondro/v1/invite-pin"
     public static let labelRecovery = "duongondro/v1/recovery"
     public static let labelRecoverySig = "duongondro/v1/recovery-sig"
+    /// The PRF input every passkey ceremony asks with; the phone fixes it, never the server.
+    public static let labelPrf = "duongondro/v1/prf"
+    public static let labelPrfWrap = "duongondro/v1/prf-wrap"
+    public static let labelPrfSig = "duongondro/v1/prf-sig"
     static let statementPrefix = "duongondro/v1/"
 
     public static let keySize = 32
@@ -31,9 +35,10 @@ public enum E2EE {
         case open, padding, size, signature, tag
     }
 
-    /// What a wrap carries: the practice key, the identity seed, or a share key.
+    /// What a wrap carries: the practice key, the identity seed, a share key, or
+    /// the user key U's private scalar (to another of the account's phones).
     public enum WrapKind: UInt8, Sendable {
-        case practiceKey = 1, identitySeed = 2, shareKey = 3
+        case practiceKey = 1, identitySeed = 2, shareKey = 3, userKey = 4
     }
 
     // MARK: Building blocks
@@ -233,6 +238,57 @@ public enum E2EE {
     public static func verifyRecoveryBox(_ box: Data, user: UUID, kind: WrapKind, signature: Data,
                                          identity: Curve25519.Signing.PublicKey) -> Bool {
         identity.isValidSignature(signature, for: recoveryBoxMessage(user: user, kind: kind, box: box))
+    }
+
+    // MARK: Passkey unlock (PRF)
+
+    /// The WebAuthn-level PRF input (`eval.first`): the 17 bytes of the label. The
+    /// platform hashes it into the authenticator's salt.
+    public static var prfInput: Data { Data(labelPrf.utf8) }
+
+    public static func prfKey(output: Data, user: UUID) -> SymmetricKey {
+        derive(output, salt: user.bytes, info: labelPrfWrap)
+    }
+
+    /// uuid(user) ‖ identityPk ‖ uuid(U.id) ‖ credentialId: the credential id last,
+    /// so its length needs no prefix. The identity public key (32 bytes) is bound
+    /// in because nothing else on a new phone authenticates it: a box opens only
+    /// under the identity key the phone that sealed it saw.
+    public static func prfAAD(user: UUID, identityPublicKey: Data, userKey: UUID, credentialID: Data) -> Data {
+        user.bytes + identityPublicKey + userKey.bytes + credentialID
+    }
+
+    /// U's 32-byte scalar sealed under a passkey's PRF key: the passkey's box.
+    public static func sealPasskeyBox(_ scalar: Data, key: SymmetricKey, aad: Data, nonce: Data? = nil) throws -> Data {
+        guard scalar.count == keySize else { throw Failure.size }
+        return try seal(key, scalar, aad: aad, nonce: nonce)
+    }
+
+    public static func openPasskeyBox(_ box: Data, key: SymmetricKey, aad: Data) throws -> Data {
+        guard box.count == wrappedBoxSize else { throw Failure.size }
+        return try open(key, box, aad: aad)
+    }
+
+    public static func passkeyBoxMessage(aad: Data, box: Data) -> Data {
+        Data(labelPrfSig.utf8) + aad + box
+    }
+
+    public static func signPasskeyBox(_ box: Data, aad: Data, identity: Curve25519.Signing.PrivateKey) throws -> Data {
+        try identity.signature(for: passkeyBoxMessage(aad: aad, box: box))
+    }
+
+    public static func verifyPasskeyBox(_ box: Data, aad: Data, signature: Data, identity: Curve25519.Signing.PublicKey) -> Bool {
+        identity.isValidSignature(signature, for: passkeyBoxMessage(aad: aad, box: box))
+    }
+
+    /// U from its scalar, checked against the public key its statement signs: a
+    /// box that opens to another key is refused.
+    public static func userKey(scalar: Data, expectedPublicKey: Data) throws -> P256.KeyAgreement.PrivateKey {
+        guard scalar.count == keySize, let key = try? P256.KeyAgreement.PrivateKey(rawRepresentation: scalar) else {
+            throw Failure.size
+        }
+        guard key.publicKey.x963Representation == expectedPublicKey else { throw Failure.signature }
+        return key
     }
 }
 

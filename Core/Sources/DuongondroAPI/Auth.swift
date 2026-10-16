@@ -92,6 +92,12 @@ extension APIClient {
 
     // MARK: The session and the profile
 
+    /// Signs out every other session of this account ("sign out everywhere else");
+    /// the phones signed out stop receiving pushes.
+    public func signOutOthers() async throws {
+        let _: Empty = try await request("DELETE", "api/me/sessions", query: [], body: Optional<Empty>.none)
+    }
+
     /// Ends this session; its token stops working.
     public func signOut() async throws {
         let _: Empty = try await request("DELETE", "api/me/session", query: [], body: Optional<Empty>.none)
@@ -250,7 +256,12 @@ struct PasskeySignUp: Encodable {
     }
 }
 
-struct PasskeyResponse: Encodable { let credential: JSONValue }
+/// A finish call's body. The PRF output never reaches the server (api#26): the
+/// credential goes up with empty client extension results, whatever it held.
+struct PasskeyResponse: Encodable {
+    let credential: JSONValue
+    init(credential: JSONValue) { self.credential = WebAuthn.withoutExtensionResults(credential) }
+}
 
 public struct SignInResult: Codable, Equatable, Sendable {
     /// The bearer token.

@@ -22,6 +22,8 @@ public final class Account: @unchecked Sendable {
     let deviceKeys: DeviceKeys
     let database: AppDatabase
     let now: () -> Date
+    /// One user-key operation at a time (create, share, box, replace).
+    let userKeyGate = SerialGate()
     /// True once set-up or restore found a Secure Enclave that refused to make a key.
     public private(set) var deviceKeyFellBack = false
 
@@ -46,6 +48,11 @@ public final class Account: @unchecked Sendable {
         /// A box, wrap or list did not verify against the account's identity key.
         case notAuthentic
         case missingSecret
+        /// The server kept the old U: this phone does not hold the current
+        /// practice key, or another replacement landed first.
+        case userKeyNotReplaced
+        /// The passkey is the account's last way to sign in, so it stays (409).
+        case lastWayToSignIn
     }
 
     // MARK: Identity
@@ -165,6 +172,7 @@ public final class Account: @unchecked Sendable {
                 for name in [SecretName.identitySeed, SecretName.practiceKey(me.keyVersion), SecretName.pendingRecovery] {
                     try secrets.delete(name)
                 }
+                try Self.forgetUserKey(secrets)
                 try secrets.write(SecretName.setUpUser, Data(me.id.uuidString.lowercased().utf8))
             }
             if let seed = try secrets.read(SecretName.identitySeed) {
@@ -227,14 +235,23 @@ public final class Account: @unchecked Sendable {
             guard (try? E2EE.openSession(sealKey: sealKey, session: sample.id, user: me.id, keyVersion: UInt32(version),
                                          sealed: sample.sealed!)) != nil else { throw Failure.recoveryOutdated }
         }
-        try secrets.write(SecretName.identitySeed, seed)
+        try await enrol(user: me.id, identity: identity, identityPublic: identityPublic, practiceKey: practiceKey, version: version)
+    }
+
+    /// A new phone that has opened the keys (by the recovery code or a passkey):
+    /// keeps them, registers this device, lists it, and wraps the keys to itself.
+    func enrol(user: UUID, identity: Curve25519.Signing.PrivateKey, identityPublic: Curve25519.Signing.PublicKey,
+               practiceKey: Data, version: Int) async throws {
+        // A U left here by another account is never this one's.
+        try Self.forgetUserKey(secrets)
+        try secrets.write(SecretName.identitySeed, identity.rawRepresentation)
         try secrets.write(SecretName.practiceKey(version), practiceKey)
 
         let device = try await registerThisDevice()
         let previous = try await api.deviceList()
-        try await publishDeviceList(adding: device, user: me.id, identity: identity, previous: previous, verifyWith: identityPublic)
-        try await wrapSecrets(to: device, user: me.id, keyVersion: version, identity: identity, practiceKey: practiceKey)
-        try database.saveSyncState(SyncState(userID: me.id, keyVersion: version))
+        try await publishDeviceList(adding: device, user: user, identity: identity, previous: previous, verifyWith: identityPublic)
+        try await wrapSecrets(to: device, user: user, keyVersion: version, identity: identity, practiceKey: practiceKey)
+        try database.saveSyncState(SyncState(userID: user, keyVersion: version))
         try database.markAllDirty()
     }
 
@@ -337,7 +354,8 @@ public final class Account: @unchecked Sendable {
                 newest = max(newest, w.keyVersion)
                 continue
             }
-            let aad = E2EE.wrapAAD(user: user, keyVersion: UInt32(w.keyVersion), device: deviceID, kind: .practiceKey)
+            guard let version = UInt32(exactly: w.keyVersion) else { continue }
+            let aad = E2EE.wrapAAD(user: user, keyVersion: version, device: deviceID, kind: .practiceKey)
             let wrapped = E2EE.Wrapped(epk: w.ephemeralKey, box: w.box)
             guard w.authType == .signature,
                   E2EE.verifyWrap(wrapped, aad: aad, recipientPk: key.publicKey, signature: w.authenticator, identity: identityPublic)
@@ -349,5 +367,24 @@ public final class Account: @unchecked Sendable {
             newest = max(newest, w.keyVersion)
         }
         return newest
+    }
+}
+
+/// Runs async operations one after another, in the order they were asked for.
+final class SerialGate: @unchecked Sendable {
+    private let lock = NSLock()
+    private var tail: Task<Void, Never>?
+
+    func run<T: Sendable>(_ operation: @escaping @Sendable () async throws -> T) async throws -> T {
+        let task: Task<T, Error> = lock.withLock {
+            let previous = tail
+            let task = Task<T, Error> {
+                await previous?.value
+                return try await operation()
+            }
+            tail = Task { _ = try? await task.value }
+            return task
+        }
+        return try await task.value
     }
 }
