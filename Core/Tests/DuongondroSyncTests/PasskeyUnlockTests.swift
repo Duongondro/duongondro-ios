@@ -25,6 +25,10 @@ final class KeyServer: URLProtocol {
         var passkeys: [String: [String: Any]?] = [:]
         var names: [String: String] = [:]
         var userKeyPuts = 0
+        var replacements = 0
+        var othersSignedOut = 0
+        /// What happened, in order: "remove", "sign-out-others", "replace".
+        var log: [String] = []
     }
 
     private static let lock = NSLock()
@@ -96,11 +100,23 @@ final class KeyServer: URLProtocol {
                           "wraps": s.userKeyWraps.filter { ($0["userKeyId"] as! String).lowercased() == u.id.uuidString.lowercased() }])
         case ("PUT", "/api/me/user-key"):
             s.userKeyPuts += 1
-            XCTAssertNil(input["replace"], "the app never replaces U")
             let payload = data("payload")
+            let replace = input["replace"] as? Bool ?? false
+            if replace { s.replacements += 1; s.log.append("replace") }
+            if let u = s.userKey, replace {
+                let parsed = Statements.parseUserKey(payload)!
+                guard parsed.id != u.id, parsed.version > u.version else { return (409, ["error": "not newer"]) }
+                // The old U's boxes, wraps and kind 4 wraps go with it.
+                for id in s.passkeys.keys { s.passkeys[id] = .some(nil) }
+                s.userKeyWraps = []
+                for d in s.wraps.keys { s.wraps[d]!.removeAll { $0["kind"] as! Int == 4 } }
+                s.userKey = (parsed.id, parsed.version, payload, data("signature"))
+                return (201, nil)
+            }
             if let u = s.userKey {
                 return u.payload == payload ? (201, nil) : (409, ["error": "exists", "userKey": ["id": u.id.uuidString.lowercased(), "version": u.version]])
             }
+            if s.identity == nil { return (409, ["error": "no identity key"]) }
             let parsed = Statements.parseUserKey(payload)!
             s.userKey = (parsed.id, parsed.version, payload, data("signature"))
             return (201, nil)
@@ -112,6 +128,10 @@ final class KeyServer: URLProtocol {
             var w = input
             w["createdAt"] = now
             s.userKeyWraps.append(w)
+            return (204, nil)
+        case ("DELETE", "/api/me/sessions"):
+            s.othersSignedOut += 1
+            s.log.append("sign-out-others")
             return (204, nil)
         case ("GET", "/api/me/credentials"):
             return (200, ["passkeys": s.passkeys.keys.sorted().map { id -> [String: Any] in
@@ -143,6 +163,7 @@ final class KeyServer: URLProtocol {
                 if method == "DELETE" {
                     if s.passkeys.count == 1 { return (409, ["error": "last way to sign in"]) }
                     s.passkeys[id] = nil
+                    s.log.append("remove")
                     return (204, nil)
                 }
             }
@@ -211,13 +232,14 @@ final class PasskeyUnlockTests: XCTestCase {
         let (second, secrets, db) = try phone()
         let v3 = try await second.standing()
         XCTAssertEqual(v3, .restore)
-        let v4 = try await second.unlock(with: passkey)
+        let v4 = try await second.unlock(with: passkey, for: KeyServer.with { $0.user })
         XCTAssertTrue(v4, "no recovery code asked")
         XCTAssertEqual(try secrets.read(SecretName.identitySeed), try firstSecrets.read(SecretName.identitySeed))
         XCTAssertEqual(try secrets.read(SecretName.practiceKey(1)), try firstSecrets.read(SecretName.practiceKey(1)))
         XCTAssertEqual(try db.syncState()?.userID, KeyServer.with { $0.user })
         XCTAssertEqual(try second.heldUserKey(), try first.heldUserKey(), "the new phone holds U too")
         XCTAssertEqual(KeyServer.with { $0.devices.count }, 2, "the new phone registered and listed itself")
+        XCTAssertEqual(KeyServer.with { $0.replacements }, 0, "nothing replaced U on its own")
         let v5 = try await second.standing()
         XCTAssertEqual(v5, .ready)
     }
@@ -232,10 +254,10 @@ final class PasskeyUnlockTests: XCTestCase {
         XCTAssertEqual(v6, .saved)
 
         let (second, secrets, _) = try phone()
-        let unlockedBare = try await second.unlock(with: bare)
+        let unlockedBare = try await second.unlock(with: bare, for: KeyServer.with { $0.user })
         XCTAssertFalse(unlockedBare, "a passkey without a box")
         let wrongOutput = PasskeyPRF(credentialID: boxed.credentialID, output: Data(repeating: 7, count: 32))
-        let unlockedWrong = try await second.unlock(with: wrongOutput)
+        let unlockedWrong = try await second.unlock(with: wrongOutput, for: KeyServer.with { $0.user })
         XCTAssertFalse(unlockedWrong, "a PRF output that does not open the box")
         XCTAssertNil(try secrets.read(SecretName.identitySeed))
     }
@@ -258,7 +280,7 @@ final class PasskeyUnlockTests: XCTestCase {
         // The server serves a's box as b's: its AAD names a's credential id.
         KeyServer.with { $0.passkeys[b.credentialKey] = $0.passkeys[a.credentialKey]! }
         let (second, secrets, _) = try phone()
-        let opened = try await second.unlock(with: PasskeyPRF(credentialID: b.credentialID, output: a.output))
+        let opened = try await second.unlock(with: PasskeyPRF(credentialID: b.credentialID, output: a.output), for: KeyServer.with { $0.user })
         XCTAssertFalse(opened, "a box under another credential id does not open")
         XCTAssertNil(try secrets.read(SecretName.identitySeed))
     }
@@ -286,7 +308,7 @@ final class PasskeyUnlockTests: XCTestCase {
             }
         }
         let (second, secrets, db) = try phone()
-        let opened = try await second.unlock(with: passkey)
+        let opened = try await second.unlock(with: passkey, for: KeyServer.with { $0.user })
         XCTAssertFalse(opened)
         XCTAssertNil(try secrets.read(SecretName.identitySeed))
         XCTAssertNil(try secrets.read(SecretName.userKey))
@@ -306,7 +328,7 @@ final class PasskeyUnlockTests: XCTestCase {
         // The second phone made its own U before seeing the first's: the
         // conditional create answers 409 and it keeps nothing of its own.
         try secrets.write(SecretName.userKey, try JSONEncoder().encode(
-            Account.HeldUserKey(id: UUID(), version: 1, scalar: P256.KeyAgreement.PrivateKey().rawRepresentation)))
+            Account.HeldUserKey(user: KeyServer.with { $0.user }, id: UUID(), version: 1, scalar: P256.KeyAgreement.PrivateKey().rawRepresentation)))
         let v10 = try await second.keepUserKey()
         XCTAssertTrue(v10, "U reached it as a kind 4 wrap from the first phone")
         XCTAssertEqual(KeyServer.with { $0.userKey!.id }, published, "never replaced")
@@ -379,6 +401,136 @@ final class PasskeyUnlockTests: XCTestCase {
         holds = try await second.keepUserKey()
         XCTAssertFalse(holds, "not U's current version")
         XCTAssertNil(try secrets.read(SecretName.userKey))
+    }
+
+    func testAnOutputHeldForAnotherAccountOpensNothing() async throws {
+        let (first, _, _) = try phone()
+        _ = try await first.setUpFirstDevice()
+        let passkey = prf("p")
+        addPasskey(passkey)
+        _ = try await first.savePasskeyBox(passkey)
+        let (second, secrets, _) = try phone()
+        let opened = try await second.unlock(with: passkey, for: UUID())
+        XCTAssertFalse(opened)
+        XCTAssertNil(try secrets.read(SecretName.identitySeed))
+    }
+
+    /// The Keychain outlives an uninstall: a U another account left is never
+    /// published or used as this account's.
+    func testAUserKeyLeftByAnotherAccountIsNotReused() async throws {
+        let (first, secrets, _) = try phone()
+        let stale = Account.HeldUserKey(user: UUID(), id: UUID(), version: 1, scalar: P256.KeyAgreement.PrivateKey().rawRepresentation)
+        try secrets.write(SecretName.userKey, try JSONEncoder().encode(stale))
+        _ = try await first.setUpFirstDevice()
+        let created = try await first.keepUserKey()
+        XCTAssertTrue(created)
+        let published = try XCTUnwrap(Statements.parseUserKey(KeyServer.with { $0.userKey!.payload }))
+        XCTAssertNotEqual(published.id, stale.id)
+        XCTAssertNotEqual(published.publicKey, try P256.KeyAgreement.PrivateKey(rawRepresentation: stale.scalar).publicKey.x963Representation)
+        XCTAssertEqual(try first.heldUserKey()?.user, KeyServer.with { $0.user })
+    }
+
+    /// Syncs, sign-ins and the card can ask at once: one U comes of it, and this
+    /// phone holds the one the server has.
+    func testConcurrentUserKeyWorkMakesOneUserKey() async throws {
+        let (first, _, _) = try phone()
+        _ = try await first.setUpFirstDevice()
+        let passkey = prf("p")
+        addPasskey(passkey)
+        async let a = first.keepUserKey()
+        async let b = first.keepUserKey()
+        async let c = first.savePasskeyBox(passkey)
+        let results = try await (a, b, c)
+        XCTAssertTrue(results.0 && results.1)
+        XCTAssertEqual(results.2, .saved)
+        XCTAssertEqual(KeyServer.with { $0.userKeyPuts }, 1, "one create")
+        XCTAssertEqual(try first.heldUserKey()?.id, KeyServer.with { $0.userKey!.id })
+    }
+
+    func testAPreconditionConflictIsNotTakenForAnotherPhonesUserKey() async throws {
+        let (first, _, _) = try phone()
+        _ = try await first.setUpFirstDevice()
+        KeyServer.with { $0.identity = nil }
+        do {
+            _ = try await first.keepUserKey()
+            XCTFail("409 without userKey throws")
+        } catch APIError.conflict {}
+        XCTAssertNotNil(try first.heldUserKey(), "the U made is kept for the retry")
+    }
+
+    /// Removing a passkey that could unlock: the person may replace U. Every box
+    /// goes, other phones get the new U, and a passkey unlocks again only after
+    /// a new box.
+    func testReplacingTheUserKey() async throws {
+        let (first, _, _) = try phone()
+        let code = try await first.setUpFirstDevice()
+        let (second, _, _) = try phone()
+        try await second.restore(recoveryCode: code)
+        let kept = try await first.keepUserKey()
+        XCTAssertTrue(kept)
+        let removed = prf("removed"), other = prf("other")
+        addPasskey(removed)
+        addPasskey(other)
+        _ = try await first.savePasskeyBox(removed)
+        _ = try await first.savePasskeyBox(other)
+        let old = try XCTUnwrap(try first.heldUserKey())
+
+        try await first.replaceUserKey()
+        XCTAssertEqual(KeyServer.with { $0.replacements }, 1)
+        let new = try XCTUnwrap(try first.heldUserKey())
+        XCTAssertNotEqual(new.id, old.id)
+        XCTAssertEqual(new.version, old.version + 1)
+        XCTAssertEqual(KeyServer.with { $0.userKey!.id }, new.id)
+        XCTAssertEqual(KeyServer.with { $0.userKeyWraps.count }, 2, "the keys wrapped to the new U")
+        let list = try await first.api.passkeys()
+        XCTAssertTrue(list.allSatisfy { !$0.canUnlock }, "every box went with the old U: the card offers them again")
+
+        let received = try await second.keepUserKey()
+        XCTAssertTrue(received, "the other phone gets the new U by kind 4")
+        XCTAssertEqual(try second.heldUserKey(), new)
+
+        let (third, _, _) = try phone()
+        let openedOld = try await third.unlock(with: other, for: KeyServer.with { $0.user })
+        XCTAssertFalse(openedOld)
+        _ = try await first.savePasskeyBox(other)
+        let openedNew = try await third.unlock(with: other, for: KeyServer.with { $0.user })
+        XCTAssertTrue(openedNew)
+    }
+
+    func testRemovingAndReplacingSignsOutTheOtherPhones() async throws {
+        let (first, _, _) = try phone()
+        _ = try await first.setUpFirstDevice()
+        let removed = prf("removed"), kept = prf("kept")
+        addPasskey(removed)
+        addPasskey(kept)
+        _ = try await first.savePasskeyBox(removed)
+        let before = try XCTUnwrap(try first.heldUserKey())
+        let listed = try await first.api.passkeys().first { $0.id == removed.credentialKey }!
+        try await first.removePasskeyAndReplaceUserKey(listed)
+        XCTAssertEqual(KeyServer.with { $0.log }, ["remove", "sign-out-others", "replace"])
+        XCTAssertNotEqual(try first.heldUserKey()?.id, before.id)
+        XCTAssertFalse(KeyServer.with { $0.passkeys.keys.contains(removed.credentialKey) })
+
+        // The passkey this phone signed in with goes last: removing it ends this session.
+        KeyServer.with { $0.log = [] }
+        let current = Passkey(id: kept.credentialKey, createdAt: Date(), current: true, canUnlock: true)
+        addPasskey(prf("third"))
+        try await first.removePasskeyAndReplaceUserKey(current)
+        XCTAssertEqual(KeyServer.with { $0.log }, ["sign-out-others", "replace", "remove"])
+    }
+
+    func testTheLastWayToSignInIsNotRemovedNorAnythingElseDone() async throws {
+        let (first, _, _) = try phone()
+        _ = try await first.setUpFirstDevice()
+        let only = prf("only")
+        addPasskey(only)
+        _ = try await first.savePasskeyBox(only)
+        let listed = Passkey(id: only.credentialKey, createdAt: Date(), canUnlock: true)
+        do {
+            try await first.removePasskeyAndReplaceUserKey(listed)
+            XCTFail("the last way to sign in stays")
+        } catch APIError.conflict {}
+        XCTAssertEqual(KeyServer.with { $0.log }, [])
     }
 
     func testAUserKeyTheIdentityDidNotSignIsRefused() async throws {

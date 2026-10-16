@@ -19,8 +19,10 @@ public struct PasskeyPRF: Equatable, Sendable {
 }
 
 extension SecretName {
-    /// U as this phone holds it: id, version and the private scalar.
+    /// U as this phone holds it: account, id, version and the private scalar.
     static let userKey = "user-key"
+    /// A replacement U on its way up, until the server has it.
+    static let userKeyPending = "user-key-pending"
     /// The devices this phone gave U to, as kind 4 wraps.
     static let userKeyShared = "user-key-shared"
 }
@@ -39,6 +41,8 @@ extension SecretName {
 ///   output, then the seed and the practice key, and enrols as after recovery.
 extension Account {
     struct HeldUserKey: Codable, Equatable {
+        /// The account it belongs to: Keychain items outlive an uninstall.
+        let user: UUID
         let id: UUID
         let version: Int
         let scalar: Data
@@ -48,18 +52,24 @@ extension Account {
         }
     }
 
+    /// The U this phone holds, if it is this account's (the sync state's); one
+    /// left by another account is deleted, never reused.
     func heldUserKey() throws -> HeldUserKey? {
         guard let data = try secrets.read(SecretName.userKey) else { return nil }
-        return try JSONDecoder().decode(HeldUserKey.self, from: data)
+        let held = try? JSONDecoder().decode(HeldUserKey.self, from: data)
+        guard let held, held.user == (try database.syncState())?.userID else {
+            try Self.forgetUserKey(secrets)
+            return nil
+        }
+        return held
     }
 
     private func hold(_ key: HeldUserKey) throws {
         try secrets.write(SecretName.userKey, try JSONEncoder().encode(key))
     }
 
-    private func forgetUserKey() throws {
-        try secrets.delete(SecretName.userKey)
-        try secrets.delete(SecretName.userKeyShared)
+    static func forgetUserKey(_ secrets: SecretStore) throws {
+        for name in [SecretName.userKey, SecretName.userKeyShared, SecretName.userKeyPending] { try secrets.delete(name) }
     }
 
     /// U's statement, checked against the account's identity key before anything
@@ -81,6 +91,11 @@ extension Account {
     /// false while it waits for another phone's U to reach it.
     @discardableResult
     public func keepUserKey() async throws -> Bool {
+        try await userKeyGate.run { try await self.keepUserKeyNow() }
+    }
+
+    /// keepUserKey, inside the gate: one U operation at a time on this phone.
+    private func keepUserKeyNow() async throws -> Bool {
         guard let state = try database.syncState() else { throw Failure.accountHasNoKeys }
         let identity = try identity()
         let user = state.userID
@@ -89,9 +104,17 @@ extension Account {
         }
         let key = try verifiedUserKey(current, user: user, identity: identity.publicKey)
         var held = try heldUserKey()
+        if held?.id != key.id, let data = try secrets.read(SecretName.userKeyPending),
+           let pending = try? JSONDecoder().decode(HeldUserKey.self, from: data), pending.id == key.id, pending.user == user {
+            // This phone's replacement went up but the answer was lost.
+            try hold(pending)
+            try secrets.delete(SecretName.userKeyShared)
+            held = pending
+        }
+        try secrets.delete(SecretName.userKeyPending)
         if let h = held, h.id != key.id {
             // Another phone's U won, or replaced this one: this one is useless now.
-            try forgetUserKey()
+            try Self.forgetUserKey(secrets)
             held = nil
         }
         if held == nil { held = try await receiveUserKey(key, user: user, identity: identity.publicKey) }
@@ -108,7 +131,7 @@ extension Account {
         if let kept = try heldUserKey() {
             held = kept
         } else {
-            held = HeldUserKey(id: UUID.v7(), version: 1, scalar: P256.KeyAgreement.PrivateKey().rawRepresentation)
+            held = HeldUserKey(user: user, id: UUID.v7(), version: 1, scalar: P256.KeyAgreement.PrivateKey().rawRepresentation)
             try hold(held)
         }
         let key = Statements.UserKey(id: held.id, publicKey: try held.privateKey.publicKey.x963Representation,
@@ -116,11 +139,12 @@ extension Account {
         let payload = Statements.userKey(key)
         let signature = try E2EE.signStatement(type: "user-key", payload: payload, identity: identity)
         switch try await api.createUserKey(SignedStatement(payload: payload, signature: signature)) {
-        case .exists:
+        case .exists(let id, _):
             // Another phone published one first: never replace it; it comes here
-            // as a kind 4 wrap from a phone that holds it.
-            try forgetUserKey()
-            return false
+            // as a kind 4 wrap from a phone that holds it. Only the U just sent is
+            // dropped, and only if it is not the stored one.
+            if id != held.id, try heldUserKey()?.id == held.id { try Self.forgetUserKey(secrets) }
+            return id == held.id
         case .created:
             try await wrapKeys(to: key, already: [], user: user, identity: identity, keyVersion: keyVersion)
             try await shareUserKey(key, held: held, user: user, identity: identity)
@@ -184,6 +208,8 @@ extension Account {
         if shared?.userKey != key.id { shared = Shared(userKey: key.id, devices: []) }
         let me = deviceID
         for device in devices where device.id != me && !(shared!.devices.contains(device.id)) {
+            // One device the server no longer has does not hold up the others.
+            do {
             let aad = E2EE.wrapAAD(user: user, keyVersion: UInt32(key.version), device: device.id, kind: .userKey)
             let wrapped = try E2EE.wrap(held.scalar, to: try P256.KeyAgreement.PublicKey(x963Representation: device.publicKey), aad: aad)
             let signature = try E2EE.signWrap(wrapped, aad: aad, recipientPk: device.publicKey, identity: identity)
@@ -192,6 +218,10 @@ extension Account {
                                             authenticator: signature), device: device.id)
             shared!.devices.insert(device.id)
             try secrets.write(SecretName.userKeyShared, try JSONEncoder().encode(shared!))
+            } catch let error as APIError {
+                if case .unauthorized = error { throw error }
+                continue
+            }
         }
     }
 
@@ -207,11 +237,65 @@ extension Account {
             guard E2EE.verifyWrap(wrapped, aad: aad, recipientPk: device.publicKey, signature: w.authenticator, identity: identity),
                   let scalar = try? E2EE.unwrap(wrapped, with: device.agreement, aad: aad),
                   (try? E2EE.userKey(scalar: scalar, expectedPublicKey: key.publicKey)) != nil else { continue }
-            let held = HeldUserKey(id: key.id, version: key.version, scalar: scalar)
+            let held = HeldUserKey(user: user, id: key.id, version: key.version, scalar: scalar)
             try hold(held)
             return held
         }
         return nil
+    }
+
+    // MARK: Replacing U, on the person's request
+
+    /// Replaces U (`replace: true`): a new id and a higher version, the keys
+    /// wrapped to it and U given to the account's other phones again. The server
+    /// deletes every box and wrap of the old U, so each passkey needs a new box
+    /// (the card in Settings). Only when the person asks: after removing a
+    /// passkey that could unlock the counts, so a copy of its box opens nothing
+    /// new. It cannot take back keys already opened with the old U.
+    public func replaceUserKey() async throws {
+        try await userKeyGate.run { try await self.replaceUserKeyNow() }
+    }
+
+    private func replaceUserKeyNow() async throws {
+        guard let state = try database.syncState() else { throw Failure.accountHasNoKeys }
+        let identity = try identity()
+        let user = state.userID
+        let current = try await api.userKey()
+        let version = try current.map { try verifiedUserKey($0, user: user, identity: identity.publicKey).version } ?? 0
+        let held = HeldUserKey(user: user, id: UUID.v7(), version: version + 1,
+                               scalar: P256.KeyAgreement.PrivateKey().rawRepresentation)
+        // Kept aside until the server has it: a failed replacement leaves the old U here.
+        try secrets.write(SecretName.userKeyPending, try JSONEncoder().encode(held))
+        let key = Statements.UserKey(id: held.id, publicKey: try held.privateKey.publicKey.x963Representation,
+                                     user: user, version: held.version)
+        let payload = Statements.userKey(key)
+        let signature = try E2EE.signStatement(type: "user-key", payload: payload, identity: identity)
+        guard case .created = try await api.createUserKey(SignedStatement(payload: payload, signature: signature),
+                                                           replace: current != nil) else {
+            try secrets.delete(SecretName.userKeyPending)
+            throw Failure.userKeyNotReplaced
+        }
+        try secrets.delete(SecretName.userKeyShared)
+        try hold(held)
+        try secrets.delete(SecretName.userKeyPending)
+        try await wrapKeys(to: key, already: [], user: user, identity: identity, keyVersion: state.keyVersion)
+        try await shareUserKey(key, held: held, user: user, identity: identity)
+    }
+
+    /// "Remove and replace the unlock key", for a passkey that could unlock the
+    /// counts: the passkey goes, every other session of the account is signed
+    /// out, and U is replaced (the keys wrapped to the new one, which goes to the
+    /// listed phones by kind 4). The passkey then cannot unlock the counts on a
+    /// new phone; a phone it already unlocked keeps what it has (iOS has neither
+    /// device removal nor rotation). The passkey this phone signed in with is
+    /// removed last, since removing it ends this session.
+    /// Throws `APIError.conflict` when it is the last way to sign in: then, unless
+    /// it was this phone's own, nothing else was done.
+    public func removePasskeyAndReplaceUserKey(_ passkey: Passkey) async throws {
+        if !passkey.current { try await api.removePasskey(passkey.id) }
+        try await api.signOutOthers()
+        try await replaceUserKey()
+        if passkey.current { try await api.removePasskey(passkey.id) }
     }
 
     // MARK: A passkey's box
@@ -227,7 +311,11 @@ extension Account {
     /// Seals U under a passkey's PRF output and stores it as that passkey's box,
     /// creating U first if the account has none.
     public func savePasskeyBox(_ prf: PasskeyPRF) async throws -> BoxResult {
-        guard try await keepUserKey(), let held = try heldUserKey(), let state = try database.syncState() else {
+        try await userKeyGate.run { try await self.savePasskeyBoxNow(prf) }
+    }
+
+    private func savePasskeyBoxNow(_ prf: PasskeyPRF) async throws -> BoxResult {
+        guard try await keepUserKeyNow(), let held = try heldUserKey(), let state = try database.syncState() else {
             return .waitingForUserKey
         }
         let box = try Self.passkeyBox(prf, held: held, user: state.userID, identity: try identity())
@@ -254,8 +342,10 @@ extension Account {
     /// or one its PRF output does not open, or no wrap of the current practice
     /// key), so the recovery code is asked instead; throws when something does
     /// not verify against the account's identity key.
-    public func unlock(with prf: PasskeyPRF) async throws -> Bool {
+    public func unlock(with prf: PasskeyPRF, for user: UUID) async throws -> Bool {
         let me = try await api.me()
+        // The output belongs to the sign-in of this account only.
+        guard me.id == user else { return false }
         guard let identityPk = me.identityPublicKey,
               let identityPublic = try? Curve25519.Signing.PublicKey(rawRepresentation: identityPk) else {
             throw Failure.accountHasNoKeys
@@ -292,9 +382,9 @@ extension Account {
         // The seed must be the account's own: the server published its public half.
         guard identity.publicKey.rawRepresentation == identityPk else { throw Failure.notAuthentic }
 
-        try hold(HeldUserKey(id: key.id, version: key.version, scalar: scalar))
         try await enrol(user: me.id, identity: identity, identityPublic: identityPublic, practiceKey: practiceKey,
                         version: me.keyVersion)
+        try hold(HeldUserKey(user: me.id, id: key.id, version: key.version, scalar: scalar))
         return true
     }
 }

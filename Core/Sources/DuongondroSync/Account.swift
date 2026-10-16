@@ -22,6 +22,8 @@ public final class Account: @unchecked Sendable {
     let deviceKeys: DeviceKeys
     let database: AppDatabase
     let now: () -> Date
+    /// One user-key operation at a time (create, share, box, replace).
+    let userKeyGate = SerialGate()
     /// True once set-up or restore found a Secure Enclave that refused to make a key.
     public private(set) var deviceKeyFellBack = false
 
@@ -46,6 +48,9 @@ public final class Account: @unchecked Sendable {
         /// A box, wrap or list did not verify against the account's identity key.
         case notAuthentic
         case missingSecret
+        /// The server kept the old U: this phone does not hold the current
+        /// practice key, or another replacement landed first.
+        case userKeyNotReplaced
     }
 
     // MARK: Identity
@@ -165,6 +170,7 @@ public final class Account: @unchecked Sendable {
                 for name in [SecretName.identitySeed, SecretName.practiceKey(me.keyVersion), SecretName.pendingRecovery] {
                     try secrets.delete(name)
                 }
+                try Self.forgetUserKey(secrets)
                 try secrets.write(SecretName.setUpUser, Data(me.id.uuidString.lowercased().utf8))
             }
             if let seed = try secrets.read(SecretName.identitySeed) {
@@ -234,6 +240,8 @@ public final class Account: @unchecked Sendable {
     /// keeps them, registers this device, lists it, and wraps the keys to itself.
     func enrol(user: UUID, identity: Curve25519.Signing.PrivateKey, identityPublic: Curve25519.Signing.PublicKey,
                practiceKey: Data, version: Int) async throws {
+        // A U left here by another account is never this one's.
+        try Self.forgetUserKey(secrets)
         try secrets.write(SecretName.identitySeed, identity.rawRepresentation)
         try secrets.write(SecretName.practiceKey(version), practiceKey)
 
@@ -356,5 +364,24 @@ public final class Account: @unchecked Sendable {
             newest = max(newest, w.keyVersion)
         }
         return newest
+    }
+}
+
+/// Runs async operations one after another, in the order they were asked for.
+final class SerialGate: @unchecked Sendable {
+    private let lock = NSLock()
+    private var tail: Task<Void, Never>?
+
+    func run<T: Sendable>(_ operation: @escaping @Sendable () async throws -> T) async throws -> T {
+        let task: Task<T, Error> = lock.withLock {
+            let previous = tail
+            let task = Task<T, Error> {
+                await previous?.value
+                return try await operation()
+            }
+            tail = Task { _ = try? await task.value }
+            return task
+        }
+        return try await task.value
     }
 }

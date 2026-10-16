@@ -32,8 +32,13 @@ final class PasskeyTests: XCTestCase {
     }
 
     func testTheUserKeyCreateNeverAsksToReplace() throws {
-        let body = try JSONSerialization.jsonObject(with: APIClient.encoder.encode(UserKeyInput(payload: Data([1]), signature: Data([2])))) as! [String: Any]
+        let body = try JSONSerialization.jsonObject(with: APIClient.encoder.encode(UserKeyInput(payload: Data([1]), signature: Data([2]), replace: nil))) as! [String: Any]
         XCTAssertEqual(Set(body.keys), ["payload", "signature"])
+    }
+
+    func testAReplacementSaysSoExplicitly() throws {
+        let body = try JSONSerialization.jsonObject(with: APIClient.encoder.encode(UserKeyInput(payload: Data([1]), signature: Data([2]), replace: true))) as! [String: Any]
+        XCTAssertEqual(body["replace"] as? Bool, true)
     }
 
     func testARotationWithoutAUserKeyLeavesTheFieldOut() throws {

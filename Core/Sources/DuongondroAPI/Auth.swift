@@ -92,6 +92,12 @@ extension APIClient {
 
     // MARK: The session and the profile
 
+    /// Signs out every other session of this account ("sign out everywhere else");
+    /// the phones signed out stop receiving pushes.
+    public func signOutOthers() async throws {
+        let _: Empty = try await request("DELETE", "api/me/sessions", query: [], body: Optional<Empty>.none)
+    }
+
     /// Ends this session; its token stops working.
     public func signOut() async throws {
         let _: Empty = try await request("DELETE", "api/me/session", query: [], body: Optional<Empty>.none)

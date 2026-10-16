@@ -33,16 +33,22 @@ extension APIClient {
     }
 
     /// Publishes U, only when the account has none: a conditional create (201; the
-    /// same statement again is 201 too). 409: the account has a U already, or the
-    /// create was refused; nothing changed. The app never sends `replace`, so it
-    /// never replaces an existing U.
-    public func createUserKey(_ statement: SignedStatement) async throws -> UserKeyCreation {
-        do {
-            try await send("PUT", "api/me/user-key", body: UserKeyInput(payload: statement.payload, signature: statement.signature))
-            return .created
-        } catch APIError.conflict {
-            return .exists
+    /// same statement again is 201 too). 409 with the stored U's id: the account
+    /// has one already and nothing changed. Any other 409 (a precondition, such as
+    /// no identity key yet) throws `APIError.conflict`.
+    ///
+    /// `replace` replaces an existing U, only when the person asks (it was lost,
+    /// or a passkey that could unlock it was removed): the server takes it from a
+    /// device holding the current practice key, for a new id and a higher version,
+    /// and deletes every box and wrap of the old U.
+    public func createUserKey(_ statement: SignedStatement, replace: Bool = false) async throws -> UserKeyCreation {
+        let body = UserKeyInput(payload: statement.payload, signature: statement.signature, replace: replace ? true : nil)
+        let (status, data) = try await exchange("PUT", "api/me/user-key", query: [], body: body)
+        if status == 409, let existing = (try? Self.decoder.decode(UserKeyConflict.self, from: data))?.userKey {
+            return .exists(id: existing.id, version: existing.version)
         }
+        _ = try Self.check(status, data)
+        return .created
     }
 
     /// The practice key or the identity seed wrapped to the current U.
@@ -103,12 +109,19 @@ struct PasskeyRename: Encodable {
 struct UserKeyInput: Encodable {
     let payload: Data
     let signature: Data
+    /// Only ever true, when the person asked for a replacement; absent otherwise.
+    let replace: Bool?
+}
+
+struct UserKeyConflict: Decodable {
+    struct Existing: Decodable { let id: UUID; let version: Int }
+    let userKey: Existing?
 }
 
 public enum UserKeyCreation: Equatable, Sendable {
     case created
-    /// The account has a U already (another phone won), or the create was refused.
-    case exists
+    /// The account has this U already (another phone won); nothing changed.
+    case exists(id: UUID, version: Int)
 }
 
 public struct UserKeyWrapInput: Codable, Equatable, Sendable {
