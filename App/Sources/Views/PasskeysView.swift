@@ -23,7 +23,7 @@ struct PasskeysView: View {
                     .foregroundStyle(Theme.muted)
                     .padding(.horizontal, Theme.Space.l)
                     .fixedSize(horizontal: false, vertical: true)
-                if account.offersPasskeyUnlock { PasskeyUnlockCard() }
+                if account.offersPasskeyUnlock || account.offersNewPasskey { PasskeyUnlockCard() }
                 if !account.passkeys.isEmpty {
                     CardSection {
                         ForEach(account.passkeys) { passkey in
@@ -195,59 +195,111 @@ private struct PasskeyRow: View {
 
 /// The calm card for an account made before passkey unlock, or a passkey that
 /// gave no PRF output when it was made: one ceremony, whichever passkey answers.
-/// Only in Settings, never over a count.
+/// A passkey that answers without a PRF output is not asked again; when only
+/// such passkeys are left, the card offers a new passkey instead. Only in
+/// Settings, never over a count.
 struct PasskeyUnlockCard: View {
     @EnvironmentObject private var account: AccountModel
     @State private var working = false
     @State private var note: String?
+    /// The unlock key has not reached this phone: if no phone holds it any more,
+    /// the person can replace it.
+    @State private var waiting = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.s) {
-            Text("Let your passkey unlock your counts on a new phone")
-                .font(.body.weight(.semibold))
-                .foregroundStyle(Theme.ink)
-                .fixedSize(horizontal: false, vertical: true)
-            Text("Signing in with it on a new phone then brings your counts back without the recovery code.")
-                .font(.footnote)
-                .foregroundStyle(Theme.muted)
-                .fixedSize(horizontal: false, vertical: true)
+            if account.offersPasskeyUnlock {
+                Text("Let your passkey unlock your counts on a new phone")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Signing in with it on a new phone then brings your counts back without the recovery code.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
+                Text("Your passkey can't unlock your counts on a new phone")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(Theme.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("A new passkey may. Until one does, keep your recovery code.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if let note {
                 Text(verbatim: note)
                     .font(.footnote)
                     .foregroundStyle(Theme.accent)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Button { run() } label: {
-                HStack(spacing: Theme.Space.s) {
-                    Text("Use my passkey").font(.body.weight(.semibold)).foregroundStyle(Theme.accent)
-                    if working { ProgressView() }
+            HStack(spacing: Theme.Space.l) {
+                if account.offersPasskeyUnlock {
+                    action("Use my passkey") { await useMyPasskey() }
+                } else {
+                    action("Add a new passkey") { await addPasskey() }
                 }
-                .frame(minHeight: Theme.Size.minTap)
-                .contentShape(Rectangle())
+                if waiting {
+                    action("Replace the unlock key") { await replace() }
+                }
+                if working { ProgressView() }
             }
-            .disabled(working)
         }
         .padding(Theme.Space.l)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Theme.card, in: RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
     }
 
-    private func run() {
-        working = true
-        note = nil
-        Task {
-            defer { working = false }
-            switch await account.letPasskeyUnlock() {
-            case .saved, .cancelled: break
-            case .noPRF:
-                note = localized("This passkey can't unlock your counts. Keep your recovery code, or add a new passkey in Passkeys.")
-            case .waiting:
-                note = localized("Another of your phones is setting this up. Try again after it has synced.")
-            case .otherAccount:
-                note = localized("That passkey belongs to another account.")
-            case .failed:
-                note = accountError
+    private func action(_ title: LocalizedStringKey, _ work: @escaping @MainActor () async -> Void) -> some View {
+        Button {
+            working = true
+            note = nil
+            Task {
+                defer { working = false }
+                await work()
             }
+        } label: {
+            Text(title).font(.body.weight(.semibold)).foregroundStyle(Theme.accent)
+                .frame(minHeight: Theme.Size.minTap)
+                .contentShape(Rectangle())
+        }
+        .disabled(working)
+    }
+
+    private func useMyPasskey() async {
+        waiting = false
+        switch await account.letPasskeyUnlock() {
+        case .saved, .cancelled: break
+        case .noPRF:
+            note = localized("This passkey can't unlock your counts. Keep your recovery code, or add a new passkey in Passkeys.")
+        case .waiting:
+            waiting = true
+            note = localized("The unlock key hasn't reached this phone. If another of your phones has the app, open it there and try again; if none has, replace the unlock key.")
+        case .otherAccount:
+            note = localized("That passkey belongs to another account.")
+        case .failed:
+            note = accountError
+        }
+    }
+
+    private func addPasskey() async {
+        do {
+            if case .saved = try await account.createPasskey(profile: nil, consent: false) {
+                note = localized("Passkey saved.")
+            }
+        } catch Passkeys.Failure.refused {
+            note = localized("This phone could not save a passkey for Duongöndro.")
+        } catch {
+            note = accountError
+        }
+    }
+
+    private func replace() async {
+        if await account.replaceLostUnlockKey() {
+            waiting = false
+            note = localized("The unlock key was replaced.")
+        } else {
+            note = accountError
         }
     }
 }

@@ -2828,6 +2828,64 @@
         }
       }
     },
+    "A new passkey may. Until one does, keep your recovery code." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein neuer Passkey kann es vielleicht. Bis dahin bewahre deinen Wiederherstellungscode auf."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Новый ключ доступа, возможно, сможет. А пока сохраните код восстановления."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Новий ключ доступу, можливо, зможе. А поки збережіть код відновлення."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nowy klucz dostępu może to umieć. Do tego czasu zachowaj kod odzyskiwania."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nový přístupový klíč to možná zvládne. Do té doby si uschovej obnovovací kód."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nový prístupový kľúč to možno zvládne. Dovtedy si uschovaj obnovovací kód."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Egy új hozzáférési kulcs talán igen. Addig őrizd meg a helyreállítási kódot."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una clave de acceso nueva quizá sí. Hasta entonces, guarda tu código de recuperación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une nouvelle clé d'accès le pourra peut-être. D'ici là, garde ton code de récupération."
+          }
+        }
+      }
+    },
     "A new phone picks up where this one left off" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3638,6 +3696,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Añadir un amigo"
+          }
+        }
+      }
+    },
+    "Add a new passkey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neuen Passkey hinzufügen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Добавить новый ключ доступа"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Додати новий ключ доступу"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dodaj nowy klucz dostępu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Přidat nový přístupový klíč"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pridať nový prístupový kľúč"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Új hozzáférési kulcs hozzáadása"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir una clave de acceso nueva"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter une nouvelle clé d'accès"
           }
         }
       }
@@ -4566,64 +4682,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Una hora antes de la hora en que sueles practicar, calculada en este teléfono con las últimas dos semanas."
-          }
-        }
-      }
-    },
-    "Another of your phones is setting this up. Try again after it has synced." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eines deiner anderen Handys richtet das gerade ein. Versuch es wieder, wenn es synchronisiert hat."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Другой ваш телефон сейчас это настраивает. Попробуйте снова после его синхронизации."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Інший ваш телефон зараз це налаштовує. Спробуйте знову після його синхронізації."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Inny twój telefon właśnie to konfiguruje. Spróbuj ponownie, gdy się zsynchronizuje."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jiný tvůj telefon to právě nastavuje. Zkus to znovu, až se synchronizuje."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Iný tvoj telefón to práve nastavuje. Skús to znova, keď sa zosynchronizuje."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egy másik telefonod épp beállítja ezt. Próbáld újra, ha az szinkronizált."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Otro de tus teléfonos lo está configurando. Vuelve a intentarlo cuando se haya sincronizado."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Un autre de tes téléphones est en train de le configurer. Réessaie une fois qu'il s'est synchronisé."
           }
         }
       }
@@ -19316,6 +19374,64 @@
         }
       }
     },
+    "The unlock key hasn't reached this phone. If another of your phones has the app, open it there and try again; if none has, replace the unlock key." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Entsperrschlüssel ist noch nicht auf diesem Handy angekommen. Wenn ein anderes deiner Handys die App hat, öffne sie dort und versuch es noch einmal; wenn keines sie hat, ersetze den Entsperrschlüssel."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ разблокировки ещё не дошёл до этого телефона. Если приложение есть на другом вашем телефоне, откройте его там и попробуйте снова; если ни на одном нет, замените ключ разблокировки."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ключ розблокування ще не дійшов до цього телефона. Якщо застосунок є на іншому вашому телефоні, відкрийте його там і спробуйте знову; якщо ні на якому немає, замініть ключ розблокування."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klucz odblokowania nie dotarł jeszcze do tego telefonu. Jeśli inny Twój telefon ma aplikację, otwórz ją tam i spróbuj ponownie; jeśli żaden jej nie ma, wymień klucz odblokowania."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odemykací klíč ještě nedorazil do tohoto telefonu. Pokud má aplikaci jiný tvůj telefon, otevři ji tam a zkus to znovu; pokud žádný, vyměň odemykací klíč."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Odomykací kľúč ešte neprišiel do tohto telefónu. Ak má aplikáciu iný tvoj telefón, otvor ju tam a skús to znova; ak žiadny, vymeň odomykací kľúč."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A feloldókulcs még nem ért el erre a telefonra. Ha egy másik telefonodon megvan az app, nyisd meg ott, és próbáld újra; ha egyiken sincs, cseréld le a feloldókulcsot."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La llave de desbloqueo aún no ha llegado a este teléfono. Si otro de tus teléfonos tiene la app, ábrela allí y vuelve a intentarlo; si ninguno la tiene, cambia la llave de desbloqueo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La clé de déverrouillage n'est pas encore arrivée sur ce téléphone. Si un autre de tes téléphones a l'app, ouvre-la là-bas et réessaie ; si aucun ne l'a, remplace la clé de déverrouillage."
+          }
+        }
+      }
+    },
     "The unlock key was not replaced, so the passkey was not removed. Try again." : {
       "localizations" : {
         "de" : {
@@ -23456,6 +23572,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Tu propia práctica"
+          }
+        }
+      }
+    },
+    "Your passkey can't unlock your counts on a new phone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dein Passkey kann deine Zählungen auf einem neuen Handy nicht entsperren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваш ключ доступа не может открыть ваши счёты на новом телефоне"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваш ключ доступу не може відкрити ваші підрахунки на новому телефоні"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twój klucz dostępu nie odblokuje Twoich liczb na nowym telefonie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvůj přístupový klíč neodemkne tvé počty na novém telefonu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvoj prístupový kľúč neodomkne tvoje počty v novom telefóne"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A hozzáférési kulcsod nem tudja feloldani a számaidat új telefonon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu clave de acceso no puede desbloquear tus cuentas en un teléfono nuevo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ta clé d'accès ne peut pas déverrouiller tes décomptes sur un nouveau téléphone"
           }
         }
       }

@@ -56,7 +56,7 @@ struct AccountSection: View {
                     .disabled(finishing)
             }
         case .ready:
-            if account.offersPasskeyUnlock { PasskeyUnlockCard() }
+            if account.offersPasskeyUnlock || account.offersNewPasskey { PasskeyUnlockCard() }
             CardSection(header: "Account", footer: account.offline ? "The last sync did not finish. Your counts are safe on this phone and sync when the server can be reached." : nil) {
                 if let who = account.email ?? account.username {
                     SettingsRow("Signed in as", detail: Text(verbatim: who))

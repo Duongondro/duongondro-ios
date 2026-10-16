@@ -18,7 +18,7 @@ enum Passkeys {
         /// server on localhost), or no passcode on this phone.
         case refused(String)
         /// The passkey that answered gives no PRF output, so it cannot unlock the counts.
-        case noPRF
+        case noPRF(credentialID: Data)
     }
 
     /// A new passkey: the registration response (WebAuthn JSON) for the server,
@@ -88,7 +88,7 @@ enum Passkeys {
         let request = assertionRequest(relyingParty: WebAuthn.defaultRelyingParty, challenge: random(32), allowed: allowed)
         request.userVerificationPreference = .required
         guard let credential = try await perform(request) as? ASAuthorizationPlatformPublicKeyCredentialAssertion else { return nil }
-        guard let output = prfOutput(credential) else { throw Failure.noPRF }
+        guard let output = prfOutput(credential) else { throw Failure.noPRF(credentialID: credential.credentialID) }
         return PasskeyPRF(credentialID: credential.credentialID, output: output)
     }
 

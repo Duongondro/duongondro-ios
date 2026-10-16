@@ -173,7 +173,9 @@ final class AccountModel: ObservableObject {
         static let pushSentAt = "account.pushSentAt"
         /// An account made here whose Name, Gender and recovery code steps are not done yet.
         static let stepsPending = "account.stepsPending"
-        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt, stepsPending]
+        /// Passkeys that gave no PRF output to the card's ceremony.
+        static let noPRFPasskeys = "account.noPRFPasskeys"
+        static let all = [email, username, displayName, lastSync, "recoveryUnconfirmed", "pokedOn", pushSent, pushSentAt, stepsPending, noPRFPasskeys]
     }
 
     init(database: AppDatabase) {
@@ -267,6 +269,7 @@ final class AccountModel: ObservableObject {
         passkeys = []
         passkeysLoaded = false
         userKeyKept = false
+        noPRFPasskeys = []
         let kept = email
         username = nil
         displayName = ""
@@ -679,7 +682,20 @@ final class AccountModel: ObservableObject {
     /// The calm card in Settings: this phone holds the keys, can ask for a PRF
     /// output, and a passkey of the account cannot unlock the counts yet.
     var offersPasskeyUnlock: Bool {
-        status == .ready && Passkeys.prfAvailable && passkeys.contains { !$0.canUnlock }
+        status == .ready && Passkeys.prfAvailable && passkeys.contains { !$0.canUnlock && !noPRFPasskeys.contains($0.id) }
+    }
+
+    /// The card's other face: the passkeys that could not unlock gave no PRF
+    /// output, and none can unlock the counts, so a new passkey is offered.
+    var offersNewPasskey: Bool {
+        status == .ready && Passkeys.prfAvailable && !offersPasskeyUnlock
+            && passkeys.contains { noPRFPasskeys.contains($0.id) } && !passkeys.contains(where: \.canUnlock)
+    }
+
+    /// Passkeys that answered the card's ceremony without a PRF output: not
+    /// offered again (credential ids, kept with the account).
+    @Published private(set) var noPRFPasskeys = Set(UserDefaults.standard.stringArray(forKey: Keys.noPRFPasskeys) ?? []) {
+        didSet { UserDefaults.standard.set(Array(noPRFPasskeys), forKey: Keys.noPRFPasskeys) }
     }
 
     /// U checked once a launch, after a sync: made if the account has none,
@@ -690,6 +706,18 @@ final class AccountModel: ObservableObject {
         if !userKeyKept { userKeyKept = (try? await account.keepUserKey()) ?? false }
         if let prf = takePRF(for: userID) { _ = try? await account.savePasskeyBox(prf) }
         await refreshPasskeys()
+    }
+
+    /// The lost-U case: no phone holds it, so it never arrives. On request only.
+    func replaceLostUnlockKey() async -> Bool {
+        guard let account else { return false }
+        do {
+            try await account.replaceUserKey()
+            await refreshPasskeys()
+            return true
+        } catch {
+            return false
+        }
     }
 
     func refreshPasskeys() async {
@@ -715,7 +743,8 @@ final class AccountModel: ObservableObject {
             case .waitingForUserKey: return .waiting
             case .otherAccountsPasskey: return .otherAccount
             }
-        } catch Passkeys.Failure.noPRF {
+        } catch Passkeys.Failure.noPRF(let credentialID) {
+            noPRFPasskeys.insert(WebAuthn.base64URL(credentialID))
             return .noPRF
         } catch {
             return .failed
@@ -1008,6 +1037,7 @@ final class AccountModel: ObservableObject {
         passkeys = []
         passkeysLoaded = false
         userKeyKept = false
+        noPRFPasskeys = []
         unlockKeyNotReplaced = false
         heldPRF = nil
         // No session to finish the account steps with: sign in again instead.
@@ -1243,6 +1273,7 @@ final class AccountModel: ObservableObject {
         passkeys = []
         passkeysLoaded = false
         userKeyKept = false
+        noPRFPasskeys = []
         magicToken = nil
         linkWindow.close()
         status = .none
