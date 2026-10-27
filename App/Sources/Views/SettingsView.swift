@@ -153,9 +153,10 @@ private struct GeneralSection: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.vertical, Theme.Space.s)
-            MalaSizeRows(value: Binding(get: { model.preferences.malaSize },
-                                        set: { v in model.update { $0.malaSize = v ?? 108 } }),
-                         defaultSize: nil)
+            MalaSizeRows(value: model.preferences.malaSize, resetTo: Preferences.standardMalaSize,
+                         resettable: model.preferences.malaSize != Preferences.standardMalaSize,
+                         onChange: { v in model.update { $0.malaSize = v } },
+                         onReset: { model.update { $0.malaSize = Preferences.standardMalaSize } })
             Toggle(isOn: Binding(
                 get: { model.preferences.reminderMinutes != nil },
                 set: { on in
@@ -217,11 +218,25 @@ struct PracticeSettingsView: View {
     @EnvironmentObject private var account: AccountModel
     @Environment(\.dismiss) private var dismiss
     let practiceID: String
+    @State private var correcting = false
 
     var body: some View {
         if let p = model.snapshot.practices.first(where: { $0.id == practiceID }) {
             Form {
                 Group {
+                    // Design decision 34: where the count stands, and its correction.
+                    if !p.streakOnly {
+                        Section("Count") {
+                            CountSummary(practice: p, sessions: model.snapshot.sessions(of: p.id))
+                            Button { correcting = true } label: {
+                                Text("Correct the count")
+                                    .foregroundStyle(Theme.accent)
+                                    .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
                     Section {
                         if p.practice.isCustom {
                             TextField("Name", text: binding(p, \.practice.name))
@@ -253,7 +268,12 @@ struct PracticeSettingsView: View {
                             NumberField(title: "Target per round",
                                         value: Binding(get: { p.practice.target ?? 0 },
                                                        set: { binding(p, \.practice.target).wrappedValue = $0 > 0 ? $0 : nil }))
-                            MalaSizeRows(value: binding(p, \.practice.malaSize), defaultSize: model.preferences.malaSize)
+                            // The practice's own size, or the default from General; typing
+                            // sets its own, Reset goes back to the default.
+                            MalaSizeRows(value: p.practice.effectiveMalaSize(default: model.preferences.malaSize),
+                                         resetTo: model.preferences.malaSize, resettable: p.practice.malaSize != nil,
+                                         onChange: { v in binding(p, \.practice.malaSize).wrappedValue = v },
+                                         onReset: { binding(p, \.practice.malaSize).wrappedValue = nil })
                         }
                     }
                     Section {
@@ -273,6 +293,9 @@ struct PracticeSettingsView: View {
             .numberPadDone()
             .navigationTitle(Text(verbatim: p.practice.shownName))
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $correcting) {
+                CorrectCountSheet(practice: p, current: p.lifetime(sessions: model.snapshot.sessions(of: p.id)))
+            }
         }
     }
 
@@ -373,92 +396,191 @@ private struct LanguageView: View {
     }
 }
 
-/// "A mala counts as": 108, or a number the user types (Custom). With a
-/// `defaultSize` (per practice) there is also "Default (N)", which is `nil`.
-/// Any other stored value, such as the 100 an earlier version offered, shows as Custom.
+/// "A mala counts as": one number field (1…10,000), and "Reset to N" below it
+/// while the value can go back (General: anything but 108; a practice: while it
+/// has its own size). A keystroke that leaves the range is not taken; an emptied
+/// field changes nothing until a number is typed.
 private struct MalaSizeRows: View {
     static let bounds = 1...10_000
 
-    private enum Choice: Hashable { case standard, custom, inherited }
-
-    @Binding var value: Int?
-    let defaultSize: Int?
-    @State private var custom: Bool
+    /// The number in effect (the practice's own, or the default).
+    let value: Int
+    /// What Reset goes back to.
+    let resetTo: Int
+    let resettable: Bool
+    let onChange: (Int) -> Void
+    let onReset: () -> Void
     @State private var text: String
     /// The last text the field took: a keystroke that leaves the range goes back to it.
     @State private var accepted: String
 
-    init(value: Binding<Int?>, defaultSize: Int?) {
-        _value = value
-        self.defaultSize = defaultSize
-        let v = value.wrappedValue
-        _custom = State(initialValue: v != nil && v != 108)
-        _text = State(initialValue: v.map { String($0) } ?? "")
-        _accepted = State(initialValue: v.map { String($0) } ?? "")
-    }
-
-    private var choice: Choice {
-        if custom { return .custom }
-        return value == nil ? .inherited : .standard
+    init(value: Int, resetTo: Int, resettable: Bool, onChange: @escaping (Int) -> Void, onReset: @escaping () -> Void) {
+        self.value = value
+        self.resetTo = resetTo
+        self.resettable = resettable
+        self.onChange = onChange
+        self.onReset = onReset
+        _text = State(initialValue: String(value))
+        _accepted = State(initialValue: String(value))
     }
 
     var body: some View {
         Group {
-            // The picker goes under the label when both do not fit on one line
-            // ("Un mala compte pour · Personnalisé…"); it always keeps its own width.
-            FittingRow {
+            // The field goes under the label when both do not fit on one line
+            // ("Un mala compte pour"); it keeps a fixed width, so typing never
+            // moves the row between its two layouts.
+            FittingRow(spacing: Theme.Space.m) {
                 Text("A mala counts as").foregroundStyle(Theme.ink)
             } control: {
-                Picker("A mala counts as", selection: Binding(get: { choice }, set: choose)) {
-                    if let d = defaultSize { Text("Default (\(d))").tag(Choice.inherited) }
-                    Text(verbatim: "108").tag(Choice.standard)
-                    Text("Custom…").tag(Choice.custom)
-                }
-                .labelsHidden()
-                .pickerStyle(.menu)
-                .fixedSize()
-                .tint(Theme.accent)
+                TextField(String(value), text: $text)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
+                    .frame(minWidth: Theme.Size.numberField / 2, maxWidth: Theme.Size.numberField)
+                    .accessibilityLabel(Text("A mala counts as"))
+                    .onChange(of: text) { t in
+                        let digits = t.filter { $0.isASCII && $0.isNumber }
+                        if digits.isEmpty {
+                            accepted = ""
+                        } else if let n = Int(digits.prefix(6)), Self.bounds.contains(n) {
+                            // Only a new number is saved: Reset sets `accepted` first,
+                            // so its own text change saves nothing.
+                            if String(n) != accepted {
+                                accepted = String(n)
+                                onChange(n)
+                            }
+                        }
+                        if text != accepted { text = accepted }
+                    }
             }
             .padding(.vertical, Theme.Space.s)
             .frame(minHeight: Theme.Size.minTap)
-            if custom {
-                FittingRow(spacing: Theme.Space.m) {
-                    Text("Custom value").foregroundStyle(Theme.ink)
-                } control: {
-                    TextField("108", text: $text)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(minWidth: Theme.Size.numberField / 2, maxWidth: Theme.Size.numberField)
-                        .accessibilityLabel(Text("Custom value"))
-                        .onChange(of: text) { t in
-                            // Digits only, and only a number in range is taken; anything
-                            // else leaves the field as it was, so no hint is needed.
-                            // Emptied, it picks nothing until retyped.
-                            let digits = t.filter { $0.isASCII && $0.isNumber }
-                            if digits.isEmpty {
-                                accepted = ""
-                            } else if let n = Int(digits.prefix(6)), Self.bounds.contains(n) {
-                                accepted = String(n)
-                                value = n
-                            }
-                            if text != accepted { text = accepted }
-                        }
+            if resettable {
+                Button {
+                    accepted = String(resetTo)
+                    text = accepted
+                    onReset()
+                } label: {
+                    Text("Reset to \(resetTo)")
+                        .foregroundStyle(Theme.accent)
+                        .frame(maxWidth: .infinity, minHeight: Theme.Size.minTap, alignment: .leading)
+                        .contentShape(Rectangle())
                 }
-                .padding(.vertical, Theme.Space.s)
-                .frame(minHeight: Theme.Size.minTap)
+                .buttonStyle(.plain)
             }
         }
     }
+}
 
-    private func choose(_ c: Choice) {
-        switch c {
-        case .inherited: custom = false; value = nil
-        case .standard: custom = false; value = 108
-        case .custom:
-            custom = true
-            if value == nil { value = defaultSize ?? 108 }
-            text = String(value ?? 108)
-            accepted = text
+/// Settings › a practice › Count: the lifetime total, and with a target "of
+/// 111,111 · round 1" beside it and the round's bar under it.
+private struct CountSummary: View {
+    let practice: TrackedPractice
+    let sessions: [Session]
+
+    var body: some View {
+        let lifetime = practice.lifetime(sessions: sessions)
+        let rounds = practice.rounds(sessions: sessions)
+        VStack(alignment: .leading, spacing: Theme.Space.s) {
+            HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
+                Text(lifetime.grouped)
+                    .font(Typography.headingBold(34, relativeTo: .largeTitle))
+                    .foregroundStyle(Theme.accent)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                if let rounds, let target = practice.practice.target {
+                    Text("of \(target.grouped) · round \(rounds.round)")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            if let rounds, let target = practice.practice.target {
+                Bar(fraction: Double(rounds.inRound) / Double(target), height: Theme.Size.barThick)
+            }
+        }
+        .padding(.vertical, Theme.Space.s)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Correct the count (design decision 34): the count as it is now, typed as a
+/// round and the count in it (or one number without a target). Save writes the
+/// difference as a correction session, shown in History; there is no lower limit.
+private struct CorrectCountSheet: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+    let practice: TrackedPractice
+    /// The lifetime total now.
+    let current: Int
+    @State private var round: Int
+    @State private var inRound: Int
+
+    init(practice: TrackedPractice, current: Int) {
+        self.practice = practice
+        self.current = current
+        let start = CountCorrection.prefill(lifetime: current, target: practice.practice.target)
+        _round = State(initialValue: start.round)
+        _inRound = State(initialValue: start.inRound)
+    }
+
+    private var target: Int? { practice.practice.target.flatMap { $0 > 0 ? $0 : nil } }
+    private var count: Int { CountCorrection.lifetime(round: round, inRound: inRound, target: target) }
+    private var change: Int { count - current }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Group {
+                    Section {
+                        PracticeName(practice: practice.practice)
+                    }
+                    Section {
+                        if target != nil {
+                            Stepper(value: $round, in: 1...9_999) {
+                                HStack(spacing: Theme.Space.s) {
+                                    Text("Round").foregroundStyle(Theme.ink)
+                                    Spacer(minLength: Theme.Space.s)
+                                    Text(round.grouped)
+                                        .font(.body.weight(.semibold))
+                                        .monospacedDigit()
+                                }
+                            }
+                            NumberField(title: "Count in the round", value: $inRound)
+                        } else {
+                            NumberField(title: "Count now", value: $inRound)
+                        }
+                    }
+                    Section {
+                        HStack {
+                            Text("Was").foregroundStyle(Theme.ink)
+                            Spacer()
+                            Text(current.grouped).foregroundStyle(Theme.muted).monospacedDigit()
+                        }
+                        HStack {
+                            Text("Change").foregroundStyle(Theme.ink)
+                            Spacer()
+                            Text(change.signed).font(.body.weight(.semibold)).monospacedDigit()
+                        }
+                    } footer: {
+                        Text("Saved in History as a correction.")
+                    }
+                }
+                .themedRows()
+            }
+            .themedList()
+            .numberPadDone()
+            .navigationTitle("Correct the count")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        model.correct(practice.id, to: count)
+                        dismiss()
+                    }
+                    .disabled(change == 0)
+                }
+            }
         }
     }
 }
