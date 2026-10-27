@@ -18,6 +18,12 @@
             "value" : "Zuflucht und Erleuchtungsgeist"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menedék és a megvilágosodott hozzáállás"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54,6 +60,12 @@
             "value" : "Dorje Sempa"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dorje Sempa"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -73,6 +85,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amitabha"
+          }
+        },
+        "hu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Amitabha"
@@ -108,6 +126,12 @@
             "value" : "Liebevolle Augen"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chenrezig"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -138,6 +162,12 @@
             "value" : "16. Karmapa-Meditation"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "16. Karmapa meditáció"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,6 +190,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Krátké útočiště"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kis menedék"
           }
         },
         "pl" : {
@@ -196,6 +232,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verbeugungen"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leborulások"
           }
         },
         "pl" : {
@@ -246,6 +288,12 @@
             "value" : "Meditación en Mente de Diamante"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gyémánt Tudat"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -276,6 +324,12 @@
             "value" : "Mandala-Gaben"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mandala felajánlások"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -304,6 +358,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meditation auf den Lama"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditáció a lámán"
           }
         },
         "pl" : {
@@ -366,6 +426,12 @@
             "value" : "Octavo Karmapa"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8. Karmapa meditáció"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -390,6 +456,12 @@
             "value" : "Meditace na Buddhu neomezeného světla"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditáció a Határtalan Fény Buddháján"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -412,6 +484,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meditace na buddhu Milující oči"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szerető Szemek"
           }
         },
         "pl" : {
