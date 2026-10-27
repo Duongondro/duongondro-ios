@@ -359,33 +359,27 @@ private struct AddPracticeView: View {
     }
 }
 
-/// Settings › Language: System, then each language in its own name.
+/// Settings › Language (design: Settings › Language): System, naming the phone's
+/// language, then the ten languages in their own names, alphabetically, Latin
+/// scripts before Cyrillic, each with its name in the app's language beneath and,
+/// where no native speaker has read it yet, "Machine-translated". A note under the
+/// list asks for corrections.
 private struct LanguageView: View {
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
 
     var body: some View {
+        // The language the strings are in now: names beneath are given in it.
+        let current = language.localization()
         List {
-            Section {
-                ForEach(AppLanguage.allCases) { option in
-                    Button { language = option } label: {
-                        HStack {
-                            if let name = option.spokenNativeName {
-                                Text(name).foregroundStyle(Theme.ink)
-                            } else {
-                                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                                    Text("System").foregroundStyle(Theme.ink)
-                                    Text("Follow the phone's language").font(.footnote).foregroundStyle(Theme.muted)
-                                }
-                            }
-                            Spacer()
-                            if option == language {
-                                Image(systemName: "checkmark").foregroundStyle(Theme.accent)
-                            }
-                        }
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(option == language ? .isSelected : [])
+            Group {
+                Section {
+                    row(.system, current: current)
+                }
+                Section {
+                    ForEach(AppLanguage.pickerOrder) { row($0, current: current) }
+                } footer: {
+                    Text("A clumsy sentence in your language? Tell Karol: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)")
+                        .tint(Theme.accent)
                 }
             }
             .themedRows()
@@ -393,6 +387,49 @@ private struct LanguageView: View {
         .themedList()
         .navigationTitle("Language")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func row(_ option: AppLanguage, current: String) -> some View {
+        Button { language = option } label: {
+            HStack(spacing: Theme.Space.s) {
+                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                    if let name = option.spokenNativeName {
+                        Text(name).foregroundStyle(Theme.ink)
+                    } else {
+                        Text("System").foregroundStyle(Theme.ink)
+                    }
+                    if let detail = detail(option, current: current) {
+                        Text(verbatim: detail).font(.footnote).foregroundStyle(Theme.muted)
+                    }
+                }
+                Spacer(minLength: Theme.Space.s)
+                if option == language {
+                    Image(systemName: "checkmark").foregroundStyle(Theme.accent)
+                }
+            }
+            .padding(.vertical, Theme.Space.xxs)
+            .frame(minHeight: Theme.Size.minTap)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(option == language ? .isSelected : [])
+    }
+
+    /// The second line: for System the phone's language in its own name; for a
+    /// language its name in the app's language (left out where that is the name
+    /// above, as English's in English), and "Machine-translated" where it applies.
+    private func detail(_ option: AppLanguage, current: String) -> String? {
+        let bundle = AppLanguage(rawValue: current)?.bundle() ?? .main
+        let locale = Locale(identifier: current)
+        guard option != .system else {
+            let phone = AppLanguage(rawValue: AppLanguage.system.localization())?.nativeName ?? "English"
+            return String(localized: "The phone’s language: \(phone)", bundle: bundle, locale: locale)
+        }
+        let translated = locale.localizedString(forLanguageCode: option.rawValue)
+        let name = translated.flatMap { $0.compare(option.nativeName ?? "", options: [.caseInsensitive]) == .orderedSame ? nil : $0 }
+        guard option.machineTranslated else { return name }
+        if let name { return String(localized: "\(name) · Machine-translated", bundle: bundle, locale: locale) }
+        return String(localized: "Machine-translated", bundle: bundle, locale: locale)
     }
 }
 

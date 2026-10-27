@@ -41,6 +41,20 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         return Locale(identifier: rawValue).localizedString(forLanguageCode: rawValue) ?? rawValue
     }
 
+    /// The languages as Settings › Language lists them: alphabetically by their own
+    /// names, Latin scripts before Cyrillic (design: Settings › Language).
+    static var pickerOrder: [AppLanguage] {
+        let english = Locale(identifier: "en")
+        return allCases.filter { $0 != .system }.sorted { a, b in
+            let (x, y) = (a.nativeName ?? a.rawValue, b.nativeName ?? b.rawValue)
+            if x.isCyrillic != y.isCyrillic { return !x.isCyrillic }
+            return x.compare(y, options: [.caseInsensitive, .diacriticInsensitive], locale: english) == .orderedAscending
+        }
+    }
+
+    /// Not yet read by a native speaker (27 October 2026: every one but English and Polish).
+    var machineTranslated: Bool { self != .system && self != .english && self != .polish }
+
     /// `nativeName` tagged with its own language, so VoiceOver reads each in its voice.
     var spokenNativeName: AttributedString? {
         guard let nativeName else { return nil }
@@ -106,4 +120,9 @@ extension Practice {
         guard !custom else { return text }
         return String(localized: String.LocalizationValue(text), table: "Practices", bundle: .appLanguage, locale: .appLanguage)
     }
+}
+
+private extension String {
+    /// Whether the text starts in Cyrillic (U+0400–U+04FF).
+    var isCyrillic: Bool { unicodeScalars.first.map { (0x0400...0x04FF).contains($0.value) } ?? false }
 }
