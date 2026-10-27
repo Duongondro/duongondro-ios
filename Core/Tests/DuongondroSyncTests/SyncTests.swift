@@ -101,6 +101,33 @@ final class StatementTests: XCTestCase {
         let back = try JSONDecoder().decode(SealedSession.self, from: json).record(id: s.id)
         XCTAssertEqual(back, record)
     }
+
+    /// Design decision 34: a correction carries `"correction":true` and its signed
+    /// change; an ordinary session never writes the key.
+    func testACorrectionIsSealedWithItsFlagAndSignedCount() throws {
+        let now = Date(timeIntervalSince1970: 1_791_180_000)
+        let c = Session.countCorrection(practiceID: "dorje-sempa", change: -300, at: now, timeZone: TimeZone(identifier: "Europe/Amsterdam")!)
+        let record = SyncRecord(session: c, updatedAt: now)
+        let json = try SealedSession(record, practiceName: nil).encoded()
+        let text = String(decoding: json, as: UTF8.self)
+        XCTAssertTrue(text.contains(#""correction":true"#), text)
+        XCTAssertTrue(text.contains(#""count":-300"#), text)
+        XCTAssertEqual(try JSONDecoder().decode(SealedSession.self, from: json).record(id: c.id), record)
+
+        let plain = Session(practiceID: "dorje-sempa", amount: 108, startedAt: now, startExact: true,
+                            timeZoneID: "Europe/Amsterdam", loggedAt: now)
+        let plainJSON = try SealedSession(SyncRecord(session: plain, updatedAt: now), practiceName: nil).encoded()
+        XCTAssertFalse(String(decoding: plainJSON, as: UTF8.self).contains("correction"))
+    }
+
+    func testANegativeCountWithoutTheFlagIsNoSession() throws {
+        let json = #"{"count":-5,"practice":"dorje-sempa","start":1791176400000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        XCTAssertNil(try JSONDecoder().decode(SealedSession.self, from: Data(json.utf8)).record(id: UUID()))
+        let flagged = #"{"correction":true,"count":-5,"practice":"dorje-sempa","start":1791176400000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        let record = try XCTUnwrap(JSONDecoder().decode(SealedSession.self, from: Data(flagged.utf8)).record(id: UUID()))
+        XCTAssertTrue(record.session.correction)
+        XCTAssertEqual(record.session.amount, -5)
+    }
 }
 
 /// Opening what the server sends, without a server: replays, missing keys,
@@ -136,6 +163,22 @@ final class ApplyTests: XCTestCase {
         XCTAssertEqual(s.amount, 108)
         XCTAssertFalse(s.startExact)
         XCTAssertEqual(s.loggedAt, s.startedAt)
+    }
+
+    func testANegativeCorrectionFromAnotherPhoneIsStored() throws {
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let json = #"{"correction":true,"count":-1200,"exact":true,"practice":"dorje-sempa","start":1791180000000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        XCTAssertEqual(try engine.apply(log(json, id: id, updatedAt: t), user: user, generation: db.generation), .applied)
+        let s = try XCTUnwrap(db.snapshot().sessions.first)
+        XCTAssertTrue(s.correction)
+        XCTAssertEqual(s.amount, -1200)
+    }
+
+    func testANegativeCountWithoutTheFlagIsRefused() throws {
+        let id = UUID.v7(at: SyncEngine.date(t))
+        let json = #"{"count":-1200,"practice":"dorje-sempa","start":1791180000000,"tz":"Europe/Amsterdam","updatedAt":1791180000000}"#
+        XCTAssertEqual(try engine.apply(log(json, id: id, updatedAt: t), user: user, generation: db.generation), .refused)
+        XCTAssertTrue(try db.snapshot().sessions.isEmpty)
     }
 
     func testAReplayUnderANewerOuterTimeIsRefused() throws {

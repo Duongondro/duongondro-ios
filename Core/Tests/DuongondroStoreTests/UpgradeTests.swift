@@ -137,6 +137,31 @@ final class UpgradeTests: XCTestCase {
         XCTAssertTrue(snap.preferences.onboarded, "practices exist, so onboarding is done")
         XCTAssertEqual(snap.sessions.count, 3)
     }
+
+    /// Migration v6 rebuilds the sessions table so a correction may be negative:
+    /// every earlier row stays, as an ordinary session, dirty as it was.
+    func testTheV6RebuildKeepsEveryRowAndAllowsNegativeCorrectionsOnly() throws {
+        let db = try openV1()
+        let before = try db.snapshot()
+        XCTAssertEqual(before.sessions.count, 3)
+        XCTAssertTrue(before.sessions.allSatisfy { !$0.correction })
+        XCTAssertEqual(try db.dirtySessions().count, 3)
+
+        let now = Date(timeIntervalSince1970: 1_791_180_000)
+        let down = Session.countCorrection(practiceID: "dorje-sempa", change: -500, at: now,
+                                      timeZone: TimeZone(identifier: "Europe/Amsterdam")!)
+        try db.insert(down)
+        let after = try db.snapshot()
+        let stored = try XCTUnwrap(after.sessions.first { $0.id == down.id })
+        XCTAssertTrue(stored.correction)
+        XCTAssertEqual(stored.amount, -500)
+        XCTAssertEqual(after.practices[0].lifetime(sessions: after.sessions), 35_556 + 108 + 216 - 500)
+        XCTAssertTrue(try db.dirtySessions().contains { $0.session.id == down.id }, "a correction syncs like any session")
+
+        let negative = Session(practiceID: "dorje-sempa", amount: -1, startedAt: now, startExact: true,
+                               timeZoneID: "Europe/Amsterdam", loggedAt: now)
+        XCTAssertThrowsError(try db.insert(negative), "only a correction goes below zero")
+    }
 }
 
 /// Sync bookkeeping (migration v2) on top of the v1 data.

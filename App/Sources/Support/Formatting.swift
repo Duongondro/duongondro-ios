@@ -20,4 +20,7 @@ extension Int {
     /// Locale grouping: 43,308 · 43.308 · 43 308.
     /// Grouped for the interface language: 43,308 in English, 43 308 in Polish.
     var grouped: String { formatted(.number.locale(.appLanguage)) }
+
+    /// With its sign, grouped: "+1,200", "−300" (a correction's change).
+    var signed: String { formatted(.number.sign(strategy: .always()).locale(.appLanguage)) }
 }

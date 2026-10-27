@@ -15,11 +15,15 @@ public struct Session: Identifiable, Hashable, Codable, Sendable {
     /// The user's explicit choice in the after-midnight sheet; nil means the start's own date.
     public var chosenDay: CivilDate?
     public let loggedAt: Date
+    /// A correction of the practice's count (design decision 34): `amount` is the
+    /// change, which may be negative. It goes into the lifetime total and rounds,
+    /// never into a day's total, malas, the usual time or the streak.
+    public var correction: Bool
 
     /// `id` defaults to a UUIDv7 stamped with the logging time, the form the server
     /// requires for session ids (design: From ngondro-tracker).
     public init(id: UUID? = nil, practiceID: String, amount: Int, startedAt: Date, startExact: Bool,
-                timeZoneID: String, chosenDay: CivilDate? = nil, loggedAt: Date) {
+                timeZoneID: String, chosenDay: CivilDate? = nil, loggedAt: Date, correction: Bool = false) {
         self.id = id ?? UUID.v7(at: loggedAt)
         self.practiceID = practiceID
         self.amount = amount
@@ -28,7 +32,19 @@ public struct Session: Identifiable, Hashable, Codable, Sendable {
         self.timeZoneID = timeZoneID
         self.chosenDay = chosenDay
         self.loggedAt = loggedAt
+        self.correction = correction
     }
+
+    /// A correction saved now: the difference between the count the person typed
+    /// and the one the app had. Exact, logged at once, in the phone's zone.
+    public static func countCorrection(practiceID: String, change: Int, at now: Date, timeZone: TimeZone) -> Session {
+        Session(practiceID: practiceID, amount: change, startedAt: now, startExact: true,
+                timeZoneID: timeZone.identifier, loggedAt: now, correction: true)
+    }
+
+    /// Whether the session belongs to its day: every session but a correction,
+    /// which changes the total and nothing a day shows (a day's total, malas, the streak).
+    public var countsForDay: Bool { !correction }
 
     public var timeZone: TimeZone { TimeZone(identifier: timeZoneID) ?? .gmt }
 
@@ -96,9 +112,17 @@ public struct TrackedPractice: Identifiable, Hashable, Codable, Sendable {
         return (r - 1) * target + count
     }
 
-    /// Lifetime total: the opening count plus every logged session.
+    /// Lifetime total: the opening count plus every logged session and correction,
+    /// never below zero.
     public func lifetime(sessions: [Session]) -> Int {
-        openingCount + sessions.lazy.filter { $0.practiceID == id }.reduce(0) { $0 + $1.amount }
+        max(0, openingCount + sessions.lazy.filter { $0.practiceID == id }.reduce(0) { $0 + $1.amount })
+    }
+
+    /// The change a correction saves so the total becomes `count` (design decision
+    /// 34). Measured from the sum before clamping at zero, so the total afterwards
+    /// is exactly `count` even after corrections took it below zero.
+    public func correction(to count: Int, sessions: [Session]) -> Int {
+        max(0, count) - (openingCount + sessions.lazy.filter { $0.practiceID == id }.reduce(0) { $0 + $1.amount })
     }
 
     /// Round progress, or nil for open-ended or streak-only practices.
@@ -133,7 +157,7 @@ public struct StreakSeed: Hashable, Codable, Sendable {
 public extension Streak {
     /// One practice's streak from its sessions and optional seed.
     static func of(practiceID: String, sessions: [Session], seed: StreakSeed?, now: Date, timeZone: TimeZone) -> Result {
-        var r = compute(events: sessions.filter { $0.practiceID == practiceID }.map(\.streakEvent),
+        var r = compute(events: sessions.filter { $0.practiceID == practiceID && $0.countsForDay }.map(\.streakEvent),
                         seed: seed?.practiceID == practiceID ? seed?.streakSeed : nil,
                         now: now, nowTimeZone: timeZone)
         if let longest = seed?.longest { r.longest = max(r.longest, longest) }
@@ -143,7 +167,7 @@ public extension Streak {
     /// The headline streak on Today: days with any practice. With several seeds,
     /// the one that gives the longest current streak wins.
     static func headline(sessions: [Session], seeds: [StreakSeed], now: Date, timeZone: TimeZone) -> Result {
-        let events = sessions.map(\.streakEvent)
+        let events = sessions.filter(\.countsForDay).map(\.streakEvent)
         let candidates = [nil] + seeds.map(\.streakSeed)
         return candidates
             .map { compute(events: events, seed: $0, now: now, nowTimeZone: timeZone) }
@@ -151,10 +175,41 @@ public extension Streak {
     }
 }
 
+public extension Session {
+    /// What a day shows of a practice: the sum of its sessions on `day`, corrections left out.
+    static func dayTotal(_ sessions: [Session], on day: CivilDate) -> Int {
+        sessions.filter { $0.countsForDay && $0.day == day }.reduce(0) { $0 + $1.amount }
+    }
+
+    /// Whether any session counted for `day` (a correction never does).
+    static func practised(_ sessions: [Session], on day: CivilDate) -> Bool {
+        sessions.contains { $0.countsForDay && $0.day == day }
+    }
+}
+
+/// Correcting a practice's count (design decision 34): the person types the count
+/// as it is now, and the difference is saved as a correction session.
+public enum CountCorrection {
+    /// The lifetime total for `round` (1-based) with `inRound` done in it; without
+    /// a target, `inRound` is the whole count. Never below zero.
+    public static func lifetime(round: Int, inRound: Int, target: Int?) -> Int {
+        guard let target, target > 0 else { return max(0, inRound) }
+        return (max(1, round) - 1) * target + max(0, inRound)
+    }
+
+    /// Where the count stands now, to prefill the form: the round and the count in
+    /// it, or round 1 and the lifetime total without a target.
+    public static func prefill(lifetime: Int, target: Int?) -> (round: Int, inRound: Int) {
+        guard let target, target > 0 else { return (1, max(0, lifetime)) }
+        let r = RoundProgress(lifetime: max(0, lifetime), target: target)
+        return (r.round, r.inRound)
+    }
+}
+
 public extension SessionStart {
     /// Lengths of the sessions the user timed with Start, for the median estimate.
     static func timedLengths(_ sessions: [Session]) -> [TimeInterval] {
-        sessions.filter(\.startExact).map { $0.loggedAt.timeIntervalSince($0.startedAt) }.filter { $0 > 0 }
+        sessions.filter { $0.startExact && $0.countsForDay }.map { $0.loggedAt.timeIntervalSince($0.startedAt) }.filter { $0 > 0 }
     }
 }
 

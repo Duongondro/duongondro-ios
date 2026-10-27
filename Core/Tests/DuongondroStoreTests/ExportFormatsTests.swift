@@ -138,6 +138,30 @@ final class ExportContentTests: XCTestCase {
         XCTAssertEqual(c.friends.map(\.displayName), ["Anna"])
     }
 
+    func testCorrectionsAreMarkedInEveryExport() throws {
+        var s = snapshot()
+        let c = Session.countCorrection(practiceID: ds.id, change: -300, at: at("2026-10-13T10:00:00Z"), timeZone: ams)
+        s.sessions.append(c)
+        let content = ExportContent.build(snapshot: s, server: nil, local: nil, now: at("2026-10-14T08:00:00Z"), timeZone: ams)
+        XCTAssertEqual(content.practices[0].total, 111_219 - 300)
+        let row = try XCTUnwrap(content.sessions.first { $0.id == c.id })
+        XCTAssertTrue(row.correction)
+        XCTAssertEqual(row.count, -300)
+        XCTAssertEqual(content.sessions.filter { !$0.correction }.count, 4)
+
+        let csv = String(decoding: CSV.table(header: CSVExport.tables(content)[1].columns.map(\.english),
+                                             rows: CSVExport.tables(content)[1].rows).dropFirst(3), as: UTF8.self)
+        XCTAssertTrue(csv.contains(",-300,"), csv)
+        XCTAssertTrue(csv.components(separatedBy: "\r\n").contains { $0.hasSuffix(",true") })
+
+        let json = try JSONSerialization.jsonObject(with: DataExport.practiceJSON(s, appVersion: "0.5 (1)", now: Date())) as! [String: Any]
+        let sessions = json["sessions"] as! [[String: Any]]
+        let flagged = sessions.filter { $0["correction"] as? Bool == true }
+        XCTAssertEqual(flagged.count, 1)
+        XCTAssertEqual(flagged.first?["amount"] as? Int, -300)
+        XCTAssertEqual(sessions.filter { $0["correction"] as? Bool == false }.count, 4)
+    }
+
     func testCustomPracticeNamedFromSealedSessions() {
         let remote = Session(practiceID: "custom-1", amount: 7, startedAt: at("2026-10-10T10:00:00Z"), startExact: true,
                              timeZoneID: ams.identifier, loggedAt: at("2026-10-10T10:00:00Z"))
@@ -154,9 +178,9 @@ final class ExportContentTests: XCTestCase {
         XCTAssertEqual(tables.map(\.name), ["practices", "sessions", "friends", "invites", "blocks", "reports", "devices"])
         let sessions = String(decoding: CSV.table(header: tables[1].columns.map(\.english), rows: tables[1].rows).dropFirst(3), as: UTF8.self)
         let lines = sessions.components(separatedBy: "\r\n")
-        XCTAssertEqual(lines[0], "Practice,Day counted,Start,Time zone,Count,Round,Day chosen after midnight")
-        XCTAssertEqual(lines[1], "Dorje Sempa,2026-10-13,2026-10-13 06:40:00,Europe/Amsterdam,108,1,")
-        XCTAssertEqual(lines[3], "Dorje Sempa,2026-10-13,2026-10-14 00:20:00,Europe/Amsterdam,108,2,2026-10-13")
+        XCTAssertEqual(lines[0], "Practice,Day counted,Start,Time zone,Count,Round,Day chosen after midnight,Correction")
+        XCTAssertEqual(lines[1], "Dorje Sempa,2026-10-13,2026-10-13 06:40:00,Europe/Amsterdam,108,1,,false")
+        XCTAssertEqual(lines[3], "Dorje Sempa,2026-10-13,2026-10-14 00:20:00,Europe/Amsterdam,108,2,2026-10-13,false")
         let friends = String(decoding: CSV.table(header: ["n", "s"], rows: tables[2].rows).dropFirst(3), as: UTF8.self)
         XCTAssertTrue(friends.contains("'=Anna,2026-10-05T12:00:00+02:00"), friends)
 

@@ -132,7 +132,7 @@ struct PracticeView: View {
         let rounds = practice.rounds(sessions: sessions)
         let shown = rounds?.inRound ?? practice.lifetime(sessions: sessions)
         let today = CivilDate.of(model.clock, in: .current)
-        let todayTotal = sessions.filter { $0.day == today }.reduce(0) { $0 + $1.amount }
+        let todayTotal = Session.dayTotal(sessions, on: today)
         return VStack(alignment: .leading, spacing: Theme.Space.s + Theme.Space.xxs) {
             HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
                 Text(shown.grouped)
@@ -295,16 +295,25 @@ private struct HistoryView: View {
                                     Text(s.startedAt.shortTime)
                                         .foregroundStyle(Theme.muted)
                                         .monospacedDigit()
+                                    if s.correction {
+                                        Text("Correction")
+                                            .foregroundStyle(Theme.ink)
+                                    }
                                     Spacer()
-                                    Text(practice.streakOnly ? String(localized: "done", bundle: .appLanguage, locale: .appLanguage) : s.amount.grouped)
+                                    Text(s.correction ? s.amount.signed
+                                         : practice.streakOnly ? String(localized: "done", bundle: .appLanguage, locale: .appLanguage) : s.amount.grouped)
                                         .font(.body.weight(.semibold))
                                 }
+                                .accessibilityElement(children: .combine)
                             }
-                            if !practice.streakOnly && list.count > 1 {
+                            // A correction changes the total, never a day's: the day's
+                            // sum is of its sessions alone.
+                            let counted = list.filter(\.countsForDay)
+                            if !practice.streakOnly && counted.count > 1 {
                                 HStack {
                                     Text("Total")
                                     Spacer()
-                                    Text(list.reduce(0) { $0 + $1.amount }.grouped)
+                                    Text(counted.reduce(0) { $0 + $1.amount }.grouped)
                                         .font(.body.weight(.bold))
                                 }
                             }

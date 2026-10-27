@@ -86,7 +86,7 @@ final class AppModel: ObservableObject {
 
     func practisedToday(_ practiceID: String, now: Date = Date()) -> Bool {
         let today = CivilDate.of(now, in: .current)
-        return snapshot.sessions(of: practiceID).contains { $0.day == today }
+        return Session.practised(snapshot.sessions(of: practiceID), on: today)
     }
 
     func malaSize(of p: TrackedPractice) -> Int { p.practice.effectiveMalaSize(default: preferences.malaSize) }
@@ -111,6 +111,19 @@ final class AppModel: ObservableObject {
         let session = next.session(timeZone: .current, timedSessionLengths: SessionStart.timedLengths(snapshot.sessions))
         perform { try $0.savePending(session, until: next.deadline, now: now) }
         scheduleClose()
+    }
+
+    /// Correct the count (design decision 34): the person typed the total as it is
+    /// now, and the difference is saved as a correction session, final at once (no
+    /// undo window) and synced like any other. An open undo window closes first, so
+    /// the difference is taken from what stays.
+    func correct(_ practiceID: String, to count: Int, at now: Date = Date()) {
+        guard persistent else { return }
+        finalisePending(now: now)
+        guard let practice = snapshot.practices.first(where: { $0.id == practiceID }) else { return }
+        let change = practice.correction(to: count, sessions: snapshot.sessions(of: practiceID))
+        guard change != 0 else { return }
+        perform { try $0.insert(Session.countCorrection(practiceID: practiceID, change: change, at: now, timeZone: .current)) }
     }
 
     /// Undo: the pending row is deleted outright; it never left the phone.

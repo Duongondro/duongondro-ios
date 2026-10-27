@@ -178,6 +178,7 @@ struct ExportBuilder {
         case .count: "Count"
         case .round: "Round"
         case .chosenDay: "Day chosen after midnight"
+        case .correction: "Correction"
         case .displayName: "Display name"
         case .friendsSince: "Friends since"
         case .code: "Friendship code"

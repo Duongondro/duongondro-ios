@@ -270,6 +270,8 @@ struct ExportPDF {
     // MARK: - Content
 
     private func number(_ n: Int) -> String { n.formatted(.number.locale(locale)) }
+    /// "+1,200" or "−300": a correction's change.
+    private func signed(_ n: Int) -> String { n.formatted(.number.sign(strategy: .always()).locale(locale)) }
 
     private func date(_ d: Date?, time: Bool = false) -> String {
         guard let d else { return "–" }
@@ -371,9 +373,11 @@ struct ExportPDF {
                     rows.append(([
                         Cell(k == 0 ? day(d.day, in: x.timeZone) : ""),
                         Cell(started),
-                        Cell(p.streakOnly || x.count == 0 ? l("Done") : number(x.count)),
+                        // A correction shows its signed change, and says what it is
+                        // where the day it counted for would go: it counts for none.
+                        Cell(x.correction ? signed(x.count) : p.streakOnly || x.count == 0 ? l("Done") : number(x.count)),
                         Cell(x.round.map(number) ?? "–"),
-                        Cell(x.day != x.startDay ? day(x.day, in: x.timeZone) : ""),
+                        Cell(x.correction ? l("Correction") : x.day != x.startDay ? day(x.day, in: x.timeZone) : ""),
                     ], group))
                 }
             }

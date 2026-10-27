@@ -125,6 +125,9 @@ public enum DataExport {
         let day: String
         let dayChosenByUser: Bool
         let loggedAt: Date
+        /// A correction of the count (design decision 34): `amount` is the change, and
+        /// it is in the lifetime total but in no day's.
+        let correction: Bool
     }
 
     struct SeedOut: Encodable {
@@ -157,7 +160,8 @@ public enum DataExport {
             sessions: s.sessions.map { x in
                 SessionOut(id: x.id.uuidString.lowercased(), practiceId: x.practiceID, amount: x.amount,
                            startedAt: x.startedAt, startExact: x.startExact, timeZone: x.timeZoneID,
-                           day: x.day.description, dayChosenByUser: x.chosenDay != nil, loggedAt: x.loggedAt)
+                           day: x.day.description, dayChosenByUser: x.chosenDay != nil, loggedAt: x.loggedAt,
+                           correction: x.correction)
             },
             streakSeeds: s.seeds.map { SeedOut(practiceId: $0.practiceID, days: $0.days, longest: $0.longest,
                                                lastDay: $0.lastDay.description, timeZone: $0.timeZoneID) })
@@ -178,7 +182,9 @@ public enum DataExport {
             "  Your practices, every session and your private streak seeds, decrypted on",
             "  your phone. Times are ISO 8601 in UTC; each session also has the time zone",
             "  it started in and the day it counts for (YYYY-MM-DD). openingCount is what",
-            "  you entered at onboarding; lifetime adds every session to it.",
+            "  you entered at onboarding; lifetime adds every session to it. A session",
+            "  with correction true is a correction of the count: its amount is the",
+            "  change (it may be negative), counted in lifetime but in no day's total.",
         ]
         if hasServer {
             lines += [

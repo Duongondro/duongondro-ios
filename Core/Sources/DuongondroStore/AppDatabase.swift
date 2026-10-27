@@ -180,6 +180,37 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
             // from before. Pending rows are never pushed, and Undo deletes them.
             try db.execute(sql: "ALTER TABLE sessions ADD COLUMN pending_until DATETIME")
         }
+        migrator.registerMigration("v6") { db in
+            // Design decision 34: a correction of a practice's count is a session
+            // whose amount is the change, which may be negative. SQLite cannot
+            // change v1's CHECK (amount >= 0), so the table is rebuilt with every
+            // row and column kept; only a correction may go below zero.
+            try db.execute(sql: """
+                CREATE TABLE sessions_v6 (
+                    id            TEXT PRIMARY KEY NOT NULL,
+                    practice_id   TEXT NOT NULL REFERENCES practices (id) ON DELETE CASCADE,
+                    amount        INTEGER NOT NULL,
+                    started_at    DATETIME NOT NULL,
+                    start_exact   INTEGER NOT NULL,
+                    time_zone     TEXT NOT NULL,
+                    chosen_day    TEXT,
+                    logged_at     DATETIME NOT NULL,
+                    dirty         INTEGER NOT NULL DEFAULT 1,
+                    updated_at    DATETIME,
+                    deleted_at    DATETIME,
+                    pending_until DATETIME,
+                    correction    INTEGER NOT NULL DEFAULT 0,
+                    CHECK (amount >= 0 OR correction = 1)
+                );
+                INSERT INTO sessions_v6 (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day,
+                                         logged_at, dirty, updated_at, deleted_at, pending_until)
+                SELECT id, practice_id, amount, started_at, start_exact, time_zone, chosen_day,
+                       logged_at, dirty, updated_at, deleted_at, pending_until FROM sessions;
+                DROP TABLE sessions;
+                ALTER TABLE sessions_v6 RENAME TO sessions;
+                CREATE INDEX sessions_practice ON sessions (practice_id, started_at);
+                """)
+        }
         return migrator
     }
 
@@ -241,14 +272,15 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
         }
     }
 
-    /// Writes a final session.
+    /// Writes a final session (or a correction), dirty, so the next push sends it.
     public func insert(_ s: Session) throws {
         try writer.write { db in
             try db.execute(sql: """
-                INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day, logged_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day, logged_at,
+                                      updated_at, correction)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, arguments: [s.id.uuidString.lowercased(), s.practiceID, s.amount, s.startedAt, s.startExact,
-                                 s.timeZoneID, s.chosenDay?.description, s.loggedAt, s.loggedAt])
+                                 s.timeZoneID, s.chosenDay?.description, s.loggedAt, s.loggedAt, s.correction])
         }
     }
 
@@ -660,15 +692,15 @@ public final class AppDatabase: @unchecked Sendable {  // the generation counter
             let s = r.session
             try db.execute(sql: """
                 INSERT INTO sessions (id, practice_id, amount, started_at, start_exact, time_zone, chosen_day,
-                                      logged_at, updated_at, deleted_at, dirty)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+                                      logged_at, updated_at, deleted_at, correction, dirty)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
                 ON CONFLICT (id) DO UPDATE SET
                     practice_id = excluded.practice_id, amount = excluded.amount, started_at = excluded.started_at,
                     start_exact = excluded.start_exact, time_zone = excluded.time_zone, chosen_day = excluded.chosen_day,
                     logged_at = excluded.logged_at, updated_at = excluded.updated_at, deleted_at = excluded.deleted_at,
-                    dirty = 0
+                    correction = excluded.correction, dirty = 0
                 """, arguments: [id, s.practiceID, s.amount, s.startedAt, s.startExact, s.timeZoneID,
-                                 s.chosenDay?.description, s.loggedAt, r.updatedAt, r.deletedAt])
+                                 s.chosenDay?.description, s.loggedAt, r.updatedAt, r.deletedAt, s.correction])
             return true
         }
     }
@@ -741,8 +773,10 @@ public struct Preferences: Codable, Equatable, Sendable {
     public var onboarded = false
     public var finishedShortRefuge = false
     public var finishedNgondro = false
-    /// Whether one mala counts as 100 or 108; each practice can override it.
-    public var malaSize = 108
+    /// The number one mala counts as (1…10,000; 108 unless set); each practice can override it.
+    public var malaSize = Preferences.standardMalaSize
+    /// What a mala counts as until someone sets another number, and what Reset goes back to.
+    public static let standardMalaSize = 108
     /// Minutes after local midnight for the streak-at-risk reminder; nil for none.
     public var reminderMinutes: Int?
     /// Lock screens show "A friend practised" instead of practice names.
@@ -801,7 +835,8 @@ extension Session {
         let chosen: String? = row["chosen_day"]
         self.init(id: UUID(uuidString: row["id"]) ?? UUID(), practiceID: row["practice_id"], amount: row["amount"],
                   startedAt: row["started_at"], startExact: row["start_exact"], timeZoneID: row["time_zone"],
-                  chosenDay: chosen.flatMap(CivilDate.init), loggedAt: row["logged_at"])
+                  chosenDay: chosen.flatMap(CivilDate.init), loggedAt: row["logged_at"],
+                  correction: row["correction"] ?? false)
     }
 }
 
