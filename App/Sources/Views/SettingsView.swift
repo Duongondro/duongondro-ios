@@ -562,7 +562,9 @@ private struct CorrectCountSheet: View {
 
     private var target: Int? { practice.practice.target.flatMap { $0 > 0 ? $0 : nil } }
     private var count: Int { CountCorrection.lifetime(round: round, inRound: inRound, target: target) }
-    private var change: Int { count - current }
+    /// What Save writes: measured against the unclamped sum, as `AppModel.correct` does,
+    /// so the sheet never shows one change and saves another.
+    private var change: Int { practice.correction(to: count, sessions: model.snapshot.sessions(of: practice.id)) }
 
     var body: some View {
         NavigationStack {
