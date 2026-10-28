@@ -70,8 +70,8 @@ struct AccountSection: View {
                 }
                 Button { replacingCode = true } label: {
                     SettingsRow("Recovery code",
-                                detail: account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"),
-                                detailColor: account.recoveryUnconfirmed ? Theme.destructive : Theme.muted,
+                                detail: account.recoveryCodeMissing ? Text("Not confirmed") : Text("Make a new one"),
+                                detailColor: account.recoveryCodeMissing ? Theme.destructive : Theme.muted,
                                 chevron: true)
                 }
                 .disabled(account.busy)

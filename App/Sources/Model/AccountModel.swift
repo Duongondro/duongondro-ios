@@ -678,6 +678,11 @@ final class AccountModel: ObservableObject {
     @Published private(set) var passkeys: [Passkey] = []
     @Published private(set) var passkeysLoaded = false
 
+    /// An unconfirmed recovery code is a warning only while it is the one way back:
+    /// a passkey that unlocks the counts brings them to a new phone without it
+    /// (decision 33).
+    var recoveryCodeMissing: Bool { recoveryUnconfirmed && !passkeys.contains(where: \.canUnlock) }
+
     /// The calm card in Settings: this phone holds the keys, can ask for a PRF
     /// output, and a passkey of the account cannot unlock the counts yet.
     var offersPasskeyUnlock: Bool {

@@ -7384,7 +7384,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eksport i usuwanie"
+            "value" : "Wyeksportuj dane lub usuń konto"
           }
         },
         "ru" : {
