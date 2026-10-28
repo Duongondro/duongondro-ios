@@ -25418,13 +25418,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neobratná věta ve vašem jazyce? Napište Karolovi: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+            "value" : "Neobratná věta ve tvém jazyce? Napiš Karolovi: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nemotorná veta vo vašom jazyku? Napíšte Karolovi: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+            "value" : "Nemotorná veta v tvojom jazyku? Napíš Karolovi: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
           }
         },
         "hu" : {
@@ -25742,7 +25742,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du kannst das vor dem Senden löschen. Zählungen und Praxen werden nicht angehängt."
+            "value" : "Du kannst das vor dem Senden löschen. Zählungen und Übungen werden nicht angehängt."
           }
         },
         "ru" : {
@@ -25766,13 +25766,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Před odesláním to můžete smazat. Počty ani praxe se nepřidávají."
+            "value" : "Před odesláním to můžeš smazat. Počty ani praktiky se nepřidávají."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pred odoslaním to môžete zmazať. Počty ani praxe sa nepridávajú."
+            "value" : "Pred odoslaním to môžeš zmazať. Počty ani cvičenia sa nepridávajú."
           }
         },
         "hu" : {
