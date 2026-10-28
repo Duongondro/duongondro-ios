@@ -104,7 +104,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciółka"
+            "value" : "Znajoma"
           }
         },
         "ru" : {
@@ -235,6 +235,18 @@
         }
       }
     },
+    "Mark today done" : {
+      "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonałam praktykę"
+          }
+        }
+      }
+    },
     "Poke a friend" : {
       "comment" : "The feminine form of the Localizable string with this key, only where a language conjugates; looked up by Gendered (design: Localisation › Grammatical gender).",
       "extractionState" : "manual",
@@ -266,7 +278,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Szturchnij przyjaciółkę"
+            "value" : "Szturchnij znajomą"
           }
         },
         "ru" : {
@@ -320,7 +332,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Szturchnięto przyjaciółkę"
+            "value" : "Szturchnięto znajomą"
           }
         },
         "ru" : {
@@ -374,7 +386,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wtedy przyjaciółka może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+            "value" : "Wtedy znajoma może cię popędzać, a ty dowiesz się, kiedy znajomi praktykują."
           }
         },
         "ru" : {

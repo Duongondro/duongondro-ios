@@ -52,7 +52,7 @@ struct PracticeView: View {
                     UndoToast(pending: pending, streakOnly: practice.streakOnly)
                 }
                 if practice.streakOnly {
-                    BigButton(title: doneToday ? "Done today" : "Mark today done", systemImage: "checkmark") {
+                    BigButton(title: doneToday ? "Done today" : LocalizedStringKey(Gendered.mine("Mark today done")), systemImage: "checkmark") {
                         taps += 1
                         model.add(0, to: practice.id)
                     }
@@ -66,7 +66,8 @@ struct PracticeView: View {
                 }
                 HStack(spacing: Theme.Space.m) {
                     if !practice.streakOnly {
-                        Button("+ Custom") { customAmount = "" }
+                        // One line, shrinking rather than overflowing where a translation runs long ("+ Inna liczba").
+                        Button { customAmount = "" } label: { Text("+ Custom").lineLimit(1).minimumScaleFactor(0.7) }
                             .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
                     }
                     Button("History") { showsHistory = true }
@@ -99,14 +100,19 @@ struct PracticeView: View {
         return Covers.photo(for: id) != nil || Covers.builtIn(for: id) != nil
     }
 
-    /// "Dorje Sempa", and below it "Diamond Mind · round 1 · 43,308 lifetime".
+    /// "Dorje Sempa", and below it "round 2" for a practice with rounds, or "43,308
+    /// lifetime" for one without: with rounds, only the one under way matters here, and
+    /// the lifetime total is the app's own bookkeeping. The second name is left to
+    /// Settings and onboarding, where a practice is chosen.
     private func header(_ practice: TrackedPractice) -> some View {
         let sessions = model.snapshot.sessions(of: practice.id)
         var parts: [String] = []
-        if let second = practice.practice.shownSecondName { parts.append(second) }
         if !practice.streakOnly {
-            if let r = practice.rounds(sessions: sessions) { parts.append(String(localized: "round \(r.round)", bundle: .appLanguage, locale: .appLanguage)) }
-            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime", bundle: .appLanguage, locale: .appLanguage))
+            if let r = practice.rounds(sessions: sessions) {
+                parts.append(String(localized: "round \(r.round)", bundle: .appLanguage, locale: .appLanguage))
+            } else {
+                parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime", bundle: .appLanguage, locale: .appLanguage))
+            }
         } else {
             parts.append(String(localized: "streak only", bundle: .appLanguage, locale: .appLanguage))
         }
