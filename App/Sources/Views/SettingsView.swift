@@ -271,7 +271,7 @@ struct PracticeSettingsView: View {
                             // The practice's own size, or the default from General; typing
                             // sets its own, Reset goes back to the default.
                             MalaSizeRows(value: p.practice.effectiveMalaSize(default: model.preferences.malaSize),
-                                         resetTo: model.preferences.malaSize, resettable: p.practice.malaSize != nil,
+                                         resetTo: model.preferences.malaSize, resettable: p.practice.malaSize.map { $0 != model.preferences.malaSize } ?? false,
                                          onChange: { v in binding(p, \.practice.malaSize).wrappedValue = v },
                                          onReset: { binding(p, \.practice.malaSize).wrappedValue = nil })
                         }
