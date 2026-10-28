@@ -15,5 +15,5 @@ SwiftUI app for Duongöndro. The design lives in `Duongondro/duongondro-design` 
 - **Never log from Today.** Counts are logged only on a practice's screen, through `PendingLog` (5-second undo window; the session is written at once, pending, counted on screen but never synced until the window closes; Undo deletes it; no source recorded).
 - **Day keys** come from `CivilDate` (Gregorian, explicit time zone), never `DateFormatter` with `YYYY`.
 - **Release builds refuse a dirty tree** (`Scripts/build-info.sh`); Debug builds show `<hash>-dirty` in Settings.
-- **Practice names:** Tibetan/Sanskrit first (Dorje Sempa, Chenrezig, Amitabha), English as the second line. French has no Practices.xcstrings entries yet, so it shows the English names until a French practice book is sourced (design: Localisation › French).
+- **Practice names:** Tibetan/Sanskrit first (Dorje Sempa, Chenrezig, Amitabha), English as the second line where a practice is chosen (Settings, onboarding); Today and the practice screen show the first name only. French has no Practices.xcstrings entries yet, so it shows the English names until a French practice book is sourced (design: Localisation › French).
 - Commits end with the attribution trailers the session asks for.
