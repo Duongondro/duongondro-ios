@@ -270,8 +270,8 @@ struct ExportPDF {
     // MARK: - Content
 
     private func number(_ n: Int) -> String { n.formatted(.number.locale(locale)) }
-    /// "+1,200" or "−300": a correction's change.
-    private func signed(_ n: Int) -> String { n.formatted(.number.sign(strategy: .always()).locale(locale)) }
+    /// "+1,200" or "−300": a correction's change, signed as History signs it.
+    private func signed(_ n: Int) -> String { n.signed(in: locale) }
 
     private func date(_ d: Date?, time: Bool = false) -> String {
         guard let d else { return "–" }

@@ -22,5 +22,12 @@ extension Int {
     var grouped: String { formatted(.number.locale(.appLanguage)) }
 
     /// With its sign, grouped: "+1,200", "−300" (a correction's change).
-    var signed: String { formatted(.number.sign(strategy: .always()).locale(.appLanguage)) }
+    var signed: String { signed(in: .appLanguage) }
+
+    /// With its sign, grouped in `locale`, and a true minus sign (U+2212), never
+    /// the hyphen most locales' formats give.
+    func signed(in locale: Locale) -> String {
+        let digits = magnitude.formatted(.number.locale(locale))
+        return self > 0 ? "+" + digits : self < 0 ? "\u{2212}" + digits : digits
+    }
 }
