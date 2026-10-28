@@ -118,7 +118,8 @@ public enum CSVExport {
                   }),
             Table(name: "sessions", columns: [.practice, .dayCounted, .start, .timeZone, .count, .round, .chosenDay, .correction],
                   rows: content.sessions.map { x in
-                      [.text(names[x.practiceID]?.name ?? x.practiceID), .text(x.day.description), .text(stamp(x.start, in: x.timeZone)),
+                      // A correction counts for no day, so its Day counted is empty.
+                      [.text(names[x.practiceID]?.name ?? x.practiceID), x.correction ? .empty : .text(x.day.description), .text(stamp(x.start, in: x.timeZone)),
                        .text(x.timeZone.identifier), .int(x.count), opt(x.round), x.dayChosen ? .text(x.day.description) : .empty,
                        .bool(x.correction)]
                   }),
@@ -171,7 +172,8 @@ public enum CSVExport {
             "device keeps its key). Session starts are local to the session's time",
             "zone, given beside them; other times are ISO 8601 with their UTC offset.",
             "In sessions.csv, Correction is true for a correction of the count: its",
-            "Count is the change (it may be negative), in the total but in no day's.",
+            "Count is the change (it may be negative), in the total but in no day's,",
+            "so its Day counted is empty.",
         ]
         switch content.serverPart {
         case .local:

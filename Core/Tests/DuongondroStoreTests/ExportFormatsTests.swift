@@ -152,7 +152,8 @@ final class ExportContentTests: XCTestCase {
         let csv = String(decoding: CSV.table(header: CSVExport.tables(content)[1].columns.map(\.english),
                                              rows: CSVExport.tables(content)[1].rows).dropFirst(3), as: UTF8.self)
         XCTAssertTrue(csv.contains(",-300,"), csv)
-        XCTAssertTrue(csv.components(separatedBy: "\r\n").contains { $0.hasSuffix(",true") })
+        let correctionLine = try XCTUnwrap(csv.components(separatedBy: "\r\n").first { $0.hasSuffix(",true") })
+        XCTAssertEqual(correctionLine.components(separatedBy: ",")[1], "", "a correction counts for no day")
 
         let json = try JSONSerialization.jsonObject(with: DataExport.practiceJSON(s, appVersion: "0.5 (1)", now: Date())) as! [String: Any]
         let sessions = json["sessions"] as! [[String: Any]]
