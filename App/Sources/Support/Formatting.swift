@@ -16,8 +16,25 @@ extension Date {
     var shortTime: String { formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: .appLanguage)) }
 }
 
+extension String {
+    /// A line of parts joined by " · " starts with a capital, in the app's language:
+    /// its parts ("round 2", "done today") are written to follow a dot, and now often
+    /// lead the line.
+    var capitalisedFirst: String { prefix(1).capitalized(with: .appLanguage) + dropFirst() }
+}
+
 extension Int {
     /// Locale grouping: 43,308 · 43.308 · 43 308.
     /// Grouped for the interface language: 43,308 in English, 43 308 in Polish.
     var grouped: String { formatted(.number.locale(.appLanguage)) }
+
+    /// With its sign, grouped: "+1,200", "−300" (a correction's change).
+    var signed: String { signed(in: .appLanguage) }
+
+    /// With its sign, grouped in `locale`, and a true minus sign (U+2212), never
+    /// the hyphen most locales' formats give.
+    func signed(in locale: Locale) -> String {
+        let digits = magnitude.formatted(.number.locale(locale))
+        return self > 0 ? "+" + digits : self < 0 ? "\u{2212}" + digits : digits
+    }
 }

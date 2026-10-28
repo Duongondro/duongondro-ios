@@ -60,9 +60,12 @@ public struct ExportContent: Equatable, Sendable {
         public var day: CivilDate
         /// The person picked `day` in the after-midnight sheet.
         public var dayChosen: Bool
+        /// The count added; on a correction, the change, which may be negative.
         public var count: Int
         /// The round the session's last count fell in; nil where there are no rounds.
         public var round: Int?
+        /// A correction of the count (design decision 34), in the total but in no day's.
+        public var correction: Bool = false
     }
 
     public struct Friend: Equatable, Sendable {
@@ -157,7 +160,8 @@ public struct ExportContent: Equatable, Sendable {
                 sessions.append(SessionRow(
                     id: x.id, practiceID: t.id, start: x.startedAt, timeZone: x.timeZone,
                     startDay: CivilDate.of(x.startedAt, in: x.timeZone), day: x.day, dayChosen: x.chosenDay != nil,
-                    count: x.amount, round: target.map { Self.round(after: running, target: $0) }))
+                    count: x.amount, round: target.map { Self.round(after: max(0, running), target: $0) },
+                    correction: x.correction))
             }
         }
 

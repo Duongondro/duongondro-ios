@@ -675,25 +675,25 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld przyjaciel"
+                  "value" : "%lld znajomy"
                 }
               },
               "few" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld przyjaciół"
+                  "value" : "%lld znajomych"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld przyjaciół"
+                  "value" : "%lld znajomych"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld przyjaciela"
+                  "value" : "%lld znajomego"
                 }
               }
             }
@@ -1874,7 +1874,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel"
+            "value" : "Znajomy"
           }
         },
         "cs" : {
@@ -3556,7 +3556,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele"
+            "value" : "Znajomi"
           }
         },
         "cs" : {
@@ -3614,7 +3614,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele od"
+            "value" : "Znajomi od"
           }
         },
         "cs" : {
@@ -4252,7 +4252,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nie masz jeszcze przyjaciół."
+            "value" : "Nie masz jeszcze znajomych."
           }
         },
         "cs" : {
@@ -5992,7 +5992,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ten telefon ma konto, ale nie udało się połączyć z serwerem, więc ta sekcja i Przyjaciele zawierają tylko to, co wie telefon. Wyeksportuj ponownie, gdy będzie połączenie."
+            "value" : "Ten telefon ma konto, ale nie udało się połączyć z serwerem, więc ta sekcja i Znajomi zawierają tylko to, co wie telefon. Wyeksportuj ponownie, gdy będzie połączenie."
           }
         },
         "cs" : {
@@ -7769,6 +7769,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "ton nom d'utilisateur, si tu en as choisi un ; il nomme ta clé d'accès et tes amis ne le voient pas"
+          }
+        }
+      }
+    },
+    "Correction" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korrektur"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправление"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виправлення"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korekta"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprava"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprava"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Javítás"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrección"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correction"
           }
         }
       }

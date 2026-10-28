@@ -180,6 +180,8 @@ struct SealedSession: Codable {
     var updatedAt: Int64
     var deletedAt: Int64?
     var practiceName: String?
+    /// Present (true) only on a correction of the count, whose `count` is the change.
+    var correction: Bool?
 
     init(_ r: SyncRecord, practiceName: String?) {
         let s = r.session
@@ -194,6 +196,7 @@ struct SealedSession: Codable {
         updatedAt = Statements.millis(r.updatedAt)
         deletedAt = r.deletedAt.map(Statements.millis)
         self.practiceName = practiceName
+        correction = s.correction ? true : nil
     }
 
     func encoded() throws -> Data {
@@ -205,10 +208,14 @@ struct SealedSession: Codable {
     /// The whole session, or nil when the content is missing (a bare tombstone).
     func record(id: UUID) -> SyncRecord? {
         guard let practice, let count, let start, let tz else { return nil }
+        // Only a correction may take a count away; a negative count on anything
+        // else is not a session this app can show, and is refused.
+        let isCorrection = correction == true
+        guard count >= 0 || isCorrection else { return nil }
         let session = Session(id: id, practiceID: practice, amount: count,
                               startedAt: SyncEngine.date(start), startExact: exact ?? false,
                               timeZoneID: tz, chosenDay: chosenDay.flatMap(CivilDate.init),
-                              loggedAt: SyncEngine.date(loggedAt ?? start))
+                              loggedAt: SyncEngine.date(loggedAt ?? start), correction: isCorrection)
         return SyncRecord(session: session, updatedAt: SyncEngine.date(updatedAt), deletedAt: deletedAt.map(SyncEngine.date))
     }
 }

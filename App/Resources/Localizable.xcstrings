@@ -2562,7 +2562,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "+ Własna"
+            "value" : "+ Inna liczba"
           }
         },
         "ru" : {
@@ -2683,7 +2683,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel"
+            "value" : "Znajomy"
           }
         },
         "ru" : {
@@ -2980,7 +2980,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Losowe imię, żeby przyjaciele mogli cię rozpoznać. Zostaw je albo zmień."
+            "value" : "Losowe imię, żeby znajomi mogli cię rozpoznać. Zostaw je albo zmień."
           }
         },
         "ru" : {
@@ -3265,7 +3265,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O aplikacji i autorzy"
+            "value" : "O aplikacji i autorach"
           }
         },
         "ru" : {
@@ -3381,7 +3381,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Po przyjęciu zostajecie przyjaciółmi: każde z was widzi publiczne serie drugiej osoby, ale nigdy liczby."
+            "value" : "Po przyjęciu zostajecie znajomymi: każde z was widzi publiczne serie drugiej osoby, ale nigdy liczby."
           }
         },
         "ru" : {
@@ -3671,7 +3671,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dodaj przyjaciela"
+            "value" : "Dodaj znajomego"
           }
         },
         "ru" : {
@@ -4019,7 +4019,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dodaj przyjaciela"
+            "value" : "Dodaj znajomego"
           }
         },
         "ru" : {
@@ -4489,7 +4489,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Konto dodaje przyjaciół, publiczne serie i synchronizację między telefonami. Liczniki są szyfrowane end-to-end w obu przypadkach: serwer nigdy ich nie widzi."
+            "value" : "Konto dodaje znajomych, publiczne serie i synchronizację między telefonami. Liczniki są szyfrowane end-to-end w obu przypadkach: serwer nigdy ich nie widzi."
           }
         },
         "ru" : {
@@ -4547,7 +4547,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Serwer przechowuje Twoje konto: Twoje klucze dostępu oraz e-mail, jeśli go dodasz; imię widoczne dla przyjaciół; nazwę użytkownika i płeć, jeśli je podasz; Twoich przyjaciół; oraz publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
+            "value" : "Konto w aplikacji do praktyki buddyjskiej coś mówi o Twoich przekonaniach, które RODO traktuje jako szczególne. Serwer przechowuje Twoje konto: Twoje klucze dostępu oraz e-mail, jeśli go dodasz; imię widoczne dla znajomych; nazwę użytkownika i płeć, jeśli je podasz; Twoich znajomych; oraz publiczne serie. Liczniki pozostają zaszyfrowane na Twoich telefonach."
           }
         },
         "ru" : {
@@ -4773,7 +4773,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Każdy z tym kodem zostanie Twoim przyjacielem · wygasa za 7 dni"
+            "value" : "Każdy z tym kodem zostanie Twoim znajomym · wygasa za 7 dni"
           }
         },
         "ru" : {
@@ -6137,122 +6137,6 @@
         }
       }
     },
-    "Custom value" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vlastní hodnota"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eigener Wert"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Valor personalizado"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Valeur personnalisée"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyéni érték"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Własna wartość"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Своё значение"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vlastná hodnota"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Власне значення"
-          }
-        }
-      }
-    },
-    "Custom…" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vlastní hodnota…"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eigener Wert…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Personalizado…"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Personnalisé…"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Egyéni érték…"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Własna wartość…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Своё значение…"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vlastná hodnota…"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Власне значення…"
-          }
-        }
-      }
-    },
     "Daily practices" : {
       "localizations" : {
         "cs" : {
@@ -6423,64 +6307,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Días practicados en la app, firmados por cada persona. Los conteos siguen siendo privados."
-          }
-        }
-      }
-    },
-    "Default (%lld)" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Výchozí (%lld)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Standard (%lld)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Par défaut (%lld)"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alapértelmezett (%lld)"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Domyślnie (%lld)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "По умолчанию (%lld)"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Predvolené (%lld)"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Типово (%lld)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Predeterminado (%lld)"
           }
         }
       }
@@ -7442,7 +7268,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wieczorne przypomnienie"
+            "value" : "Przypomnij mi wieczorem"
           }
         },
         "ru" : {
@@ -7558,7 +7384,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eksport i usuwanie"
+            "value" : "Wyeksportuj dane lub usuń konto"
           }
         },
         "ru" : {
@@ -7812,7 +7638,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel praktykował"
+            "value" : "Znajomy praktykował"
           }
         },
         "ru" : {
@@ -8208,7 +8034,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel właśnie praktykował · dzień %2$@"
+            "value" : "Znajomy właśnie praktykował · dzień %2$@"
           }
         },
         "ru" : {
@@ -8274,7 +8100,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciółka właśnie praktykowała · dzień %2$@"
+            "value" : "Znajoma właśnie praktykowała · dzień %2$@"
           }
         },
         "ru" : {
@@ -8340,7 +8166,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel właśnie praktykował · dzień %2$@"
+            "value" : "Znajomy właśnie praktykował · dzień %2$@"
           }
         },
         "ru" : {
@@ -8406,7 +8232,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel właśnie ukończył %1$@ · dzień %2$@"
+            "value" : "Znajomy właśnie ukończył %1$@ · dzień %2$@"
           }
         },
         "ru" : {
@@ -8472,7 +8298,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciółka właśnie ukończyła %1$@ · dzień %2$@"
+            "value" : "Znajoma właśnie ukończyła %1$@ · dzień %2$@"
           }
         },
         "ru" : {
@@ -8538,7 +8364,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel właśnie ukończył %1$@ · dzień %2$@"
+            "value" : "Znajomy właśnie ukończył %1$@ · dzień %2$@"
           }
         },
         "ru" : {
@@ -8677,64 +8503,6 @@
         }
       }
     },
-    "Follow the phone's language" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sprache des Telefons verwenden"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suivre la langue du téléphone"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Как на телефоне"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Як на телефоні"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jak w telefonie"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Podle jazyka telefonu"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Podľa jazyka telefónu"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A telefon nyelve szerint"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Usar el idioma del teléfono"
-          }
-        }
-      }
-    },
     "Friends" : {
       "localizations" : {
         "cs" : {
@@ -8764,7 +8532,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele"
+            "value" : "Znajomi"
           }
         },
         "ru" : {
@@ -8822,7 +8590,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą to imię obok Twoich serii."
+            "value" : "Znajomi widzą to imię obok Twoich serii."
           }
         },
         "ru" : {
@@ -8880,7 +8648,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tę serię"
+            "value" : "Znajomi widzą tę serię"
           }
         },
         "ru" : {
@@ -8944,7 +8712,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Z kontem online możesz ich dodać."
+            "value" : "Znajomi widzą tylko Twoje publiczne serie i nic więcej. Z kontem online możesz ich dodać."
           }
         },
         "ru" : {
@@ -9002,7 +8770,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą tylko Twoje publiczne serie i nic więcej. Dokończ konfigurację konta, aby ich dodać."
+            "value" : "Znajomi widzą tylko Twoje publiczne serie i nic więcej. Dokończ konfigurację konta, aby ich dodać."
           }
         },
         "ru" : {
@@ -9061,7 +8829,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciele widzą Twoje serie, nigdy liczniki"
+            "value" : "Znajomi widzą Twoje serie, nigdy liczniki"
           }
         },
         "ru" : {
@@ -9138,64 +8906,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Код дружби"
-          }
-        }
-      }
-    },
-    "From paper or a spreadsheet; rough is fine." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Z papíru nebo z tabulky; stačí přibližně."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Von Papier oder aus einer Tabelle; ungefähr reicht."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Depuis un carnet ou un tableur ; une estimation suffit."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Papírról vagy táblázatból; a hozzávetőleges érték is jó."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Z papieru lub arkusza; wystarczy w przybliżeniu."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Из бумажных записей или таблицы; примерно — тоже подойдёт."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Z papiera alebo tabuľky; stačí približne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "З паперу чи таблиці; приблизно — теж добре."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "De un cuaderno o una hoja de cálculo; un número aproximado está bien."
           }
         }
       }
@@ -9548,6 +9258,362 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "¿Ya terminaste el Short refuge?"
+          }
+        }
+      }
+    },
+    "High score: %lld days" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dny"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dne"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld den"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dní"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld Tag"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld Tage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "High score: %lld day"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "High score: %lld days"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Record : %lld jour"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Record : %lld jours"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Record : %lld jours"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld nap"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld nap"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dni"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dni"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dzień"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dnia"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld дня"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld дней"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld день"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld дней"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dni"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dní"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld deň"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Rekord: %lld dní"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld дні"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld днів"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld день"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Рекорд: %lld дня"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Récord: %lld día"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Récord: %lld días"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Récord: %lld días"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -10584,7 +10650,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pozwól przyjaciołom cię popędzać"
+            "value" : "Pozwól znajomym cię popędzać"
           }
         },
         "ru" : {
@@ -10700,7 +10766,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Litery, cyfry, kropki i podkreślenia. Przyjaciele jej nie widzą."
+            "value" : "Litery, cyfry, kropki i podkreślenia. Znajomi jej nie widzą."
           }
         },
         "ru" : {
@@ -10868,7 +10934,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ekran blokady pokazuje „Przyjaciel praktykował” zamiast nazwy praktyki."
+            "value" : "Ekran blokady pokazuje „Znajomy praktykował” zamiast nazwy praktyki."
           }
         },
         "ru" : {
@@ -10951,64 +11017,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Se registró %@"
-          }
-        }
-      }
-    },
-    "Longest %lld" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nejdelší %lld"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Längste %lld"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Record %lld"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leghosszabb: %lld"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Najdłuższa %lld"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Рекорд %lld"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Najdlhšia %lld"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Найдовша %lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máxima %lld"
           }
         }
       }
@@ -11506,7 +11514,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Oznacz dziś jako zrobione"
+            "value" : "Wykonałem/wykonałam praktykę"
           }
         },
         "ru" : {
@@ -11533,7 +11541,8 @@
             "value" : "Marcar hoy como hecho"
           }
         }
-      }
+      },
+      "extractionState" : "manual"
     },
     "Marked done" : {
       "localizations" : {
@@ -12030,7 +12039,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Na razie bez przyjaciół. Kod przyjaźni sprawia, że zostajecie przyjaciółmi; widzą Twoje publiczne serie, nigdy liczby."
+            "value" : "Na razie bez znajomych. Kod przyjaźni sprawia, że zostajecie znajomymi; widzą Twoje publiczne serie, nigdy liczby."
           }
         },
         "ru" : {
@@ -12379,7 +12388,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Niepotwierdzone"
+            "value" : "Niepotwierdzony"
           }
         },
         "ru" : {
@@ -13088,7 +13097,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tylko na tym telefonie. Konto daje przyjaciół, publiczne serie i synchronizację między telefonami; Twoje liczby pozostają zaszyfrowane end-to-end."
+            "value" : "Tylko na tym telefonie. Konto daje znajomych, publiczne serie i synchronizację między telefonami; Twoje liczby pozostają zaszyfrowane end-to-end."
           }
         },
         "ru" : {
@@ -13649,7 +13658,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel Cię szturchnął"
+            "value" : "Znajomy Cię szturchnął"
           }
         },
         "ru" : {
@@ -13715,7 +13724,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciółka Cię szturchnęła"
+            "value" : "Znajoma Cię szturchnęła"
           }
         },
         "ru" : {
@@ -13781,7 +13790,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przyjaciel Cię szturchnął"
+            "value" : "Znajomy Cię szturchnął"
           }
         },
         "ru" : {
@@ -14008,7 +14017,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wklej link od przyjaciela."
+            "value" : "Wklej link od znajomego."
           }
         },
         "ru" : {
@@ -14248,7 +14257,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Szturchnij przyjaciela"
+            "value" : "Szturchnij znajomego"
           }
         },
         "ru" : {
@@ -14424,7 +14433,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Szturchnięto przyjaciela"
+            "value" : "Szturchnięto znajomego"
           }
         },
         "ru" : {
@@ -14443,64 +14452,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Підштовхнуто: друг"
-          }
-        }
-      }
-    },
-    "Practice streak · longest %lld" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Série praxe · nejdelší %lld"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Übungsserie · längste %lld"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Série de pratique · record %lld"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gyakorlási sorozat · leghosszabb: %lld"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Seria praktyki · najdłuższa %lld"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Серия практики · рекорд %lld"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Séria dní · najdlhšia %lld"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Серія практики · найдовша %lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Racha de práctica · máxima %lld"
           }
         }
       }
@@ -16826,7 +16777,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pokaż mój kod dodawania przyjaciół"
+            "value" : "Pokaż mój kod dodawania znajomych"
           }
         },
         "ru" : {
@@ -17296,7 +17247,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wyloguj na tym telefonie"
+            "value" : "Wyloguj się"
           }
         },
         "ru" : {
@@ -17354,7 +17305,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wylogować na tym telefonie?"
+            "value" : "Czy na pewno chcesz się wylogować?"
           }
         },
         "ru" : {
@@ -17593,7 +17544,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wtedy %@ może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+            "value" : "Wtedy %@ może cię popędzać, a ty dowiesz się, kiedy znajomi praktykują."
           }
         },
         "ru" : {
@@ -17653,7 +17604,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wtedy przyjaciel może cię popędzać, a ty dowiesz się, kiedy przyjaciele praktykują."
+            "value" : "Wtedy znajomy może cię popędzać, a ty dowiesz się, kiedy znajomi praktykują."
           }
         },
         "ru" : {
@@ -17880,7 +17831,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Źródło"
+            "value" : "Kod źródłowy"
           }
         },
         "ru" : {
@@ -18408,7 +18359,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dotknij Źródło, aby otworzyć dokładnie ten commit na GitHubie."
+            "value" : "Dotknij „Kod źródłowy”, aby otworzyć dokładnie ten commit na GitHubie."
           }
         },
         "ru" : {
@@ -19287,7 +19238,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Serwer podaje teraz dla tego przyjaciela inny klucz niż ten, który telefon zobaczył jako pierwszy, dlatego jego serie są ukryte. Może to być nowy telefon bez przywracania albo ktoś pośrodku. Spotkajcie się lub poproś o nowy kod przyjaźni: jego przyjęcie sprawdzi klucz ponownie."
+            "value" : "Serwer podaje teraz dla tego znajomego inny klucz niż ten, który telefon zobaczył jako pierwszy, dlatego jego serie są ukryte. Może to być nowy telefon bez przywracania albo ktoś pośrodku. Spotkajcie się lub poproś o nowy kod przyjaźni: jego przyjęcie sprawdzi klucz ponownie."
           }
         },
         "ru" : {
@@ -19925,7 +19876,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ten kod przyjaźni nie przeszedł weryfikacji, więc nie został przyjęty. Poproś przyjaciela, aby wysłał go ponownie."
+            "value" : "Ten kod przyjaźni nie przeszedł weryfikacji, więc nie został przyjęty. Poproś znajomego, aby wysłał go ponownie."
           }
         },
         "ru" : {
@@ -20215,7 +20166,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "To Twój własny kod przyjaźni. Wyślij go przyjacielowi."
+            "value" : "To Twój własny kod przyjaźni. Wyślij go znajomemu."
           }
         },
         "ru" : {
@@ -21101,7 +21052,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo otwórz link z kodem przyjaźni od przyjaciela."
+            "value" : "Z tej sieci było w ostatniej godzinie zbyt wiele rejestracji. Spróbuj później albo otwórz link z kodem przyjaźni od znajomego."
           }
         },
         "ru" : {
@@ -21270,7 +21221,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Śledź swoją praktykę medytacji razem z przyjaciółmi."
+            "value" : "Śledź swoją praktykę medytacji razem ze znajomymi."
           }
         },
         "ru" : {
@@ -21625,7 +21576,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Usuń z przyjaciół"
+            "value" : "Usuń ze znajomych"
           }
         },
         "ru" : {
@@ -21683,7 +21634,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Usunąć z przyjaciół?"
+            "value" : "Usunąć ze znajomych?"
           }
         },
         "ru" : {
@@ -22856,7 +22807,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nie jesteście już przyjaciółmi."
+            "value" : "Nie jesteście już znajomymi."
           }
         },
         "ru" : {
@@ -22967,7 +22918,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Przestajecie widzieć swoje serie. Kod przyjaźni może ponownie uczynić was przyjaciółmi."
+            "value" : "Przestajecie widzieć swoje serie. Kod przyjaźni może ponownie uczynić was znajomymi."
           }
         },
         "ru" : {
@@ -23286,6 +23237,64 @@
         }
       }
     },
+    "Your counts stay on this phone but stop syncing. To sync them again, sign in with your passkey." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvé počty zůstanou v tomto telefonu, ale přestanou se synchronizovat. Pro další synchronizaci se přihlas přístupovým klíčem."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Zählungen bleiben auf diesem Handy, werden aber nicht mehr synchronisiert. Um wieder zu synchronisieren, melde dich mit deinem Passkey an."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus cuentas se quedan en este teléfono, pero dejan de sincronizarse. Para volver a sincronizarlas, inicia sesión con tu clave de acceso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes décomptes restent sur ce téléphone mais ne sont plus synchronisés. Pour les synchroniser à nouveau, connecte-toi avec ta clé d'accès."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A számaid ezen a telefonon maradnak, de nem szinkronizálódnak tovább. Az újbóli szinkronizáláshoz jelentkezz be a hozzáférési kulcsoddal."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoje dane zostaną na tym telefonie, ale przestaną się synchronizować. Aby znowu je synchronizować, zaloguj się kluczem dostępu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваши счёты останутся на этом телефоне, но перестанут синхронизироваться. Чтобы снова синхронизировать их, войдите с помощью ключа доступа."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvoje počty zostanú v tomto telefóne, ale prestanú sa synchronizovať. Ak ich chceš znova synchronizovať, prihlás sa prístupovým kľúčom."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваші підрахунки залишаться на цьому телефоні, але перестануть синхронізуватися. Щоб знову синхронізувати їх, увійдіть за допомогою ключа доступу."
+          }
+        }
+      }
+    },
     "Your data" : {
       "localizations" : {
         "cs" : {
@@ -23373,7 +23382,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Twoi przyjaciele"
+            "value" : "Twoi znajomi"
           }
         },
         "ru" : {
@@ -24193,7 +24202,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dotychczasowa seria liczy się na Twoim ekranie Dziś. Przyjaciele widzą wyłącznie dni śledzone w aplikacji."
+            "value" : "Dotychczasowa seria liczy się na Twoim ekranie Dziś. Znajomi widzą wyłącznie dni śledzone w aplikacji."
           }
         },
         "ru" : {
@@ -24863,6 +24872,1224 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "su propia práctica"
+          }
+        }
+      }
+    },
+    "Correction" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korrektur"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправление"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виправлення"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korekta"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprava"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprava"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Javítás"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrección"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correction"
+          }
+        }
+      }
+    },
+    "Count" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zählung"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Счёт"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рахунок"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licznik"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počet"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počet"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Számláló"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décompte"
+          }
+        }
+      }
+    },
+    "Correct the count" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zählung korrigieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправить счёт"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виправити рахунок"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popraw licznik"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opravit počet"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opraviť počet"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Számláló javítása"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corregir la cuenta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corriger le décompte"
+          }
+        }
+      }
+    },
+    "Round" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Круг"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коло"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runda"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolo"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kör"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ronda"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tour"
+          }
+        }
+      }
+    },
+    "Count in the round" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzahl in der Runde"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Количество в круге"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кількість у колі"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liczba w rundzie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počet v kole"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počet v kole"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szám a körben"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta en la ronda"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décompte du tour"
+          }
+        }
+      }
+    },
+    "Count now" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzahl jetzt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Количество сейчас"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кількість зараз"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liczba teraz"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počet teď"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počet teraz"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szám most"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta ahora"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décompte actuel"
+          }
+        }
+      }
+    },
+    "Was" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorher"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Было"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Було"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Było"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bylo"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolo"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Előtte"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avant"
+          }
+        }
+      }
+    },
+    "Change" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Änderung"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зміна"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Změna"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmena"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Változás"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écart"
+          }
+        }
+      }
+    },
+    "Saved in History as a correction." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Verlauf als Korrektur gespeichert."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранено в истории как исправление."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Збережено в історії як виправлення."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisana w historii jako korekta."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uloženo v historii jako oprava."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uložené v histórii ako oprava."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Javításként mentve az előzményekben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardada en el historial como corrección."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrée dans l’historique comme correction."
+          }
+        }
+      }
+    },
+    "of %@ · round %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "von %@ · Runde %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "из %@ · круг %lld"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "з %@ · коло %lld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "z %@ · runda %lld"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "z %@ · kolo %lld"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "z %@ · kolo %lld"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ %@ · %lld. kör"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de %@ · ronda %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sur %@ · tour %lld"
+          }
+        }
+      }
+    },
+    "Reset to %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf %lld zurücksetzen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вернуть %lld"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повернути %lld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywróć %lld"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vrátit na %lld"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vrátiť na %lld"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vissza: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer a %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revenir à %lld"
+          }
+        }
+      }
+    },
+    "The phone’s language: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache des Telefons: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Язык телефона: %@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мова телефону: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język telefonu: %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jazyk telefonu: %@"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jazyk telefónu: %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A telefon nyelve: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma del teléfono: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue du téléphone : %@"
+          }
+        }
+      }
+    },
+    "%@ · Machine-translated" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · maschinell übersetzt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · машинный перевод"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · машинний переклад"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · tłumaczenie maszynowe"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · strojový překlad"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · strojový preklad"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · gépi fordítás"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · traducción automática"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · traduction automatique"
+          }
+        }
+      }
+    },
+    "Machine-translated" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maschinell übersetzt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Машинный перевод"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Машинний переклад"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tłumaczenie maszynowe"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strojový překlad"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strojový preklad"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gépi fordítás"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducción automática"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduction automatique"
+          }
+        }
+      }
+    },
+    "A clumsy sentence in your language? Tell Karol: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein holpriger Satz in deiner Sprache? Schreib Karol: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неуклюжая фраза на вашем языке? Напишите Каролю: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Незграбне речення вашою мовою? Напишіть Каролю: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niezgrabne zdanie w Twoim języku? Napisz do Karola: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neobratná věta ve tvém jazyce? Napiš Karolovi: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nemotorná veta v tvojom jazyku? Napíš Karolovi: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Döcögős mondat a nyelveden? Írj Karolnak: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Una frase torpe en tu idioma? Escribe a Karol: [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une phrase maladroite dans ta langue ? Écris à Karol : [duongondro@moroz.dev](mailto:duongondro@moroz.dev)"
+          }
+        }
+      }
+    },
+    "Feedback" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отзыв"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відгук"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zgłoś uwagi"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpětná vazba"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spätná väzba"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visszajelzés"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comentarios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avis"
+          }
+        }
+      }
+    },
+    "Write an email" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-Mail schreiben"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Написать письмо"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Написати листа"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napisz e-mail"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napsat e-mail"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napísať e-mail"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail írása"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribir un correo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire un e-mail"
+          }
+        }
+      }
+    },
+    "Report a bug on GitHub" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler auf GitHub melden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сообщить об ошибке на GitHub"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повідомити про помилку на GitHub"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zgłoś błąd na GitHubie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nahlásit chybu na GitHubu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nahlásiť chybu na GitHube"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiba jelentése a GitHubon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informar de un error en GitHub"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaler un bug sur GitHub"
+          }
+        }
+      }
+    },
+    "Public, needs a GitHub account" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffentlich, braucht ein GitHub-Konto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Публично, нужен аккаунт GitHub"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Публічно, потрібен обліковий запис GitHub"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicznie, wymaga konta na GitHubie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veřejné, vyžaduje účet na GitHubu"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verejné, vyžaduje účet na GitHube"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nyilvános, GitHub-fiók kell hozzá"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Público, requiere una cuenta de GitHub"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public, nécessite un compte GitHub"
+          }
+        }
+      }
+    },
+    "The email starts with" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die E-Mail beginnt mit"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Письмо начинается с"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лист починається з"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail zaczyna się od"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail začíná"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail začína"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az e-mail így kezdődik"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El correo empieza con"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’e-mail commence par"
+          }
+        }
+      }
+    },
+    "You can delete it before sending. No counts or practices are added." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst das vor dem Senden löschen. Zählungen und Übungen werden nicht angehängt."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это можно удалить перед отправкой. Счёт и практики не добавляются."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Це можна видалити перед надсиланням. Рахунок і практики не додаються."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Możesz to usunąć przed wysłaniem. Nie dodajemy żadnych liczb ani praktyk."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Před odesláním to můžeš smazat. Počty ani praktiky se nepřidávají."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pred odoslaním to môžeš zmazať. Počty ani cvičenia sa nepridávajú."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küldés előtt törölheted. Számok és gyakorlatok nem kerülnek bele."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes borrarlo antes de enviarlo. No se añaden cuentas ni prácticas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu peux l’effacer avant l’envoi. Aucun décompte ni pratique n’est ajouté."
           }
         }
       }

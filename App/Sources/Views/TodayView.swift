@@ -76,7 +76,7 @@ private struct HeadlineStreakCard: View {
                 Text("\(result.current) days")
                     .font(Typography.headingBold(28, relativeTo: .title))
                 if result.current > 0 {
-                    Text("Practice streak · longest \(result.longest)")
+                    Text("High score: \(result.longest) days")
                         .font(.subheadline.weight(.medium))
                         .opacity(0.9)
                 } else {
@@ -153,11 +153,10 @@ private struct PracticeCard: View {
         .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous).stroke(Theme.cardBorder, lineWidth: 1))
     }
 
-    /// "Diamond Mind · 43,308 of 111,111", "12,960 of 111,111 · not yet today",
-    /// "Loving Eyes · done today".
+    /// "43,308 of 111,111", "12,960 of 111,111 · not yet today", "done today": no
+    /// second name on Today.
     private func statusLine(rounds: RoundProgress?, sessions: [Session], done: Bool) -> String {
         var parts: [String] = []
-        if let second = practice.practice.shownSecondName { parts.append(second) }
         if let rounds, let target = practice.practice.target {
             let progress = rounds.round > 1
                 ? String(localized: "round \(rounds.round) · \(rounds.inRound.grouped) of \(target.grouped)", bundle: .appLanguage, locale: .appLanguage)
@@ -171,7 +170,7 @@ private struct PracticeCard: View {
         } else if !done {
             parts.append(String(localized: "not yet today", bundle: .appLanguage, locale: .appLanguage))
         }
-        return parts.joined(separator: " · ")
+        return parts.joined(separator: " · ").capitalisedFirst
     }
 }
 

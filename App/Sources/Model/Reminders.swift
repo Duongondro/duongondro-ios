@@ -24,7 +24,7 @@ enum Reminders {
         let days = [today, today.adding(days: 1)]
         center.removePendingNotificationRequests(withIdentifiers: days.map { prefix + $0.description })
         guard let minutes = model.preferences.reminderMinutes, !model.snapshot.activePractices.isEmpty else { return }
-        let practisedToday = model.snapshot.sessions.contains { $0.day == today }
+        let practisedToday = Session.practised(model.snapshot.sessions, on: today)
 
         for day in days {
             if day == today && practisedToday { continue }
@@ -65,7 +65,7 @@ enum Reminders {
                 guard let usual = UsualTime.minutes(of: sessions, now: now) else { continue }
                 let minutes = (usual - 60 + 1440) % 1440
                 for day in [today, today.adding(days: 1)] {
-                    if sessions.contains(where: { $0.day == day }) { continue }
+                    if Session.practised(sessions, on: day) { continue }
                     guard let fire = fireDate(on: day, minutes: minutes, in: tz), fire > now else { continue }
                     let content = UNMutableNotificationContent()
                     content.title = String(localized: "Shouldn't you be meditating?", bundle: .appLanguage, locale: .appLanguage)

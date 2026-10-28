@@ -20,6 +20,9 @@ struct AboutSection: View {
                     SettingsRow("Server", detail: Text(verbatim: server.short).font(.system(.subheadline, design: .monospaced)))
                 }
             }
+            NavigationLink { FeedbackView() } label: {
+                SettingsRow("Feedback", chevron: true)
+            }
             NavigationLink { AboutView() } label: {
                 SettingsRow("About and contributors", chevron: true)
             }
@@ -152,6 +155,97 @@ private struct LicenceRow: View {
             .padding(.vertical, Theme.Space.s)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+}
+
+/// Settings › About › Feedback (design: Settings › Feedback): an e-mail that
+/// starts with what is running, or a public GitHub issue. Never counts or practices.
+struct FeedbackView: View {
+    @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
+    @Environment(\.openURL) private var openURL
+
+    static let address = "duongondro@moroz.dev"
+    private static let issues = URL(string: "https://github.com/Duongondro/duongondro-ios/issues")!
+
+    var body: some View {
+        let header = Self.header(language: language)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Space.l) {
+                CardSection {
+                    Button { if let url = Self.mailURL(header: header) { openURL(url) } } label: {
+                        row(title: "Write an email", detail: Text(verbatim: Self.address), systemImage: "envelope")
+                    }
+                    Button { openURL(Self.issues) } label: {
+                        row(title: "Report a bug on GitHub", detail: Text("Public, needs a GitHub account"),
+                            systemImage: "arrow.up.right.square")
+                    }
+                }
+                CardSection(header: "The email starts with",
+                            footer: "You can delete it before sending. No counts or practices are added.") {
+                    Text(verbatim: header)
+                        .font(.system(.footnote, design: .monospaced))
+                        .foregroundStyle(Theme.ink)
+                        .textSelection(.enabled)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.vertical, Theme.Space.m)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(.horizontal, Theme.Space.xl)
+            .padding(.top, Theme.Space.l)
+            .padding(.bottom, Theme.Space.xl)
+        }
+        .buttonStyle(.plain)
+        .background(Theme.ground.ignoresSafeArea())
+        .navigationTitle("Feedback")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func row(title: LocalizedStringKey, detail: Text, systemImage: String) -> some View {
+        HStack(spacing: Theme.Space.s) {
+            VStack(alignment: .leading, spacing: Theme.Space.xxs) {
+                Text(title).foregroundStyle(Theme.ink)
+                detail.font(.footnote).foregroundStyle(Theme.muted)
+            }
+            Spacer(minLength: Theme.Space.s)
+            Image(systemName: systemImage)
+                .font(.footnote)
+                .foregroundStyle(Theme.muted)
+                .accessibilityHidden(true)
+        }
+        .padding(.vertical, Theme.Space.s)
+        .frame(minHeight: Theme.Size.minTap)
+        .contentShape(Rectangle())
+    }
+
+    /// The three lines the e-mail starts with, in English for whoever reads it:
+    /// "Duongöndro 0.5 (12) · 1a2b3c4", "iOS 17.1 · iPhone15,2", "Language: polski".
+    static func header(language: AppLanguage, build: BuildIdentity = .current) -> String {
+        let name = AppLanguage(rawValue: language.localization())?.nativeName ?? "English"
+        return [
+            "Duongöndro \(build.version) \u{00B7} \(build.shortRevision)",
+            "iOS \(UIDevice.current.systemVersion) \u{00B7} \(modelIdentifier)",
+            "Language: \(name)",
+        ].joined(separator: "\n")
+    }
+
+    /// The model identifier, such as "iPhone15,2" (the simulated one in the Simulator).
+    static var modelIdentifier: String {
+        if let simulated = ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] { return simulated }
+        var info = utsname()
+        uname(&info)
+        return withUnsafeBytes(of: info.machine) { raw in
+            String(decoding: raw.prefix { $0 != 0 }, as: UTF8.self)
+        }
+    }
+
+    /// mailto: with the subject and the header, then a blank line to write under.
+    static func mailURL(header: String) -> URL? {
+        // Query values are encoded whole: no `&`, `=`, `+` or `#` left as they are.
+        var allowed = CharacterSet.urlQueryAllowed
+        allowed.remove(charactersIn: "&=+?#")
+        func encode(_ s: String) -> String { s.addingPercentEncoding(withAllowedCharacters: allowed) ?? "" }
+        return URL(string: "mailto:\(address)?subject=\(encode("Duongöndro feedback"))&body=\(encode(header + "\n\n"))")
     }
 }
 

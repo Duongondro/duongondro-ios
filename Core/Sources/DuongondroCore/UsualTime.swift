@@ -13,7 +13,7 @@ public enum UsualTime {
     /// not noon.
     public static func minutes(of sessions: [Session], now: Date) -> Int? {
         let cutoff = now.addingTimeInterval(-14 * 86400)
-        let times = sessions.filter { $0.loggedAt > cutoff && $0.loggedAt <= now }.map { s -> Int in
+        let times = sessions.filter { $0.countsForDay && $0.loggedAt > cutoff && $0.loggedAt <= now }.map { s -> Int in
             let tz = TimeZone(identifier: s.timeZoneID) ?? .current
             let c = Calendar.gregorian(in: tz).dateComponents([.hour, .minute], from: s.loggedAt)
             return (c.hour ?? 0) * 60 + (c.minute ?? 0)

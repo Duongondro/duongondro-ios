@@ -48,7 +48,7 @@ public enum CSVExport {
         // practices
         case practice, secondName, target, malaSize, streakOnly, archived
         // sessions
-        case dayCounted, start, timeZone, count, round, chosenDay
+        case dayCounted, start, timeZone, count, round, chosenDay, correction
         // friends
         case displayName, friendsSince
         // invites
@@ -73,6 +73,7 @@ public enum CSVExport {
             case .count: "Count"
             case .round: "Round"
             case .chosenDay: "Day chosen after midnight"
+            case .correction: "Correction"
             case .displayName: "Display name"
             case .friendsSince: "Friends since"
             case .code: "Friendship code"
@@ -115,10 +116,12 @@ public enum CSVExport {
                       return [.text(n.name), n.second.map(CSV.Cell.text) ?? .empty, opt(p.practice.target),
                               .int(p.malaSize), .bool(p.streakOnly), .bool(p.archived)]
                   }),
-            Table(name: "sessions", columns: [.practice, .dayCounted, .start, .timeZone, .count, .round, .chosenDay],
+            Table(name: "sessions", columns: [.practice, .dayCounted, .start, .timeZone, .count, .round, .chosenDay, .correction],
                   rows: content.sessions.map { x in
-                      [.text(names[x.practiceID]?.name ?? x.practiceID), .text(x.day.description), .text(stamp(x.start, in: x.timeZone)),
-                       .text(x.timeZone.identifier), .int(x.count), opt(x.round), x.dayChosen ? .text(x.day.description) : .empty]
+                      // A correction counts for no day, so its Day counted is empty.
+                      [.text(names[x.practiceID]?.name ?? x.practiceID), x.correction ? .empty : .text(x.day.description), .text(stamp(x.start, in: x.timeZone)),
+                       .text(x.timeZone.identifier), .int(x.count), opt(x.round), x.dayChosen ? .text(x.day.description) : .empty,
+                       .bool(x.correction)]
                   }),
         ]
         if content.serverPart != .local {
@@ -168,6 +171,9 @@ public enum CSVExport {
             "made and redeemed (friendship codes); hardware, tee and software (where a",
             "device keeps its key). Session starts are local to the session's time",
             "zone, given beside them; other times are ISO 8601 with their UTC offset.",
+            "In sessions.csv, Correction is true for a correction of the count: its",
+            "Count is the change (it may be negative), in the total but in no day's,",
+            "so its Day counted is empty.",
         ]
         switch content.serverPart {
         case .local:

@@ -683,15 +683,10 @@ private struct CountsStep: View {
                                 .font(.footnote)
                                 .foregroundStyle(Theme.soft)
                         }
-                        VStack(alignment: .leading, spacing: Theme.Space.xs) {
-                            if !p.wrappedValue.streakOnly {
-                                Text("From paper or a spreadsheet; rough is fine.")
-                            }
-                            Text("Your streak so far counts on your own Today screen. Friends only ever see days tracked in the app.")
-                        }
-                        .font(.footnote)
-                        .foregroundStyle(Theme.muted)
-                        .fixedSize(horizontal: false, vertical: true)
+                        Text("Your streak so far counts on your own Today screen. Friends only ever see days tracked in the app.")
+                            .font(.footnote)
+                            .foregroundStyle(Theme.muted)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.top, Theme.Space.s)
                 }

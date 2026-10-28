@@ -70,8 +70,8 @@ struct AccountSection: View {
                 }
                 Button { replacingCode = true } label: {
                     SettingsRow("Recovery code",
-                                detail: account.recoveryUnconfirmed ? Text("Not confirmed") : Text("Make a new one"),
-                                detailColor: account.recoveryUnconfirmed ? Theme.destructive : Theme.muted,
+                                detail: account.recoveryCodeMissing ? Text("Not confirmed") : Text("Make a new one"),
+                                detailColor: account.recoveryCodeMissing ? Theme.destructive : Theme.muted,
                                 chevron: true)
                 }
                 .disabled(account.busy)
@@ -102,10 +102,15 @@ struct AccountSection: View {
                     .confirmationDialog("Sign out on this phone?", isPresented: $signingOut, titleVisibility: .visible) {
                         Button("Sign out on this phone", role: .destructive) { Task { await account.signOut() } }
                     } message: {
-                        Text("Your counts stay on this phone but stop syncing. To sync them again, sign in and enter your recovery code.")
+                        if account.passkeys.contains(where: \.canUnlock) {
+                            Text("Your counts stay on this phone but stop syncing. To sync them again, sign in with your passkey.")
+                        } else {
+                            Text("Your counts stay on this phone but stop syncing. To sync them again, sign in and enter your recovery code.")
+                        }
                     }
                 } else {
-                    // Signing out forgets the keys: first the recovery code must be stored and confirmed.
+                    // Signing out forgets the keys: with no passkey to unlock them, first the
+                    // recovery code must be stored and confirmed.
                     Button { replacingCode = true } label: {
                         VStack(alignment: .leading, spacing: Theme.Space.xs) {
                             Text("Sign out on this phone").foregroundStyle(Theme.muted)

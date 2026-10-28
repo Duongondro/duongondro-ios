@@ -203,8 +203,11 @@ final class AccountModel: ObservableObject {
     var recoveryPending: Bool { ((try? secrets.read("recovery-pending")) ?? nil) != nil }
 
     /// Signing out here forgets the keys, so it is allowed only when they can come
-    /// back: keys set up, the recovery code stored on the server and confirmed.
-    var canSignOut: Bool { status == .ready && !recoveryUnconfirmed && !recoveryPending }
+    /// back: keys set up, and either a passkey that unlocks the counts (decision 33)
+    /// or the recovery code stored on the server and confirmed.
+    var canSignOut: Bool {
+        status == .ready && (passkeys.contains(where: \.canUnlock) || (!recoveryUnconfirmed && !recoveryPending))
+    }
 
     private var anonymous: APIClient { APIClient(baseURL: Self.serverURL) }
 
@@ -677,6 +680,11 @@ final class AccountModel: ObservableObject {
     /// The account's passkeys, as last fetched for Settings › Passkeys.
     @Published private(set) var passkeys: [Passkey] = []
     @Published private(set) var passkeysLoaded = false
+
+    /// An unconfirmed recovery code is a warning only while it is the one way back:
+    /// a passkey that unlocks the counts brings them to a new phone without it
+    /// (decision 33).
+    var recoveryCodeMissing: Bool { recoveryUnconfirmed && !passkeys.contains(where: \.canUnlock) }
 
     /// The calm card in Settings: this phone holds the keys, can ask for a PRF
     /// output, and a passkey of the account cannot unlock the counts yet.

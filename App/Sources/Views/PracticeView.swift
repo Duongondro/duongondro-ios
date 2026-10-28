@@ -52,7 +52,7 @@ struct PracticeView: View {
                     UndoToast(pending: pending, streakOnly: practice.streakOnly)
                 }
                 if practice.streakOnly {
-                    BigButton(title: doneToday ? "Done today" : "Mark today done", systemImage: "checkmark") {
+                    BigButton(title: doneToday ? "Done today" : LocalizedStringKey(Gendered.mine("Mark today done")), systemImage: "checkmark") {
                         taps += 1
                         model.add(0, to: practice.id)
                     }
@@ -66,7 +66,8 @@ struct PracticeView: View {
                 }
                 HStack(spacing: Theme.Space.m) {
                     if !practice.streakOnly {
-                        Button("+ Custom") { customAmount = "" }
+                        // One line, shrinking rather than overflowing where a translation runs long ("+ Inna liczba").
+                        Button { customAmount = "" } label: { Text("+ Custom").lineLimit(1).minimumScaleFactor(0.7) }
                             .buttonStyle(OutlinedButtonStyle(height: Theme.Size.secondary))
                     }
                     Button("History") { showsHistory = true }
@@ -99,14 +100,19 @@ struct PracticeView: View {
         return Covers.photo(for: id) != nil || Covers.builtIn(for: id) != nil
     }
 
-    /// "Dorje Sempa", and below it "Diamond Mind · round 1 · 43,308 lifetime".
+    /// "Dorje Sempa", and below it "round 2" for a practice with rounds, or "43,308
+    /// lifetime" for one without: with rounds, only the one under way matters here, and
+    /// the lifetime total is the app's own bookkeeping. The second name is left to
+    /// Settings and onboarding, where a practice is chosen.
     private func header(_ practice: TrackedPractice) -> some View {
         let sessions = model.snapshot.sessions(of: practice.id)
         var parts: [String] = []
-        if let second = practice.practice.shownSecondName { parts.append(second) }
         if !practice.streakOnly {
-            if let r = practice.rounds(sessions: sessions) { parts.append(String(localized: "round \(r.round)", bundle: .appLanguage, locale: .appLanguage)) }
-            parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime", bundle: .appLanguage, locale: .appLanguage))
+            if let r = practice.rounds(sessions: sessions) {
+                parts.append(String(localized: "round \(r.round)", bundle: .appLanguage, locale: .appLanguage))
+            } else {
+                parts.append(String(localized: "\(practice.lifetime(sessions: sessions).grouped) lifetime", bundle: .appLanguage, locale: .appLanguage))
+            }
         } else {
             parts.append(String(localized: "streak only", bundle: .appLanguage, locale: .appLanguage))
         }
@@ -115,7 +121,7 @@ struct PracticeView: View {
                 .font(Typography.headingBold(30, relativeTo: .largeTitle))
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
-            Text(parts.joined(separator: " · "))
+            Text(parts.joined(separator: " · ").capitalisedFirst)
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
@@ -132,7 +138,7 @@ struct PracticeView: View {
         let rounds = practice.rounds(sessions: sessions)
         let shown = rounds?.inRound ?? practice.lifetime(sessions: sessions)
         let today = CivilDate.of(model.clock, in: .current)
-        let todayTotal = sessions.filter { $0.day == today }.reduce(0) { $0 + $1.amount }
+        let todayTotal = Session.dayTotal(sessions, on: today)
         return VStack(alignment: .leading, spacing: Theme.Space.s + Theme.Space.xxs) {
             HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
                 Text(shown.grouped)
@@ -176,7 +182,7 @@ struct PracticeView: View {
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
             if streak.longest > streak.current {
-                Text("Longest \(streak.longest)")
+                Text("High score: \(streak.longest) days")
                     .font(.subheadline)
                     .foregroundStyle(Theme.muted)
             }
@@ -295,16 +301,25 @@ private struct HistoryView: View {
                                     Text(s.startedAt.shortTime)
                                         .foregroundStyle(Theme.muted)
                                         .monospacedDigit()
+                                    if s.correction {
+                                        Text("Correction")
+                                            .foregroundStyle(Theme.ink)
+                                    }
                                     Spacer()
-                                    Text(practice.streakOnly ? String(localized: "done", bundle: .appLanguage, locale: .appLanguage) : s.amount.grouped)
+                                    Text(s.correction ? s.amount.signed
+                                         : practice.streakOnly ? String(localized: "done", bundle: .appLanguage, locale: .appLanguage) : s.amount.grouped)
                                         .font(.body.weight(.semibold))
                                 }
+                                .accessibilityElement(children: .combine)
                             }
-                            if !practice.streakOnly && list.count > 1 {
+                            // A correction changes the total, never a day's: the day's
+                            // sum is of its sessions alone.
+                            let counted = list.filter(\.countsForDay)
+                            if !practice.streakOnly && counted.count > 1 {
                                 HStack {
                                     Text("Total")
                                     Spacer()
-                                    Text(list.reduce(0) { $0 + $1.amount }.grouped)
+                                    Text(counted.reduce(0) { $0 + $1.amount }.grouped)
                                         .font(.body.weight(.bold))
                                 }
                             }

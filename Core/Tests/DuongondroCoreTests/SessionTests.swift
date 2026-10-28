@@ -88,4 +88,69 @@ final class SessionTests: XCTestCase {
         let estimated = Session(practiceID: "a", amount: 1, startedAt: t, startExact: false, timeZoneID: ams, loggedAt: t.addingTimeInterval(3600))
         XCTAssertEqual(SessionStart.timedLengths([timed, estimated]), [1200])
     }
+
+    // MARK: Corrections (design decision 34)
+
+    func testACorrectionChangesTheTotalAndRoundsButNoDay() {
+        let tz = TimeZone(identifier: ams)!
+        let ds = Catalogue.builtIn.first { $0.id == "dorje-sempa" }!
+        let tracked = TrackedPractice(practice: ds, openingCount: 111_000)
+        let now = date("2026-10-03T12:00:00Z")
+        let logged = Session(practiceID: ds.id, amount: 108, startedAt: date("2026-10-03T08:00:00Z"), startExact: true,
+                             timeZoneID: ams, loggedAt: date("2026-10-03T08:20:00Z"))
+        let up = Session.countCorrection(practiceID: ds.id, change: 1_200, at: now, timeZone: tz)
+        XCTAssertTrue(up.correction)
+        XCTAssertTrue(up.startExact)
+        XCTAssertEqual(up.startedAt, now)
+        XCTAssertEqual(up.loggedAt, now)
+        XCTAssertEqual(up.timeZoneID, ams)
+        XCTAssertFalse(up.countsForDay)
+
+        let sessions = [logged, up]
+        XCTAssertEqual(tracked.lifetime(sessions: sessions), 112_308)
+        XCTAssertEqual(tracked.rounds(sessions: sessions)?.round, 2)
+        XCTAssertEqual(tracked.rounds(sessions: sessions)?.inRound, 1_197)
+        let today = CivilDate("2026-10-03")!
+        XCTAssertEqual(Session.dayTotal(sessions, on: today), 108, "a correction is not part of a day's total")
+        XCTAssertTrue(Session.practised(sessions, on: today))
+        XCTAssertFalse(Session.practised([up], on: today), "a correction alone is no practice that day")
+    }
+
+    func testACorrectionAloneMakesNoStreak() {
+        let tz = TimeZone(identifier: ams)!
+        let now = date("2026-10-03T12:00:00Z")
+        let c = Session.countCorrection(practiceID: "a", change: 500, at: now, timeZone: tz)
+        XCTAssertEqual(Streak.of(practiceID: "a", sessions: [c], seed: nil, now: now, timeZone: tz).current, 0)
+        XCTAssertEqual(Streak.headline(sessions: [c], seeds: [], now: now, timeZone: tz).current, 0)
+        XCTAssertNil(UsualTime.minutes(of: [c, c, c, c], now: now))
+        XCTAssertEqual(SessionStart.timedLengths([c]), [])
+    }
+
+    func testANegativeCorrectionNeverTakesTheTotalBelowZero() {
+        let tz = TimeZone(identifier: ams)!
+        let ds = Catalogue.builtIn.first { $0.id == "dorje-sempa" }!
+        let tracked = TrackedPractice(practice: ds, openingCount: 100)
+        let down = Session.countCorrection(practiceID: ds.id, change: -300, at: date("2026-10-03T12:00:00Z"), timeZone: tz)
+        XCTAssertEqual(tracked.lifetime(sessions: [down]), 0)
+        XCTAssertEqual(tracked.rounds(sessions: [down])?.round, 1)
+        // Typing 50 now saves +250, from the unclamped −200, so the total is 50.
+        XCTAssertEqual(tracked.correction(to: 50, sessions: [down]), 250)
+        let up = Session.countCorrection(practiceID: ds.id, change: 250, at: date("2026-10-03T12:01:00Z"), timeZone: tz)
+        XCTAssertEqual(tracked.lifetime(sessions: [down, up]), 50)
+        XCTAssertEqual(tracked.correction(to: 50, sessions: [down, up]), 0, "nothing to save")
+    }
+
+    func testCountCorrectionLifetimeAndPrefill() {
+        XCTAssertEqual(CountCorrection.lifetime(round: 3, inRound: 500, target: 111_111), 222_722)
+        XCTAssertEqual(CountCorrection.lifetime(round: 0, inRound: 500, target: 111_111), 500, "round 1 at least")
+        XCTAssertEqual(CountCorrection.lifetime(round: 4, inRound: 7, target: nil), 7, "without a target the field is the count")
+        XCTAssertEqual(CountCorrection.lifetime(round: 1, inRound: 200_000, target: 111_111), 200_000,
+                       "a count past the target in round 1 is a lifetime total")
+        let p = CountCorrection.prefill(lifetime: 222_722, target: 111_111)
+        XCTAssertEqual(p.round, 3)
+        XCTAssertEqual(p.inRound, 500)
+        let open = CountCorrection.prefill(lifetime: 4_321, target: nil)
+        XCTAssertEqual(open.round, 1)
+        XCTAssertEqual(open.inRound, 4_321)
+    }
 }
