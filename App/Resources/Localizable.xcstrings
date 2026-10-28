@@ -17247,7 +17247,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wyloguj na tym telefonie"
+            "value" : "Wyloguj się"
           }
         },
         "ru" : {
@@ -17305,7 +17305,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wylogować na tym telefonie?"
+            "value" : "Wylogować się?"
           }
         },
         "ru" : {
@@ -23233,6 +23233,64 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ваші підрахунки залишаться на цьому телефоні, але перестануть синхронізуватися. Щоб знову синхронізувати їх, увійдіть і введіть код відновлення."
+          }
+        }
+      }
+    },
+    "Your counts stay on this phone but stop syncing. To sync them again, sign in with your passkey." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvé počty zůstanou v tomto telefonu, ale přestanou se synchronizovat. Pro další synchronizaci se přihlas přístupovým klíčem."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Zählungen bleiben auf diesem Handy, werden aber nicht mehr synchronisiert. Um wieder zu synchronisieren, melde dich mit deinem Passkey an."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus cuentas se quedan en este teléfono, pero dejan de sincronizarse. Para volver a sincronizarlas, inicia sesión con tu clave de acceso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tes décomptes restent sur ce téléphone mais ne sont plus synchronisés. Pour les synchroniser à nouveau, connecte-toi avec ta clé d'accès."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A számaid ezen a telefonon maradnak, de nem szinkronizálódnak tovább. Az újbóli szinkronizáláshoz jelentkezz be a hozzáférési kulcsoddal."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Twoje dane zostaną na tym telefonie, ale przestaną się synchronizować. Aby znowu je synchronizować, zaloguj się kluczem dostępu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваши счёты останутся на этом телефоне, но перестанут синхронизироваться. Чтобы снова синхронизировать их, войдите с помощью ключа доступа."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tvoje počty zostanú v tomto telefóne, ale prestanú sa synchronizovať. Ak ich chceš znova synchronizovať, prihlás sa prístupovým kľúčom."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ваші підрахунки залишаться на цьому телефоні, але перестануть синхронізуватися. Щоб знову синхронізувати їх, увійдіть за допомогою ключа доступу."
           }
         }
       }

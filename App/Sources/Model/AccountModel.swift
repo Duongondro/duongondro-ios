@@ -203,8 +203,11 @@ final class AccountModel: ObservableObject {
     var recoveryPending: Bool { ((try? secrets.read("recovery-pending")) ?? nil) != nil }
 
     /// Signing out here forgets the keys, so it is allowed only when they can come
-    /// back: keys set up, the recovery code stored on the server and confirmed.
-    var canSignOut: Bool { status == .ready && !recoveryUnconfirmed && !recoveryPending }
+    /// back: keys set up, and either a passkey that unlocks the counts (decision 33)
+    /// or the recovery code stored on the server and confirmed.
+    var canSignOut: Bool {
+        status == .ready && (passkeys.contains(where: \.canUnlock) || (!recoveryUnconfirmed && !recoveryPending))
+    }
 
     private var anonymous: APIClient { APIClient(baseURL: Self.serverURL) }
 
