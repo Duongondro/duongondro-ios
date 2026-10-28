@@ -8910,64 +8910,6 @@
         }
       }
     },
-    "From paper or a spreadsheet; rough is fine." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Z papíru nebo z tabulky; stačí přibližně."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Von Papier oder aus einer Tabelle; ungefähr reicht."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Depuis un carnet ou un tableur ; une estimation suffit."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Papírról vagy táblázatból; a hozzávetőleges érték is jó."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Z papieru lub arkusza; wystarczy w przybliżeniu."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Из бумажных записей или таблицы; примерно — тоже подойдёт."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Z papiera alebo tabuľky; stačí približne."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "З паперу чи таблиці; приблизно — теж добре."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "De un cuaderno o una hoja de cálculo; un número aproximado está bien."
-          }
-        }
-      }
-    },
     "Gender" : {
       "localizations" : {
         "de" : {
