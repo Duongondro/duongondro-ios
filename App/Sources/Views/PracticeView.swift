@@ -121,7 +121,7 @@ struct PracticeView: View {
                 .font(Typography.headingBold(30, relativeTo: .largeTitle))
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
-            Text(parts.joined(separator: " · "))
+            Text(parts.joined(separator: " · ").capitalisedFirst)
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
@@ -182,7 +182,7 @@ struct PracticeView: View {
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
             if streak.longest > streak.current {
-                Text("Longest \(streak.longest)")
+                Text("High score: \(streak.longest) days")
                     .font(.subheadline)
                     .foregroundStyle(Theme.muted)
             }

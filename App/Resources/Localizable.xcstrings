@@ -11021,64 +11021,6 @@
         }
       }
     },
-    "Longest %lld" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nejdelší %lld"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Längste %lld"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Record %lld"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leghosszabb: %lld"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Najdłuższa %lld"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Рекорд %lld"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Najdlhšia %lld"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Найдовша %lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Máxima %lld"
-          }
-        }
-      }
-    },
     "Longest streak (optional)" : {
       "localizations" : {
         "cs" : {
@@ -18417,7 +18359,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dotknij Kod źródłowy, aby otworzyć dokładnie ten commit na GitHubie."
+            "value" : "Dotknij „Kod źródłowy”, aby otworzyć dokładnie ten commit na GitHubie."
           }
         },
         "ru" : {

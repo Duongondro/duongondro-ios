@@ -170,7 +170,7 @@ private struct PracticeCard: View {
         } else if !done {
             parts.append(String(localized: "not yet today", bundle: .appLanguage, locale: .appLanguage))
         }
-        return parts.joined(separator: " · ")
+        return parts.joined(separator: " · ").capitalisedFirst
     }
 }
 
